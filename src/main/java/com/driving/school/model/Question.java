@@ -16,164 +16,43 @@ public class Question {
     @Column(name = "question", length = 512)
     private String question;
 
-    @Column(name = "answera", length = 512)
-    private String answera;
+    @Column(name = "answerA", length = 512)
+    private String answerA;
 
-    @Column(name = "answerb", length = 512)
-    private String answerb;
+    @Column(name = "answerB", length = 512)
+    private String answerB;
 
-    @Column(name = "answerc", length = 512)
-    private String answerc;
+    @Column(name = "answerC", length = 512)
+    private String answerC;
 
-    @Column(name = "availablequestion")
-    private Integer availablequestion;
+    @Column(name = "availableQuestions")
+    private Integer availableQuestions;
 
-    @Column(name = "correctanswer")
-    private Integer correctanswer;
+    @Column(name = "correctAnswer")
+    private Integer correctAnswer;
 
-    @Column(name = "medianame", length = 512)
-    private String medianame;
+    @Column(name = "mediaName", length = 512)
+    private String mediaName;
 
     @Column(name = "explanation", length = 1024)
     private String explanation;
 
-    @Column(name = "questiontype", length = 512)
-    private String questiontype;
+    @Column(name = "questionType", length = 512)
+    private String questionType;
 
     @Column(name = "category", length = 128)
     private String category;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "testid", nullable = false)
-    private Test testid;
+    @JoinColumn(name = "testId", nullable = false)
+    private Test test;
 
     @ManyToMany(mappedBy = "questions")
     private Set<Exam> exams = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "question")
-    private Set<Studentanswerstest> studentanswerstests = new LinkedHashSet<>();
+    private Set<StudentAnswersTest> studentAnswersTests = new LinkedHashSet<>();
 
     @OneToOne(mappedBy = "question")
-    private Studentexamanswer studentexamanswer;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getAnswera() {
-        return answera;
-    }
-
-    public void setAnswera(String answera) {
-        this.answera = answera;
-    }
-
-    public String getAnswerb() {
-        return answerb;
-    }
-
-    public void setAnswerb(String answerb) {
-        this.answerb = answerb;
-    }
-
-    public String getAnswerc() {
-        return answerc;
-    }
-
-    public void setAnswerc(String answerc) {
-        this.answerc = answerc;
-    }
-
-    public Integer getAvailablequestion() {
-        return availablequestion;
-    }
-
-    public void setAvailablequestion(Integer availablequestion) {
-        this.availablequestion = availablequestion;
-    }
-
-    public Integer getCorrectanswer() {
-        return correctanswer;
-    }
-
-    public void setCorrectanswer(Integer correctanswer) {
-        this.correctanswer = correctanswer;
-    }
-
-    public String getMedianame() {
-        return medianame;
-    }
-
-    public void setMedianame(String medianame) {
-        this.medianame = medianame;
-    }
-
-    public String getExplanation() {
-        return explanation;
-    }
-
-    public void setExplanation(String explanation) {
-        this.explanation = explanation;
-    }
-
-    public String getQuestiontype() {
-        return questiontype;
-    }
-
-    public void setQuestiontype(String questiontype) {
-        this.questiontype = questiontype;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Test getTestid() {
-        return testid;
-    }
-
-    public void setTestid(Test testid) {
-        this.testid = testid;
-    }
-
-    public Set<Exam> getExams() {
-        return exams;
-    }
-
-    public void setExams(Set<Exam> exams) {
-        this.exams = exams;
-    }
-
-    public Set<Studentanswerstest> getStudentanswerstests() {
-        return studentanswerstests;
-    }
-
-    public void setStudentanswerstests(Set<Studentanswerstest> studentanswerstests) {
-        this.studentanswerstests = studentanswerstests;
-    }
-
-    public Studentexamanswer getStudentexamanswer() {
-        return studentexamanswer;
-    }
-
-    public void setStudentexamanswer(Studentexamanswer studentexamanswer) {
-        this.studentexamanswer = studentexamanswer;
-    }
-
+    private StudentExamAnswer studentExamAnswer;
 }

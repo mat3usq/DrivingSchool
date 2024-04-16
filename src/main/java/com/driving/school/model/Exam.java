@@ -19,64 +19,15 @@ public class Exam {
     @Column(name = "points")
     private Integer points;
 
-    @Column(name = "questionnumber")
-    private Integer questionnumber;
+    @Column(name = "questionNumber")
+    private Integer questionNumber;
 
     @ManyToMany
-    @JoinTable(name = "questionset",
-            joinColumns = @JoinColumn(name = "examid"),
-            inverseJoinColumns = @JoinColumn(name = "questionid"))
+    @JoinTable(name = "questionSet",
+            joinColumns = @JoinColumn(name = "examId"),
+            inverseJoinColumns = @JoinColumn(name = "questionId"))
     private Set<Question> questions = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "examid")
-    private Set<Studentexam> studentexams = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getPoints() {
-        return points;
-    }
-
-    public void setPoints(Integer points) {
-        this.points = points;
-    }
-
-    public Integer getQuestionnumber() {
-        return questionnumber;
-    }
-
-    public void setQuestionnumber(Integer questionnumber) {
-        this.questionnumber = questionnumber;
-    }
-
-    public Set<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
-    }
-
-    public Set<Studentexam> getStudentexams() {
-        return studentexams;
-    }
-
-    public void setStudentexams(Set<Studentexam> studentexams) {
-        this.studentexams = studentexams;
-    }
-
+    @OneToMany(mappedBy = "exam")
+    private Set<StudentExam> studentExams = new LinkedHashSet<>();
 }

@@ -3,7 +3,6 @@ package com.driving.school.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-
 @Entity
 @Table(name = "blog")
 public class Blog {
@@ -18,72 +17,15 @@ public class Blog {
     @Column(name = "image")
     private byte[] image;
 
-    @Column(name = "createdat")
-    private LocalDate createdat;
+    @Column(name = "createdAt")
+    private LocalDate createdAt;
 
-    @Column(name = "createdby")
-    private Integer createdby;
+    @Column(name = "createdBy")
+    private Integer createdBy;
 
-    @Column(name = "lastupdateat")
-    private LocalDate lastupdateat;
+    @Column(name = "lastUpdateAt")
+    private LocalDate lastUpdateAt;
 
-    @Column(name = "lastupdateby")
-    private Integer lastupdateby;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public LocalDate getCreatedat() {
-        return createdat;
-    }
-
-    public void setCreatedat(LocalDate createdat) {
-        this.createdat = createdat;
-    }
-
-    public Integer getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(Integer createdby) {
-        this.createdby = createdby;
-    }
-
-    public LocalDate getLastupdateat() {
-        return lastupdateat;
-    }
-
-    public void setLastupdateat(LocalDate lastupdateat) {
-        this.lastupdateat = lastupdateat;
-    }
-
-    public Integer getLastupdateby() {
-        return lastupdateby;
-    }
-
-    public void setLastupdateby(Integer lastupdateby) {
-        this.lastupdateby = lastupdateby;
-    }
-
+    @Column(name = "lastUpdateBy")
+    private Integer lastUpdateBy;
 }

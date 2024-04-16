@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "User", indexes = {
-        @Index(name = "user__idx", columnList = "roleid")
+        @Index(name = "user__idx", columnList = "roleId")
 })
 public class User {
     @Id
@@ -28,188 +28,43 @@ public class User {
     @Column(name = "email", length = 64)
     private String email;
 
-    @Column(name = "createdat")
-    private LocalDate createdat;
+    @Column(name = "createdAt")
+    private LocalDate createdAt;
 
-    @Column(name = "createdby", length = 64)
-    private String createdby;
+    @Column(name = "createdBy", length = 64)
+    private String createdBy;
 
-    @Column(name = "lastupdateat")
-    private LocalDate lastupdateat;
+    @Column(name = "lastUpdateAt")
+    private LocalDate lastUpdateAt;
 
-    @Column(name = "lastupdatedat", length = 64)
-    private String lastupdatedat;
+    @Column(name = "lastUpdatedAt", length = 64)
+    private String lastUpdatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "roleid", nullable = false)
-    private Role roleid;
+    @JoinColumn(name = "roleId", nullable = false)
+    private Role role;
 
-    @OneToMany(mappedBy = "userid")
-    private Set<Drivinglesson> drivinglessons = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<DrivingLesson> drivingLessons = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "userid")
-    private Set<Lecturemeeting> lecturemeetings = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<LectureMeeting> lectureMeetings = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "userid")
+    @OneToMany(mappedBy = "user")
     private Set<Payment> payments = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "userid")
-    private Set<Sensitivedatum> sensitivedata = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<SensitiveData> sensitiveData = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<Studentanswerstest> studentanswerstests = new LinkedHashSet<>();
+    private Set<StudentAnswersTest> studentAnswersTests = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<Studentcourse> studentcourses = new LinkedHashSet<>();
+    private Set<StudentCourse> studentCourses = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "userid")
-    private Set<Studentexam> studentexams = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<StudentExam> studentExams = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "userid")
-    private Set<Userstatistic> userstatistics = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getCreatedat() {
-        return createdat;
-    }
-
-    public void setCreatedat(LocalDate createdat) {
-        this.createdat = createdat;
-    }
-
-    public String getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public LocalDate getLastupdateat() {
-        return lastupdateat;
-    }
-
-    public void setLastupdateat(LocalDate lastupdateat) {
-        this.lastupdateat = lastupdateat;
-    }
-
-    public String getLastupdatedat() {
-        return lastupdatedat;
-    }
-
-    public void setLastupdatedat(String lastupdatedat) {
-        this.lastupdatedat = lastupdatedat;
-    }
-
-    public Role getRoleid() {
-        return roleid;
-    }
-
-    public void setRoleid(Role roleid) {
-        this.roleid = roleid;
-    }
-
-    public Set<Drivinglesson> getDrivinglessons() {
-        return drivinglessons;
-    }
-
-    public void setDrivinglessons(Set<Drivinglesson> drivinglessons) {
-        this.drivinglessons = drivinglessons;
-    }
-
-    public Set<Lecturemeeting> getLecturemeetings() {
-        return lecturemeetings;
-    }
-
-    public void setLecturemeetings(Set<Lecturemeeting> lecturemeetings) {
-        this.lecturemeetings = lecturemeetings;
-    }
-
-    public Set<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(Set<Payment> payments) {
-        this.payments = payments;
-    }
-
-    public Set<Sensitivedatum> getSensitivedata() {
-        return sensitivedata;
-    }
-
-    public void setSensitivedata(Set<Sensitivedatum> sensitivedata) {
-        this.sensitivedata = sensitivedata;
-    }
-
-    public Set<Studentanswerstest> getStudentanswerstests() {
-        return studentanswerstests;
-    }
-
-    public void setStudentanswerstests(Set<Studentanswerstest> studentanswerstests) {
-        this.studentanswerstests = studentanswerstests;
-    }
-
-    public Set<Studentcourse> getStudentcourses() {
-        return studentcourses;
-    }
-
-    public void setStudentcourses(Set<Studentcourse> studentcourses) {
-        this.studentcourses = studentcourses;
-    }
-
-    public Set<Studentexam> getStudentexams() {
-        return studentexams;
-    }
-
-    public void setStudentexams(Set<Studentexam> studentexams) {
-        this.studentexams = studentexams;
-    }
-
-    public Set<Userstatistic> getUserstatistics() {
-        return userstatistics;
-    }
-
-    public void setUserstatistics(Set<Userstatistic> userstatistics) {
-        this.userstatistics = userstatistics;
-    }
-
+    @OneToMany(mappedBy = "user")
+    private Set<UserStatistic> userStatistics = new LinkedHashSet<>();
 }

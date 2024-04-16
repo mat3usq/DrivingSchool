@@ -21,41 +21,8 @@ public class Sublecture {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "lectureid", nullable = false)
-    private Lecture lectureid;
+    private Lecture lecture;
 
-    @OneToMany(mappedBy = "sublectureid")
+    @OneToMany(mappedBy = "sublecture")
     private Set<Subject> subjects = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Lecture getLectureid() {
-        return lectureid;
-    }
-
-    public void setLectureid(Lecture lectureid) {
-        this.lectureid = lectureid;
-    }
-
-    public Set<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(Set<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
 }

@@ -16,31 +16,6 @@ public class Lecture {
     @Column(name = "name", length = 128)
     private String name;
 
-    @OneToMany(mappedBy = "lectureid")
+    @OneToMany(mappedBy = "lecture")
     private Set<Sublecture> sublectures = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Sublecture> getSublectures() {
-        return sublectures;
-    }
-
-    public void setSublectures(Set<Sublecture> sublectures) {
-        this.sublectures = sublectures;
-    }
-
 }
