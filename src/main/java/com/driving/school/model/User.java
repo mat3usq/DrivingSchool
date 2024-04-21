@@ -1,15 +1,27 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "User", indexes = {
         @Index(name = "user__idx", columnList = "roleId")
 })
+@EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,21 +40,24 @@ public class User {
     @Column(name = "email", length = 64)
     private String email;
 
+    @CreatedDate
     @Column(name = "createdAt")
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
+    @CreatedBy
     @Column(name = "createdBy", length = 64)
     private String createdBy;
 
-    @Column(name = "lastUpdateAt")
-    private LocalDate lastUpdateAt;
+    @LastModifiedDate
+    @Column(name = "lastUpdatedAt")
+    private LocalDateTime lastUpdatedAt;
 
-    @Column(name = "lastUpdatedAt", length = 64)
-    private String lastUpdatedAt;
+    @LastModifiedBy
+    @Column(name = "lastUpdatedBy", length = 64)
+    private String lastUpdatedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "roleId", nullable = false)
-    private Role role;
+    @OneToMany(mappedBy = "user")
+    private Set<Role> roles = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "user")
     private Set<DrivingLesson> drivingLessons = new LinkedHashSet<>();
