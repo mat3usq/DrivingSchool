@@ -23,9 +23,6 @@ public class HomeController {
         ModelAndView m = new ModelAndView("home");
         m.addObject("registerUser", new User());
         m.addObject("loginUser", new User());
-        m.addObject("loginMessage", null);
-        m.addObject("registerMessage", null);
-        m.addObject("logoutMessage", null);
         return m;
     }
 
@@ -34,9 +31,9 @@ public class HomeController {
         ModelAndView m = new ModelAndView("home");
         boolean isSaved = userService.createNewUser(user);
         if (isSaved)
-            m.setViewName("redirect:/login?register=true");
+            m.setViewName("redirect:/login?register=true#login");
         else
-            m.setViewName("redirect:/login?register=false");
+            m.setViewName("redirect:/login?register=false#login");
 
         return m;
     }

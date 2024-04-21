@@ -29,16 +29,19 @@ public class UserService {
     public boolean createNewUser(User user) {
         boolean isSaved = false;
 
-        Set<Role> roles = new LinkedHashSet<>();
-        Role role = new Role(Constants.STUDENT_ROLE, user);
-        roles.add(role);
+        if(!userRepository.existsByEmail(user.getEmail()))
+        {
+            Set<Role> roles = new LinkedHashSet<>();
+            Role role = new Role(Constants.STUDENT_ROLE, user);
+            roles.add(role);
 
-        user.setRoles(roles);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user = userRepository.save(user);
-        role = roleRepository.save(role);
-        if (user.getId() > 0 && user.getRoles() != null && role.getId() > 0)
-            isSaved = true;
+            user.setRoles(roles);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user = userRepository.save(user);
+            role = roleRepository.save(role);
+            if (user.getId() > 0 && user.getRoles() != null && role.getId() > 0)
+                isSaved = true;
+        }
 
         return isSaved;
     }

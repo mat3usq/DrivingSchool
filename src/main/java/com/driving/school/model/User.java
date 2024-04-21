@@ -37,7 +37,7 @@ public class User {
     @Column(name = "password", length = 256)
     private String password;
 
-    @Column(name = "email", length = 64)
+    @Column(name = "email", length = 64, unique = true)
     private String email;
 
     @CreatedDate

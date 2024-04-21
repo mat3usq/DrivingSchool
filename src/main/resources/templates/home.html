@@ -280,8 +280,9 @@
                     <form action="categoryPanel.html" class="sign-in-form">
                         <h2 class="title">Zaloguj sie</h2>
                         <div class="underline"></div>
-                        <p th:if="${loginMessage != null}" th:text="${loginMessage}"></p>
-                        <p th:if="${registerMessage != null}" th:text="${registerMessage}"></p>
+                        <p class="green-text" th:if="${registerPositiveMessage != null}" th:text="${registerPositiveMessage}"></p>
+                        <p class="info-text" th:if="${logoutMessage != null}" th:text="${logoutMessage}"></p>
+                        <p class="orange-text" th:if="${loginErrorMessage != null}" th:text="${loginErrorMessage}"></p>
                         <div class="input-field">
                             <i class="fas fa-user"></i>
                             <input type="text" placeholder="Email" />
@@ -315,6 +316,7 @@
                     <form th:action="@{/registerUser}" method="post" th:object="${registerUser}" class="sign-up-form">
                         <h2 class="title">Zarejestruj Sie</h2>
                         <div class="underline"></div>
+                        <p class="orange-text" th:if="${registerErrorMessage != null}" th:text="${registerErrorMessage}"></p>
                         <div class="input-field">
                             <i class="fas fa-user"></i>
                             <input type="text" th:field="*{name}" placeholder="Imie" />

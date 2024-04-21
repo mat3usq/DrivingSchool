@@ -15,3 +15,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		nav.classList.add('shadow-bg')
 	})
 })
+
+document.addEventListener("DOMContentLoaded", function() {
+	const url = new URL(window.location.href);
+
+	if (url.hash.includes('login') && new URLSearchParams(url.search).get('register') === 'false') {
+		const signUpBtn = document.getElementById('sign-up-btn');
+		if (signUpBtn) {
+			signUpBtn.click();
+		}
+	}
+});

@@ -23,6 +23,16 @@ html {
   font-weight: bold;
 }
 
+.green-text{
+  color: $icon-color;
+  font-weight: bold;
+}
+
+.info-text {
+  color: $info-color;
+  font-weight: bold;
+}
+
 .shadow-bg {
   background-color: rgba(0, 0, 0, 0.9);
 }

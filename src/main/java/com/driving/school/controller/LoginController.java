@@ -13,25 +13,27 @@ public class LoginController {
     public ModelAndView displayLoginPage(@RequestParam(required = false) String error,
                                          @RequestParam(required = false) String logout,
                                          @RequestParam(required = false) String register) {
-        String loginMessage = null;
-        String registerMessage;
+        String loginErrorMessage = null;
+        String registerErrorMessage = null;
+        String registerPositiveMessage = null;
         String logoutMessage = null;
         ModelAndView m = new ModelAndView();
         m.setViewName("home");
 
         if (error != null)
-            loginMessage = "Login lub Password jest niepoprawne!";
+            loginErrorMessage = "Login lub Password jest niepoprawne!";
 
         if (register != null && register.equals("true"))
-            registerMessage = "Rejestracja przebiegła pomyślnie! Zaloguj sie swoimi danymi.";
+            registerPositiveMessage = "Rejestracja przebiegła pomyślnie! Zaloguj sie swoimi danymi.";
         else
-            registerMessage = "Rejestracja przebiegła negatywnie. Błąd Zapisu danych.";
+            registerErrorMessage = "Uzytkownik pod danym emailem juz istnieje!";
 
         if (logout != null)
             logoutMessage = "Wylogowałeś sie poprawnie!";
 
-        m.addObject("loginMessage", loginMessage);
-        m.addObject("registerMessage", registerMessage);
+        m.addObject("loginErrorMessage", loginErrorMessage);
+        m.addObject("registerErrorMessage", registerErrorMessage);
+        m.addObject("registerPositiveMessage", registerPositiveMessage);
         m.addObject("logoutMessage", logoutMessage);
         m.addObject("registerUser", new User());
         m.addObject("loginUser", new User());
