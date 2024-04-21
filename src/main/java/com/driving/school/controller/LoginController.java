@@ -21,11 +21,11 @@ public class LoginController {
         m.setViewName("home");
 
         if (error != null)
-            loginErrorMessage = "Login lub Password jest niepoprawne!";
+            loginErrorMessage = "Email lub Hasło jest niepoprawne!";
 
         if (register != null && register.equals("true"))
             registerPositiveMessage = "Rejestracja przebiegła pomyślnie! Zaloguj sie swoimi danymi.";
-        else
+        else if (register != null && register.equals("false"))
             registerErrorMessage = "Uzytkownik pod danym emailem juz istnieje!";
 
         if (logout != null)
@@ -36,7 +36,6 @@ public class LoginController {
         m.addObject("registerPositiveMessage", registerPositiveMessage);
         m.addObject("logoutMessage", logoutMessage);
         m.addObject("registerUser", new User());
-        m.addObject("loginUser", new User());
         return m;
     }
 }

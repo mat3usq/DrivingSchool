@@ -12,18 +12,18 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/createUser"))
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/registerUser"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard/**").authenticated()
                         .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/assets/**").permitAll());
-//                .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
-//                        .defaultSuccessUrl("/dashboard").failureUrl("/").permitAll())
-//                .logout(logoutConfigurer -> logoutConfigurer.logoutSuccessUrl("/login?logout=true")
-//                        .invalidateHttpSession(true).permitAll());
-//                .httpBasic(Customizer.withDefaults());
+                        .requestMatchers("/assets/**").permitAll())
+                .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
+                        .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
+                .logout(logoutConfigurer -> logoutConfigurer.logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true).permitAll())
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
