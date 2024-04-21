@@ -16,8 +16,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard/**").authenticated()
                         .requestMatchers("/", "/home").permitAll()
-                        .requestMatchers("/createUser").permitAll()
-                        .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/registerUser").permitAll()
+                        .requestMatchers("/login").permitAll()
                         .requestMatchers("/assets/**").permitAll());
 //                .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
 //                        .defaultSuccessUrl("/dashboard").failureUrl("/").permitAll())

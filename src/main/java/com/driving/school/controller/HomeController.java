@@ -23,15 +23,21 @@ public class HomeController {
         ModelAndView m = new ModelAndView("home");
         m.addObject("registerUser", new User());
         m.addObject("loginUser", new User());
+        m.addObject("loginMessage", null);
+        m.addObject("registerMessage", null);
+        m.addObject("logoutMessage", null);
         return m;
     }
 
-    @PostMapping(value = "/createUser")
-    public String createUser( @ModelAttribute("registerUser") User user) {
+    @PostMapping(value = "/registerUser")
+    public ModelAndView createUser(@ModelAttribute("registerUser") User user) {
+        ModelAndView m = new ModelAndView("home");
         boolean isSaved = userService.createNewUser(user);
         if (isSaved)
-            return "redirect:/login?register=true";
+            m.setViewName("redirect:/login?register=true");
         else
-            return "home.html";
+            m.setViewName("redirect:/login?register=false");
+
+        return m;
     }
 }

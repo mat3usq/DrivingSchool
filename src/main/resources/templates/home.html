@@ -280,6 +280,8 @@
                     <form action="categoryPanel.html" class="sign-in-form">
                         <h2 class="title">Zaloguj sie</h2>
                         <div class="underline"></div>
+                        <p th:if="${loginMessage != null}" th:text="${loginMessage}"></p>
+                        <p th:if="${registerMessage != null}" th:text="${registerMessage}"></p>
                         <div class="input-field">
                             <i class="fas fa-user"></i>
                             <input type="text" placeholder="Email" />
@@ -310,7 +312,7 @@
                         </div>
                         <p class="reset-text">Nie pamietasz hasla? <a href="#login" class="link">Kliknij tutaj!</a></p>
                     </form>
-                    <form th:action="@{/createUser}" method="post" th:object="${registerUser}" class="sign-up-form">
+                    <form th:action="@{/registerUser}" method="post" th:object="${registerUser}" class="sign-up-form">
                         <h2 class="title">Zarejestruj Sie</h2>
                         <div class="underline"></div>
                         <div class="input-field">
