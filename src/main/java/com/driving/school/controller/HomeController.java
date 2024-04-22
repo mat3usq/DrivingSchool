@@ -26,13 +26,10 @@ public class HomeController {
     }
 
     @PostMapping(value = "/registerUser")
-    public ModelAndView createUser(@ModelAttribute("registerUser") User user) {
-        ModelAndView m = new ModelAndView("registerUser");
+    public String createUser(@ModelAttribute("registerUser") User user) {
         if (userService.createNewUser(user))
-            m.setViewName("redirect:/login?register=true#login");
+            return "redirect:/login?register=true#login";
         else
-            m.setViewName("redirect:/login?register=false#login");
-
-        return m;
+            return "redirect:/login?register=false#login";
     }
 }
