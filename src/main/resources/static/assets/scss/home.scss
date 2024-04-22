@@ -23,14 +23,65 @@ html {
   font-weight: bold;
 }
 
-.green-text{
-  color: $icon-color;
-  font-weight: bold;
+.danger-text {
+  color: $primary-color; 
+  border-left: 4px solid $primary-color;
+  border-right: 4px solid $primary-color;
+}
+
+.warning-text {
+  color: $secondary-color; 
+  border-left: 4px solid $secondary-color;
+  border-right: 4px solid $secondary-color;
+}
+
+.success-text {
+  color: $icon-color; 
+  border-left: 4px solid $icon-color;
+  border-right: 4px solid $icon-color;
 }
 
 .info-text {
   color: $info-color;
+  border-left: 4px solid $info-color;
+  border-right: 4px solid $info-color;
+}
+
+.success-text::before
+{
+  content: "\f00c"; 
+}
+
+.warning-text::before{
+  content: "\f071";
+}
+
+.danger-text::before{
+  content: "\f06a";
+}
+
+.info-text::before{
+  content: "\f05a";
+}
+
+.success-text, .warning-text, .danger-text, .info-text {
   font-weight: bold;
+  background-color: #3333332a;
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 35px;
+  text-align: right;
+  position: relative; 
+}
+
+.success-text::before, .warning-text::before, .danger-text::before, .info-text::before {
+  font-family: "Font Awesome 5 Free"; 
+  font-weight: 900; 
+  color: inherit; 
+  position: absolute;
+  left: 10px; 
+  top: 50%;
+  transform: translateY(-50%); 
 }
 
 .shadow-bg {

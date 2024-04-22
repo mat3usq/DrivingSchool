@@ -46,6 +46,8 @@
 - Powiadomienia
 - Komunikacja
 - Zarządzanie płatnościami
+- Walidacja przy rejestracji (dodanie pola confirm pwd, email)
+- Walidacja przy logowaniu (email, pwd)
 
 ## TODO optional
 - Podział na różne permisje dla kursu

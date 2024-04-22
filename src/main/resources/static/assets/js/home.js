@@ -25,4 +25,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			signUpBtn.click();
 		}
 	}
+
+	if (url.pathname === '/login' && url.searchParams.get('error') === 'true') {
+		window.location.hash = 'login';
+	}
 });

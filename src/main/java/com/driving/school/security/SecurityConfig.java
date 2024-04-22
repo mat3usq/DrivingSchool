@@ -21,12 +21,17 @@ public class SecurityConfig {
                         .requestMatchers("/assets/**").permitAll())
                 .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
                         .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
-                .logout(logoutConfigurer -> logoutConfigurer.logoutSuccessUrl("/login?logout=true")
-                        .invalidateHttpSession(true).permitAll())
+                .logout(logoutConfigurer -> logoutConfigurer
+                        .logoutSuccessUrl("/login?logout=true")
+                        .deleteCookies("JSESSIONID")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .permitAll())
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

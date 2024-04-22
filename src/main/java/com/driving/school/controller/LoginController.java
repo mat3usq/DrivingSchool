@@ -24,7 +24,7 @@ public class LoginController {
             loginErrorMessage = "Email lub Hasło jest niepoprawne!";
 
         if (register != null && register.equals("true"))
-            registerPositiveMessage = "Rejestracja przebiegła pomyślnie! Zaloguj sie swoimi danymi.";
+            registerPositiveMessage = "Rejestracja przebiegła pomyślnie!";
         else if (register != null && register.equals("false"))
             registerErrorMessage = "Uzytkownik pod danym emailem juz istnieje!";
 
