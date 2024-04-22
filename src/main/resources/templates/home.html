@@ -291,6 +291,7 @@
                         <p class="back-login">Chcesz sie zalogowac? <a href="#login" class="link">Kliknij tutaj!</a></p>
                     </form>
                     <form th:action="@{/login}" method="post" class="sign-in-form">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <h2 class="title">Zaloguj się</h2>
                         <div class="underline"></div>
                         <p class="success-text" th:if="${registerPositiveMessage}"

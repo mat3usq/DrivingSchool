@@ -20,7 +20,7 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/assets/**").permitAll())
                 .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
-                        .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
+                        .defaultSuccessUrl("/dashboard", true).failureUrl("/login?error=true").permitAll())
                 .logout(logoutConfigurer -> logoutConfigurer
                         .logoutSuccessUrl("/login?logout=true")
                         .deleteCookies("JSESSIONID")
