@@ -16,7 +16,6 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/registerUser"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard/**").authenticated()
-                        .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/login").permitAll()
