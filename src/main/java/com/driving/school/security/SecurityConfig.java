@@ -13,16 +13,20 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-//        http.csrf(csrf -> csrf.ignoringRequestMatchers("/registerUser"))
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/registerUser"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard/**").authenticated()
                         .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/registerUser").permitAll()
+                        .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/register").permitAll()
                         .requestMatchers("/assets/**").permitAll())
-                .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
-                        .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
+                .formLogin(loginConfigurer -> loginConfigurer
+                        .loginProcessingUrl("/loginUser")
+                        .loginPage("/home")
+                        .defaultSuccessUrl("/dashboard")
+                        .failureUrl("/login?error=true").permitAll())
                 .logout(logoutConfigurer -> logoutConfigurer
                         .logoutSuccessUrl("/login?logout=true")
                         .deleteCookies("JSESSIONID")

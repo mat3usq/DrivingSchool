@@ -28,8 +28,8 @@ public class HomeController {
     @PostMapping(value = "/registerUser")
     public String createUser(@ModelAttribute("registerUser") User user) {
         if (userService.createNewUser(user))
-            return "redirect:/login?register=true#login";
+            return "redirect:/register?register=true#login";
         else
-            return "redirect:/login?register=false#login";
+            return "redirect:/register?register=false#login";
     }
 }
