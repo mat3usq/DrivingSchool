@@ -1,33 +1,38 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "userStatistic", indexes = {
-        @Index(name = "userstatistic__idx", columnList = "userId")
+@Table(name = "USERSTATISTIC", indexes = {
+        @Index(name = "USERSTATISTIC__IDX", columnList = "SCHOOLUSERID", unique = true)
 })
 public class UserStatistic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
 
-    @Column(name = "deposits")
-    private Integer deposits;
+    @Column(name = "DEPOSITS")
+    private Long deposits;
 
-    @Column(name = "isExamPassed", length = 128)
+    @Column(name = "ISEXAMPASSED", length = 128)
     private String isExamPassed;
 
-    @Column(name = "hoursed", length = 100)
+    @Column(name = "HOURSED", length = 9)
     private String hoursed;
 
-    @Column(name = "hoursBuyed", length = 100)
+    @Column(name = "HOURSBUYED", length = 9)
     private String hoursBuyed;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    @JoinColumn(name = "SCHOOLUSERID", nullable = false)
+    private SchoolUser schoolUser;
+
 }

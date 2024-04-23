@@ -1,42 +1,47 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "sensitiveData", indexes = {
-        @Index(name = "sensitivedata__idx", columnList = "userId")
+@Table(name = "SENSITIVEDATA", indexes = {
+        @Index(name = "SENSITIVEDATA__IDX", columnList = "SCHOOLUSERID", unique = true)
 })
 public class SensitiveData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
 
-    @Column(name = "address", length = 64)
+    @Column(name = "ADDRESS", length = 64)
     private String address;
 
-    @Column(name = "city", length = 64)
+    @Column(name = "CITY", length = 64)
     private String city;
 
-    @Column(name = "streetNumber")
-    private Integer streetNumber;
+    @Column(name = "STREETNUMBER")
+    private Long streetNumber;
 
-    @Column(name = "apartmentNumber")
-    private Integer apartmentNumber;
+    @Column(name = "APARTMENTNUMBER")
+    private Long apartmentNumber;
 
-    @Column(name = "zipCode", length = 64)
+    @Column(name = "ZIPCODE", length = 64)
     private String zipCode;
 
-    @Column(name = "phoneNumber", length = 15)
+    @Column(name = "PHONENUMBER", length = 15)
     private String phoneNumber;
 
-    @Column(name = "email", length = 64)
+    @Column(name = "EMAIL", length = 64)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    @JoinColumn(name = "SCHOOLUSERID", nullable = false)
+    private SchoolUser schoolUser;
+
 }

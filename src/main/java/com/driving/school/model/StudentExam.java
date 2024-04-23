@@ -1,35 +1,41 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "studentExam")
+@Table(name = "STUDENTEXAM")
 public class StudentExam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
 
-    @Column(name = "category", length = 128)
+    @Column(name = "CATEGORY", length = 128)
     private String category;
 
-    @Column(name = "points")
-    private Integer points;
+    @Column(name = "POINTS")
+    private Long points;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "examId", nullable = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "EXAMID", nullable = false)
     private Exam exam;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    @JoinColumn(name = "SCHOOLUSERID", nullable = false)
+    private SchoolUser schoolUser;
 
-    @OneToMany(mappedBy = "studentExamId")
+    @OneToMany(mappedBy = "studentExam")
     private Set<StudentExamAnswer> studentExamAnswers = new LinkedHashSet<>();
+
 }

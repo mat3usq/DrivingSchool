@@ -1,20 +1,29 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "questionSet")
+@Table(name = "QUESTIONSET")
 public class QuestionSet {
     @EmbeddedId
     private QuestionSetId id;
 
-    @MapsId("examId")
+    @MapsId("examid")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "examId", nullable = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "EXAMID", nullable = false)
     private Exam exam;
 
-    @MapsId("questionId")
+    @MapsId("questionid")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "questionId", nullable = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "QUESTIONID", nullable = false)
     private Question question;
+
 }

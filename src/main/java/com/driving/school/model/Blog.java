@@ -1,31 +1,37 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
 @Entity
-@Table(name = "blog")
+@Table(name = "BLOG")
 public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
 
-    @Column(name = "content", length = 4096)
+    @Column(name = "CONTENT", length = 3800)
     private String content;
 
-    @Column(name = "image")
+    @Column(name = "IMAGE")
     private byte[] image;
 
-    @Column(name = "createdAt")
-    private LocalDate createdAt;
+    @Column(name = "CREATEDAT")
+    private LocalDateTime createdAt;
 
-    @Column(name = "createdBy")
-    private Integer createdBy;
+    @Column(name = "CREATEDBY")
+    private Long createdBy;
 
-    @Column(name = "lastUpdateAt")
-    private LocalDate lastUpdateAt;
+    @Column(name = "LASTUPDATEDAT")
+    private LocalDateTime lastUpdatedAt;
 
-    @Column(name = "lastUpdateBy")
-    private Integer lastUpdateBy;
+    @Column(name = "LASTUPDATEDBY")
+    private Long lastUpdatedBy;
+
 }

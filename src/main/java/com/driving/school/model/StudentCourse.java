@@ -1,35 +1,40 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "studentCourse")
+@Table(name = "STUDENTCOURSE")
 public class StudentCourse {
     @EmbeddedId
     private StudentCourseId id;
 
-    @MapsId("userId")
+    @MapsId("schooluserid")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    @JoinColumn(name = "SCHOOLUSERID", nullable = false)
+    private SchoolUser schoolUser;
 
-    @MapsId("courseId")
+    @MapsId("courseid")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "courseId", nullable = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "COURSEID", nullable = false)
     private Course course;
 
-    @Column(name = "passed", precision = 10)
-    private BigDecimal passed;
+    @Column(name = "PASSED", nullable = false)
+    private Long passed;
 
-    @Column(name = "startedAt")
+    @Column(name = "STARTEDAT")
     private LocalDate startedAt;
 
-    @Column(name = "endAt")
+    @Column(name = "ENDAT")
     private LocalDate endAt;
+
 }

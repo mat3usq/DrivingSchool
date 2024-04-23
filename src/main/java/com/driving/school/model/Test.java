@@ -1,28 +1,32 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "test")
+@Table(name = "TEST")
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
 
-    @Column(name = "name", length = 512)
+    @Column(name = "NAME", length = 512)
     private String name;
 
-    @Column(name = "numberQuestion")
-    private Integer numberQuestion;
+    @Column(name = "NUMBERQUESTIONS")
+    private Long numberQuestions;
 
-    @Column(name = "image")
+    @Column(name = "IMAGE")
     private byte[] image;
 
-    @Column(name = "questionType", length = 512)
+    @Column(name = "QUESTIONTYPE", length = 512)
     private String questionType;
 
     @OneToMany(mappedBy = "test")
@@ -30,4 +34,5 @@ public class Test {
 
     @OneToMany(mappedBy = "test")
     private Set<StudentAnswersTest> studentAnswersTests = new LinkedHashSet<>();
+
 }

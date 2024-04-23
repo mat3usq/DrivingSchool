@@ -1,29 +1,32 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.math.BigDecimal;
-
+@Getter
+@Setter
 @Entity
-@Table(name = "studentexamanswer")
+@Table(name = "STUDENTEXAMANSWER")
 public class StudentExamAnswer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "questionId", nullable = false)
-    private Integer id;
+    @EmbeddedId
+    private StudentExamAnswerId id;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "questionId", nullable = false)
-    private Question question;
-
-    @Column(name = "answerType", precision = 10)
-    private BigDecimal answerType;
-
+    @MapsId("studentExamId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "studentExamId", nullable = false)
-    private StudentExam studentExamId;
+    @JoinColumn(name = "STUDENTEXAMID", nullable = false)
+    private StudentExam studentExam;
+
+    @MapsId("questionId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "QUESTIONID", nullable = false)
+    private Question question;
+
+    @Column(name = "ANSWERTYPE", nullable = false)
+    private Long answerType;
+
 }

@@ -1,7 +1,7 @@
 package com.driving.school.controller;
 
-import com.driving.school.model.User;
-import com.driving.school.service.UserService;
+import com.driving.school.model.SchoolUser;
+import com.driving.school.service.SchoolUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +13,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class LoginController {
-    private final UserService userService;
+    private final SchoolUserService schoolUserService;
 
     @Autowired
-    public LoginController(UserService userService) {
-        this.userService = userService;
+    public LoginController(SchoolUserService schoolUserService) {
+        this.schoolUserService = schoolUserService;
     }
 
     @GetMapping(value = "/login")
@@ -36,12 +36,12 @@ public class LoginController {
 
         m.addObject("loginErrorMessage", loginErrorMessage);
         m.addObject("logoutMessage", logoutMessage);
-        m.addObject("registerUser", new User());
+        m.addObject("registerUser", new SchoolUser());
         return m;
     }
 
     @GetMapping(value = "/register")
-    public ModelAndView catchRegisterMessage(@ModelAttribute("registerUser") User registerUser,
+    public ModelAndView catchRegisterMessage(@ModelAttribute("registerUser") SchoolUser registerUser,
                                              @RequestParam(required = false) String register) {
         String registerErrorMessage = null;
         String registerPositiveMessage = null;
@@ -60,9 +60,9 @@ public class LoginController {
     }
 
     @PostMapping(value = "/registerUser")
-    public String registerUser(@ModelAttribute("registerUser") User user, RedirectAttributes redirectAttributes) {
-        if (userService.createNewUser(user)) {
-            redirectAttributes.addFlashAttribute("registerUser", new User());
+    public String registerUser(@ModelAttribute("registerUser") SchoolUser user, RedirectAttributes redirectAttributes) {
+        if (schoolUserService.createNewUser(user)) {
+            redirectAttributes.addFlashAttribute("registerUser", new SchoolUser());
             return "redirect:/register?register=true#login";
         } else {
             redirectAttributes.addFlashAttribute("registerUser", user);

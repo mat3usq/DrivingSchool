@@ -1,33 +1,38 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "exam")
+@Table(name = "EXAM")
 public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
 
-    @Column(name = "name", length = 128)
+    @Column(name = "NAME", length = 128)
     private String name;
 
-    @Column(name = "points")
-    private Integer points;
+    @Column(name = "POINTS")
+    private Long points;
 
-    @Column(name = "questionNumber")
-    private Integer questionNumber;
+    @Column(name = "QUESTIONNUMBER")
+    private Long questionNumber;
 
     @ManyToMany
-    @JoinTable(name = "questionSet",
-            joinColumns = @JoinColumn(name = "examId"),
-            inverseJoinColumns = @JoinColumn(name = "questionId"))
+    @JoinTable(name = "QUESTIONSET",
+            joinColumns = @JoinColumn(name = "EXAMID"),
+            inverseJoinColumns = @JoinColumn(name = "QUESTIONID"))
     private Set<Question> questions = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "exam")
     private Set<StudentExam> studentExams = new LinkedHashSet<>();
+
 }

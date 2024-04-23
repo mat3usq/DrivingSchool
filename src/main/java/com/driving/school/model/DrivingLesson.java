@@ -1,33 +1,41 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "drivingLesson")
+@Table(name = "DRIVINGLESSON")
 public class DrivingLesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
 
-    @Column(name = "startTime")
+    @Column(name = "STARTTIME")
     private LocalDate startTime;
 
-    @Column(name = "endTime")
+    @Column(name = "ENDTIME")
     private LocalDate endTime;
 
-    @Column(name = "time", length = 100)
+    @Column(name = "TIME", length = 9)
     private String time;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "SCHOOLUSERID", nullable = false)
+    private SchoolUser schoolUser;
 
-    @Column(name = "studentId")
-    private Integer student;
+    @Column(name = "STUDENTID")
+    private Long studentId;
 
-    @Column(name = "status", length = 128)
+    @Column(name = "STATUS", length = 128)
     private String status;
+
 }
