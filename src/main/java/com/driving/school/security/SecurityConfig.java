@@ -13,11 +13,10 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/registerUser"))
-                .authorizeHttpRequests(requests -> requests
+        http.authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard/**").authenticated()
-                        .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/loginUser").permitAll()
+                        .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/assets/**").permitAll())
