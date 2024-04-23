@@ -22,7 +22,7 @@ public class SecurityConfig {
                         .requestMatchers("/assets/**").permitAll())
                 .formLogin(loginConfigurer -> loginConfigurer
                         .loginProcessingUrl("/loginUser")
-                        .loginPage("/home")
+                        .loginPage("/")
                         .defaultSuccessUrl("/dashboard")
                         .failureUrl("/login?error=true").permitAll())
                 .logout(logoutConfigurer -> logoutConfigurer

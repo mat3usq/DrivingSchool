@@ -1,8 +1,7 @@
 package com.driving.school.security;
 
-import com.driving.school.model.User;
-import com.driving.school.repository.RoleRepository;
-import com.driving.school.repository.UserRepository;
+import com.driving.school.model.SchoolUser;
+import com.driving.school.repository.SchoolUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,14 +18,12 @@ import java.util.List;
 
 @Component
 public class UsernamePwdAuthenticationProvider implements AuthenticationProvider {
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private final SchoolUserRepository schoolUserRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsernamePwdAuthenticationProvider(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+    public UsernamePwdAuthenticationProvider(SchoolUserRepository schoolUserRepository, PasswordEncoder passwordEncoder) {
+        this.schoolUserRepository = schoolUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -34,17 +31,16 @@ public class UsernamePwdAuthenticationProvider implements AuthenticationProvider
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
         String pwd = authentication.getCredentials().toString();
-        User user = userRepository.findByEmail(email);
+        SchoolUser user = schoolUserRepository.findByEmail(email);
         if (user != null && user.getId() > 0 && passwordEncoder.matches(pwd, user.getPassword()))
             return new UsernamePasswordAuthenticationToken(email, user.getPassword(), getGrantedAuthorities(user));
         else
             throw new BadCredentialsException("Invalid credentials!");
     }
 
-    private List<GrantedAuthority> getGrantedAuthorities(User user) {
+    private List<GrantedAuthority> getGrantedAuthorities(SchoolUser user) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        roleRepository.findAllByUser(user).forEach(role ->
-                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName())));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRoleName()));
         return grantedAuthorities;
     }
 
