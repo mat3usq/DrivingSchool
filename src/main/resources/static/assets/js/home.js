@@ -26,5 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     } else if (url.pathname === '/login' && new URLSearchParams(url.search).get('error') === 'true') {
         window.location.hash = 'login';
+    } else if (url.pathname === '/login' && new URLSearchParams(url.search).get('logout') === 'true') {
+        window.location.hash = 'login';
     }
 });

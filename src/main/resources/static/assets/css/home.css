@@ -120,9 +120,9 @@ html {
 }
 
 .info-text {
-  color: #6acff1;
-  border-left: 4px solid #6acff1;
-  border-right: 4px solid #6acff1;
+  color: aliceblue;
+  border-left: 4px solid aliceblue;
+  border-right: 4px solid aliceblue;
 }
 
 .success-text::before {

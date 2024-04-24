@@ -42,9 +42,9 @@ html {
 }
 
 .info-text {
-  color: $info-color;
-  border-left: 4px solid $info-color;
-  border-right: 4px solid $info-color;
+  color: $text-color;
+  border-left: 4px solid $text-color;
+  border-right: 4px solid $text-color;
 }
 
 .success-text::before
