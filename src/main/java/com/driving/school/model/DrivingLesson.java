@@ -28,7 +28,7 @@ public class DrivingLesson {
     private String time;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
     private SchoolUser schoolUser;
 

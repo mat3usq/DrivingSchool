@@ -50,7 +50,7 @@ public class Question {
     private String category;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "TESTID", nullable = false)
     private Test test;
 

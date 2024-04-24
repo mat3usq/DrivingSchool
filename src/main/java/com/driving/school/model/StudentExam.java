@@ -26,7 +26,7 @@ public class StudentExam {
     private Long points;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "EXAMID", nullable = false)
     private Exam exam;
 

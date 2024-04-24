@@ -22,7 +22,7 @@ public class StudentExamAnswer {
 
     @MapsId("questionId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "QUESTIONID", nullable = false)
     private Question question;
 
