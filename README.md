@@ -48,6 +48,7 @@
 - Zarządzanie płatnościami
 - Walidacja przy rejestracji (dodanie pola confirm pwd, email)
 - Walidacja przy logowaniu (email, pwd)
+- Poprawka frontu + aktualnosci w dashboard
 
 ## TODO optional
 - Podział na różne permisje dla kursu
