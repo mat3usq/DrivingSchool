@@ -127,22 +127,13 @@ h2 {
   background-image: url("../img/backgroundPanelCategories.png");
   background-position: center;
   background-size: cover;
-  z-index: 0;
-  overflow: hidden;
-}
-.categories .hero-img .hero-shadow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: -5;
+  overflow: scroll;
 }
 .categories .hero-img .box-category {
   position: absolute;
   top: 12vh;
-  left: 150px;
-  height: 88vh;
-  width: 100%;
+  left: 300px;
+  width: calc(100vw - 300px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -164,12 +155,9 @@ h2 {
 }
 .categories .hero-img .box-category .box-container .container-category {
   display: flex;
-  flex-direction: row;
-}
-.categories .hero-img .box-category .box-container .container-category .first-box,
-.categories .hero-img .box-category .box-container .container-category .second-box {
-  display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
 .categories .hero-img .box-category .box-container .container-category .category {
   font-size: 19px;
@@ -242,32 +230,24 @@ h2 {
   color: antiquewhite;
 }
 
-@media (max-width: 1200px) {
-  .categories .hero-img .box-category .box-container .container-category .first-box,
-  .categories .hero-img .box-category .box-container .container-category .second-box {
-    display: flex;
-    flex-direction: column;
-  }
+.user-box {
+  margin: 10px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
+.user-box .user_role {
+  font-size: 10px;
+  font-weight: lighter;
+  font-style: italic;
+}
+
 @media (max-width: 720px) {
   .categories .hero-img .box-category {
-    top: 12vh;
     left: 0px;
-    height: 88vh;
-    width: 100%;
-  }
-}
-@media (max-width: 400px) {
-  .navbar-left {
-    height: 115vh;
-  }
-  .categories .hero-img {
-    height: 127vh;
-  }
-  .categories .hero-img .box-category {
-    top: 12vh;
-    left: 0px;
-    height: 115vh;
     width: 100%;
   }
 }/*# sourceMappingURL=dashboard.css.map */

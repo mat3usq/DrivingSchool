@@ -29,7 +29,10 @@
         <span class="orange-text">Driving <span class="gold-text">School</span></span></a
     >
     <div data-aos="fade-right" data-aos-delay="150" class="box-account">
-        <span th:text="'Witaj, ' + ${username} + ' ' + ${role} ">Witaj, Mateusz</span>
+        <div class="user-box">
+            <span th:text="'Witaj ' + ${username}"></span>
+            <span class="user_role" th:text="${role}"></span>
+        </div>
         <form id="logoutForm" th:action="@{/logout}" method="post">
             <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
         </form>
@@ -75,35 +78,50 @@
 <main>
     <section class="categories">
         <div class="hero-img">
-            <div class="hero-shadow"></div>
             <div class="box-category">
                 <div class="box-container">
                     <p class="title" data-aos="fade-down" data-aos-delay="100">Twoje dostepne kategorie</p>
                     <div class="container-category">
-                        <div data-aos="zoom-in" data-aos-delay="150" class="first-box">
-                            <div class="category">
+                            <div class="category" data-aos="zoom-in" data-aos-delay="120">
                                 <i class="fa-solid fa-motorcycle"></i>
                                 <p>Kategoria <span>A</span></p>
                             </div>
-                            <div class="category">
+                            <div class="category" data-aos="zoom-in" data-aos-delay="160">
                                 <i class="fa-solid fa-car"></i>
                                 <p>Kategoria <span>B</span></p>
                             </div>
-                            <div class="category">
+                            <div class="category" data-aos="zoom-in" data-aos-delay="140">
                                 <i class="fa-solid fa-truck"></i>
                                 <p>Kategoria <span>C</span></p>
                             </div>
-                        </div>
-                        <div data-aos="zoom-in" data-aos-delay="250" class="second-box">
-                            <div class="category">
+                            <div class="category" data-aos="zoom-in" data-aos-delay="130">
                                 <i class="fa-solid fa-bus"></i>
                                 <p>Kategoria <span>D</span></p>
                             </div>
-                            <div class="category">
+                            <div class="category" data-aos="zoom-in" data-aos-delay="150">
                                 <i class="fa-solid fa-tractor"></i>
                                 <p>Kategoria <span>T</span></p>
                             </div>
-                        </div>
+                            <div class="category" data-aos="zoom-in" data-aos-delay="120">
+                                <i class="fa-solid fa-motorcycle"></i>
+                                <p>Kategoria <span>A</span></p>
+                            </div>
+                            <div class="category" data-aos="zoom-in" data-aos-delay="160">
+                                <i class="fa-solid fa-car"></i>
+                                <p>Kategoria <span>B</span></p>
+                            </div>
+                            <div class="category" data-aos="zoom-in" data-aos-delay="140">
+                                <i class="fa-solid fa-truck"></i>
+                                <p>Kategoria <span>C</span></p>
+                            </div>
+                            <div class="category" data-aos="zoom-in" data-aos-delay="130">
+                                <i class="fa-solid fa-bus"></i>
+                                <p>Kategoria <span>D</span></p>
+                            </div>
+                            <div class="category" data-aos="zoom-in" data-aos-delay="150">
+                                <i class="fa-solid fa-tractor"></i>
+                                <p>Kategoria <span>T</span></p>
+                            </div>
                     </div>
                 </div>
             </div>
