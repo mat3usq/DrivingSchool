@@ -49,6 +49,8 @@
 - Walidacja przy rejestracji (dodanie pola confirm pwd, email)
 - Walidacja przy logowaniu (email, pwd)
 - Poprawka frontu + aktualnosci w dashboard
+- Walidacja do dodawania wykladu
+- Naprawic zeby sie nie wyswietlal pusty Paragraf w wykladzie przy dodawaniu 
 
 ## TODO optional
 - Podział na różne permisje dla kursu

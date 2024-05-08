@@ -73,21 +73,26 @@
                         </div>
                     </div>
 
-                    <form name="lecture" th:action="@{/addLecture}" method="post" th:object="${newLecture}" class="lectureForm">
+                    <div class="container-lecture" th:each="lecture : ${lectureList}">
+                        <p class="title" th:text="${lecture.name}"></p>
+                        <p class="content" th:if="${lecture.content}" th:text="${lecture.content}"></p>
+                    </div>
+
+                    <form name="lecture" th:action="@{/lecture/addLecture}" method="post" th:object="${newLecture}" class="lectureForm">
                         <p class="formTitle">Dodaj Wykład</p>
                         <div class="input-field">
                             <i class="fas fa-chalkboard-teacher"></i>
-                            <input type="text" name="lectureTitle" placeholder="Nazwa Wykładu" th:field="*{name}">
+                            <input type="text" name="lectureTitle" placeholder="Nazwa Wykładu" th:field="*{name}" required>
                         </div>
-                    
+
                         <div class="input-field">
                             <i class="fas fa-align-left"></i>
                             <textarea name="lectureContent" placeholder="Treść Wykładu" rows="4" th:field="*{content}"></textarea>
                         </div>
-                    
+
                         <button type="submit" class="btn">Dodaj</button>
                     </form>
-                    
+
                 </div>
             </div>
         </div>

@@ -171,7 +171,16 @@ h2 {
 					font-weight: bold;
 				}
 
-				.container-subject {
+				.content {
+					padding: 20px 10px;
+					background-color: rgba(0, 0, 0, 0.6);
+					border-radius: 20px;
+					font-size: 17px;
+					text-align: center;
+				}
+
+				.container-subject,
+				.container-lecture {
 					display: flex;
 					flex-direction: column;
 					max-width: 70%;
@@ -225,11 +234,26 @@ h2 {
 					}
 				}
 
+				.container-lecture {
+					max-width: 60%;
+					padding: 20px 10px;
+					background-color: rgba(0, 0, 0, 0.6);
+					border-radius: 20px;
+					margin: 10px;
+
+					.title,
+					.content {
+						padding: 0px 10px;
+						background-color: transparent;
+					}
+				}
+
 				.lectureForm {
+					margin: 50px 0;
 					display: flex;
 					flex-direction: column;
 					align-items: center;
-          width: 65%;
+					width: 65%;
 
 					.formTitle {
 						padding: 20px 10px;
@@ -269,9 +293,9 @@ h2 {
 							background-color: rgba(252, 240, 221, 0.84);
 							color: black;
 
-              &::placeholder {
-                color: black; 
-            }
+							&::placeholder {
+								color: black;
+							}
 
 							&:focus {
 								outline: none;
