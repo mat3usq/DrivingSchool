@@ -18,6 +18,7 @@ public class SecurityConfig {
                         .ignoringRequestMatchers("/registerUser", "/loginUser"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard/**").authenticated()
+                        .requestMatchers("/lecture/**").authenticated()
                         .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()

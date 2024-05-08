@@ -1,0 +1,67 @@
+<nav th:fragment="navigation-top" class="navbar-top shadow-bg">
+    <a class="navbar-brand" href="javascript:document.getElementById('logoutForm').submit()">
+        <img src="/assets/img/logo.png" class="logo" alt="Logo L"/>
+        <span class="orange-text">Driving <span class="gold-text">School</span></span></a
+    >
+    <div data-aos="fade-right" data-aos-delay="150" class="box-account">
+        <div class="user-box">
+            <span th:text="'Witaj ' + ${session.username}"></span>
+            <span class="user_role" th:text="${session.role}"></span>
+        </div>
+        <form id="logoutForm" th:action="@{/logout}" method="post">
+            <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
+        </form>
+        <a href="javascript:document.getElementById('logoutForm').submit()">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+    </div>
+    <button data-aos="fade-right" data-aos-delay="150" class="menu-bars">
+        <i class="fa-sharp fa-solid fa-bars"></i>
+    </button>
+</nav>
+
+<nav th:fragment="navigation-left" data-aos="fade-right" data-aos-delay="20" class="navbar-left shadow-bg">
+    <div class="navbar-nav">
+        <p class="title">Kategoria B</p>
+        <div class="underline"></div>
+
+        <a data-aos="fade-right" data-aos-delay="100" class="nav-link active" th:href="@{/dashboard}"
+        ><i class="fa-solid fa-car-side"></i>Akutalnosci</a
+        >
+        <a data-aos="fade-right" data-aos-delay="150" class="nav-link" th:href="@{/lecture}"
+        ><i class="fa-solid fa-book-open"></i>Wykłady</a
+        >
+        <a data-aos="fade-right" data-aos-delay="200" class="nav-link" href="tests.html"
+        ><i class="fa-solid fa-person-chalkboard"></i>Nauka Testów</a
+        >
+        <a data-aos="fade-right" data-aos-delay="250" class="nav-link" href="examNormalQuestion.html"
+        ><i class="fa-solid fa-file-pen"></i>Egzamin</a
+        >
+        <a data-aos="fade-right" data-aos-delay="300" class="nav-link" href="instructionExam.html"
+        ><i class="fa-solid fa-wrench"></i>Instrukcja Egzaminu</a
+        >
+        <a data-aos="fade-right" data-aos-delay="350" class="nav-link" href="account.html"
+        ><i class="fa-regular fa-user"></i>Moje Konto</a
+        >
+        <a data-aos="fade-right" data-aos-delay="400" class="nav-link logout" href="javascript:document.getElementById('logoutForm').submit()"
+        ><i class="fa-solid fa-arrow-right-to-bracket"></i>Wyloguj Sie</a
+        >
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const currentPath = window.location.pathname;
+
+            function updateActiveNavLink() {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (currentPath.includes(link.getAttribute('href'))) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            updateActiveNavLink();
+        });
+
+    </script>
+</nav>

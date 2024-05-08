@@ -22,10 +22,12 @@ public class DashboardController {
     public ModelAndView displayDashboard(Authentication authentication, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
         SchoolUser user = schoolUserRepository.findByEmail(authentication.getName());
-        modelAndView.addObject("username", user.getName());
-        modelAndView.addObject("role", authentication.getAuthorities().toString().charAt(0) +
-                authentication.getAuthorities().toString().substring(6));
-        session.setAttribute("loggedInUser", user);
+        if (user != null) {
+            session.setAttribute("loggedInUser", user);
+            session.setAttribute("username", user.getName());
+            session.setAttribute("role", authentication.getAuthorities().toString().charAt(0) +
+                    authentication.getAuthorities().toString().substring(6));
+        }
         return modelAndView;
     }
 }

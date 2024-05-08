@@ -230,21 +230,6 @@ h2 {
   color: antiquewhite;
 }
 
-.user-box {
-  margin: 10px;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-}
-.user-box .user_role {
-  font-size: 10px;
-  font-weight: lighter;
-  font-style: italic;
-}
-
 @media (max-width: 720px) {
   .categories .hero-img .box-category {
     left: 0px;
