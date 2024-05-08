@@ -19,8 +19,8 @@ public class Subject {
     @Column(name = "SUBJECT", length = 512)
     private String subject;
 
-    @Column(name = "NAME", length = 3800)
-    private String name;
+    @Column(name = "CONTENT", length = 3800)
+    private String content;
 
     @Column(name = "IMAGE")
     private byte[] image;
