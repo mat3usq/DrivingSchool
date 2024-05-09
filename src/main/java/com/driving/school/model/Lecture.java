@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +24,6 @@ public class Lecture {
     private String content;
 
     @OneToMany(mappedBy = "lecture")
-    private Set<Sublecture> sublectures = new LinkedHashSet<>();
+    private List<Sublecture> sublectures = new ArrayList<>();
 
 }

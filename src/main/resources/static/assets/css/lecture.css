@@ -327,6 +327,9 @@ h2 {
   align-items: center;
   width: 65%;
 }
+.subject .hero-img .box-subject .box-container .lectureForm #sublecturesContainer {
+  width: 100%;
+}
 .subject .hero-img .box-subject .box-container .lectureForm .formTitle {
   padding: 20px 10px;
   background-color: rgba(0, 0, 0, 0.6);
@@ -337,7 +340,7 @@ h2 {
   font-weight: bold;
   border-bottom: 3px solid #ef476f;
   border-top: 3px solid #ef476f;
-  width: 220px;
+  max-width: 400px;
   margin: 0 auto;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-field {

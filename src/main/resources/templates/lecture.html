@@ -76,23 +76,31 @@
                     <div class="container" th:each="lecture : ${lectureList}">
                         <div class="container-lecture">
                             <p class="title" th:text="${lecture.name}"></p>
-                            <p class="content" th:unless="${lecture.content == null or lecture.content.isEmpty()}" th:text="${lecture.content}"></p>
+                            <p class="content" th:unless="${lecture.content == null or lecture.content.isEmpty()}"
+                               th:text="${lecture.content}"></p>
                         </div>
                     </div>
 
-                    <form name="lecture" th:action="@{/lecture/addLecture}" method="post" th:object="${newLecture}" class="lectureForm">
-                        <p class="formTitle">Dodaj Wykład</p>
+                    <form name="lecture" th:action="@{/lecture/addLecture}" method="post" th:object="${newLecture}"
+                          class="lectureForm">
+                        <p class="formTitle">Dodawanie Wykładu</p>
                         <div class="input-field">
                             <i class="fas fa-chalkboard-teacher"></i>
-                            <input type="text" name="lectureTitle" placeholder="Nazwa Wykładu" th:field="*{name}" required>
+                            <input type="text" name="lectureTitle" placeholder="Nazwa Wykładu" th:field="*{name}"
+                                   required>
                         </div>
 
                         <div class="input-field">
                             <i class="fas fa-align-left"></i>
-                            <textarea name="lectureContent" placeholder="Treść Wykładu" rows="4" th:field="*{content}"></textarea>
+                            <textarea name="lectureContent" placeholder="Treść Wykładu" rows="4"
+                                      th:field="*{content}"></textarea>
                         </div>
 
-                        <button type="submit" class="btn">Dodaj</button>
+                        <div id="sublecturesContainer"></div>
+
+                        <button type="button" onclick="addSublectureForm()">Dodaj Podwykład</button>
+
+                        <button type="submit" class="btn">Dodaj Wyklad</button>
                     </form>
 
                 </div>
@@ -154,5 +162,27 @@
 <script src="/assets/js/navigation.js"></script>
 <script src="/assets/js/refresh.js"></script>
 <script src="/assets/js/progressBarSubject.js"></script>
+<script th:inline="javascript">
+    let sublectureIndex = 0;
+
+    function addSublectureForm() {
+        if (sublectureIndex < 10) {
+            const container = document.getElementById('sublecturesContainer');
+            container.innerHTML += `
+        <p class="formTitle">Dodawanie ${sublectureIndex + 1}. Podwykładu</p>
+        <div class="input-field">
+            <i class="fas fa-user-edit"></i>
+            <input type="text" name="sublectures[${sublectureIndex}].title" placeholder="Nazwa Podwykładu" required>
+        </div>
+        <div class="input-field">
+            <i class="fas fa-align-left"></i>
+            <textarea name="sublectures[${sublectureIndex}].content" placeholder="Treść Podwykładu" rows="4"></textarea>
+        </div>
+        `;
+            sublectureIndex++;
+        }
+    }
+
+</script>
 </body>
 </html>
