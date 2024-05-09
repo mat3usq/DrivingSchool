@@ -161,6 +161,13 @@ h2 {
 				align-items: center;
 				margin: 10px auto;
 
+				.container {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					width: 100%;
+				}
+
 				.title {
 					padding: 20px 10px;
 					background-color: rgba(0, 0, 0, 0.6);
@@ -235,14 +242,20 @@ h2 {
 				}
 
 				.container-lecture {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
 					max-width: 60%;
 					padding: 20px 10px;
 					background-color: rgba(0, 0, 0, 0.6);
 					border-radius: 20px;
 					margin: 10px;
+					border-right: 3px solid $nav-color;
+					border-left: 3px solid $nav-color;
 
 					.title,
 					.content {
+						margin: 0px;
 						padding: 0px 10px;
 						background-color: transparent;
 					}
@@ -263,8 +276,8 @@ h2 {
 						letter-spacing: 1px;
 						text-align: center;
 						font-weight: bold;
-						border-bottom: 5px solid $primary-color;
-						border-top: 5px solid $primary-color;
+						border-bottom: 3px solid $primary-color;
+						border-top: 3px solid $primary-color;
 						width: 220px;
 						margin: 0 auto;
 					}
@@ -391,7 +404,8 @@ h2 {
 				height: 88vh;
 				width: 100%;
 				.box-container {
-					.container-subject {
+					.container-subject,
+					.container-lecture {
 						max-width: 100%;
 					}
 				}

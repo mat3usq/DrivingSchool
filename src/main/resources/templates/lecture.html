@@ -73,9 +73,11 @@
                         </div>
                     </div>
 
-                    <div class="container-lecture" th:each="lecture : ${lectureList}">
-                        <p class="title" th:text="${lecture.name}"></p>
-                        <p class="content" th:if="${lecture.content}" th:text="${lecture.content}"></p>
+                    <div class="container" th:each="lecture : ${lectureList}">
+                        <div class="container-lecture">
+                            <p class="title" th:text="${lecture.name}"></p>
+                            <p class="content" th:unless="${lecture.content == null or lecture.content.isEmpty()}" th:text="${lecture.content}"></p>
+                        </div>
                     </div>
 
                     <form name="lecture" th:action="@{/lecture/addLecture}" method="post" th:object="${newLecture}" class="lectureForm">

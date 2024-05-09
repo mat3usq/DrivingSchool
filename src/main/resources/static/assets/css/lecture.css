@@ -225,6 +225,12 @@ h2 {
   align-items: center;
   margin: 10px auto;
 }
+.subject .hero-img .box-subject .box-container .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 .subject .hero-img .box-subject .box-container .title {
   padding: 20px 10px;
   background-color: rgba(0, 0, 0, 0.6);
@@ -297,14 +303,20 @@ h2 {
   font-weight: bold;
 }
 .subject .hero-img .box-subject .box-container .container-lecture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: 60%;
   padding: 20px 10px;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 20px;
   margin: 10px;
+  border-right: 3px solid #e0ff72;
+  border-left: 3px solid #e0ff72;
 }
 .subject .hero-img .box-subject .box-container .container-lecture .title,
 .subject .hero-img .box-subject .box-container .container-lecture .content {
+  margin: 0px;
   padding: 0px 10px;
   background-color: transparent;
 }
@@ -323,8 +335,8 @@ h2 {
   letter-spacing: 1px;
   text-align: center;
   font-weight: bold;
-  border-bottom: 5px solid #ef476f;
-  border-top: 5px solid #ef476f;
+  border-bottom: 3px solid #ef476f;
+  border-top: 3px solid #ef476f;
   width: 220px;
   margin: 0 auto;
 }
@@ -435,7 +447,8 @@ h2 {
     height: 88vh;
     width: 100%;
   }
-  .subject .hero-img .box-subject .box-container .container-subject {
+  .subject .hero-img .box-subject .box-container .container-subject,
+  .subject .hero-img .box-subject .box-container .container-lecture {
     max-width: 100%;
   }
   .navbar-nav .subject-nav {
