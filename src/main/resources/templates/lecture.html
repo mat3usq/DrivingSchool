@@ -33,45 +33,45 @@
             <div class="hero-shadow"></div>
             <div class="box-subject">
                 <div class="box-container">
-                    <p data-aos="fade-down" data-aos-delay="100" class="title">RUCH POJAZDOW</p>
-                    <div data-aos="zoom" data-aos-delay="150" class="container-subject">
-                        <div class="subject-details" id="ogolne-zasady-ruchu-pojazdow">
-                            <h4>Ogólne zasady ruchu pojazdów.</h4>
-                            <p>
-                                Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu
-                                Drogowego
-                                (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej,
-                                jest
-                                obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej
-                                do dojazdu do
-                                nieruchomości położonej przy drodze”.
-                            </p>
-                            <div class="img-block">
-                                <img
-                                        src="../img/subjects-img/droga-dwujezdniowa.jpg"
-                                        title="droga dwujezdniowa"
-                                        alt="droga dwujezdniowa"/>
-                            </div>
-                            <p>
-                                Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący
-                                pojazdem,
-                                korzystając z jezdni dwukierunkowej co najmniej o czterech pasach ruchu, jest obowiązany
-                                zajmować
-                                pas ruchu znajdujący się na prawej połowie jezdni”
-                            </p>
-                            <div class="img-block">
-                                <img
-                                        src="../img/subjects-img/zajmowanie-jednego-pasa-ruchu.jpg"
-                                        title="zajmowanie jednego pasa ruchu"
-                                        alt="zajmowanie jednego pasa ruchu"/>
-                            </div>
-                            <p>
-                                „Kierujący pojazdem jest obowiązany jechać możliwie blisko prawej krawędzi jezdni.
-                                Jeżeli pasy ruchu
-                                na jezdni są wyznaczone, nie może zajmować więcej niż jednego pasa.”
-                            </p>
-                        </div>
-                    </div>
+<!--                    <p data-aos="fade-down" data-aos-delay="100" class="title">RUCH POJAZDOW</p>-->
+<!--                    <div data-aos="zoom" data-aos-delay="150" class="container-subject">-->
+<!--                        <div class="subject-details" id="ogolne-zasady-ruchu-pojazdow">-->
+<!--                            <h4>Ogólne zasady ruchu pojazdów.</h4>-->
+<!--                            <p>-->
+<!--                                Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu-->
+<!--                                Drogowego-->
+<!--                                (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej,-->
+<!--                                jest-->
+<!--                                obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej-->
+<!--                                do dojazdu do-->
+<!--                                nieruchomości położonej przy drodze”.-->
+<!--                            </p>-->
+<!--                            <div class="img-block">-->
+<!--                                <img-->
+<!--                                        src="../img/subjects-img/droga-dwujezdniowa.jpg"-->
+<!--                                        title="droga dwujezdniowa"-->
+<!--                                        alt="droga dwujezdniowa"/>-->
+<!--                            </div>-->
+<!--                            <p>-->
+<!--                                Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący-->
+<!--                                pojazdem,-->
+<!--                                korzystając z jezdni dwukierunkowej co najmniej o czterech pasach ruchu, jest obowiązany-->
+<!--                                zajmować-->
+<!--                                pas ruchu znajdujący się na prawej połowie jezdni”-->
+<!--                            </p>-->
+<!--                            <div class="img-block">-->
+<!--                                <img-->
+<!--                                        src="../img/subjects-img/zajmowanie-jednego-pasa-ruchu.jpg"-->
+<!--                                        title="zajmowanie jednego pasa ruchu"-->
+<!--                                        alt="zajmowanie jednego pasa ruchu"/>-->
+<!--                            </div>-->
+<!--                            <p>-->
+<!--                                „Kierujący pojazdem jest obowiązany jechać możliwie blisko prawej krawędzi jezdni.-->
+<!--                                Jeżeli pasy ruchu-->
+<!--                                na jezdni są wyznaczone, nie może zajmować więcej niż jednego pasa.”-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                     <div class="container" th:each="lecture : ${lectureList}">
                         <div class="container-lecture">
@@ -79,10 +79,16 @@
                             <p class="content" th:unless="${lecture.content == null or lecture.content.isEmpty()}"
                                th:text="${lecture.content}"></p>
                         </div>
+
+                        <div class="container-subject">
+                            <div class="subject-details" th:each="sublecture : ${lecture.getSublectures()}">
+                                <h4 th:text="${sublecture.title}"></h4>
+                                <p th:text="${sublecture.content}"></p>
+                            </div>
+                        </div>
                     </div>
 
-                    <form name="lecture" th:action="@{/lecture/addLecture}" method="post" th:object="${newLecture}"
-                          class="lectureForm">
+                    <form name="lecture" th:action="@{/lecture/addLecture}" method="post" th:object="${newLecture}" class="lectureForm">
                         <p class="formTitle">Dodawanie Wykładu</p>
                         <div class="input-field">
                             <i class="fas fa-chalkboard-teacher"></i>
@@ -98,9 +104,11 @@
 
                         <div id="sublecturesContainer"></div>
 
-                        <button type="button" onclick="addSublectureForm()">Dodaj Podwykład</button>
-
-                        <button type="submit" class="btn">Dodaj Wyklad</button>
+                        <div class="box-btn">
+                            <button type="button" class="other-btn" onclick="addSublectureForm()">Dodaj Podwykład</button>
+                            <button type="submit" class="main-btn">Dodaj Wyklad</button>
+                            <button type="button" class="other-btn" onclick="addSubjectForm()">Dodaj Rozdział</button>
+                        </div>
                     </form>
 
                 </div>
@@ -162,23 +170,24 @@
 <script src="/assets/js/navigation.js"></script>
 <script src="/assets/js/refresh.js"></script>
 <script src="/assets/js/progressBarSubject.js"></script>
-<script th:inline="javascript">
+<script>
     let sublectureIndex = 0;
 
     function addSublectureForm() {
         if (sublectureIndex < 10) {
             const container = document.getElementById('sublecturesContainer');
-            container.innerHTML += `
-        <p class="formTitle">Dodawanie ${sublectureIndex + 1}. Podwykładu</p>
-        <div class="input-field">
-            <i class="fas fa-user-edit"></i>
-            <input type="text" name="sublectures[${sublectureIndex}].title" placeholder="Nazwa Podwykładu" required>
-        </div>
-        <div class="input-field">
-            <i class="fas fa-align-left"></i>
-            <textarea name="sublectures[${sublectureIndex}].content" placeholder="Treść Podwykładu" rows="4"></textarea>
-        </div>
+            const htmlContent = `
+            <p class="formTitle">Dodawanie ${sublectureIndex + 1}. Podwykładu</p>
+            <div class="input-field">
+                <i class="fas fa-book"></i>
+                <input type="text" name="sublectures[${sublectureIndex}].title" placeholder="Nazwa Podwykładu" required>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-align-left"></i>
+                <textarea name="sublectures[${sublectureIndex}].content" placeholder="Treść Podwykładu" rows="4"></textarea>
+            </div>
         `;
+            container.insertAdjacentHTML('beforeend', htmlContent);
             sublectureIndex++;
         }
     }

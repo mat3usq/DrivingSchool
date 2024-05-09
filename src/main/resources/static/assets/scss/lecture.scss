@@ -190,7 +190,7 @@ h2 {
 				.container-lecture {
 					display: flex;
 					flex-direction: column;
-					max-width: 70%;
+					margin: 0 50px;
 
 					.subject-details {
 						font-size: 19px;
@@ -198,7 +198,7 @@ h2 {
 						flex-direction: column;
 						align-items: center;
 						margin: 30px 50px;
-						padding: 20px 50px;
+						padding: 20px 30px;
 						background-color: rgba(0, 0, 0, 0.7);
 						border-radius: 20px;
 						text-align: center;
@@ -206,7 +206,9 @@ h2 {
 						h4 {
 							font-weight: bold;
 							letter-spacing: 1px;
-							margin: 40px;
+							margin: 20px;
+							padding-bottom: 10px;
+							border-bottom: 3px solid $primary-color;
 						}
 
 						ol {
@@ -250,8 +252,8 @@ h2 {
 					background-color: rgba(0, 0, 0, 0.6);
 					border-radius: 20px;
 					margin: 10px;
-					border-right: 3px solid $nav-color;
-					border-left: 3px solid $nav-color;
+					border-right: 3px solid $secondary-color;
+					border-left: 3px solid $secondary-color;
 
 					.title,
 					.content {
@@ -260,7 +262,7 @@ h2 {
 						background-color: transparent;
 					}
 				}
-				
+
 				.lectureForm {
 					margin: 50px 0;
 					display: flex;
@@ -268,7 +270,7 @@ h2 {
 					align-items: center;
 					width: 65%;
 
-					#sublecturesContainer{
+					#sublecturesContainer {
 						width: 100%;
 					}
 
@@ -320,19 +322,48 @@ h2 {
 							}
 						}
 					}
-					button.btn {
+
+					.box-btn {
+						display: flex;
+						flex-direction: row;
+						align-content: space-around;
+						justify-content: center;
+						align-items: stretch;
+						flex-wrap: wrap;
+						margin: 10px;
+					}
+
+					button.main-btn,
+					.other-btn {
+						margin: 10px;
 						padding: 10px 20px;
-						background-color: $primary-color;
 						border: none;
 						border-radius: 10px;
 						color: white;
 						font-weight: bold;
 						text-transform: uppercase;
+						text-align: center;
 						cursor: pointer;
 						transition: background-color 0.3s;
+						transition: transform 0.3s ease;
 
 						&:hover {
-							background-color: darken($secondary-color, 10%);
+							transform: scale(1.05);
+						}
+					}
+
+					button.main-btn {
+						background-color: $primary-color;
+
+						&:hover {
+							background-color: darken($primary-color, 10%);
+						}
+					}
+
+					button.other-btn {
+						background-color: $btn-bg-color;
+						&:hover {
+							background-color: darken($btn-bg-color, 10%);
 						}
 					}
 				}
@@ -405,8 +436,6 @@ h2 {
 			.box-subject {
 				top: 12vh;
 				left: 0px;
-				height: 88vh;
-				width: 100%;
 				.box-container {
 					.container-subject,
 					.container-lecture {
@@ -424,6 +453,25 @@ h2 {
 	}
 }
 
+@media (min-width: 576px) and (max-width: 720px) {
+	.container,
+	.container-sm {
+		max-width: 100%;
+	}
+
+	.subject {
+		.hero-img {
+			.box-subject {
+				.box-container {
+					.container-subject {
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
 @media (max-width: 540px) {
 	.subject {
 		.hero-img {
@@ -432,6 +480,7 @@ h2 {
 				height: 102vh;
 				.box-container {
 					.container-subject {
+						margin: 0 10px;
 						.subject-details {
 							font-size: 14px;
 							margin: 30px;

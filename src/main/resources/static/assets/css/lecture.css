@@ -251,7 +251,7 @@ h2 {
 .subject .hero-img .box-subject .box-container .container-lecture {
   display: flex;
   flex-direction: column;
-  max-width: 70%;
+  margin: 0 50px;
 }
 .subject .hero-img .box-subject .box-container .container-subject .subject-details,
 .subject .hero-img .box-subject .box-container .container-lecture .subject-details {
@@ -260,7 +260,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   margin: 30px 50px;
-  padding: 20px 50px;
+  padding: 20px 30px;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 20px;
   text-align: center;
@@ -269,7 +269,9 @@ h2 {
 .subject .hero-img .box-subject .box-container .container-lecture .subject-details h4 {
   font-weight: bold;
   letter-spacing: 1px;
-  margin: 40px;
+  margin: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #ef476f;
 }
 .subject .hero-img .box-subject .box-container .container-subject .subject-details ol,
 .subject .hero-img .box-subject .box-container .container-lecture .subject-details ol {
@@ -311,8 +313,8 @@ h2 {
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 20px;
   margin: 10px;
-  border-right: 3px solid #e0ff72;
-  border-left: 3px solid #e0ff72;
+  border-right: 3px solid #ffd166;
+  border-left: 3px solid #ffd166;
 }
 .subject .hero-img .box-subject .box-container .container-lecture .title,
 .subject .hero-img .box-subject .box-container .container-lecture .content {
@@ -378,19 +380,44 @@ h2 {
   outline: none;
   border-color: #ef476f;
 }
-.subject .hero-img .box-subject .box-container .lectureForm button.btn {
+.subject .hero-img .box-subject .box-container .lectureForm .box-btn {
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+.subject .hero-img .box-subject .box-container .lectureForm button.main-btn,
+.subject .hero-img .box-subject .box-container .lectureForm .other-btn {
+  margin: 10px;
   padding: 10px 20px;
-  background-color: #ef476f;
   border: none;
   border-radius: 10px;
   color: white;
   font-weight: bold;
   text-transform: uppercase;
+  text-align: center;
   cursor: pointer;
   transition: background-color 0.3s;
+  transition: transform 0.3s ease;
 }
-.subject .hero-img .box-subject .box-container .lectureForm button.btn:hover {
-  background-color: #ffc233;
+.subject .hero-img .box-subject .box-container .lectureForm button.main-btn:hover,
+.subject .hero-img .box-subject .box-container .lectureForm .other-btn:hover {
+  transform: scale(1.05);
+}
+.subject .hero-img .box-subject .box-container .lectureForm button.main-btn {
+  background-color: #ef476f;
+}
+.subject .hero-img .box-subject .box-container .lectureForm button.main-btn:hover {
+  background-color: #eb184a;
+}
+.subject .hero-img .box-subject .box-container .lectureForm button.other-btn {
+  background-color: #4d84e2;
+}
+.subject .hero-img .box-subject .box-container .lectureForm button.other-btn:hover {
+  background-color: #2366d9;
 }
 
 .contact {
@@ -447,8 +474,6 @@ h2 {
   .subject .hero-img .box-subject {
     top: 12vh;
     left: 0px;
-    height: 88vh;
-    width: 100%;
   }
   .subject .hero-img .box-subject .box-container .container-subject,
   .subject .hero-img .box-subject .box-container .container-lecture {
@@ -458,12 +483,24 @@ h2 {
     height: 330px;
   }
 }
+@media (min-width: 576px) and (max-width: 720px) {
+  .container,
+  .container-sm {
+    max-width: 100%;
+  }
+  .subject .hero-img .box-subject .box-container .container-subject {
+    margin: 0;
+  }
+}
 @media (max-width: 540px) {
   .subject .hero-img {
     height: 117vh;
   }
   .subject .hero-img .box-subject {
     height: 102vh;
+  }
+  .subject .hero-img .box-subject .box-container .container-subject {
+    margin: 0 10px;
   }
   .subject .hero-img .box-subject .box-container .container-subject .subject-details {
     font-size: 14px;

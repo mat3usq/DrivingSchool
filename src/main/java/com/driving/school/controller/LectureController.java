@@ -2,7 +2,7 @@ package com.driving.school.controller;
 
 import com.driving.school.model.Lecture;
 import com.driving.school.model.Sublecture;
-import com.driving.school.repository.LectureRepository;
+import com.driving.school.service.LectureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,20 +10,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
 public class LectureController {
-    LectureRepository lectureRepository;
+    private final LectureService lectureService;
 
     @Autowired
-    public LectureController(LectureRepository lectureRepository) {
-        this.lectureRepository = lectureRepository;
+    public LectureController(LectureService lectureService) {
+        this.lectureService = lectureService;
     }
 
     @GetMapping(value = "/lecture")
@@ -35,16 +32,13 @@ public class LectureController {
                 .collect(Collectors.toList());
         lecture.setSublectures(sublectures);
         m.addObject("newLecture", lecture);
-        m.addObject("lectureList", lectureRepository.findAll());
+        m.addObject("lectureList", lectureService.findAll());
         return m;
     }
 
     @PostMapping(value = "/lecture/addLecture")
     public String addLecture(@ModelAttribute("newLecture") Lecture lecture) {
-        lectureRepository.save(lecture);
-        lecture.getSublectures().forEach(s -> {
-            System.out.println(s.getContent() + " " + s.getTitle());
-        });
+        lectureService.save(lecture);
         return "redirect:/lecture";
     }
 }
