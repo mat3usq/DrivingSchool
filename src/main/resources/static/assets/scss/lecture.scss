@@ -221,13 +221,8 @@ h2 {
 							margin: 5px;
 						}
 
-						p,
-						img {
+						p {
 							margin: 20px;
-						}
-
-						img {
-							width: 60%;
 						}
 
 						i {
@@ -239,6 +234,13 @@ h2 {
 						span {
 							color: $category-icon;
 							font-weight: bold;
+						}
+					}
+
+					.subject-details {
+						img {
+							margin: 20px;
+							max-height: 70%;
 						}
 					}
 				}
