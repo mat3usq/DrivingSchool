@@ -9,8 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -42,6 +45,17 @@ public class LectureController {
 
     @PostMapping(value = "/lecture/addLecture")
     public String addLecture(@ModelAttribute("newLecture") Lecture lecture) {
+        lecture.getSublectures().forEach(sublecture -> {
+            sublecture.getSubjects().forEach(subject -> {
+                if (!subject.getFile().isEmpty()) {
+                    try {
+                        subject.setImage(subject.getFile().getBytes());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+        });
         lectureService.save(lecture);
         return "redirect:/lecture";
     }

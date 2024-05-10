@@ -90,9 +90,7 @@
                                     <p th:text="${subject.title}"></p>
                                     <p th:text="${subject.content}"></p>
                                     <div class="img-block">
-                                        <img th:src="@{'data:image/bmp;base64,' + ${subject.image}}"
-                                             th:title="${subject.title}"
-                                             th:alt="${subject.title}"/>
+                                        <img th:if="${subject.image}" th:src="${subject.getImageBase64()}" th:alt="${subject.title}"/>
                                     </div>
                                 </div>
                             </div>
@@ -212,19 +210,20 @@
     function addSubjectForm(sublectureId) {
         if (subjectCounters[sublectureId] < 10) {
             const btnContainer = document.getElementById(`btn-container-${sublectureId}`);
+            const subjectIndex = subjectCounters[sublectureId];
             const htmlContent = `
-        <div class="subject-form">
-            <p class="formTitle">Dodawanie ${subjectCounters[sublectureId] + 1}. Rozdziału</p>
-            <div class="input-field">
-                <i class="fas fa-book"></i>
-                <input type="text" name="sublectures[${sublectureId}].subjects[${subjectCounters[sublectureId]}].title" placeholder="Nazwa Rozdziału">
+            <div class="subject-form">
+                <p class="formTitle">Dodawanie ${subjectIndex + 1}. Rozdziału</p>
+                <div class="input-field">
+                    <i class="fas fa-book"></i>
+                    <input type="text" name="sublectures[${sublectureId}].subjects[${subjectIndex}].title" placeholder="Nazwa Rozdziału">
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-align-left"></i>
+                    <textarea name="sublectures[${sublectureId}].subjects[${subjectIndex}].content" placeholder="Treść Rozdziału" rows="4"></textarea>
+                </div>
+                <input type="file" name="sublectures[${sublectureId}].subjects[${subjectIndex}].file" accept="image/*">
             </div>
-            <div class="input-field">
-                <i class="fas fa-align-left"></i>
-                <textarea name="sublectures[${sublectureId}].subjects[${subjectCounters[sublectureId]}].content" placeholder="Treść Rozdziału" rows="4"></textarea>
-            </div>
-            <input type="file" name="sublectures[${sublectureId}].subjects[${subjectCounters[sublectureId]}].image" accept="image/*">
-        </div>
         `;
             btnContainer.insertAdjacentHTML('beforebegin', htmlContent);
             subjectCounters[sublectureId]++;

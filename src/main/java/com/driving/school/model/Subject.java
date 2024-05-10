@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Base64;
 
@@ -24,11 +25,18 @@ public class Subject {
     @Column(name = "CONTENT", length = 5000)
     private String content;
 
-    @Column(name = "IMAGE")
+    @Column(name = "IMAGE", columnDefinition = "LONGBLOB")
     private byte[] image;
+
+    @Transient
+    private MultipartFile file;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "SUBLECTUREID", nullable = false)
     private Sublecture sublecture;
+
+    public String getImageBase64() {
+        return (this.image != null) ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(this.image) : null;
+    }
 }
