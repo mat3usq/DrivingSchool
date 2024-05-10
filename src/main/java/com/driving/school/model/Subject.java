@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.Base64;
+
 @Getter
 @Setter
 @Entity
@@ -17,9 +19,9 @@ public class Subject {
     private Long id;
 
     @Column(name = "SUBJECT", length = 512)
-    private String subject;
+    private String title;
 
-    @Column(name = "CONTENT", length = 3800)
+    @Column(name = "CONTENT", length = 5000)
     private String content;
 
     @Column(name = "IMAGE")
@@ -29,5 +31,4 @@ public class Subject {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "SUBLECTUREID", nullable = false)
     private Sublecture sublecture;
-
 }

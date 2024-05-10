@@ -6,7 +6,9 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -22,7 +24,7 @@ public class Sublecture {
     @Column(name = "TITLE", length = 128)
     private String title;
 
-    @Column(name = "CONTENT", length = 3800)
+    @Column(name = "CONTENT", length = 5000)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -31,6 +33,6 @@ public class Sublecture {
     private Lecture lecture;
 
     @OneToMany(mappedBy = "sublecture")
-    private Set<Subject> subjects = new LinkedHashSet<>();
+    private List<Subject> subjects = new ArrayList<>();
 
 }

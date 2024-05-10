@@ -1,6 +1,7 @@
 package com.driving.school.controller;
 
 import com.driving.school.model.Lecture;
+import com.driving.school.model.Subject;
 import com.driving.school.model.Sublecture;
 import com.driving.school.service.LectureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,12 @@ public class LectureController {
     public ModelAndView displayLecturePage() {
         ModelAndView m = new ModelAndView("lecture");
         Lecture lecture = new Lecture();
-        List<Sublecture> sublectures = IntStream.range(0, 10)
-                .mapToObj(i -> new Sublecture())
-                .collect(Collectors.toList());
+        List<Sublecture> sublectures = IntStream.range(0, 10).mapToObj(i -> {
+            Sublecture sublecture = new Sublecture();
+            List<Subject> subjects = IntStream.range(0, 10).mapToObj(j -> new Subject()).toList();
+            sublecture.setSubjects(subjects);
+            return sublecture;
+        }).toList();
         lecture.setSublectures(sublectures);
         m.addObject("newLecture", lecture);
         m.addObject("lectureList", lectureService.findAll());
