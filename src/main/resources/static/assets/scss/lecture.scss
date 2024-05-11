@@ -412,8 +412,9 @@ h2 {
 						margin-bottom: 20px;
 					}
 
-					button.main-btn,
-					.other-btn {
+					button.add-btn,
+					.delete-btn,
+					.info-btn {
 						margin: 10px;
 						padding: 10px 20px;
 						border: none;
@@ -423,26 +424,32 @@ h2 {
 						text-transform: uppercase;
 						text-align: center;
 						cursor: pointer;
-						transition: background-color 0.3s;
-						transition: transform 0.3s ease;
+						transition: 0.3s ease;
 
 						&:hover {
 							transform: scale(1.05);
 						}
 					}
 
-					button.main-btn {
-						background-color: $primary-color;
+					button.add-btn {
+						background-color: #2de300;
 
 						&:hover {
-							background-color: darken($primary-color, 10%);
+							background-color: darken(#2de300, 10%);
 						}
 					}
 
-					button.other-btn {
+					button.info-btn {
 						background-color: $btn-bg-color;
 						&:hover {
 							background-color: darken($btn-bg-color, 10%);
+						}
+					}
+
+					button.delete-btn {
+						background-color: $primary-color;
+						&:hover {
+							background-color: darken($primary-color, 10%);
 						}
 					}
 				}

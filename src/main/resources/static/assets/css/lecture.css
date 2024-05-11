@@ -453,8 +453,9 @@ h2 {
   margin-top: 10px;
   margin-bottom: 20px;
 }
-.subject .hero-img .box-subject .box-container .lectureForm button.main-btn,
-.subject .hero-img .box-subject .box-container .lectureForm .other-btn {
+.subject .hero-img .box-subject .box-container .lectureForm button.add-btn,
+.subject .hero-img .box-subject .box-container .lectureForm .delete-btn,
+.subject .hero-img .box-subject .box-container .lectureForm .info-btn {
   margin: 10px;
   padding: 10px 20px;
   border: none;
@@ -464,24 +465,30 @@ h2 {
   text-transform: uppercase;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s;
-  transition: transform 0.3s ease;
+  transition: 0.3s ease;
 }
-.subject .hero-img .box-subject .box-container .lectureForm button.main-btn:hover,
-.subject .hero-img .box-subject .box-container .lectureForm .other-btn:hover {
+.subject .hero-img .box-subject .box-container .lectureForm button.add-btn:hover,
+.subject .hero-img .box-subject .box-container .lectureForm .delete-btn:hover,
+.subject .hero-img .box-subject .box-container .lectureForm .info-btn:hover {
   transform: scale(1.05);
 }
-.subject .hero-img .box-subject .box-container .lectureForm button.main-btn {
-  background-color: #ef476f;
+.subject .hero-img .box-subject .box-container .lectureForm button.add-btn {
+  background-color: #2de300;
 }
-.subject .hero-img .box-subject .box-container .lectureForm button.main-btn:hover {
-  background-color: #eb184a;
+.subject .hero-img .box-subject .box-container .lectureForm button.add-btn:hover {
+  background-color: #23b000;
 }
-.subject .hero-img .box-subject .box-container .lectureForm button.other-btn {
+.subject .hero-img .box-subject .box-container .lectureForm button.info-btn {
   background-color: #4d84e2;
 }
-.subject .hero-img .box-subject .box-container .lectureForm button.other-btn:hover {
+.subject .hero-img .box-subject .box-container .lectureForm button.info-btn:hover {
   background-color: #2366d9;
+}
+.subject .hero-img .box-subject .box-container .lectureForm button.delete-btn {
+  background-color: #ef476f;
+}
+.subject .hero-img .box-subject .box-container .lectureForm button.delete-btn:hover {
+  background-color: #eb184a;
 }
 
 .contact {
