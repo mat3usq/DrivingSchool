@@ -1,192 +1,203 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Lectures</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Lectures</title>
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet" />
 
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-            crossorigin="anonymous"/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+			crossorigin="anonymous" />
 
-    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+		<script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="/assets/css/lecture.css"/>
-    <link rel="stylesheet" href="/assets/css/navigation.css"/>
-</head>
-<body data-bs-spy="scroll" data-bs-target="#navbar">
-<div th:replace="~{navigation :: navigation-top}"></div>
-<div th:replace="~{navigation :: navigation-left}"></div>
+		<link rel="stylesheet" href="/assets/css/lecture.css" />
+		<link rel="stylesheet" href="/assets/css/navigation.css" />
+		<link rel="stylesheet" href="../static/assets/css/lecture.css" />
+		<link rel="stylesheet" href="../static/assets/css/navigation.css" />
+	</head>
+	<body data-bs-spy="scroll" data-bs-target="#navbar">
+		<div th:replace="~{navigation :: navigation-top}"></div>
+		<div th:replace="~{navigation :: navigation-left}"></div>
 
-<main>
-    <section class="subject">
-        <div class="hero-img">
-            <div class="hero-shadow"></div>
-            <div class="box-subject">
-                <div class="box-container">
-                    <!--                    <p data-aos="fade-down" data-aos-delay="100" class="title">RUCH POJAZDOW</p>-->
-                    <!--                    <div data-aos="zoom" data-aos-delay="150" class="container-subject">-->
-                    <!--                        <div class="subject-details" id="ogolne-zasady-ruchu-pojazdow">-->
-                    <!--                            <h4>Ogólne zasady ruchu pojazdów.</h4>-->
-                    <!--                            <p>-->
-                    <!--                                Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu-->
-                    <!--                                Drogowego-->
-                    <!--                                (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej,-->
-                    <!--                                jest-->
-                    <!--                                obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej-->
-                    <!--                                do dojazdu do-->
-                    <!--                                nieruchomości położonej przy drodze”.-->
-                    <!--                            </p>-->
-                    <!--                            <div class="img-block">-->
-                    <!--                                <img-->
-                    <!--                                        src="../img/subjects-img/droga-dwujezdniowa.jpg"-->
-                    <!--                                        title="droga dwujezdniowa"-->
-                    <!--                                        alt="droga dwujezdniowa"/>-->
-                    <!--                            </div>-->
-                    <!--                            <p>-->
-                    <!--                                Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący-->
-                    <!--                                pojazdem,-->
-                    <!--                                korzystając z jezdni dwukierunkowej co najmniej o czterech pasach ruchu, jest obowiązany-->
-                    <!--                                zajmować-->
-                    <!--                                pas ruchu znajdujący się na prawej połowie jezdni”-->
-                    <!--                            </p>-->
-                    <!--                            <div class="img-block">-->
-                    <!--                                <img-->
-                    <!--                                        src="../img/subjects-img/zajmowanie-jednego-pasa-ruchu.jpg"-->
-                    <!--                                        title="zajmowanie jednego pasa ruchu"-->
-                    <!--                                        alt="zajmowanie jednego pasa ruchu"/>-->
-                    <!--                            </div>-->
-                    <!--                            <p>-->
-                    <!--                                „Kierujący pojazdem jest obowiązany jechać możliwie blisko prawej krawędzi jezdni.-->
-                    <!--                                Jeżeli pasy ruchu-->
-                    <!--                                na jezdni są wyznaczone, nie może zajmować więcej niż jednego pasa.”-->
-                    <!--                            </p>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
+		<main>
+			<section class="subject">
+				<div class="hero-img">
+					<div class="hero-shadow"></div>
+					<div class="box-subject">
+						<div class="box-container">
+							<!--                    <p data-aos="fade-down" data-aos-delay="100" class="title">RUCH POJAZDOW</p>-->
+							<!--                    <div data-aos="zoom" data-aos-delay="150" class="container-subject">-->
+							<!--                        <div class="subject-details" id="ogolne-zasady-ruchu-pojazdow">-->
+							<!--                            <h4>Ogólne zasady ruchu pojazdów.</h4>-->
+							<!--                            <p>-->
+							<!--                                Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu-->
+							<!--                                Drogowego-->
+							<!--                                (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej,-->
+							<!--                                jest-->
+							<!--                                obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej-->
+							<!--                                do dojazdu do-->
+							<!--                                nieruchomości położonej przy drodze”.-->
+							<!--                            </p>-->
+							<!--                            <div class="img-block">-->
+							<!--                                <img-->
+							<!--                                        src="../img/subjects-img/droga-dwujezdniowa.jpg"-->
+							<!--                                        title="droga dwujezdniowa"-->
+							<!--                                        alt="droga dwujezdniowa"/>-->
+							<!--                            </div>-->
+							<!--                            <p>-->
+							<!--                                Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący-->
+							<!--                                pojazdem,-->
+							<!--                                korzystając z jezdni dwukierunkowej co najmniej o czterech pasach ruchu, jest obowiązany-->
+							<!--                                zajmować-->
+							<!--                                pas ruchu znajdujący się na prawej połowie jezdni”-->
+							<!--                            </p>-->
+							<!--                            <div class="img-block">-->
+							<!--                                <img-->
+							<!--                                        src="../img/subjects-img/zajmowanie-jednego-pasa-ruchu.jpg"-->
+							<!--                                        title="zajmowanie jednego pasa ruchu"-->
+							<!--                                        alt="zajmowanie jednego pasa ruchu"/>-->
+							<!--                            </div>-->
+							<!--                            <p>-->
+							<!--                                „Kierujący pojazdem jest obowiązany jechać możliwie blisko prawej krawędzi jezdni.-->
+							<!--                                Jeżeli pasy ruchu-->
+							<!--                                na jezdni są wyznaczone, nie może zajmować więcej niż jednego pasa.”-->
+							<!--                            </p>-->
+							<!--                        </div>-->
+							<!--                    </div>-->
 
-                    <div class="container" th:each="lecture : ${lectureList}">
-                        <div class="container-lecture">
-                            <p class="title" th:text="${lecture.name}"></p>
-                            <p
-                                    class="content"
-                                    th:unless="${lecture.content == null or lecture.content.isEmpty()}"
-                                    th:text="${lecture.content}"></p>
-                        </div>
+							<div class="container" th:each="lecture : ${lectureList}">
+								<div class="container-lecture">
+									<p class="title" th:text="${lecture.name}"></p>
+									<p
+										class="content"
+										th:unless="${lecture.content == null or lecture.content.isEmpty()}"
+										th:text="${lecture.content}"></p>
+								</div>
 
-                        <div class="container-sublecture">
-                            <div class="sublecture-details" th:each="sublecture : ${lecture.getSublectures()}">
-                                <h4 th:text="${sublecture.title}"></h4>
-                                <p th:text="${sublecture.content}"></p>
+								<div class="container-sublecture">
+									<div class="sublecture-details" th:each="sublecture : ${lecture.getSublectures()}">
+										<h4
+											th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
+											th:text="${sublecture.title}"></h4>
+										<p
+											th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
+											th:text="${sublecture.content}"></p>
 
-                                <div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
-                                    <p th:text="${subject.title}"></p>
-                                    <p th:text="${subject.content}"></p>
-                                    <div class="img-block">
-                                        <img th:if="${subject.image}" th:src="${subject.getImageBase64()}" th:alt="${subject.title}"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+										<div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
+											<p th:text="${subject.title}"></p>
+											<div class="img-block">
+												<img th:if="${subject.image}" th:src="${subject.getImageBase64()}" th:alt="${subject.title}" />
+											</div>
+											<p th:text="${subject.content}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
 
-                    <form name="lecture" th:action="@{/lecture/addLecture}" method="post" th:object="${newLecture}" enctype="multipart/form-data" class="lectureForm">
-                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                        <p class="formTitle">Dodawanie Wykładu</p>
-                        <div class="input-field">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                            <input type="text" name="lectureTitle" placeholder="Nazwa Wykładu" th:field="*{name}"
-                                   required/>
-                        </div>
+							<form
+								name="lecture"
+								th:action="@{/lecture/addLecture}"
+								method="post"
+								th:object="${newLecture}"
+								enctype="multipart/form-data"
+								class="lectureForm">
+								<input type="hidden" name="_csrf" value="${_csrf.token}" />
+								<p class="formTitle">Dodawanie Wykładu</p>
+								<div class="input-field">
+									<i class="fas fa-chalkboard-teacher"></i>
+									<input type="text" name="lectureTitle" placeholder="Nazwa Wykładu" th:field="*{name}" required />
+								</div>
 
-                        <div class="input-field">
-                            <i class="fas fa-align-left"></i>
-                            <textarea name="lectureContent" placeholder="Treść Wykładu" rows="4"
-                                      th:field="*{content}"></textarea>
-                        </div>
+								<div class="input-field">
+									<i class="fas fa-align-left"></i>
+									<textarea name="lectureContent" placeholder="Treść Wykładu" rows="4" th:field="*{content}"></textarea>
+								</div>
 
-                        <div id="sublecturesContainer"></div>
+								<div id="sublecturesContainer"></div>
 
-                        <div class="box-btn">
-                            <button type="button" class="other-btn" onclick="addSublectureForm()">Dodaj Podwykład
-                            </button>
-                            <button type="submit" class="main-btn">Dodaj Wyklad</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+								<div class="box-btn">
+									<button type="button" class="other-btn" onclick="addSublectureForm()">Dodaj Podwykład</button>
+									<button type="submit" class="main-btn">Dodaj Wyklad</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</section>
 
-    <br/>
-    <br/>
+			<br />
+			<br />
 
-    <h2>Kontakt</h2>
-    <div class="underline"></div>
+			<h2>Kontakt</h2>
+			<div class="underline"></div>
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="row text-center contact-us">
-                <div class="order-1 col-sm-6 col-lg-4 contact-item">
-                    <h3>Główna Siedziba</h3>
-                    <p>ul. Złota 44</p>
-                    <p>12-432 Warszawa</p>
-                    <p>+48 492 345 234</p>
-                    <p>DrivingSchool@gmail.com</p>
-                </div>
+			<section id="contact" class="contact">
+				<div class="container">
+					<div class="row text-center contact-us">
+						<div class="order-1 col-sm-6 col-lg-4 contact-item">
+							<h3>Główna Siedziba</h3>
+							<p>ul. Złota 44</p>
+							<p>12-432 Warszawa</p>
+							<p>+48 492 345 234</p>
+							<p>DrivingSchool@gmail.com</p>
+						</div>
 
-                <div class="order-0 order-lg-1 col-lg-4 contact-item">
-                    <h3>Social Media</h3>
-                    <div class="social-media">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
+						<div class="order-0 order-lg-1 col-lg-4 contact-item">
+							<h3>Social Media</h3>
+							<div class="social-media">
+								<a href="#"><i class="fab fa-facebook"></i></a>
+								<a href="#"><i class="fab fa-twitter"></i></a>
+								<a href="#"><i class="fab fa-linkedin-in"></i></a>
+							</div>
+						</div>
 
-                <div class="order-1 col-sm-6 col-lg-4 contact-item">
-                    <h3>Siedziba Poboczna</h3>
-                    <p>ul. Wiejska 45A</p>
-                    <p>32-643 Białystok</p>
-                    <p>+48 537 943 743</p>
-                    <p>DrivingSchool@apple.pl</p>
-                </div>
-            </div>
-        </div>
+						<div class="order-1 col-sm-6 col-lg-4 contact-item">
+							<h3>Siedziba Poboczna</h3>
+							<p>ul. Wiejska 45A</p>
+							<p>32-643 Białystok</p>
+							<p>+48 537 943 743</p>
+							<p>DrivingSchool@apple.pl</p>
+						</div>
+					</div>
+				</div>
 
-        <div class="contact-shadow"></div>
-    </section>
-</main>
+				<div class="contact-shadow"></div>
+			</section>
+		</main>
 
-<footer class="py-4 text-center">
-    <p class="mb-0">
-        &copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
-        <span class="orange-text">Driving</span> <span class="gold-text">School</span>
-    </p>
-</footer>
+		<footer class="py-4 text-center">
+			<p class="mb-0">
+				&copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+				<span class="orange-text">Driving</span> <span class="gold-text">School</span>
+			</p>
+		</footer>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="/assets/js/aosSettings.js"></script>
-<script src="/assets/js/navigation.js"></script>
-<script src="/assets/js/refresh.js"></script>
-<script src="/assets/js/progressBarSubject.js"></script>
-<script>
-    let sublectureIndex = 0
-    let subjectCounters = []
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+		<script src="/assets/js/aosSettings.js"></script>
+		<script src="/assets/js/navigation.js"></script>
+		<script src="/assets/js/refresh.js"></script>
+		<script src="/assets/js/progressBarSubject.js"></script>
+		<script src="/assets/js/dragAndDrop.js"></script>
+		<script src="../static/assets/js/dragAndDrop.js"></script>
+		<script>
+			let sublectureIndex = 0
+			let subjectCounters = []
 
-    function addSublectureForm() {
-        if (sublectureIndex < 10) {
-            const container = document.getElementById('sublecturesContainer')
-            subjectCounters[sublectureIndex] = 0
+			function addSublectureForm() {
+				if (sublectureIndex < 10) {
+					const container = document.getElementById('sublecturesContainer')
+					subjectCounters[sublectureIndex] = 0
 
-            const htmlContent = `
+					const htmlContent = `
         <div id="sublecture-${sublectureIndex}">
             <p class="formTitle">Dodawanie ${sublectureIndex + 1}. Podwykładu</p>
             <div class="input-field">
@@ -202,34 +213,45 @@
             </div>
         </div>
         `
-            container.insertAdjacentHTML('beforeend', htmlContent)
-            sublectureIndex++
-        }
-    }
+					container.insertAdjacentHTML('beforeend', htmlContent)
+					sublectureIndex++
+				}
+			}
 
-    function addSubjectForm(sublectureId) {
-        if (subjectCounters[sublectureId] < 10) {
-            const btnContainer = document.getElementById(`btn-container-${sublectureId}`);
-            const subjectIndex = subjectCounters[sublectureId];
-            const htmlContent = `
+			function addSubjectForm(sublectureId) {
+				if (subjectCounters[sublectureId] < 10) {
+					const subjectIndex = subjectCounters[sublectureId]
+					const btnContainer = document.getElementById(`btn-container-${sublectureId}`)
+					const htmlContent = `
             <div class="subject-form">
                 <p class="formTitle">Dodawanie ${subjectIndex + 1}. Rozdziału</p>
                 <div class="input-field">
                     <i class="fas fa-book"></i>
                     <input type="text" name="sublectures[${sublectureId}].subjects[${subjectIndex}].title" placeholder="Nazwa Rozdziału">
                 </div>
+                <div class="input-file" data-sublecture="${sublectureId}" data-subject="${subjectIndex}">
+                    <h3 class="title-file">Prześlij swój plik</h3>
+                		<div class="drag-area">
+                    		<div class="icon">
+                        		<i class="fas fa-images"></i>
+                    		</div>
+                    		<span class="header first">Przeciągnij & Upuść</span>
+                    		<span class="header second">lub <span class="button">Zaimportuj</span></span>
+                    		<span class="support">Wspieramy: JPEG, PNG, JPG</span>
+                		</div>
+                    	<input type="file" hidden name="sublectures[${sublectureId}].subjects[${subjectIndex}].file" accept="image/*">
+                </div>
                 <div class="input-field">
                     <i class="fas fa-align-left"></i>
                     <textarea name="sublectures[${sublectureId}].subjects[${subjectIndex}].content" placeholder="Treść Rozdziału" rows="4"></textarea>
                 </div>
-                <input type="file" name="sublectures[${sublectureId}].subjects[${subjectIndex}].file" accept="image/*">
             </div>
-        `;
-            btnContainer.insertAdjacentHTML('beforebegin', htmlContent);
-            subjectCounters[sublectureId]++;
-        }
-    }
-
-</script>
-</body>
+        `
+					btnContainer.insertAdjacentHTML('beforebegin', htmlContent)
+					subjectCounters[sublectureId]++
+                    initializeDragAndDrop(sublectureId, subjectIndex)
+				}
+			}
+		</script>
+	</body>
 </html>
