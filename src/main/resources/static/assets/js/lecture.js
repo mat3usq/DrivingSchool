@@ -60,7 +60,7 @@ function updateFollowingSublectures(sublectureIndex) {
 			input.setAttribute('name', nameAttr.replace(`[${current}]`, `[${next}]`))
 		})
 
-		const btnContainer = currentSublecture.querySelector('.box-btn')
+		const btnContainer = document.getElementById(`container-${current}`)
 		btnContainer.id = `container-${next}`
 		const btns = btnContainer.querySelectorAll('button')
 		btns.forEach(btn => {
@@ -76,7 +76,7 @@ function updateFollowingSublectures(sublectureIndex) {
 				const subjectInputs = currentSubject.querySelectorAll('input, textarea')
 				subjectInputs.forEach(input => {
 					const nameAttr = input.getAttribute('name')
-					input.setAttribute('name', nameAttr.replace(`[${current}]`, `[${next}]`))
+					input.setAttribute('name', nameAttr.replace(`sublectures[${current}]`, `sublectures[${next}]`))
 				})
 
 				const deleteButton = currentSubject.querySelector('.delete-btn')

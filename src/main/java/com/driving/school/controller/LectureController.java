@@ -47,9 +47,9 @@ public class LectureController {
     public String addLecture(@ModelAttribute("newLecture") Lecture lecture) {
         lecture.getSublectures().forEach(sublecture -> {
             sublecture.getSubjects().forEach(subject -> {
-                if (!subject.getFile().isEmpty()) {
+                if (subject != null && !subject.getFile().isEmpty()) {
                     try {
-                        subject.setImage(subject.getFile().getBytes());
+                            subject.setImage(subject.getFile().getBytes());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

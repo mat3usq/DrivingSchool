@@ -53,11 +53,11 @@
 											th:text="${sublecture.content}"></p>
 
 										<div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
-											<p th:text="${subject.title}"></p>
+											<p th:unless="${subject.title == null or subject.title.isEmpty()}" th:text="${subject.title}"></p>
 											<div class="img-block">
 												<img th:if="${subject.image}" th:src="${subject.getImageBase64()}" th:alt="${subject.title}" />
 											</div>
-											<p th:text="${subject.content}"></p>
+											<p th:unless="${subject.content == null or subject.content.isEmpty()}" th:text="${subject.content}"></p>
 										</div>
 									</div>
 								</div>

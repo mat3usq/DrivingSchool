@@ -46,10 +46,14 @@ function initializeDragAndDrop(sublectureIndex, subjectIndex) {
 	})
 
 	dragArea.addEventListener('drop', event => {
-		event.preventDefault()
-		file = event.dataTransfer.files[0]
-		displayFile()
-	})
+		event.preventDefault();
+		const dt = new DataTransfer();
+		dt.items.add(event.dataTransfer.files[0]);
+		input.files = dt.files;
+
+		file = input.files[0];
+		displayFile();
+	});
 
 	function displayFile() {
 		if (file) {
