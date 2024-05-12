@@ -17,7 +17,7 @@ function addSublectureForm() {
     <i class="fas fa-align-left"></i>
     <textarea name="sublectures[${sublectureCounters}].content" placeholder="Treść Podwykładu" rows="4"></textarea>
 </div>
-<div class="box-btn" id="container-${sublectureCounters}">
+<div class="box-btn" id="subject-container-${sublectureCounters}">
     <button type="button" class="delete-btn" onclick="removeSublectureForm(${sublectureCounters})">Usuń Podwykład</button>
     <button type="button" class="info-btn" onclick="addSubjectForm(${sublectureCounters})">Dodaj Rozdział</button>
 </div>
@@ -60,8 +60,8 @@ function updateFollowingSublectures(sublectureIndex) {
 			input.setAttribute('name', nameAttr.replace(`[${current}]`, `[${next}]`))
 		})
 
-		const btnContainer = document.getElementById(`container-${current}`)
-		btnContainer.id = `container-${next}`
+		const btnContainer = document.getElementById(`subject-container-${current}`)
+		btnContainer.id = `subject-container-${next}`
 		const btns = btnContainer.querySelectorAll('button')
 		btns.forEach(btn => {
 			const onClickAttr = btn.getAttribute('onclick')
@@ -102,7 +102,7 @@ function updateFollowingSublectures(sublectureIndex) {
 function addSubjectForm(sublectureIndex) {
 	if (subjectCounters[sublectureIndex] < 10) {
 		const subjectIndex = subjectCounters[sublectureIndex]
-		const btnContainer = document.getElementById(`container-${sublectureIndex}`)
+		const btnContainer = document.getElementById(`subject-container-${sublectureIndex}`)
 		const htmlContent = `
 <div id="subject-${sublectureIndex}-${subjectIndex}">
     <p class="formTitle">Dodawanie ${subjectIndex + 1}. Rozdziału</p>

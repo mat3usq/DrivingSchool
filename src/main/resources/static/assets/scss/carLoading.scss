@@ -109,6 +109,31 @@ $spin-deg: 20deg;
 .fadeIn {
 	animation: fadeIn 0.4s both;
 }
+
+.loading-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 200px;
+    z-index: 1000;
+}
+
+.box-shadow {
+    position: fixed;   
+    top: calc(50% + 12vh);
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%);
+    background-image: url('../img/backgroundSubject.png');
+    background-size: cover;  
+    background-position: center; 
+    z-index: 900;
+}
+
+
 .loading-window {
 	background: $background-color;
 	border-radius: $border-radius-big;
@@ -121,18 +146,8 @@ $spin-deg: 20deg;
 	position: fixed;
 	top: 50%;
 	width: 300px;
-	z-index: 1000; 
-    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
-
-	.box-shadow {
-		position: fixed; 
-		top: 0;
-		left: 0;
-		width: 100vw; 
-		height: 100vh; 
-		background-color: rgba(0, 0, 0, 0.609);
-		z-index: 100; 
-	}
+	z-index: 1000;
+	font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
 
 	.text {
 		font-size: $font-size-header;
@@ -141,7 +156,7 @@ $spin-deg: 20deg;
 		top: 75%;
 		left: 38%;
 		margin: 0 auto;
-        z-index: 900; 
+		z-index: 900;
 	}
 
 	.dots {
@@ -151,7 +166,7 @@ $spin-deg: 20deg;
 		vertical-align: bottom;
 		animation: dots 1.5s linear infinite;
 		transition: 1;
-        z-index: 900; 
+		z-index: 900;
 	}
 }
 
@@ -161,7 +176,7 @@ $spin-deg: 20deg;
 	height: 42px;
 	left: 92px;
 	top: 70px;
-	z-index: 900; 
+	z-index: 900;
 
 	.strike {
 		position: absolute;
