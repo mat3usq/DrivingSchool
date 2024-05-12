@@ -29,7 +29,7 @@ public class LectureService {
 
     public void save(Lecture lecture) {
         lectureRepository.save(lecture);
-        lecture.getSublectures().forEach(sl ->{
+        lecture.getSublectures().forEach(sl -> {
             sl.setLecture(lecture);
             sublectureRepository.save(sl);
 
@@ -38,5 +38,13 @@ public class LectureService {
                 subjectRepository.save(s);
             });
         });
+    }
+
+    public Lecture findById(Long id) {
+        return lectureRepository.findById(id).orElse(null);
+    }
+
+    public void delete(Lecture lecture) {
+        lectureRepository.delete(lecture);
     }
 }

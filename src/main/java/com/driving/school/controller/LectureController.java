@@ -4,18 +4,14 @@ import com.driving.school.model.Lecture;
 import com.driving.school.model.Subject;
 import com.driving.school.model.Sublecture;
 import com.driving.school.service.LectureService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
@@ -49,7 +45,7 @@ public class LectureController {
             sublecture.getSubjects().forEach(subject -> {
                 if (subject != null && !subject.getFile().isEmpty()) {
                     try {
-                            subject.setImage(subject.getFile().getBytes());
+                        subject.setImage(subject.getFile().getBytes());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -57,6 +53,32 @@ public class LectureController {
             });
         });
         lectureService.save(lecture);
+        return "redirect:/lecture";
+    }
+
+    @GetMapping(value = "/lecture/editLecture/{id}")
+    public ModelAndView redirectToEditLecture(@PathVariable("id") Long id, HttpSession session) {
+        ModelAndView m = new ModelAndView("editLecture");
+        Lecture editLecture = lectureService.findById(id);
+        m.addObject("editLecture", editLecture);
+        m.addObject("lectureList", lectureService.findAll());
+        session.setAttribute("editLecture", editLecture);
+        return m;
+    }
+
+    @PostMapping(value = "/lecture/editLecture")
+    public String updateLecture(@ModelAttribute("lecture") Lecture lecture, HttpSession session) {
+        Lecture editLecture = (Lecture) session.getAttribute("editLecture");
+        editLecture.setName(lecture.getName());
+        editLecture.setContent(lecture.getContent());
+        lectureService.save(editLecture);
+        return "redirect:/lecture";
+    }
+
+    @PostMapping(value = "/lecture/deleteLecture")
+    public String deleteLecture(HttpSession session) {
+        Lecture editLecture = (Lecture) session.getAttribute("editLecture");
+        lectureService.delete(editLecture);
         return "redirect:/lecture";
     }
 }
