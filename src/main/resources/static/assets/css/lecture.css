@@ -278,33 +278,12 @@ h2 {
   padding-bottom: 10px;
   border-bottom: 3px solid #ef476f;
 }
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture ol,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture ol {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture li,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture li {
-  margin: 5px;
-}
 .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture p,
 .subject .hero-img .box-subject .box-container .container-lecture .box-sublecture p {
   margin: 20px;
 }
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture i,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture i {
-  color: #4cc9f0;
-  font-size: 36px;
-  padding: 20px;
-}
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture span,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture span {
-  color: #4cc9f0;
-  font-weight: bold;
-}
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details img,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details img {
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details .img-block img,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details .img-block img {
   margin: 20px;
   max-width: 70%;
 }
@@ -312,6 +291,9 @@ h2 {
 .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .sublecture-details,
 .subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details,
 .subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .sublecture-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   width: 90%;
 }
@@ -358,7 +340,8 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .lectureForm,
 .subject .hero-img .box-subject .box-container .editLectureForm,
-.subject .hero-img .box-subject .box-container .editSublectureForm {
+.subject .hero-img .box-subject .box-container .editSublectureForm,
+.subject .hero-img .box-subject .box-container .editSubjectForm {
   margin: 50px 0;
   display: flex;
   flex-direction: column;
@@ -367,12 +350,14 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .lectureForm #sublecturesContainer,
 .subject .hero-img .box-subject .box-container .editLectureForm #sublecturesContainer,
-.subject .hero-img .box-subject .box-container .editSublectureForm #sublecturesContainer {
+.subject .hero-img .box-subject .box-container .editSublectureForm #sublecturesContainer,
+.subject .hero-img .box-subject .box-container .editSubjectForm #sublecturesContainer {
   width: 100%;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .formTitle,
 .subject .hero-img .box-subject .box-container .editLectureForm .formTitle,
-.subject .hero-img .box-subject .box-container .editSublectureForm .formTitle {
+.subject .hero-img .box-subject .box-container .editSublectureForm .formTitle,
+.subject .hero-img .box-subject .box-container .editSubjectForm .formTitle {
   padding: 20px 10px;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 20px;
@@ -387,7 +372,8 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file {
   width: 70%;
   margin: 20px auto;
   padding: 30px;
@@ -403,14 +389,16 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file h3,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file h3,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file h3 {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file h3,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file h3 {
   font-weight: bold;
   font-size: 17px;
   margin-bottom: 20px;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file .drag-area,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file .drag-area,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file .drag-area {
   width: 100%;
   min-height: 250px;
   max-height: 500px;
@@ -424,31 +412,36 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file .drag-area .icon,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file .drag-area .icon,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .icon {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .icon,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file .drag-area .icon {
   font-size: 50px;
   color: #1683ff;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file .drag-area .header,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file .drag-area .header,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .header {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .header,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file .drag-area .header {
   font-size: 20px;
   font-weight: 500;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file .drag-area .header.second,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file .drag-area .header.second,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .header.second {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .header.second,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file .drag-area .header.second {
   transition: opacity 0.3s ease;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file .drag-area .support,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file .drag-area .support,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .support {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .support,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file .drag-area .support {
   font-size: 12px;
   color: gray;
   margin: 10px 0 15px 0;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file .drag-area .button,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file .drag-area .button,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .button {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area .button,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file .drag-area .button {
   font-size: 20px;
   font-weight: 500;
   color: #1683ff;
@@ -456,7 +449,8 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file .drag-area img,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file .drag-area img,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area img {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .drag-area img,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file .drag-area img {
   width: 100%;
   min-height: 250px;
   max-height: 500px;
@@ -466,20 +460,23 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-file .active,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-file .active,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .active {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file .active,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file .active {
   border: 4px dashed #ef476f;
   outline: none;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-field,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-field,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field {
   position: relative;
   margin: 20px auto;
   width: 70%;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-field i,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-field i,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field i {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field i,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field i {
   position: absolute;
   left: 10px;
   top: 50%;
@@ -492,7 +489,9 @@ h2 {
 .subject .hero-img .box-subject .box-container .editLectureForm .input-field input,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-field textarea,
 .subject .hero-img .box-subject .box-container .editSublectureForm .input-field input,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field input,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field textarea {
   width: 100%;
   padding: 10px 10px 10px 40px;
   border-radius: 10px;
@@ -502,7 +501,7 @@ h2 {
   background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
   color: black;
 }
-.subject .hero-img .box-subject .box-container .lectureForm .input-field input::-moz-placeholder, .subject .hero-img .box-subject .box-container .lectureForm .input-field textarea::-moz-placeholder, .subject .hero-img .box-subject .box-container .editLectureForm .input-field input::-moz-placeholder, .subject .hero-img .box-subject .box-container .editLectureForm .input-field textarea::-moz-placeholder, .subject .hero-img .box-subject .box-container .editSublectureForm .input-field input::-moz-placeholder, .subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea::-moz-placeholder {
+.subject .hero-img .box-subject .box-container .lectureForm .input-field input::-moz-placeholder, .subject .hero-img .box-subject .box-container .lectureForm .input-field textarea::-moz-placeholder, .subject .hero-img .box-subject .box-container .editLectureForm .input-field input::-moz-placeholder, .subject .hero-img .box-subject .box-container .editLectureForm .input-field textarea::-moz-placeholder, .subject .hero-img .box-subject .box-container .editSublectureForm .input-field input::-moz-placeholder, .subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea::-moz-placeholder, .subject .hero-img .box-subject .box-container .editSubjectForm .input-field input::-moz-placeholder, .subject .hero-img .box-subject .box-container .editSubjectForm .input-field textarea::-moz-placeholder {
   color: black;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-field input::placeholder,
@@ -510,7 +509,9 @@ h2 {
 .subject .hero-img .box-subject .box-container .editLectureForm .input-field input::placeholder,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-field textarea::placeholder,
 .subject .hero-img .box-subject .box-container .editSublectureForm .input-field input::placeholder,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea::placeholder {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea::placeholder,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field input::placeholder,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field textarea::placeholder {
   color: black;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .input-field input:focus,
@@ -518,13 +519,16 @@ h2 {
 .subject .hero-img .box-subject .box-container .editLectureForm .input-field input:focus,
 .subject .hero-img .box-subject .box-container .editLectureForm .input-field textarea:focus,
 .subject .hero-img .box-subject .box-container .editSublectureForm .input-field input:focus,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea:focus {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea:focus,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field input:focus,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field textarea:focus {
   outline: none;
   border-color: #ef476f;
 }
 .subject .hero-img .box-subject .box-container .lectureForm .box-btn,
 .subject .hero-img .box-subject .box-container .editLectureForm .box-btn,
-.subject .hero-img .box-subject .box-container .editSublectureForm .box-btn {
+.subject .hero-img .box-subject .box-container .editSublectureForm .box-btn,
+.subject .hero-img .box-subject .box-container .editSubjectForm .box-btn {
   display: flex;
   flex-direction: row;
   align-content: space-around;
@@ -542,7 +546,10 @@ h2 {
 .subject .hero-img .box-subject .box-container .editLectureForm .info-btn,
 .subject .hero-img .box-subject .box-container .editSublectureForm button.add-btn,
 .subject .hero-img .box-subject .box-container .editSublectureForm .delete-btn,
-.subject .hero-img .box-subject .box-container .editSublectureForm .info-btn {
+.subject .hero-img .box-subject .box-container .editSublectureForm .info-btn,
+.subject .hero-img .box-subject .box-container .editSubjectForm button.add-btn,
+.subject .hero-img .box-subject .box-container .editSubjectForm .delete-btn,
+.subject .hero-img .box-subject .box-container .editSubjectForm .info-btn {
   margin: 10px;
   padding: 10px 20px;
   border: none;
@@ -562,37 +569,46 @@ h2 {
 .subject .hero-img .box-subject .box-container .editLectureForm .info-btn:hover,
 .subject .hero-img .box-subject .box-container .editSublectureForm button.add-btn:hover,
 .subject .hero-img .box-subject .box-container .editSublectureForm .delete-btn:hover,
-.subject .hero-img .box-subject .box-container .editSublectureForm .info-btn:hover {
+.subject .hero-img .box-subject .box-container .editSublectureForm .info-btn:hover,
+.subject .hero-img .box-subject .box-container .editSubjectForm button.add-btn:hover,
+.subject .hero-img .box-subject .box-container .editSubjectForm .delete-btn:hover,
+.subject .hero-img .box-subject .box-container .editSubjectForm .info-btn:hover {
   transform: scale(1.05);
 }
 .subject .hero-img .box-subject .box-container .lectureForm button.add-btn,
 .subject .hero-img .box-subject .box-container .editLectureForm button.add-btn,
-.subject .hero-img .box-subject .box-container .editSublectureForm button.add-btn {
+.subject .hero-img .box-subject .box-container .editSublectureForm button.add-btn,
+.subject .hero-img .box-subject .box-container .editSubjectForm button.add-btn {
   background-color: #2de300;
 }
 .subject .hero-img .box-subject .box-container .lectureForm button.add-btn:hover,
 .subject .hero-img .box-subject .box-container .editLectureForm button.add-btn:hover,
-.subject .hero-img .box-subject .box-container .editSublectureForm button.add-btn:hover {
+.subject .hero-img .box-subject .box-container .editSublectureForm button.add-btn:hover,
+.subject .hero-img .box-subject .box-container .editSubjectForm button.add-btn:hover {
   background-color: #23b000;
 }
 .subject .hero-img .box-subject .box-container .lectureForm button.info-btn,
 .subject .hero-img .box-subject .box-container .editLectureForm button.info-btn,
-.subject .hero-img .box-subject .box-container .editSublectureForm button.info-btn {
+.subject .hero-img .box-subject .box-container .editSublectureForm button.info-btn,
+.subject .hero-img .box-subject .box-container .editSubjectForm button.info-btn {
   background-color: #4d84e2;
 }
 .subject .hero-img .box-subject .box-container .lectureForm button.info-btn:hover,
 .subject .hero-img .box-subject .box-container .editLectureForm button.info-btn:hover,
-.subject .hero-img .box-subject .box-container .editSublectureForm button.info-btn:hover {
+.subject .hero-img .box-subject .box-container .editSublectureForm button.info-btn:hover,
+.subject .hero-img .box-subject .box-container .editSubjectForm button.info-btn:hover {
   background-color: #2366d9;
 }
 .subject .hero-img .box-subject .box-container .lectureForm button.delete-btn,
 .subject .hero-img .box-subject .box-container .editLectureForm button.delete-btn,
-.subject .hero-img .box-subject .box-container .editSublectureForm button.delete-btn {
+.subject .hero-img .box-subject .box-container .editSublectureForm button.delete-btn,
+.subject .hero-img .box-subject .box-container .editSubjectForm button.delete-btn {
   background-color: #ef476f;
 }
 .subject .hero-img .box-subject .box-container .lectureForm button.delete-btn:hover,
 .subject .hero-img .box-subject .box-container .editLectureForm button.delete-btn:hover,
-.subject .hero-img .box-subject .box-container .editSublectureForm button.delete-btn:hover {
+.subject .hero-img .box-subject .box-container .editSublectureForm button.delete-btn:hover,
+.subject .hero-img .box-subject .box-container .editSubjectForm button.delete-btn:hover {
   background-color: #eb184a;
 }
 .subject .hero-img .box-subject .box-container .editLectureForm {
@@ -602,19 +618,20 @@ h2 {
 .subject .hero-img .box-subject .box-container .editLectureForm .formTitle {
   width: 80%;
 }
-.subject .hero-img .box-subject .box-container .editSublectureForm {
+.subject .hero-img .box-subject .box-container .editSublectureForm, .subject .hero-img .box-subject .box-container .editSubjectForm {
   margin: 0;
   width: 85%;
 }
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field, .subject .hero-img .box-subject .box-container .editSubjectForm .input-field {
   width: 100%;
 }
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field i {
-  left: -5px;
-}
 .subject .hero-img .box-subject .box-container .editSublectureForm .input-field input,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea, .subject .hero-img .box-subject .box-container .editSubjectForm .input-field input,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field textarea {
   text-align: center;
+}
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file, .subject .hero-img .box-subject .box-container .editSubjectForm .input-file {
+  width: 85%;
 }
 
 .contact {

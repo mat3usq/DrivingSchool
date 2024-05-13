@@ -216,33 +216,12 @@ h2 {
 							border-bottom: 3px solid $primary-color;
 						}
 
-						ol {
-							display: flex;
-							flex-direction: column;
-							align-items: center;
-						}
-
-						li {
-							margin: 5px;
-						}
-
 						p {
 							margin: 20px;
 						}
 
-						i {
-							color: $category-icon;
-							font-size: 36px;
-							padding: 20px;
-						}
-
-						span {
-							color: $category-icon;
-							font-weight: bold;
-						}
-
 						.subject-details {
-							img {
+							.img-block img {
 								margin: 20px;
 								max-width: 70%;
 							}
@@ -250,6 +229,9 @@ h2 {
 
 						.subject-details,
 						.sublecture-details {
+							display: flex;
+							flex-direction: column;
+							align-items: center;
 							position: relative;
 							width: 90%;
 							a.edit-icon i {
@@ -298,7 +280,8 @@ h2 {
 
 				.lectureForm,
 				.editLectureForm,
-				.editSublectureForm {
+				.editSublectureForm,
+				.editSubjectForm {
 					margin: 50px 0;
 					display: flex;
 					flex-direction: column;
@@ -498,21 +481,22 @@ h2 {
 					}
 				}
 
-				.editSublectureForm {
+				.editSublectureForm, .editSubjectForm {
 					margin: 0;
 					width: 85%;
 					.input-field {
 						width: 100%;
-						i {
-							left: -5px;
-						}
-
 						input,
 						textarea {
 							text-align: center;
 						}
 					}
+
+					.input-file {
+						width: 85%;
+					}
 				}
+
 			}
 		}
 	}

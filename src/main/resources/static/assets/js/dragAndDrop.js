@@ -7,10 +7,14 @@ function initializeDragAndDrop(sublectureIndex, subjectIndex) {
 	const secondHeader = dragArea.querySelector('.header.second')
 	const titleFile = inputFileDiv.querySelector('.title-file')
 	const button = inputFileDiv.querySelector('span.button')
-	const input = document.querySelector(
+	let input = document.querySelector(
 		`input[type="file"][name="sublectures[${sublectureIndex}].subjects[${subjectIndex}].file"]`
 	)
 	let file
+
+	if (!input && window.location.href.includes('lecture/editSubject')) {
+		input = document.getElementById(`sublectures[${sublectureIndex}].subjects[${subjectIndex}]`);
+	}
 
 	button.onclick = () => {
 		input.click()

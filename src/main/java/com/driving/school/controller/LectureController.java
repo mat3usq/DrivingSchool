@@ -3,6 +3,7 @@ package com.driving.school.controller;
 import com.driving.school.model.Lecture;
 import com.driving.school.model.Subject;
 import com.driving.school.model.Sublecture;
+import com.driving.school.repository.SubjectRepository;
 import com.driving.school.repository.SublectureRepository;
 import com.driving.school.service.LectureService;
 import jakarta.servlet.http.HttpSession;
@@ -19,11 +20,13 @@ import java.util.stream.IntStream;
 public class LectureController {
     private final LectureService lectureService;
     private final SublectureRepository sublectureRepository;
+    private final SubjectRepository subjectRepository;
 
     @Autowired
-    public LectureController(LectureService lectureService, SublectureRepository sublectureRepository) {
+    public LectureController(LectureService lectureService, SublectureRepository sublectureRepository, SubjectRepository subjectRepository) {
         this.lectureService = lectureService;
         this.sublectureRepository = sublectureRepository;
+        this.subjectRepository = subjectRepository;
     }
 
     @GetMapping(value = "/lecture")
@@ -46,7 +49,7 @@ public class LectureController {
     public String addLecture(@ModelAttribute("newLecture") Lecture lecture) {
         lecture.getSublectures().forEach(sublecture -> {
             sublecture.getSubjects().forEach(subject -> {
-                if (subject != null && !subject.getFile().isEmpty()) {
+                if (subject != null && subject.getFile() != null && !subject.getFile().isEmpty()) {
                     try {
                         subject.setImage(subject.getFile().getBytes());
                     } catch (IOException e) {
@@ -108,6 +111,39 @@ public class LectureController {
     public String deleteSublecture(HttpSession session) {
         Sublecture editedSublecture = (Sublecture) session.getAttribute("editedSublecture");
         sublectureRepository.delete(editedSublecture);
+        return "redirect:/lecture";
+    }
+
+    @GetMapping(value = "/lecture/editSubject/{id}")
+    public ModelAndView redirectToEditSubject(@PathVariable("id") Long id, HttpSession session) {
+        ModelAndView m = new ModelAndView("editSubject");
+        Subject editedSubject = subjectRepository.findById(id).orElse(new Subject());
+        m.addObject("newSubject", editedSubject);
+        m.addObject("lectureList", lectureService.findAll());
+        session.setAttribute("editedSubject", editedSubject);
+        return m;
+    }
+
+    @PostMapping(value = "/lecture/editSubject")
+    public String updateSubject(@ModelAttribute("newSubject") Subject subject, HttpSession session) {
+        Subject editedSubject = (Subject) session.getAttribute("editedSubject");
+        editedSubject.setTitle(subject.getTitle());
+        editedSubject.setContent(subject.getContent());
+        if (!subject.getFile().isEmpty()) {
+            try {
+                editedSubject.setImage(subject.getFile().getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        subjectRepository.save(editedSubject);
+        return "redirect:/lecture";
+    }
+
+    @PostMapping(value = "/lecture/deleteSubject")
+    public String deleteSubject(HttpSession session) {
+        Subject editedSubject = (Subject) session.getAttribute("editedSubject");
+        subjectRepository.delete(editedSubject);
         return "redirect:/lecture";
     }
 }

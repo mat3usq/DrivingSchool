@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Edycja PodWykładu</title>
+    <title>Edycja Rozdziału</title>
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
 
@@ -46,7 +46,7 @@
 
                         <div class="container-sublecture">
                             <div class="box-sublecture" th:each="sublecture : ${lecture.getSublectures()}">
-                                <div th:if="${sublecture.id} != ${newSublecture.id}" class="sublecture-details">
+                                <div class="sublecture-details">
                                     <h4
                                             th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
                                             th:text="${sublecture.title}"></h4>
@@ -54,52 +54,69 @@
                                             th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
                                             th:text="${sublecture.content}"></p>
                                 </div>
-                                <form
-                                        th:if="${sublecture.id} == ${newSublecture.id}"
-                                        name="editSublecture"
-                                        th:action="@{/lecture/editSublecture}"
-                                        method="post"
-                                        th:object="${newSublecture}"
-                                        class="editSublectureForm">
-                                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                                    <p class="formTitle">Edycja PodWykładu</p>
-                                    <div class="input-field">
-                                        <i class="fas fa-chalkboard-teacher"></i>
-                                        <input
-                                                type="text"
-                                                name="sublectureTitle"
-                                                placeholder="Nazwa PodWykładu"
-                                                th:field="*{title}"
-                                                required/>
-                                    </div>
-                                    <div class="input-field">
-                                        <i class="fas fa-align-left"></i>
-                                        <textarea
-                                                name="sublectureContent"
-                                                placeholder="Treść PodWykładu"
-                                                rows="4"
-                                                th:field="*{content}">
-                                    </textarea>
-                                    </div>
-                                    <div class="box-btn">
-                                        <button type="button" class="info-btn back-btn">Wróć</button>
-                                        <button type="button" class="delete-btn">Usuń</button>
-                                        <button type="submit" class="add-btn">Zaktualizuj</button>
-                                    </div>
-                                </form>
-                                <form th:action="@{/lecture/deleteSublecture}" method="post" id="deleteSublectureForm">
-                                    <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
-                                </form>
                                 <div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
-                                    <p th:unless="${subject.title == null or subject.title.isEmpty()}"
-                                       th:text="${subject.title}"></p>
-                                    <div class="img-block">
-                                        <img th:if="${subject.image}" th:src="${subject.getImageBase64()}"
-                                             th:alt="${subject.title}"/>
+                                    <div th:if="${subject.id} != ${newSubject.id}">
+                                        <p th:unless="${subject.title == null or subject.title.isEmpty()}"
+                                           th:text="${subject.title}"></p>
+                                        <div class="img-block">
+                                            <img th:if="${subject.image}" th:src="${subject.getImageBase64()}"
+                                                 th:alt="${subject.title}"/>
+                                        </div>
+                                        <p
+                                                th:unless="${subject.content == null or subject.content.isEmpty()}"
+                                                th:text="${subject.content}"></p>
+
                                     </div>
-                                    <p
-                                            th:unless="${subject.content == null or subject.content.isEmpty()}"
-                                            th:text="${subject.content}"></p>
+                                    <form
+                                            th:if="${subject.id} == ${newSubject.id}"
+                                            name="editSubject"
+                                            th:action="@{/lecture/editSubject}"
+                                            method="post"
+                                            th:object="${newSubject}"
+                                            class="editSubjectForm"
+                                            enctype="multipart/form-data">
+                                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                                        <p class="formTitle">Edycja Rozdziału</p>
+                                        <div class="input-field">
+                                            <i class="fas fa-chalkboard-teacher"></i>
+                                            <input
+                                                    type="text"
+                                                    name="subjectTitle"
+                                                    placeholder="Nazwa Rozdziału"
+                                                    th:field="*{title}"
+                                                    required/>
+                                        </div>
+                                        <div class="input-file" th:data-sublecture="${sublecture.id}" th:data-subject="${subject.id}">
+                                            <h3 class="title-file">Zamień swój plik na nowy poprzez:</h3>
+                                            <div class="drag-area">
+                                                <div class="icon">
+                                                    <i class="fas fa-images"></i>
+                                                </div>
+                                                <span class="header first">Przeciągnij & Upuść</span>
+                                                <span class="header second">lub <span
+                                                        class="button">Zaimportuj</span></span>
+                                                <span class="support">Wspieramy: JPEG, PNG, JPG</span>
+                                            </div>
+                                            <input type="file" hidden accept="image/*" th:field="*{file}" th:id="'sublectures[' + ${sublecture.id} + '].subjects[' + ${subject.id} + ']'" />
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="fas fa-align-left"></i>
+                                            <textarea
+                                                    name="subjectContent"
+                                                    placeholder="Treść Rozdziału"
+                                                    rows="5"
+                                                    th:field="*{content}">
+                                            </textarea>
+                                        </div>
+                                        <div class="box-btn">
+                                            <button type="button" class="info-btn back-btn">Wróć</button>
+                                            <button type="button" class="delete-btn">Usuń</button>
+                                            <button type="submit" class="add-btn">Zaktualizuj</button>
+                                        </div>
+                                    </form>
+                                    <form th:action="@{/lecture/deleteSubject}" method="post" id="deleteSubjectForm">
+                                        <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +177,8 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="/assets/js/aosSettings.js"></script>
 <script src="/assets/js/navigation.js"></script>
-<script src="/assets/js/editSublecture.js"></script>
 <script src="/assets/js/loadTextarea.js"></script>
+<script src="/assets/js/dragAndDrop.js"></script>
+<script src="/assets/js/editSubject.js"></script>
 </body>
 </html>
