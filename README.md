@@ -51,6 +51,9 @@
 - Poprawka frontu + aktualnosci w dashboard
 - Walidacja do dodawania wykladu
 
+** zrobic gdy uzytknowik wejdzie na edycje to niech go odrazu przekieruje na sekcje  do edytowanego elementu
+** ponumerowac elementy w lecture, subelecture, subject
+
 ## TODO optional
 - Podział na różne permisje dla kursu
 - Kurs może mieć wiele kategorii

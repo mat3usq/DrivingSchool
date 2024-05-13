@@ -25,6 +25,14 @@ function addSublectureForm() {
 `
 		container.insertAdjacentHTML('beforeend', htmlContent)
 		sublectureCounters++
+
+        const textareas = document.querySelectorAll('textarea');
+        textareas.forEach(textarea => {
+            textarea.addEventListener('input', function () {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        });
 	}
 }
 
@@ -135,6 +143,14 @@ function addSubjectForm(sublectureIndex) {
 		btnContainer.insertAdjacentHTML('beforebegin', htmlContent)
 		subjectCounters[sublectureIndex]++
 		initializeDragAndDrop(sublectureIndex, subjectIndex)
+
+        const textareas = document.querySelectorAll('textarea');
+        textareas.forEach(textarea => {
+            textarea.addEventListener('input', function () {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        });
 	}
 }
 
