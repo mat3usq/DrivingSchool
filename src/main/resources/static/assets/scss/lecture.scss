@@ -197,7 +197,7 @@ h2 {
 					flex-direction: column;
 					margin: 0 50px;
 
-					.sublecture-details {
+					.box-sublecture {
 						font-size: 19px;
 						display: flex;
 						flex-direction: column;
@@ -240,12 +240,37 @@ h2 {
 							color: $category-icon;
 							font-weight: bold;
 						}
+
+						.subject-details {
+							img {
+								margin: 20px;
+								max-width: 70%;
+							}
+						}
+
+						.subject-details,
+						.sublecture-details {
+							position: relative;
+							width: 90%;
+							a.edit-icon i {
+								right: -35px;
+							}
+						}
 					}
 
-					.subject-details {
-						img {
-							margin: 20px;
-							max-width: 70%;
+					a.edit-icon i {
+						position: absolute;
+						right: 10px;
+						top: 45%;
+						transform: translateY(-45%);
+						text-decoration: none;
+						color: $category-icon;
+						transition: 0.3s ease;
+						font-size: 20px;
+
+						&:hover {
+							font-size: 22px;
+							color: $icon-color;
 						}
 					}
 				}
@@ -269,26 +294,11 @@ h2 {
 						padding: 0px 10px;
 						background-color: transparent;
 					}
-
-					.edit-icon {
-						position: absolute;
-						right: 10px;
-						top: 50%;
-						transform: translateY(-50%);
-						text-decoration: none;
-						color: $category-icon;
-						transition: 0.3s ease;
-						font-size: 16px;
-
-						&:hover {
-							font-size: 20px;
-							color: $icon-color;
-						}
-					}
 				}
 
 				.lectureForm,
-				.editLectureForm {
+				.editLectureForm,
+				.editSublectureForm {
 					margin: 50px 0;
 					display: flex;
 					flex-direction: column;
@@ -408,6 +418,7 @@ h2 {
 							padding: 10px 10px 10px 40px;
 							border-radius: 10px;
 							border: 2px solid black;
+							font-size: 18px;
 							// background-color: rgba(252, 240, 221, 0.84);
 							background: #e0eafc;
 							background: -webkit-linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
@@ -484,6 +495,22 @@ h2 {
 
 					.formTitle {
 						width: 80%;
+					}
+				}
+
+				.editSublectureForm {
+					margin: 0;
+					width: 85%;
+					.input-field {
+						width: 100%;
+						i {
+							left: -5px;
+						}
+
+						input,
+						textarea {
+							text-align: center;
+						}
 					}
 				}
 			}
@@ -606,7 +633,7 @@ h2 {
 				.box-container {
 					.container-sublecture {
 						margin: 0 10px;
-						.sublecture-details {
+						.box-sublecture {
 							font-size: 14px;
 							margin: 30px;
 							padding: 20px;

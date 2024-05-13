@@ -3,6 +3,7 @@ package com.driving.school.controller;
 import com.driving.school.model.Lecture;
 import com.driving.school.model.Subject;
 import com.driving.school.model.Sublecture;
+import com.driving.school.repository.SublectureRepository;
 import com.driving.school.service.LectureService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,12 @@ import java.util.stream.IntStream;
 @Controller
 public class LectureController {
     private final LectureService lectureService;
+    private final SublectureRepository sublectureRepository;
 
     @Autowired
-    public LectureController(LectureService lectureService) {
+    public LectureController(LectureService lectureService, SublectureRepository sublectureRepository) {
         this.lectureService = lectureService;
+        this.sublectureRepository = sublectureRepository;
     }
 
     @GetMapping(value = "/lecture")
@@ -59,26 +62,52 @@ public class LectureController {
     @GetMapping(value = "/lecture/editLecture/{id}")
     public ModelAndView redirectToEditLecture(@PathVariable("id") Long id, HttpSession session) {
         ModelAndView m = new ModelAndView("editLecture");
-        Lecture editLecture = lectureService.findById(id);
-        m.addObject("editLecture", editLecture);
+        Lecture editedLecture = lectureService.findById(id);
+        m.addObject("newLecture", editedLecture);
         m.addObject("lectureList", lectureService.findAll());
-        session.setAttribute("editLecture", editLecture);
+        session.setAttribute("editedLecture", editedLecture);
         return m;
     }
 
     @PostMapping(value = "/lecture/editLecture")
-    public String updateLecture(@ModelAttribute("lecture") Lecture lecture, HttpSession session) {
-        Lecture editLecture = (Lecture) session.getAttribute("editLecture");
-        editLecture.setName(lecture.getName());
-        editLecture.setContent(lecture.getContent());
-        lectureService.save(editLecture);
+    public String updateLecture(@ModelAttribute("newLecture") Lecture lecture, HttpSession session) {
+        Lecture editedLecture = (Lecture) session.getAttribute("editedLecture");
+        editedLecture.setName(lecture.getName());
+        editedLecture.setContent(lecture.getContent());
+        lectureService.save(editedLecture);
         return "redirect:/lecture";
     }
 
     @PostMapping(value = "/lecture/deleteLecture")
     public String deleteLecture(HttpSession session) {
-        Lecture editLecture = (Lecture) session.getAttribute("editLecture");
-        lectureService.delete(editLecture);
+        Lecture editedLecture = (Lecture) session.getAttribute("editedLecture");
+        lectureService.delete(editedLecture);
+        return "redirect:/lecture";
+    }
+
+    @GetMapping(value = "/lecture/editSublecture/{id}")
+    public ModelAndView redirectToEditSublecture(@PathVariable("id") Long id, HttpSession session) {
+        ModelAndView m = new ModelAndView("editSublecture");
+        Sublecture editedSublecture = sublectureRepository.findById(id).orElse(new Sublecture());
+        m.addObject("newSublecture", editedSublecture);
+        m.addObject("lectureList", lectureService.findAll());
+        session.setAttribute("editedSublecture", editedSublecture);
+        return m;
+    }
+
+    @PostMapping(value = "/lecture/editSublecture")
+    public String updateSublecture(@ModelAttribute("newSublecture") Sublecture sublecture, HttpSession session) {
+        Sublecture editedSublecture = (Sublecture) session.getAttribute("editedSublecture");
+        editedSublecture.setTitle(sublecture.getTitle());
+        editedSublecture.setContent(sublecture.getContent());
+        sublectureRepository.save(editedSublecture);
+        return "redirect:/lecture";
+    }
+
+    @PostMapping(value = "/lecture/deleteSublecture")
+    public String deleteSublecture(HttpSession session) {
+        Sublecture editedSublecture = (Sublecture) session.getAttribute("editedSublecture");
+        sublectureRepository.delete(editedSublecture);
         return "redirect:/lecture";
     }
 }

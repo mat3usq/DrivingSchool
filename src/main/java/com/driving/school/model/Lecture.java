@@ -17,10 +17,10 @@ public class Lecture {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "NAME", nullable = false, length = 128)
+    @Column(name = "NAME", nullable = false, length = 1024)
     private String name;
 
-    @Column(name = "CONTENT", length = 5000)
+    @Column(name = "CONTENT", length = 4096)
     private String content;
 
     @OneToMany(mappedBy = "lecture")

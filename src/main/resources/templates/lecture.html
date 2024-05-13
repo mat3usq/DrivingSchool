@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Lectures</title>
+    <title>Wykłady</title>
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
 
@@ -41,18 +41,23 @@
                                         class="content"
                                         th:unless="${lecture.content == null or lecture.content.isEmpty()}"
                                         th:text="${lecture.content}"></p>
-                                <a class="edit-icon" th:href="'/lecture/editLecture/' + ${lecture.id}"><i class="fas fa-pen"></i></a>
+                                <a class="edit-icon" th:href="'/lecture/editLecture/' + ${lecture.id}"><i
+                                        class="fas fa-pen"></i></a>
                             </div>
                         </div>
 
                         <div class="container-sublecture">
-                            <div class="sublecture-details" th:each="sublecture : ${lecture.getSublectures()}">
-                                <h4
-                                        th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
-                                        th:text="${sublecture.title}"></h4>
-                                <p
-                                        th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
-                                        th:text="${sublecture.content}"></p>
+                            <div class="box-sublecture" th:each="sublecture : ${lecture.getSublectures()}">
+                                <div class="sublecture-details">
+                                    <h4
+                                            th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
+                                            th:text="${sublecture.title}"></h4>
+                                    <p
+                                            th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
+                                            th:text="${sublecture.content}"></p>
+                                    <a class="edit-icon" th:href="'/lecture/editSublecture/' + ${sublecture.id}"><i
+                                            class="fas fa-pen"></i></a>
+                                </div>
 
                                 <div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
                                     <p th:unless="${subject.title == null or subject.title.isEmpty()}"
@@ -64,6 +69,8 @@
                                     <p
                                             th:unless="${subject.content == null or subject.content.isEmpty()}"
                                             th:text="${subject.content}"></p>
+                                    <a class="edit-icon" th:href="'/lecture/editSubject/' + ${subject.id}"><i
+                                            class="fas fa-pen"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -155,5 +162,6 @@
 <script src="/assets/js/navigation.js"></script>
 <script src="/assets/js/dragAndDrop.js"></script>
 <script src="/assets/js/lecture.js"></script>
+<script src="/assets/js/loadTextarea.js"></script>
 </body>
 </html>

@@ -19,10 +19,10 @@ public class Subject {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "SUBJECT", length = 512)
+    @Column(name = "SUBJECT", length = 1024)
     private String title;
 
-    @Column(name = "CONTENT", length = 5000)
+    @Column(name = "CONTENT", length = 4096)
     private String content;
 
     @Column(name = "IMAGE", columnDefinition = "LONGBLOB")

@@ -21,10 +21,10 @@ public class Sublecture {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "TITLE", length = 128)
+    @Column(name = "TITLE", length = 1024)
     private String title;
 
-    @Column(name = "CONTENT", length = 5000)
+    @Column(name = "CONTENT", length = 4096)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
