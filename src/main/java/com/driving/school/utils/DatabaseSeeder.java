@@ -19,7 +19,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     private QuestionService questionService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/questions/questions.csv"))) {
             List<String[]> records = reader.readAll();
             for (String[] record : records) {

@@ -6,3 +6,9 @@ textareas.forEach(textarea => {
         this.style.height = this.scrollHeight + 'px';
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const formElement = document.getElementById("editable");
+    formElement.scrollIntoView({behavior: "smooth"});
+    window.location.hash = 'editable'
+});

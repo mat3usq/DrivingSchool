@@ -36,6 +36,7 @@
                     <div class="container" th:each="lecture : ${lectureList}">
                         <div class="container-lecture">
                             <div class="lecture-details">
+                                <p class="title" th:text="'Wykład nr. ' + ${lecture.id}"></p>
                                 <p class="title" th:text="${lecture.name}"></p>
                                 <p
                                         class="content"
@@ -47,6 +48,7 @@
                         <div class="container-sublecture">
                             <div class="box-sublecture" th:each="sublecture : ${lecture.getSublectures()}">
                                 <div th:if="${sublecture.id} != ${newSublecture.id}" class="sublecture-details">
+                                    <h4 th:text="'PodWykład nr. ' + ${sublecture.id}"></h4>
                                     <h4
                                             th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
                                             th:text="${sublecture.title}"></h4>
@@ -60,9 +62,10 @@
                                         th:action="@{/lecture/editSublecture}"
                                         method="post"
                                         th:object="${newSublecture}"
-                                        class="editSublectureForm">
+                                        class="editSublectureForm"
+                                        id="editable">
                                     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                                    <p class="formTitle">Edycja PodWykładu</p>
+                                    <h4 th:text="'Edycja PodWykładu nr. ' + ${sublecture.id}"></h4>
                                     <div class="input-field">
                                         <i class="fas fa-chalkboard-teacher"></i>
                                         <input
@@ -91,6 +94,7 @@
                                     <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
                                 </form>
                                 <div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
+                                    <p th:text="'Rozdział nr. ' + ${sublecture.id}"></p>
                                     <p th:unless="${subject.title == null or subject.title.isEmpty()}"
                                        th:text="${subject.title}"></p>
                                     <div class="img-block">
