@@ -35,7 +35,7 @@ public class Question {
     private Long availableQuestions;
 
     @Column(name = "CORRECTANSWER")
-    private Long correctAnswer;
+    private String correctAnswer;
 
     @Column(name = "MEDIANAME", length = 512)
     private String mediaName;
@@ -49,9 +49,9 @@ public class Question {
     @Column(name = "CATEGORY", length = 128)
     private String category;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "TESTID", nullable = false)
+    @JoinColumn(name = "TESTID", nullable = true)
     private Test test;
 
     @ManyToMany(mappedBy = "questions")
@@ -63,4 +63,24 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private Set<StudentExamAnswer> studentExamAnswers = new LinkedHashSet<>();
 
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", answerA='" + answerA + '\'' +
+                ", answerB='" + answerB + '\'' +
+                ", answerC='" + answerC + '\'' +
+                ", availableQuestions=" + availableQuestions +
+                ", correctAnswer='" + correctAnswer + '\'' +
+                ", mediaName='" + mediaName + '\'' +
+                ", explanation='" + explanation + '\'' +
+                ", questionType='" + questionType + '\'' +
+                ", category='" + category + '\'' +
+                ", test=" + test +
+                ", exams=" + exams +
+                ", studentAnswersTests=" + studentAnswersTests +
+                ", studentExamAnswers=" + studentExamAnswers +
+                '}';
+    }
 }

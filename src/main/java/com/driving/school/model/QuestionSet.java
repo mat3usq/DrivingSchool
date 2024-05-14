@@ -11,7 +11,10 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "QUESTIONSET")
 public class QuestionSet {
-    @EmbeddedId
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
     private QuestionSetId id;
 
     @MapsId("examid")
