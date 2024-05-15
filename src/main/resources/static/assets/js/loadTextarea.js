@@ -9,6 +9,9 @@ textareas.forEach(textarea => {
 
 document.addEventListener("DOMContentLoaded", function () {
     const formElement = document.getElementById("editable");
-    formElement.scrollIntoView({behavior: "smooth"});
-    window.location.hash = 'editable'
+    if(formElement)
+    {
+        formElement.scrollIntoView({behavior: "smooth"});
+        window.location.hash = 'editable'
+    }
 });

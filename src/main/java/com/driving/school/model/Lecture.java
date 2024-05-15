@@ -26,12 +26,12 @@ public class Lecture {
     private String content;
 
     @Column(name = "ORDERINDEX", nullable = false)
-    private int orderIndex;
+    private Integer orderIndex;
 
     @OneToMany(mappedBy = "lecture")
     private List<Sublecture> sublectures = new ArrayList<>();
 
-    public Lecture(String name, String content, int orderIndex) {
+    public Lecture(String name, String content, Integer orderIndex) {
         this.name = name;
         this.content = content;
         this.orderIndex = orderIndex;

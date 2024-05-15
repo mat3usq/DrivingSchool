@@ -30,7 +30,7 @@ public class Sublecture {
     private String content;
 
     @Column(name = "ORDERINDEX", nullable = false)
-    private int orderIndex;
+    private Integer orderIndex;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -40,7 +40,7 @@ public class Sublecture {
     @OneToMany(mappedBy = "sublecture")
     private List<Subject> subjects = new ArrayList<>();
 
-    public Sublecture(String title, String content, int orderIndex, Lecture lecture) {
+    public Sublecture(String title, String content, Integer orderIndex, Lecture lecture) {
         this.title = title;
         this.content = content;
         this.orderIndex = orderIndex;

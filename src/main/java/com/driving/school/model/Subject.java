@@ -31,7 +31,7 @@ public class Subject {
     private byte[] image;
 
     @Column(name = "ORDERINDEX", nullable = false)
-    private int orderIndex;
+    private Integer orderIndex;
 
     @Transient
     private MultipartFile file;
@@ -45,7 +45,7 @@ public class Subject {
         return (this.image != null) ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(this.image) : null;
     }
 
-    public Subject(String title, String content, byte[] image, int orderIndex, Sublecture sublecture) {
+    public Subject(String title, String content, byte[] image, Integer orderIndex, Sublecture sublecture) {
         this.title = title;
         this.content = content;
         this.image = image;

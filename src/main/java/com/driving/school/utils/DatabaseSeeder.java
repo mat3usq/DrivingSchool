@@ -59,6 +59,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     private void createLectures() {
         try {
             Lecture l = new Lecture("RUCH POJAZDOW", null, 1);
+            Lecture l2 = new Lecture("RUCH POJAZDOW2", null, 2);
             Sublecture sl1 = new Sublecture("Ogólne zasady ruchu pojazdów.", "Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej, jest obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej do dojazdu do nieruchomości położonej przy drodze”.", 1, l);
             Sublecture sl2 = new Sublecture("Włączanie się do ruchu.", "Włączanie się do ruchu wymaga zachowania szczególnej ostrożności, a także konieczności ustąpienia pierwszeństwa wszystkim pozostałym uczestnikom ruchu. Przede wszystkim, zanim rozpoczniesz ruch, dokonaj uważnej obserwacji sytuacji jaka występuje na drodze, a także podejmij trafną decyzję, czy manewr włączania się do ruchu przeprowadzisz w bezpieczny sposób. Jeżeli masz jakiekolwiek wątpliwości zaczekaj na poprawę sytuacji.", 2, l);
             List<Subject> subjects = new ArrayList<>(Arrays.asList(
@@ -89,6 +90,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                             convertImage("/data/image/wyjazd-z-drogi-dla-rowerow.jpg"), 7, sl2)
             ));
             lectureRepository.save(l);
+            lectureRepository.save(l2);
             sublectureRepository.saveAll(List.of(sl1, sl2));
             subjectRepository.saveAll(subjects);
         } catch (Exception e) {
