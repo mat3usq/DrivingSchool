@@ -2,6 +2,7 @@ package com.driving.school.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -12,6 +13,7 @@ import java.util.Base64;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "SUBJECT")
 public class Subject {
     @Id
@@ -38,5 +40,11 @@ public class Subject {
 
     public String getImageBase64() {
         return (this.image != null) ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(this.image) : null;
+    }
+
+    public Subject(String title, String content, byte[] image) {
+        this.title = title;
+        this.content = content;
+        this.image = image;
     }
 }

@@ -2,6 +2,7 @@ package com.driving.school.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "LECTURE")
 public class Lecture {
     @Id
@@ -26,4 +28,9 @@ public class Lecture {
     @OneToMany(mappedBy = "lecture")
     private List<Sublecture> sublectures = new ArrayList<>();
 
+    public Lecture(String name, String content, List<Sublecture> sublectures) {
+        this.name = name;
+        this.content = content;
+        this.sublectures = sublectures;
+    }
 }

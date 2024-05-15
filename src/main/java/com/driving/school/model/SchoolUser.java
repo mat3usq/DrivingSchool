@@ -1,7 +1,9 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,6 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "SCHOOLUSER")
 public class SchoolUser {
@@ -81,4 +84,11 @@ public class SchoolUser {
     @OneToOne(mappedBy = "schoolUser")
     private UserStatistic userStatistic;
 
+    public SchoolUser(String name, String surname, String password, String email, String roleName) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.email = email;
+        this.roleName = roleName;
+    }
 }

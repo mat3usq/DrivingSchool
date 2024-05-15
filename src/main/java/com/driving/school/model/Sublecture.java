@@ -2,6 +2,7 @@ package com.driving.school.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "SUBLECTURE")
 public class Sublecture {
     @Id
@@ -35,4 +37,10 @@ public class Sublecture {
     @OneToMany(mappedBy = "sublecture")
     private List<Subject> subjects = new ArrayList<>();
 
+    public Sublecture(String title, String content, Lecture lecture, List<Subject> subjects) {
+        this.title = title;
+        this.content = content;
+        this.lecture = lecture;
+        this.subjects = subjects;
+    }
 }
