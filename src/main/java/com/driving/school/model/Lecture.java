@@ -25,12 +25,15 @@ public class Lecture {
     @Column(name = "CONTENT", length = 4096)
     private String content;
 
+    @Column(name = "ORDERINDEX", nullable = false)
+    private int orderIndex;
+
     @OneToMany(mappedBy = "lecture")
     private List<Sublecture> sublectures = new ArrayList<>();
 
-    public Lecture(String name, String content, List<Sublecture> sublectures) {
+    public Lecture(String name, String content, int orderIndex) {
         this.name = name;
         this.content = content;
-        this.sublectures = sublectures;
+        this.orderIndex = orderIndex;
     }
 }

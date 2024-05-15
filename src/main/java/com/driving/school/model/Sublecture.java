@@ -29,6 +29,9 @@ public class Sublecture {
     @Column(name = "CONTENT", length = 4096)
     private String content;
 
+    @Column(name = "ORDERINDEX", nullable = false)
+    private int orderIndex;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "LECTUREID", nullable = false)
@@ -37,10 +40,10 @@ public class Sublecture {
     @OneToMany(mappedBy = "sublecture")
     private List<Subject> subjects = new ArrayList<>();
 
-    public Sublecture(String title, String content, Lecture lecture, List<Subject> subjects) {
+    public Sublecture(String title, String content, int orderIndex, Lecture lecture) {
         this.title = title;
         this.content = content;
+        this.orderIndex = orderIndex;
         this.lecture = lecture;
-        this.subjects = subjects;
     }
 }

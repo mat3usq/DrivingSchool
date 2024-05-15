@@ -58,53 +58,39 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void createLectures() {
         try {
+            Lecture l = new Lecture("RUCH POJAZDOW", null, 1);
+            Sublecture sl1 = new Sublecture("Ogólne zasady ruchu pojazdów.", "Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej, jest obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej do dojazdu do nieruchomości położonej przy drodze”.", 1, l);
+            Sublecture sl2 = new Sublecture("Włączanie się do ruchu.", "Włączanie się do ruchu wymaga zachowania szczególnej ostrożności, a także konieczności ustąpienia pierwszeństwa wszystkim pozostałym uczestnikom ruchu. Przede wszystkim, zanim rozpoczniesz ruch, dokonaj uważnej obserwacji sytuacji jaka występuje na drodze, a także podejmij trafną decyzję, czy manewr włączania się do ruchu przeprowadzisz w bezpieczny sposób. Jeżeli masz jakiekolwiek wątpliwości zaczekaj na poprawę sytuacji.", 2, l);
             List<Subject> subjects = new ArrayList<>(Arrays.asList(
+                    new Subject(null, "Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z jezdni dwukierunkowej co najmniej o czterech pasach ruchu, jest obowiązany zajmować pas ruchu znajdujący się na prawej połowie jezdni”",
+                            convertImage("/data/image/droga-dwujezdniowa.jpg"), 1, sl1),
                     new Subject(null,
-                            "Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej, jest obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej do dojazdu do nieruchomości położonej przy drodze”.",
-                            convertImage("/data/image/droga-dwujezdniowa.jpg")),
-                    new Subject(null,
-                            "Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z jezdni dwukierunkowej co najmniej o czterech pasach ruchu, jest obowiązany zajmować pas ruchu znajdujący się na prawej połowie jezdni”",
-                            convertImage("/data/image/zajmowanie-jednego-pasa-ruchu.jpg")),
+                            "„Kierujący pojazdem jest obowiązany jechać możliwie blisko prawej krawędzi jezdni. Jeżeli pasy ruchu na jezdni są wyznaczone, nie może zajmować więcej niż jednego pasa.”",
+                            convertImage("/data/image/zajmowanie-jednego-pasa-ruchu.jpg"), 2, sl1),
                     new Subject("Włączającym się do ruchu jesteś także w ściśle określonych przepisami sytuacjach, np. podczas:",
-                            null, null),
+                            null, null, 1, sl2),
                     new Subject("1. wyjazdu ze strefy zamieszkania,",
                             null,
-                            convertImage("/data/image/wyjazd-ze-strefy-zamieszkania.jpg")),
+                            convertImage("/data/image/wyjazd-ze-strefy-zamieszkania.jpg"), 2, sl2),
                     new Subject("2. wyjazdu na drogę z nieruchomości, obiektu przydrożnego tj. parkingu, stacji benzynowej,",
                             null,
-                            convertImage("/data/image/wyjazd-z-parkingu.jpg")),
+                            convertImage("/data/image/wyjazd-z-parkingu.jpg"), 3, sl2),
                     new Subject("3. wyjazdu z drogi niebędącej drogą publiczną,",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg")),
+                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg"), 4, sl2),
                     new Subject("4. wyjazdu na drogę z pola,",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg")),
+                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg"), 5, sl2),
                     new Subject("5. wyjazdu z drogi niebędącej drogą publiczną (drogi wewnętrznej),",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-wewnetrznej.jpg")),
+                            convertImage("/data/image/wyjazd-z-drogi-wewnetrznej.jpg"), 6, sl2),
                     new Subject("6. wyjazdu z drogi dla rowerów na jezdnię lub pobocze, z wyjątkiem wjazdu na przejazd dla rowerzystów lub pas ruchu dla rowerów.",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-dla-rowerow.jpg"))
+                            convertImage("/data/image/wyjazd-z-drogi-dla-rowerow.jpg"), 7, sl2)
             ));
-
-            Lecture l = new Lecture("RUCH POJAZDOW", null, null);
-            Sublecture sl1 = new Sublecture("Ogólne zasady ruchu pojazdów.", null, l, List.of(subjects.get(0), subjects.get(1)));
-            Sublecture sl2 = new Sublecture("Włączanie się do ruchu.", "Włączanie się do ruchu wymaga zachowania szczególnej ostrożności, a także konieczności ustąpienia pierwszeństwa wszystkim pozostałym uczestnikom ruchu. Przede wszystkim, zanim rozpoczniesz ruch, dokonaj uważnej obserwacji sytuacji jaka występuje na drodze, a także podejmij trafną decyzję, czy manewr włączania się do ruchu przeprowadzisz w bezpieczny sposób. Jeżeli masz jakiekolwiek wątpliwości zaczekaj na poprawę sytuacji.", l, List.of(subjects.get(2), subjects.get(5), subjects.get(4), subjects.get(5), subjects.get(6)));
-            subjects.get(0).setSublecture(sl1);
-            subjects.get(1).setSublecture(sl1);
-            subjects.get(2).setSublecture(sl2);
-            subjects.get(3).setSublecture(sl2);
-            subjects.get(4).setSublecture(sl2);
-            subjects.get(5).setSublecture(sl2);
-            subjects.get(6).setSublecture(sl2);
-            subjects.get(7).setSublecture(sl2);
-            subjects.get(8).setSublecture(sl2);
-            l.setSublectures(List.of(sl1, sl2));
-
             lectureRepository.save(l);
             sublectureRepository.saveAll(List.of(sl1, sl2));
             subjectRepository.saveAll(subjects);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
