@@ -69,25 +69,25 @@ public class DatabaseSeeder implements CommandLineRunner {
                             "„Kierujący pojazdem jest obowiązany jechać możliwie blisko prawej krawędzi jezdni. Jeżeli pasy ruchu na jezdni są wyznaczone, nie może zajmować więcej niż jednego pasa.”",
                             convertImage("/data/image/zajmowanie-jednego-pasa-ruchu.jpg"), 2, sl1),
                     new Subject("Włączającym się do ruchu jesteś także w ściśle określonych przepisami sytuacjach, np. podczas:",
-                            null, null, 1, sl2),
+                            null, null, 3, sl2),
                     new Subject("1. wyjazdu ze strefy zamieszkania,",
                             null,
-                            convertImage("/data/image/wyjazd-ze-strefy-zamieszkania.jpg"), 2, sl2),
+                            convertImage("/data/image/wyjazd-ze-strefy-zamieszkania.jpg"), 4, sl2),
                     new Subject("2. wyjazdu na drogę z nieruchomości, obiektu przydrożnego tj. parkingu, stacji benzynowej,",
                             null,
-                            convertImage("/data/image/wyjazd-z-parkingu.jpg"), 3, sl2),
+                            convertImage("/data/image/wyjazd-z-parkingu.jpg"), 5, sl2),
                     new Subject("3. wyjazdu z drogi niebędącej drogą publiczną,",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg"), 4, sl2),
+                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg"), 6, sl2),
                     new Subject("4. wyjazdu na drogę z pola,",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg"), 5, sl2),
+                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg"), 7, sl2),
                     new Subject("5. wyjazdu z drogi niebędącej drogą publiczną (drogi wewnętrznej),",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-wewnetrznej.jpg"), 6, sl2),
+                            convertImage("/data/image/wyjazd-z-drogi-wewnetrznej.jpg"), 8, sl2),
                     new Subject("6. wyjazdu z drogi dla rowerów na jezdnię lub pobocze, z wyjątkiem wjazdu na przejazd dla rowerzystów lub pas ruchu dla rowerów.",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-dla-rowerow.jpg"), 7, sl2)
+                            convertImage("/data/image/wyjazd-z-drogi-dla-rowerow.jpg"), 9, sl2)
             ));
             lectureRepository.save(l);
             lectureRepository.save(l2);

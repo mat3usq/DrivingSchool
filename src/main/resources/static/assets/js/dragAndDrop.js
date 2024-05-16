@@ -7,7 +7,7 @@ function initializeDragAndDrop(sublectureIndex, subjectIndex) {
 	const secondHeader = dragArea.querySelector('.header.second')
 	const titleFile = inputFileDiv.querySelector('.title-file')
 	const button = inputFileDiv.querySelector('span.button')
-	let input = document.querySelector(
+	let input = inputFileDiv.querySelector(
 		`input[type="file"][name="sublectures[${sublectureIndex}].subjects[${subjectIndex}].file"]`
 	)
 	let file

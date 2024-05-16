@@ -6,6 +6,7 @@ import com.driving.school.model.Sublecture;
 import com.driving.school.repository.SubjectRepository;
 import com.driving.school.repository.SublectureRepository;
 import com.driving.school.service.LectureService;
+import com.driving.school.service.SublectureService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,14 +20,14 @@ import java.util.stream.IntStream;
 @Controller
 public class LectureController {
     private final LectureService lectureService;
-    private final SublectureRepository sublectureRepository;
+    private final SublectureService sublectureService;
     private final SubjectRepository subjectRepository;
 
     @Autowired
-    public LectureController(LectureService lectureService, SublectureRepository sublectureRepository, SubjectRepository subjectRepository) {
+    public LectureController(LectureService lectureService, SubjectRepository subjectRepository, SublectureService sublectureService) {
         this.lectureService = lectureService;
-        this.sublectureRepository = sublectureRepository;
         this.subjectRepository = subjectRepository;
+        this.sublectureService = sublectureService;
     }
 
     @GetMapping(value = "/lecture")
@@ -39,8 +40,11 @@ public class LectureController {
             sublecture.setSubjects(subjects);
             return sublecture;
         }).toList();
+        Sublecture sublecture = new Sublecture();
+        sublecture.setSubjects(IntStream.range(0, 10).mapToObj(i -> new Subject()).toList());
         lecture.setSublectures(sublectures);
         m.addObject("newLecture", lecture);
+        m.addObject("newSublecture", sublecture);
         m.addObject("lectureList", lectureService.findAll());
         return m;
     }
@@ -77,7 +81,7 @@ public class LectureController {
         Lecture editedLecture = (Lecture) session.getAttribute("editedLecture");
         editedLecture.setName(lecture.getName());
         editedLecture.setContent(lecture.getContent());
-        lectureService.save(editedLecture);
+        lectureService.update(editedLecture);
         return "redirect:/lecture";
     }
 
@@ -88,10 +92,25 @@ public class LectureController {
         return "redirect:/lecture";
     }
 
+    @PostMapping(value = "/lecture/addSublecture")
+    public String addSublecture(@ModelAttribute("newSublecture") Sublecture sublecture) {
+        sublecture.getSubjects().forEach(subject -> {
+            if (subject != null && subject.getFile() != null && !subject.getFile().isEmpty()) {
+                try {
+                    subject.setImage(subject.getFile().getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        sublectureService.save(sublecture);
+        return "redirect:/lecture";
+    }
+
     @GetMapping(value = "/lecture/editSublecture/{id}")
     public ModelAndView redirectToEditSublecture(@PathVariable("id") Long id, HttpSession session) {
         ModelAndView m = new ModelAndView("editSublecture");
-        Sublecture editedSublecture = sublectureRepository.findById(id).orElse(new Sublecture());
+        Sublecture editedSublecture = sublectureService.findById(id);
         m.addObject("newSublecture", editedSublecture);
         m.addObject("lectureList", lectureService.findAll());
         session.setAttribute("editedSublecture", editedSublecture);
@@ -103,14 +122,14 @@ public class LectureController {
         Sublecture editedSublecture = (Sublecture) session.getAttribute("editedSublecture");
         editedSublecture.setTitle(sublecture.getTitle());
         editedSublecture.setContent(sublecture.getContent());
-        sublectureRepository.save(editedSublecture);
+        sublectureService.save(editedSublecture);
         return "redirect:/lecture";
     }
 
     @PostMapping(value = "/lecture/deleteSublecture")
     public String deleteSublecture(HttpSession session) {
         Sublecture editedSublecture = (Sublecture) session.getAttribute("editedSublecture");
-        sublectureRepository.delete(editedSublecture);
+        sublectureService.delete(editedSublecture);
         return "redirect:/lecture";
     }
 

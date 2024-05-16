@@ -36,16 +36,22 @@ public class LectureService {
     }
 
     public void save(Lecture lecture) {
-        lectureRepository.save(lecture);
+        renumberLecture(lecture);
         lecture.getSublectures().forEach(sl -> {
             sl.setLecture(lecture);
+            sl.setOrderIndex(sublectureRepository.findMaxOrderIndex() + 1);
             sublectureRepository.save(sl);
 
             sl.getSubjects().forEach(s -> {
                 s.setSublecture(sl);
+                s.setOrderIndex(subjectRepository.findMaxOrderIndex() + 1);
                 subjectRepository.save(s);
             });
         });
+    }
+
+    public void update(Lecture lecture) {
+        lectureRepository.save(lecture);
     }
 
     public Lecture findById(Long id) {
@@ -54,5 +60,19 @@ public class LectureService {
 
     public void delete(Lecture lecture) {
         lectureRepository.delete(lecture);
+    }
+
+    private void renumberLecture(Lecture lecture) {
+        List<Lecture> lectures = lectureRepository.findAllByOrderByOrderIndex();
+
+        if (lecture.getOrderIndex() == -1)
+            lecture.setOrderIndex(lectures.size() + 1);
+        else for (Lecture l : lectures)
+            if (l.getOrderIndex() >= lecture.getOrderIndex()) {
+                l.setOrderIndex(l.getOrderIndex() + 1);
+                lectureRepository.save(l);
+            }
+
+        lectureRepository.save(lecture);
     }
 }
