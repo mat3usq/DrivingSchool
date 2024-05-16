@@ -3,9 +3,8 @@ package com.driving.school.controller;
 import com.driving.school.model.Lecture;
 import com.driving.school.model.Subject;
 import com.driving.school.model.Sublecture;
-import com.driving.school.repository.SubjectRepository;
-import com.driving.school.repository.SublectureRepository;
 import com.driving.school.service.LectureService;
+import com.driving.school.service.SubjectService;
 import com.driving.school.service.SublectureService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,37 +13,26 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.IntStream;
 
 @Controller
 public class LectureController {
     private final LectureService lectureService;
     private final SublectureService sublectureService;
-    private final SubjectRepository subjectRepository;
+    private final SubjectService subjectService;
 
     @Autowired
-    public LectureController(LectureService lectureService, SubjectRepository subjectRepository, SublectureService sublectureService) {
+    public LectureController(LectureService lectureService, SublectureService sublectureService, SubjectService subjectService) {
         this.lectureService = lectureService;
-        this.subjectRepository = subjectRepository;
         this.sublectureService = sublectureService;
+        this.subjectService = subjectService;
     }
 
     @GetMapping(value = "/lecture")
     public ModelAndView displayLecturePage() {
         ModelAndView m = new ModelAndView("lecture");
-        Lecture lecture = new Lecture();
-        List<Sublecture> sublectures = IntStream.range(0, 10).mapToObj(i -> {
-            Sublecture sublecture = new Sublecture();
-            List<Subject> subjects = IntStream.range(0, 10).mapToObj(j -> new Subject()).toList();
-            sublecture.setSubjects(subjects);
-            return sublecture;
-        }).toList();
-        Sublecture sublecture = new Sublecture();
-        sublecture.setSubjects(IntStream.range(0, 10).mapToObj(i -> new Subject()).toList());
-        lecture.setSublectures(sublectures);
-        m.addObject("newLecture", lecture);
-        m.addObject("newSublecture", sublecture);
+        m.addObject("newLecture", new Lecture());
+        m.addObject("newSublecture", new Sublecture());
+        m.addObject("newSubject", new Subject());
         m.addObject("lectureList", lectureService.findAll());
         return m;
     }
@@ -133,10 +121,24 @@ public class LectureController {
         return "redirect:/lecture";
     }
 
+    @PostMapping(value = "/lecture/addSubject")
+    public String addSubject(@ModelAttribute("newSubject") Subject subject) {
+        System.out.println(subject);
+        if (subject != null && subject.getFile() != null && !subject.getFile().isEmpty()) {
+            try {
+                subject.setImage(subject.getFile().getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        subjectService.save(subject);
+        return "redirect:/lecture";
+    }
+
     @GetMapping(value = "/lecture/editSubject/{id}")
     public ModelAndView redirectToEditSubject(@PathVariable("id") Long id, HttpSession session) {
         ModelAndView m = new ModelAndView("editSubject");
-        Subject editedSubject = subjectRepository.findById(id).orElse(new Subject());
+        Subject editedSubject = subjectService.findById(id);
         m.addObject("newSubject", editedSubject);
         m.addObject("lectureList", lectureService.findAll());
         session.setAttribute("editedSubject", editedSubject);
@@ -155,14 +157,14 @@ public class LectureController {
                 throw new RuntimeException(e);
             }
         }
-        subjectRepository.save(editedSubject);
+        subjectService.save(editedSubject);
         return "redirect:/lecture";
     }
 
     @PostMapping(value = "/lecture/deleteSubject")
     public String deleteSubject(HttpSession session) {
         Subject editedSubject = (Subject) session.getAttribute("editedSubject");
-        subjectRepository.delete(editedSubject);
+        subjectService.delete(editedSubject);
         return "redirect:/lecture";
     }
 }

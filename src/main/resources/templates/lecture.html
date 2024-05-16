@@ -130,7 +130,7 @@
                         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                         <p class="formTitle">Dodawanie PodWykładu</p>
                         <div class="input-field">
-                            <i class="fas fa-chalkboard-teacher"></i>
+                            <i class="fas fa-book"></i>
                             <input type="text" name="sublectureTitle" placeholder="Nazwa PodWykładu" th:field="*{title}"
                                    required/>
                         </div>
@@ -144,7 +144,8 @@
 
                         <div class="input-field">
                             <i class="fa-solid fa-arrow-down-a-z"></i>
-                            <select id="lectureSelect" name="orderIndex" th:field="*{lecture}" required onchange="filterSublectures()">
+                            <select id="sublecture-lectureSelect" name="lecture" th:field="*{lecture}" required
+                                    onchange="filterSublectures()">
                                 <option value="1" selected>Wybierz wykład do którego chcesz dodac podWykład</option>
                                 <option th:each="lecture: ${lectureList}"
                                         th:value="${lecture.id}"
@@ -154,8 +155,9 @@
                         </div>
 
                         <div class="input-field">
-                            <i class="fa-solid fa-arrow-down-a-z"></i>
-                            <select id="sublectureSelect" name="orderIndex" th:field="*{orderIndex}" required>
+                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+                            <select id="sublecture-sublectureSelect" name="orderIndex" th:field="*{orderIndex}"
+                                    required>
                                 <option th:value="-1" selected>Wybierz miejsce dodania podWykładu</option>
                                 <option th:value="1">Jako Pierwszy</option>
                                 <th:block th:each="lecture : ${lectureList}">
@@ -163,7 +165,7 @@
                                         <option th:value="${sublecture.orderIndex + 1}"
                                                 th:if="${subIterStat.index + 1 < lecture.sublectures.size()}"
                                                 th:text="'Między &quot;' + (${sublecture.title.length() > 25 ? sublecture.title.substring(0, 22) + '...' : sublecture.title}) + '&quot; - &quot;' + (${lecture.sublectures[subIterStat.index + 1].title.length() > 25 ? lecture.sublectures[subIterStat.index + 1].title.substring(0, 22) + '...' : lecture.sublectures[subIterStat.index + 1].title}) + '&quot;'"
-                                                th:data-lecture-id="${lecture.id}">
+                                                th:sublecture-data-lecture-id="${lecture.id}">
                                         </option>
                                     </th:block>
                                 </th:block>
@@ -176,6 +178,80 @@
                             <button type="submit" class="add-btn">Dodaj PodWykład</button>
                         </div>
                     </form>
+
+                    <form
+                            name="subject"
+                            th:action="@{/lecture/addSubject}"
+                            method="post"
+                            th:object="${newSubject}"
+                            enctype="multipart/form-data"
+                            class="subjectForm">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                        <p class="formTitle">Dodawanie Rozdziału</p>
+                        <div class="input-field">
+                            <i class="fas fa-bookmark"></i>
+                            <input type="text" name="subjectTitle" placeholder="Nazwa Rozdziału" th:field="*{title}"
+                                   required/>
+                        </div>
+
+                        <div class="input-file" id="subject-file-form">
+                            <h3 class="title-file">Prześlij swój plik</h3>
+                            <div class="drag-area">
+                                <div class="icon">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <span class="header first">Przeciągnij & Upuść</span>
+                                <span class="header second">lub <span class="button">Zaimportuj</span></span>
+                                <span class="support">Wspieramy: JPEG, PNG, JPG</span>
+                            </div>
+                            <input type="file" hidden th:field="*{file}" accept="image/*">
+                        </div>
+
+                        <div class="input-field">
+                            <i class="fas fa-align-left"></i>
+                            <textarea name="subjectContent" placeholder="Treść Rozdziału" rows="4" th:field="*{content}"></textarea>
+                        </div>
+
+                        <div class="input-field">
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                            <select id="subject-sublectureSelect" name="sublecture" th:field="*{sublecture}" required
+                                    onchange="filterSubjects()">
+                                <option value="1" selected>Wybierz podWykład do którego chcesz dodać Rozdział</option>
+                                <th:block th:each="lecture : ${lectureList}">
+                                    <th:block th:each="sublecture : ${lecture.sublectures}">
+                                        <option th:value="${sublecture.id}"
+                                                th:text="'Do - &quot;' + ${sublecture.title.length() > 50 ? sublecture.title.substring(0, 47) + '...' : sublecture.title} + '&quot;'">
+                                        </option>
+                                    </th:block>
+                                </th:block>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+                            <select id="subject-subjectSelect" name="orderIndex" th:field="*{orderIndex}" required>
+                                <option th:value="-1" selected>Wybierz miejsce dodania Rozdziału</option>
+                                <option th:value="1">Jako Pierwszy</option>
+                                <th:block th:each="lecture : ${lectureList}">
+                                    <th:block th:each="sublecture : ${lecture.sublectures}">
+                                        <th:block th:each="subject, subIterStat : ${sublecture.subjects}">
+                                            <option th:value="${subject.orderIndex + 1}"
+                                                    th:if="${subIterStat.index + 1 < sublecture.subjects.size()}"
+                                                    th:text="'Między &quot;' + (${subject.title != null ? (subject.title.length() > 25 ? subject.title.substring(0, 22) + '...' : subject.title) : 'Rozdział nr. ' + subject.orderIndex}) + '&quot; - &quot;' + (${sublecture.subjects[subIterStat.index + 1].title != null ? (sublecture.subjects[subIterStat.index + 1].title.length() > 25 ? sublecture.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sublecture.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + sublecture.subjects[subIterStat.index + 1].orderIndex}) + '&quot;'"
+                                                    th:data-sublecture-id="${sublecture.id}">
+                                            </option>
+                                        </th:block>
+                                    </th:block>
+                                </th:block>
+                                <option th:value="-1">Jako Ostatni</option>
+                            </select>
+                        </div>
+
+                        <div class="box-btn">
+                            <button type="submit" class="add-btn">Dodaj Rozdział</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>

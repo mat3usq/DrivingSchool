@@ -280,6 +280,7 @@ h2 {
 
 				.lectureForm,
 				.sublectureForm,
+				.subjectForm,
 				.editLectureForm,
 				.editSublectureForm,
 				.editSubjectForm {
@@ -570,7 +571,7 @@ h2 {
 				top: 12vh;
 				left: 0px;
 				.box-container {
-					.lectureForm, .sublectureForm {
+					.lectureForm, .sublectureForm, .subjectForm {
 						.input-field,
 						.input-file {
 							width: 100%;
