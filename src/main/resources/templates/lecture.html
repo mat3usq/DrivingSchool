@@ -237,7 +237,7 @@
                                         <th:block th:each="subject, subIterStat : ${sublecture.subjects}">
                                             <option th:value="${subject.orderIndex + 1}"
                                                     th:if="${subIterStat.index + 1 < sublecture.subjects.size()}"
-                                                    th:text="'Między &quot;' + (${subject.title != null ? (subject.title.length() > 25 ? subject.title.substring(0, 22) + '...' : subject.title) : 'Rozdział nr. ' + subject.orderIndex}) + '&quot; - &quot;' + (${sublecture.subjects[subIterStat.index + 1].title != null ? (sublecture.subjects[subIterStat.index + 1].title.length() > 25 ? sublecture.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sublecture.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + sublecture.subjects[subIterStat.index + 1].orderIndex}) + '&quot;'"
+                                                    th:text="'Między &quot;' + (${subject.title != null ? (subject.title.length() > 25 ? subject.title.substring(0, 22) + '...' : subject.title) : 'Rozdział nr. ' + subIterStat.index + 1}) + '&quot; - &quot;' + (${sublecture.subjects[subIterStat.index + 1].title != null ? (sublecture.subjects[subIterStat.index + 1].title.length() > 25 ? sublecture.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sublecture.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + subIterStat.index + 2}) + '&quot;'"
                                                     th:data-sublecture-id="${sublecture.id}">
                                             </option>
                                         </th:block>

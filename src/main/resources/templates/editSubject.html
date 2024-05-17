@@ -33,10 +33,10 @@
             <div class="hero-shadow"></div>
             <div class="box-subject">
                 <div class="box-container">
-                    <div class="container" th:each="lecture : ${lectureList}">
+                    <div class="container" th:each="lecture, lectureIterStat : ${lectureList}">
                         <div class="container-lecture">
                             <div class="lecture-details">
-                                <p class="title" th:text="'Wykład nr. ' + ${lecture.orderIndex}"></p>
+                                <p class="title" th:text="'Wykład nr. ' + ${lectureIterStat.index + 1}"></p>
                                 <p class="title" th:text="${lecture.name}"></p>
                                 <p
                                         class="content"
@@ -46,9 +46,9 @@
                         </div>
 
                         <div class="container-sublecture">
-                            <div class="box-sublecture" th:each="sublecture : ${lecture.getSublectures()}">
+                            <div class="box-sublecture" th:each="sublecture, sublectureIterStat : ${lecture.getSublectures()}">
                                 <div class="sublecture-details">
-                                    <h4 th:text="'PodWykład nr. ' + ${sublecture.orderIndex}"></h4>
+                                    <h4 th:text="'PodWykład nr. ' + ${sublectureIterStat.index + 1}"></h4>
                                     <h4
                                             th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
                                             th:text="${sublecture.title}"></h4>
@@ -56,9 +56,9 @@
                                             th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
                                             th:text="${sublecture.content}"></p>
                                 </div>
-                                <div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
+                                <div class="subject-details" th:each="subject, subjectIterStat : ${sublecture.getSubjects()}">
                                     <div th:if="${subject.id} != ${newSubject.id}">
-                                        <p th:text="'Rozdział nr. ' + ${subject.orderIndex}"></p>
+                                        <p th:text="'Rozdział nr. ' + ${subjectIterStat.index + 1}"></p>
                                         <p th:unless="${subject.title == null or subject.title.isEmpty()}"
                                            th:text="${subject.title}"></p>
                                         <div class="img-block">
@@ -80,7 +80,7 @@
                                             enctype="multipart/form-data"
                                             id="editable">
                                         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                                        <p th:text="'Edycja Rozdziału nr. ' + ${subject.orderIndex}"></p>
+                                        <p th:text="'Edycja Rozdziału nr. ' + ${subjectIterStat.index + 1}"></p>
                                         <div class="input-field">
                                             <i class="fas fa-chalkboard-teacher"></i>
                                             <input
