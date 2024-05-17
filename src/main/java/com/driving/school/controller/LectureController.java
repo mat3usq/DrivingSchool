@@ -69,6 +69,7 @@ public class LectureController {
         Lecture editedLecture = (Lecture) session.getAttribute("editedLecture");
         editedLecture.setName(lecture.getName());
         editedLecture.setContent(lecture.getContent());
+        editedLecture.setOrderIndex(lecture.getOrderIndex());
         lectureService.update(editedLecture);
         return "redirect:/lecture";
     }

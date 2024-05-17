@@ -51,7 +51,8 @@ public class LectureService {
     }
 
     public void update(Lecture lecture) {
-        lectureRepository.save(lecture);
+        renumberLecture(lecture);
+        renumberAllLectures();
     }
 
     public Lecture findById(Long id) {
@@ -60,6 +61,7 @@ public class LectureService {
 
     public void delete(Lecture lecture) {
         lectureRepository.delete(lecture);
+        renumberAllLectures();
     }
 
     private void renumberLecture(Lecture lecture) {
@@ -74,5 +76,14 @@ public class LectureService {
             }
 
         lectureRepository.save(lecture);
+    }
+
+    public void renumberAllLectures() {
+        List<Lecture> lectures = lectureRepository.findAllByOrderByOrderIndex();
+        for (int i = 0; i < lectures.size(); i++) {
+            Lecture lecture = lectures.get(i);
+            lecture.setOrderIndex(i + 1);
+            lectureRepository.save(lecture);
+        }
     }
 }
