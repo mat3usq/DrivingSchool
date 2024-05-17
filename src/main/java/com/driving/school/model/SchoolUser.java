@@ -41,6 +41,9 @@ public class SchoolUser {
     @Column(name = "EMAIL", length = 64)
     private String email;
 
+    @Column(name ="INSTRUCTOR")
+    private Long instructor;
+
     @CreatedDate
     @Column(name = "CREATEDAT")
     private LocalDateTime createdAt;
