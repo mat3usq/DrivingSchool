@@ -20,6 +20,9 @@ public class Test {
     @Column(name = "NAME", length = 512)
     private String name;
 
+    @Column(name = "ISSPECALISTICQUESTIONTEST")
+    private Boolean isSpecialistQuestionTest;
+
     @Column(name = "NUMBERQUESTIONS")
     private Long numberQuestions;
 

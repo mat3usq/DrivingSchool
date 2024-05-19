@@ -8,6 +8,7 @@ import com.driving.school.repository.SublectureRepository;
 import com.driving.school.service.LectureService;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.SchoolUserService;
+import com.driving.school.service.TestService;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,18 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final LectureRepository lectureRepository;
     private final SublectureRepository sublectureRepository;
     private final SubjectRepository subjectRepository;
+    private final TestService testService;
 
     @Autowired
-    public DatabaseSeeder(QuestionService questionService, SchoolUserRepository schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository, SubjectRepository subjectRepository) {
+    public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
+            schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
+                          SubjectRepository subjectRepository, TestService testService) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
         this.sublectureRepository = sublectureRepository;
         this.subjectRepository = subjectRepository;
+        this.testService = testService;
     }
 
     @Override
@@ -122,6 +127,22 @@ public class DatabaseSeeder implements CommandLineRunner {
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addTeststoDb(){
+        addTestToDb("");
+        addTestToDb("");
+        addTestToDb("");
+        addTestToDb("");
+        addTestToDb("");
+
+
+
+    }
+    public void addTestToDb(String Name){
+        Test test = new Test();
+        test.setName(Name);
+        testService.saveTest(test);
     }
 
     public static byte[] convertImage(String resourcePath) throws Exception {
