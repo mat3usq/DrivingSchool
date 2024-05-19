@@ -153,6 +153,8 @@ public class LectureController {
         Subject editedSubject = (Subject) session.getAttribute("editedSubject");
         editedSubject.setTitle(subject.getTitle());
         editedSubject.setContent(subject.getContent());
+        editedSubject.setSublecture(subject.getSublecture());
+        editedSubject.setOrderIndex(subject.getOrderIndex());
         if (!subject.getFile().isEmpty()) {
             try {
                 editedSubject.setImage(subject.getFile().getBytes());
@@ -160,7 +162,7 @@ public class LectureController {
                 throw new RuntimeException(e);
             }
         }
-        subjectService.save(editedSubject);
+        subjectService.update(editedSubject);
         return "redirect:/lecture";
     }
 

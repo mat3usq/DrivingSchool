@@ -1,9 +1,7 @@
 package com.driving.school.service;
 
 import com.driving.school.model.Subject;
-import com.driving.school.model.Sublecture;
 import com.driving.school.repository.SubjectRepository;
-import com.driving.school.repository.SublectureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +22,8 @@ public class SubjectService {
     }
 
     public void update(Subject subject) {
-        subjectRepository.save(subject);
+        renumberSubject(subject);
+        renumberAllSubject();
     }
 
     public Subject findById(Long id) {
@@ -33,6 +32,7 @@ public class SubjectService {
 
     public void delete(Subject subject) {
         subjectRepository.delete(subject);
+        renumberAllSubject();
     }
 
     private void renumberSubject(Subject subject) {
@@ -47,5 +47,14 @@ public class SubjectService {
             }
 
         subjectRepository.save(subject);
+    }
+
+    public void renumberAllSubject() {
+        List<Subject> subjects = subjectRepository.findAllByOrderByOrderIndex();
+        for (int i = 0; i < subjects.size(); i++) {
+            Subject subject = subjects.get(i);
+            subject.setOrderIndex(i + 1);
+            subjectRepository.save(subject);
+        }
     }
 }

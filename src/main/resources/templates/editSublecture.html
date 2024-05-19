@@ -102,12 +102,12 @@
                                         <select id="sublecture-sublectureSelect" name="orderIndex" th:field="*{orderIndex}"
                                                 required>
                                             <option th:value="1">Jako Pierwszy PodWykład</option>
-                                            <th:block th:each="lecture : ${lectureList}">
-                                                <th:block th:each="sl, subIterStat : ${lecture.sublectures}">
+                                            <th:block th:each="l : ${lectureList}">
+                                                <th:block th:each="sl, subIterStat : ${l.sublectures}">
                                                     <option th:value="${sl.orderIndex + 1}"
-                                                            th:if="${subIterStat.index + 1 < lecture.sublectures.size() && sl.id != newSublecture.id && lecture.sublectures[subIterStat.index + 1].id != newSublecture.id}"
-                                                            th:text="'Między Wykład: &quot;' + (${sl.title.length() > 25 ? sl.title.substring(0, 22) + '...' : sl.title}) + '&quot; - Wykład: &quot;' + (${lecture.sublectures[subIterStat.index + 1].title.length() > 25 ? lecture.sublectures[subIterStat.index + 1].title.substring(0, 22) + '...' : lecture.sublectures[subIterStat.index + 1].title}) + '&quot;'"
-                                                            th:sublecture-data-lecture-id="${lecture.id}">
+                                                            th:if="${subIterStat.index + 1 < l.sublectures.size() && sl.id != newSublecture.id && l.sublectures[subIterStat.index + 1].id != newSublecture.id}"
+                                                            th:text="'Między Wykład: &quot;' + (${sl.title.length() > 25 ? sl.title.substring(0, 22) + '...' : sl.title}) + '&quot; - Wykład: &quot;' + (${l.sublectures[subIterStat.index + 1].title.length() > 25 ? l.sublectures[subIterStat.index + 1].title.substring(0, 22) + '...' : l.sublectures[subIterStat.index + 1].title}) + '&quot;'"
+                                                            th:sublecture-data-lecture-id="${l.id}">
                                                     </option>
                                                 </th:block>
                                             </th:block>

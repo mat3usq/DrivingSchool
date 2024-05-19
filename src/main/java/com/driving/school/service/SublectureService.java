@@ -1,6 +1,5 @@
 package com.driving.school.service;
 
-import com.driving.school.model.Lecture;
 import com.driving.school.model.Sublecture;
 import com.driving.school.repository.SubjectRepository;
 import com.driving.school.repository.SublectureRepository;

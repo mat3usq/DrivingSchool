@@ -112,6 +112,40 @@
                                                     th:field="*{content}">
                                             </textarea>
                                         </div>
+
+                                        <p>Zmien miejsce Rozdziału</p>
+                                        <div class="input-field">
+                                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                                            <select id="subject-sublectureSelect" name="sublecture" th:field="*{sublecture}" required
+                                                    onchange="filterSubjects()">
+                                                <th:block th:each="l : ${lectureList}">
+                                                    <th:block th:each="sl : ${lecture.sublectures}">
+                                                        <option th:value="${sl.id}"
+                                                                th:text="'Do PodWykładu: &quot;' + ${sl.title.length() > 50 ? sl.title.substring(0, 47) + '...' : sl.title} + '&quot;'">
+                                                        </option>
+                                                    </th:block>
+                                                </th:block>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+                                            <select id="subject-subjectSelect" name="orderIndex" th:field="*{orderIndex}" required>
+                                                <option th:value="1">Jako Pierwszy Rozdział</option>
+                                                <th:block th:each="l : ${lectureList}">
+                                                    <th:block th:each="sl : ${l.sublectures}">
+                                                        <th:block th:each="sb, subIterStat : ${sl.subjects}">
+                                                            <option th:value="${sb.orderIndex + 1}"
+                                                                    th:if="${subIterStat.index + 1 < sl.subjects.size() && sb.id != newSubject.id && sl.subjects[subIterStat.index + 1].id != newSubject.id}"
+                                                                    th:text="'Między Rozdział: &quot;' + (${sb.title != null ? (sb.title.length() > 25 ? sb.title.substring(0, 22) + '...' : sb.title) : 'Rozdział nr. ' + subIterStat.index + 1}) + '&quot; - Rozdział:&quot;' + (${sl.subjects[subIterStat.index + 1].title != null ? (sl.subjects[subIterStat.index + 1].title.length() > 25 ? sl.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sl.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + subIterStat.index + 2}) + '&quot;'"
+                                                                    th:data-sublecture-id="${sl.id}">
+                                                            </option>
+                                                        </th:block>
+                                                    </th:block>
+                                                </th:block>
+                                                <option th:value="-1">Jako Ostatni Rozdział</option>
+                                            </select>
+                                        </div>
                                         <div class="box-btn">
                                             <button type="button" class="info-btn back-btn">Wróć</button>
                                             <button type="button" class="delete-btn">Usuń</button>
