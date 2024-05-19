@@ -14,8 +14,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository()))
-                .authorizeHttpRequests(requests -> requests
+        http.authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard/**").authenticated()
                         .requestMatchers("/lecture/**").authenticated()
                         .requestMatchers("/loginUser").permitAll()
