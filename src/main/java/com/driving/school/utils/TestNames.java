@@ -1,11 +1,10 @@
 package com.driving.school.utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TestNames {
-    private static ArrayList<String> names = new ArrayList<>();
-    private static ArrayList<String> specialtestnames = new ArrayList<>();
+    private static final ArrayList<String> names = new ArrayList<>();
+    private static final ArrayList<String> specialtestnames = new ArrayList<>();
 
     static {
         names.add("Znaki Ostrzegawcze");
