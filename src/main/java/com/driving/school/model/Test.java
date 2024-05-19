@@ -23,6 +23,9 @@ public class Test {
     @Column(name = "ISSPECALISTICQUESTIONTEST")
     private Boolean isSpecialistQuestionTest;
 
+    @Column(name = "CATEGORY")
+    private String category;
+
     @Column(name = "NUMBERQUESTIONS")
     private Long numberQuestions;
 

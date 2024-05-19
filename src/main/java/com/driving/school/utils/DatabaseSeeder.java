@@ -54,6 +54,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         mapQuestionsToDb();
         createUsers();
         createLectures();
+        addTeststoDb();
     }
 
     private void createUsers() {
@@ -130,18 +131,20 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     public void addTeststoDb(){
-        addTestToDb("");
-        addTestToDb("");
-        addTestToDb("");
-        addTestToDb("");
-        addTestToDb("");
-
-
-
+        List<String> normalnames = TestNames.getNames();
+        List<String> specialnames = TestNames.getSpecialtestnames();
+        for(String name : normalnames){
+            addTestToDb(name,false);
+        }
+        for(String name : specialnames){
+            addTestToDb(name,true);
+        }
     }
-    public void addTestToDb(String Name){
+    public void addTestToDb(String Name, Boolean isSpecialistic){
         Test test = new Test();
         test.setName(Name);
+        test.setCategory("B");
+        test.setIsSpecialistQuestionTest(isSpecialistic);
         testService.saveTest(test);
     }
 

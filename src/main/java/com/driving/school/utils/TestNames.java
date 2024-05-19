@@ -5,6 +5,7 @@ import java.util.List;
 
 public class TestNames {
     private static ArrayList<String> names = new ArrayList<>();
+    private static ArrayList<String> specialtestnames = new ArrayList<>();
 
     static {
         names.add("Znaki Ostrzegawcze");
@@ -22,6 +23,19 @@ public class TestNames {
         names.add("Obowiązki kierującego,dokumenty");
         names.add("Awaria pojazdu, pierwsza pomoc");
         names.add("Inne");
-        names.add("");
+        specialtestnames.add("Warunki drogowe");
+        specialtestnames.add("Prędkość hamowania");
+        specialtestnames.add("Technika jazdy");
+        specialtestnames.add("Obowiązki kierującego, dokumenty");
+        specialtestnames.add("Awaria pojazdu, pierwsza pmoc");
+        specialtestnames.add("Inne");
+    }
+
+    public static ArrayList<String> getNames() {
+        return names;
+    }
+
+    public static ArrayList<String> getSpecialtestnames() {
+        return specialtestnames;
     }
 }
