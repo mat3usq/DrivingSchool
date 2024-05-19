@@ -84,6 +84,37 @@
                                                 th:field="*{content}">
                                     </textarea>
                                     </div>
+
+                                    <p>Zmien miejsce PodWykładu</p>
+                                    <div class="input-field">
+                                        <i class="fa-solid fa-arrow-down-a-z"></i>
+                                        <select id="sublecture-lectureSelect" name="lecture" th:field="*{lecture}" required
+                                                onchange="filterSublectures()">
+                                            <option th:each="l: ${lectureList}"
+                                                    th:value="${l.id}"
+                                                    th:text="'Do Wykładu: &quot;' + ${l.name.length() > 50 ? l.name.substring(0, 47) + '...' : l.name} + '&quot;'">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-field">
+                                        <i class="fa-solid fa-arrow-down-wide-short"></i>
+                                        <select id="sublecture-sublectureSelect" name="orderIndex" th:field="*{orderIndex}"
+                                                required>
+                                            <option th:value="1">Jako Pierwszy PodWykład</option>
+                                            <th:block th:each="lecture : ${lectureList}">
+                                                <th:block th:each="sl, subIterStat : ${lecture.sublectures}">
+                                                    <option th:value="${sl.orderIndex + 1}"
+                                                            th:if="${subIterStat.index + 1 < lecture.sublectures.size() && sl.id != newSublecture.id && lecture.sublectures[subIterStat.index + 1].id != newSublecture.id}"
+                                                            th:text="'Między Wykład: &quot;' + (${sl.title.length() > 25 ? sl.title.substring(0, 22) + '...' : sl.title}) + '&quot; - Wykład: &quot;' + (${lecture.sublectures[subIterStat.index + 1].title.length() > 25 ? lecture.sublectures[subIterStat.index + 1].title.substring(0, 22) + '...' : lecture.sublectures[subIterStat.index + 1].title}) + '&quot;'"
+                                                            th:sublecture-data-lecture-id="${lecture.id}">
+                                                    </option>
+                                                </th:block>
+                                            </th:block>
+                                            <option th:value="-1">Jako Ostatni PodWykład</option>
+                                        </select>
+                                    </div>
+
                                     <div class="box-btn">
                                         <button type="button" class="info-btn back-btn">Wróć</button>
                                         <button type="button" class="delete-btn">Usuń</button>

@@ -111,7 +111,9 @@ public class LectureController {
         Sublecture editedSublecture = (Sublecture) session.getAttribute("editedSublecture");
         editedSublecture.setTitle(sublecture.getTitle());
         editedSublecture.setContent(sublecture.getContent());
-        sublectureService.save(editedSublecture);
+        editedSublecture.setLecture(sublecture.getLecture());
+        editedSublecture.setOrderIndex(sublecture.getOrderIndex());
+        sublectureService.update(editedSublecture);
         return "redirect:/lecture";
     }
 

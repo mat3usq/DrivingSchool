@@ -1,5 +1,6 @@
 package com.driving.school.service;
 
+import com.driving.school.model.Lecture;
 import com.driving.school.model.Sublecture;
 import com.driving.school.repository.SubjectRepository;
 import com.driving.school.repository.SublectureRepository;
@@ -29,7 +30,8 @@ public class SublectureService {
     }
 
     public void update(Sublecture sublecture) {
-        sublectureRepository.save(sublecture);
+        renumberSublecture(sublecture);
+        renumberAllSubLectures();
     }
 
     public Sublecture findById(Long id) {
@@ -38,6 +40,7 @@ public class SublectureService {
 
     public void delete(Sublecture sublecture) {
         sublectureRepository.delete(sublecture);
+        renumberAllSubLectures();
     }
 
     private void renumberSublecture(Sublecture sublecture) {
@@ -53,5 +56,14 @@ public class SublectureService {
             }
 
         sublectureRepository.save(sublecture);
+    }
+
+    public void renumberAllSubLectures() {
+        List<Sublecture> sublectures = sublectureRepository.findAllByOrderByOrderIndex();
+        for (int i = 0; i < sublectures.size(); i++) {
+            Sublecture sublecture = sublectures.get(i);
+            sublecture.setOrderIndex(i + 1);
+            sublectureRepository.save(sublecture);
+        }
     }
 }
