@@ -14,8 +14,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository())
-                        .ignoringRequestMatchers("/registerUser", "/loginUser"))
+        http.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository()))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard/**").authenticated()
                         .requestMatchers("/lecture/**").authenticated()
@@ -33,7 +32,6 @@ public class SecurityConfig {
                 .logout(logoutConfigurer -> logoutConfigurer
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout=true")
-                        .deleteCookies("JSESSIONID")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll())
