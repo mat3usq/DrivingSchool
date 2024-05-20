@@ -91,9 +91,9 @@ todayBtn.addEventListener("click", () => {
 });
 
 dateInput.addEventListener("input", (e) => {
-    dateInput.value = dateInput.value.replace(/[^0-9]/g, "");
+    dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
 
-    if (dateInput.value.length === 2 && !dateInput.value.includes("/"))
+    if (dateInput.value.length === 2)
         dateInput.value += "/";
 
     if (dateInput.value.length > 7)
@@ -104,10 +104,6 @@ dateInput.addEventListener("input", (e) => {
             dateInput.value = dateInput.value.slice(0, 2);
 });
 
-dateInput.addEventListener("keydown", (e) => {
-    if (e.key >= '0' && e.key <= '9' && dateInput.value.length === 2 && !dateInput.value.includes("/"))
-        dateInput.value += "/";
-});
 
 gotoBtn.addEventListener("click", gotoDate);
 

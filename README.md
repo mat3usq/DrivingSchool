@@ -52,6 +52,7 @@
 - Walidacja do dodawania wykladu/podwykladu/rozdzialu
 - Przeniesienie formularzy w wykladach do sekcji nizej
 - Poprawienie responsywnosci w wykladzie
+- Formatowanie daty go-to calendar
 
 ## TODO optional
 - Podział na różne permisje dla kursu
