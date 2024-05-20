@@ -49,7 +49,9 @@
 - Walidacja przy rejestracji (dodanie pola confirm pwd, email)
 - Walidacja przy logowaniu (email, pwd)
 - Poprawka frontu + aktualnosci w dashboard
-- Walidacja do dodawania wykladu
+- Walidacja do dodawania wykladu/podwykladu/rozdzialu
+- Przeniesienie formularzy w wykladach do sekcji nizej
+- Rozgraniczenie na użytkowników w wykladach
 
 
 ## TODO optional
