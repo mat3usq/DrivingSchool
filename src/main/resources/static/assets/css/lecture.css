@@ -236,6 +236,16 @@ h2 {
   align-items: center;
   width: 100%;
 }
+.subject .hero-img .box-subject .box-container .container .edit-box .edit-item {
+  position: absolute;
+  right: 15px;
+  top: 70%;
+  transform: translateY(-45%);
+  font-size: 11px;
+  font-weight: lighter;
+  font-style: italic;
+  color: rgba(191, 191, 191, 0.88);
+}
 .subject .hero-img .box-subject .box-container .title {
   padding: 20px 10px;
   background-color: rgba(0, 0, 0, 0.6);
@@ -303,11 +313,28 @@ h2 {
 .subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .sublecture-details a.edit-icon i {
   right: -35px;
 }
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details .edit-item,
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .sublecture-details .edit-item,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details .edit-item,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .sublecture-details .edit-item {
+  right: -55px;
+  top: 36%;
+}
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details,
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .sublecture-details,
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .lecture-details,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .sublecture-details,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .lecture-details {
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 3px dashed rgba(102, 102, 102, 0.879);
+}
 .subject .hero-img .box-subject .box-container .container-sublecture a.edit-icon i,
 .subject .hero-img .box-subject .box-container .container-lecture a.edit-icon i {
   position: absolute;
   right: 10px;
-  top: 45%;
+  top: 35%;
   transform: translateY(-45%);
   text-decoration: none;
   color: #4cc9f0;
@@ -351,7 +378,8 @@ h2 {
   align-items: center;
   width: 65%;
 }
-.subject .hero-img .box-subject .box-container .lectureForm #sublecturesContainer, .subject .hero-img .box-subject .box-container .lectureForm #subjectsContainer,
+.subject .hero-img .box-subject .box-container .lectureForm #sublecturesContainer,
+.subject .hero-img .box-subject .box-container .lectureForm #subjectsContainer,
 .subject .hero-img .box-subject .box-container .sublectureForm #sublecturesContainer,
 .subject .hero-img .box-subject .box-container .sublectureForm #subjectsContainer,
 .subject .hero-img .box-subject .box-container .subjectForm #sublecturesContainer,
@@ -710,19 +738,23 @@ h2 {
 .subject .hero-img .box-subject .box-container .editLectureForm .formTitle {
   width: 80%;
 }
-.subject .hero-img .box-subject .box-container .editSublectureForm, .subject .hero-img .box-subject .box-container .editSubjectForm {
+.subject .hero-img .box-subject .box-container .editSublectureForm,
+.subject .hero-img .box-subject .box-container .editSubjectForm {
   margin: 0;
   width: 85%;
 }
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field, .subject .hero-img .box-subject .box-container .editSubjectForm .input-field {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field {
   width: 100%;
 }
 .subject .hero-img .box-subject .box-container .editSublectureForm .input-field input,
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea, .subject .hero-img .box-subject .box-container .editSubjectForm .input-field input,
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-field textarea,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-field input,
 .subject .hero-img .box-subject .box-container .editSubjectForm .input-field textarea {
   text-align: center;
 }
-.subject .hero-img .box-subject .box-container .editSublectureForm .input-file, .subject .hero-img .box-subject .box-container .editSubjectForm .input-file {
+.subject .hero-img .box-subject .box-container .editSublectureForm .input-file,
+.subject .hero-img .box-subject .box-container .editSubjectForm .input-file {
   width: 85%;
 }
 
@@ -782,8 +814,10 @@ h2 {
     left: 0px;
   }
   .subject .hero-img .box-subject .box-container .lectureForm .input-field,
-  .subject .hero-img .box-subject .box-container .lectureForm .input-file, .subject .hero-img .box-subject .box-container .sublectureForm .input-field,
-  .subject .hero-img .box-subject .box-container .sublectureForm .input-file, .subject .hero-img .box-subject .box-container .subjectForm .input-field,
+  .subject .hero-img .box-subject .box-container .lectureForm .input-file,
+  .subject .hero-img .box-subject .box-container .sublectureForm .input-field,
+  .subject .hero-img .box-subject .box-container .sublectureForm .input-file,
+  .subject .hero-img .box-subject .box-container .subjectForm .input-field,
   .subject .hero-img .box-subject .box-container .subjectForm .input-file {
     width: 100%;
   }
@@ -817,7 +851,6 @@ h2 {
   .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture {
     font-size: 14px;
     margin: 30px;
-    padding: 20px;
   }
   .navbar-left {
     height: 105vh;

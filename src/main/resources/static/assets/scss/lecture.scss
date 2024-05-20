@@ -171,6 +171,19 @@ h2 {
 					flex-direction: column;
 					align-items: center;
 					width: 100%;
+
+					.edit-box {
+						.edit-item {
+							position: absolute;
+							right: 15px;
+							top: 70%;
+							transform: translateY(-45%);
+							font-size: 11px;
+							font-weight: lighter;
+							font-style: italic;
+							color: rgb(191 191 191 / 88%);
+						}
+					}
 				}
 
 				.title {
@@ -237,13 +250,26 @@ h2 {
 							a.edit-icon i {
 								right: -35px;
 							}
+
+							.edit-item {
+								right: -55px;
+								top: 36%;
+							}
+						}
+
+						.subject-details,
+						.sublecture-details,
+						.lecture-details {
+							margin: 10px 0;
+							border-radius: 10px;
+							border: 3px dashed rgba(102, 102, 102, 0.879);
 						}
 					}
 
 					a.edit-icon i {
 						position: absolute;
 						right: 10px;
-						top: 45%;
+						top: 35%;
 						transform: translateY(-45%);
 						text-decoration: none;
 						color: $category-icon;
@@ -291,7 +317,8 @@ h2 {
 					align-items: center;
 					width: 65%;
 
-					#sublecturesContainer, #subjectsContainer {
+					#sublecturesContainer,
+					#subjectsContainer {
 						width: 100%;
 					}
 
@@ -485,7 +512,8 @@ h2 {
 					}
 				}
 
-				.editSublectureForm, .editSubjectForm {
+				.editSublectureForm,
+				.editSubjectForm {
 					margin: 0;
 					width: 85%;
 					.input-field {
@@ -500,7 +528,6 @@ h2 {
 						width: 85%;
 					}
 				}
-
 			}
 		}
 	}
@@ -571,7 +598,9 @@ h2 {
 				top: 12vh;
 				left: 0px;
 				.box-container {
-					.lectureForm, .sublectureForm, .subjectForm {
+					.lectureForm,
+					.sublectureForm,
+					.subjectForm {
 						.input-field,
 						.input-file {
 							width: 100%;
@@ -624,7 +653,6 @@ h2 {
 						.box-sublecture {
 							font-size: 14px;
 							margin: 30px;
-							padding: 20px;
 						}
 					}
 				}

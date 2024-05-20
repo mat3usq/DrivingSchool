@@ -35,14 +35,17 @@
                 <div class="box-container">
                     <div class="container" th:each="lecture : ${lectureList}">
                         <div class="container-lecture">
-                            <div th:id="'lecture-details-' + ${lecture.id}">
+                            <div class="lecture-details" th:id="'lecture-details-' + ${lecture.id}">
                                 <p class="title" th:text="${lecture.name}"></p>
                                 <p
                                         class="content"
                                         th:unless="${lecture.content == null or lecture.content.isEmpty()}"
                                         th:text="${lecture.content}"></p>
-                                <a class="edit-icon" th:href="'/lecture/editLecture/' + ${lecture.id}"><i
-                                        class="fas fa-pen"></i></a>
+                                <div class="edit-box">
+                                    <a class="edit-icon" th:href="'/lecture/editLecture/' + ${lecture.id}"><i
+                                            class="fas fa-pen"></i></a>
+                                    <p class="edit-item" th:text="'W' + ${lecture.id}"></p>
+                                </div>
                             </div>
                         </div>
 
@@ -55,8 +58,11 @@
                                     <p
                                             th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
                                             th:text="${sublecture.content}"></p>
-                                    <a class="edit-icon" th:href="'/lecture/editSublecture/' + ${sublecture.id}"><i
-                                            class="fas fa-pen"></i></a>
+                                    <div class="edit-box">
+                                        <a class="edit-icon" th:href="'/lecture/editSublecture/' + ${sublecture.id}"><i
+                                                class="fas fa-pen"></i></a>
+                                        <p class="edit-item" th:text="'PW' + ${sublecture.id}"></p>
+                                    </div>
                                 </div>
 
                                 <div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
@@ -69,8 +75,12 @@
                                     <p
                                             th:unless="${subject.content == null or subject.content.isEmpty()}"
                                             th:text="${subject.content}"></p>
-                                    <a class="edit-icon" th:href="'/lecture/editSubject/' + ${subject.id}"><i
-                                            class="fas fa-pen"></i></a>
+
+                                    <div class="edit-box">
+                                        <a class="edit-icon" th:href="'/lecture/editSubject/' + ${subject.id}"><i
+                                                class="fas fa-pen"></i></a>
+                                        <p class="edit-item" th:text="'R' + ${subject.id}"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +219,8 @@
 
                         <div class="input-field">
                             <i class="fas fa-align-left"></i>
-                            <textarea name="subjectContent" placeholder="Treść Rozdziału" rows="4" th:field="*{content}"></textarea>
+                            <textarea name="subjectContent" placeholder="Treść Rozdziału" rows="4"
+                                      th:field="*{content}"></textarea>
                         </div>
 
                         <div class="input-field">
