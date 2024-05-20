@@ -825,9 +825,6 @@ h2 {
   .subject .hero-img .box-subject .box-container .container-lecture {
     max-width: 100%;
   }
-  .navbar-nav .subject-nav {
-    height: 330px;
-  }
 }
 @media (min-width: 576px) and (max-width: 720px) {
   .container,
@@ -852,9 +849,6 @@ h2 {
     font-size: 14px;
     margin: 30px;
   }
-  .navbar-left {
-    height: 105vh;
-  }
 }
 @media (max-width: 400px) {
   .subject .hero-img {
@@ -862,8 +856,5 @@ h2 {
   }
   .subject .hero-img .box-subject {
     height: 130vh;
-  }
-  .navbar-left {
-    height: 138vh;
   }
 }/*# sourceMappingURL=lecture.css.map */

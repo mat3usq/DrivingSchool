@@ -51,6 +51,7 @@
 - Poprawka frontu + aktualnosci w dashboard
 - Walidacja do dodawania wykladu/podwykladu/rozdzialu
 - Przeniesienie formularzy w wykladach do sekcji nizej
+- Poprawienie responsywnosci w wykladzie
 
 ## TODO optional
 - Podział na różne permisje dla kursu

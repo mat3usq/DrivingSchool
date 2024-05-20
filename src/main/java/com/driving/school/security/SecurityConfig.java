@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/dashboard/**").authenticated()
                         .requestMatchers("/lecture").authenticated()
                         .requestMatchers("/lecture/**").hasAnyRole("INSTRUCTOR", "ADMIN")
+                        .requestMatchers("/calendar/**").authenticated()
                         .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()

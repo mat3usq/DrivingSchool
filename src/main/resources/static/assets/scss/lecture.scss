@@ -614,12 +614,6 @@ h2 {
 			}
 		}
 	}
-
-	.navbar-nav {
-		.subject-nav {
-			height: 330px;
-		}
-	}
 }
 
 @media (min-width: 576px) and (max-width: 720px) {
@@ -659,10 +653,6 @@ h2 {
 			}
 		}
 	}
-
-	.navbar-left {
-		height: 105vh;
-	}
 }
 
 @media (max-width: 400px) {
@@ -673,9 +663,5 @@ h2 {
 				height: 130vh;
 			}
 		}
-	}
-
-	.navbar-left {
-		height: 138vh;
 	}
 }
