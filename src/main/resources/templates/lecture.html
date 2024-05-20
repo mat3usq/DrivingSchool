@@ -33,7 +33,7 @@
             <div class="hero-shadow"></div>
             <div class="box-subject">
                 <div class="box-container">
-                    <div class="container" th:each="lecture : ${lectureList}">
+                    <div class="container" th:each="lecture, iterLecture : ${lectureList}">
                         <div class="container-lecture">
                             <div class="lecture-details" th:id="'lecture-details-' + ${lecture.id}">
                                 <p class="title" th:text="${lecture.name}"></p>
@@ -44,13 +44,13 @@
                                 <div class="edit-box">
                                     <a class="edit-icon" th:href="'/lecture/editLecture/' + ${lecture.id}"><i
                                             class="fas fa-pen"></i></a>
-                                    <p class="edit-item" th:text="'W' + ${lecture.id}"></p>
+                                    <p class="edit-item" th:text="'W' + ${iterLecture.index + 1}"></p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="container-sublecture">
-                            <div class="box-sublecture" th:each="sublecture : ${lecture.getSublectures()}">
+                            <div class="box-sublecture" th:each="sublecture, iterSublecture : ${lecture.sublectures}">
                                 <div class="sublecture-details">
                                     <h4
                                             th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
@@ -61,11 +61,11 @@
                                     <div class="edit-box">
                                         <a class="edit-icon" th:href="'/lecture/editSublecture/' + ${sublecture.id}"><i
                                                 class="fas fa-pen"></i></a>
-                                        <p class="edit-item" th:text="'PW' + ${sublecture.id}"></p>
+                                        <p class="edit-item" th:text="'PW' + ${iterSublecture.index + 1}"></p>
                                     </div>
                                 </div>
 
-                                <div class="subject-details" th:each="subject : ${sublecture.getSubjects()}">
+                                <div class="subject-details" th:each="subject, iterSubject : ${sublecture.subjects}">
                                     <p th:unless="${subject.title == null or subject.title.isEmpty()}"
                                        th:text="${subject.title}"></p>
                                     <div class="img-block">
@@ -79,7 +79,7 @@
                                     <div class="edit-box">
                                         <a class="edit-icon" th:href="'/lecture/editSubject/' + ${subject.id}"><i
                                                 class="fas fa-pen"></i></a>
-                                        <p class="edit-item" th:text="'R' + ${subject.id}"></p>
+                                        <p class="edit-item" th:text="'R' + ${iterSubject.index + 1}"></p>
                                     </div>
                                 </div>
                             </div>
