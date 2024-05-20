@@ -57,7 +57,7 @@
                                             th:text="${sublecture.content}"></p>
                                 </div>
                                 <div class="subject-details" th:each="subject, subjectIterStat : ${sublecture.getSubjects()}">
-                                    <div th:if="${subject.id} != ${newSubject.id}">
+                                    <th:block th:if="${subject.id} != ${newSubject.id}">
                                         <p th:text="'Rozdział nr. ' + ${subjectIterStat.index + 1}"></p>
                                         <p th:unless="${subject.title == null or subject.title.isEmpty()}"
                                            th:text="${subject.title}"></p>
@@ -68,8 +68,7 @@
                                         <p
                                                 th:unless="${subject.content == null or subject.content.isEmpty()}"
                                                 th:text="${subject.content}"></p>
-
-                                    </div>
+                                    </th:block>
                                     <form
                                             th:if="${subject.id} == ${newSubject.id}"
                                             name="editSubject"

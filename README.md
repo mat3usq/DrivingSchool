@@ -51,8 +51,6 @@
 - Poprawka frontu + aktualnosci w dashboard
 - Walidacja do dodawania wykladu/podwykladu/rozdzialu
 - Przeniesienie formularzy w wykladach do sekcji nizej
-- Rozgraniczenie na użytkowników w wykladach
-
 
 ## TODO optional
 - Podział na różne permisje dla kursu

@@ -46,85 +46,91 @@
                         </div>
 
                         <div class="container-sublecture">
-                            <div class="box-sublecture" th:each="sublecture, sublectureIterStat : ${lecture.getSublectures()}">
-                                <div th:if="${sublecture.id} != ${newSublecture.id}" class="sublecture-details">
-                                    <h4 th:text="'PodWykład nr. ' + ${sublectureIterStat.index + 1}"></h4>
-                                    <h4
-                                            th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
-                                            th:text="${sublecture.title}"></h4>
-                                    <p
-                                            th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
-                                            th:text="${sublecture.content}"></p>
-                                </div>
-                                <form
-                                        th:if="${sublecture.id} == ${newSublecture.id}"
-                                        name="editSublecture"
-                                        th:action="@{/lecture/editSublecture}"
-                                        method="post"
-                                        th:object="${newSublecture}"
-                                        class="editSublectureForm"
-                                        id="editable">
-                                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                                    <h4 th:text="'Edycja PodWykładu nr. ' + ${sublectureIterStat.index + 1}"></h4>
-                                    <div class="input-field">
-                                        <i class="fas fa-chalkboard-teacher"></i>
-                                        <input
-                                                type="text"
-                                                name="sublectureTitle"
-                                                placeholder="Nazwa PodWykładu"
-                                                th:field="*{title}"
-                                                required/>
-                                    </div>
-                                    <div class="input-field">
-                                        <i class="fas fa-align-left"></i>
-                                        <textarea
-                                                name="sublectureContent"
-                                                placeholder="Treść PodWykładu"
-                                                rows="4"
-                                                th:field="*{content}">
+                            <div class="box-sublecture"
+                                 th:each="sublecture, sublectureIterStat : ${lecture.getSublectures()}">
+                                <div class="sublecture-details">
+                                    <th:block th:if="${sublecture.id} != ${newSublecture.id}">
+                                        <h4 th:text="'PodWykład nr. ' + ${sublectureIterStat.index + 1}"></h4>
+                                        <h4
+                                                th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
+                                                th:text="${sublecture.title}"></h4>
+                                        <p
+                                                th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
+                                                th:text="${sublecture.content}"></p>
+                                    </th:block>
+                                    <form
+                                            th:if="${sublecture.id} == ${newSublecture.id}"
+                                            name="editSublecture"
+                                            th:action="@{/lecture/editSublecture}"
+                                            method="post"
+                                            th:object="${newSublecture}"
+                                            class="editSublectureForm"
+                                            id="editable">
+                                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                                        <h4 th:text="'Edycja PodWykładu nr. ' + ${sublectureIterStat.index + 1}"></h4>
+                                        <div class="input-field">
+                                            <i class="fas fa-chalkboard-teacher"></i>
+                                            <input
+                                                    type="text"
+                                                    name="sublectureTitle"
+                                                    placeholder="Nazwa PodWykładu"
+                                                    th:field="*{title}"
+                                                    required/>
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="fas fa-align-left"></i>
+                                            <textarea
+                                                    name="sublectureContent"
+                                                    placeholder="Treść PodWykładu"
+                                                    rows="4"
+                                                    th:field="*{content}">
                                     </textarea>
-                                    </div>
+                                        </div>
 
-                                    <p>Zmien miejsce PodWykładu</p>
-                                    <div class="input-field">
-                                        <i class="fa-solid fa-arrow-down-a-z"></i>
-                                        <select id="sublecture-lectureSelect" name="lecture" th:field="*{lecture}" required
-                                                onchange="filterSublectures()">
-                                            <option th:each="l: ${lectureList}"
-                                                    th:value="${l.id}"
-                                                    th:text="'Do Wykładu: &quot;' + ${l.name.length() > 50 ? l.name.substring(0, 47) + '...' : l.name} + '&quot;'">
-                                            </option>
-                                        </select>
-                                    </div>
+                                        <p>Zmien miejsce PodWykładu</p>
+                                        <div class="input-field">
+                                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                                            <select id="sublecture-lectureSelect" name="lecture" th:field="*{lecture}"
+                                                    required
+                                                    onchange="filterSublectures()">
+                                                <option th:each="l: ${lectureList}"
+                                                        th:value="${l.id}"
+                                                        th:text="'Do Wykładu: &quot;' + ${l.name.length() > 50 ? l.name.substring(0, 47) + '...' : l.name} + '&quot;'">
+                                                </option>
+                                            </select>
+                                        </div>
 
-                                    <div class="input-field">
-                                        <i class="fa-solid fa-arrow-down-wide-short"></i>
-                                        <select id="sublecture-sublectureSelect" name="orderIndex" th:field="*{orderIndex}"
-                                                required>
-                                            <option th:value="1">Jako Pierwszy PodWykład</option>
-                                            <th:block th:each="l : ${lectureList}">
-                                                <th:block th:each="sl, subIterStat : ${l.sublectures}">
-                                                    <option th:value="${sl.orderIndex + 1}"
-                                                            th:if="${subIterStat.index + 1 < l.sublectures.size() && sl.id != newSublecture.id && l.sublectures[subIterStat.index + 1].id != newSublecture.id}"
-                                                            th:text="'Między Wykład: &quot;' + (${sl.title.length() > 25 ? sl.title.substring(0, 22) + '...' : sl.title}) + '&quot; - Wykład: &quot;' + (${l.sublectures[subIterStat.index + 1].title.length() > 25 ? l.sublectures[subIterStat.index + 1].title.substring(0, 22) + '...' : l.sublectures[subIterStat.index + 1].title}) + '&quot;'"
-                                                            th:sublecture-data-lecture-id="${l.id}">
-                                                    </option>
+                                        <div class="input-field">
+                                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+                                            <select id="sublecture-sublectureSelect" name="orderIndex"
+                                                    th:field="*{orderIndex}"
+                                                    required>
+                                                <option th:value="1">Jako Pierwszy PodWykład</option>
+                                                <th:block th:each="l : ${lectureList}">
+                                                    <th:block th:each="sl, subIterStat : ${l.sublectures}">
+                                                        <option th:value="${sl.orderIndex + 1}"
+                                                                th:if="${subIterStat.index + 1 < l.sublectures.size() && sl.id != newSublecture.id && l.sublectures[subIterStat.index + 1].id != newSublecture.id}"
+                                                                th:text="'Między Wykład: &quot;' + (${sl.title.length() > 25 ? sl.title.substring(0, 22) + '...' : sl.title}) + '&quot; - Wykład: &quot;' + (${l.sublectures[subIterStat.index + 1].title.length() > 25 ? l.sublectures[subIterStat.index + 1].title.substring(0, 22) + '...' : l.sublectures[subIterStat.index + 1].title}) + '&quot;'"
+                                                                th:sublecture-data-lecture-id="${l.id}">
+                                                        </option>
+                                                    </th:block>
                                                 </th:block>
-                                            </th:block>
-                                            <option th:value="-1">Jako Ostatni PodWykład</option>
-                                        </select>
-                                    </div>
+                                                <option th:value="-1">Jako Ostatni PodWykład</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="box-btn">
-                                        <button type="button" class="info-btn back-btn">Wróć</button>
-                                        <button type="button" class="delete-btn">Usuń</button>
-                                        <button type="submit" class="add-btn">Zaktualizuj</button>
-                                    </div>
-                                </form>
+                                        <div class="box-btn">
+                                            <button type="button" class="info-btn back-btn">Wróć</button>
+                                            <button type="button" class="delete-btn">Usuń</button>
+                                            <button type="submit" class="add-btn">Zaktualizuj</button>
+                                        </div>
+                                    </form>
+                                </div>
                                 <form th:action="@{/lecture/deleteSublecture}" method="post" id="deleteSublectureForm">
                                     <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
                                 </form>
-                                <div class="subject-details" th:each="subject, subjectIterStat : ${sublecture.getSubjects()}">
+                                <div class="subject-details"
+                                     th:each="subject, subjectIterStat : ${sublecture.getSubjects()}">
                                     <p th:text="'Rozdział nr. ' + ${subjectIterStat.index + 1}"></p>
                                     <p th:unless="${subject.title == null or subject.title.isEmpty()}"
                                        th:text="${subject.title}"></p>
