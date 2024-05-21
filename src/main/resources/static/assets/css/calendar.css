@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .bounce-top {
   display: block;
   animation: bounce-top 2s infinite both;
@@ -171,7 +172,7 @@ h2 {
   background-color: rgba(39, 43, 57, 0.95);
 }
 .calendar-section .hero-img .box-calendar .container .left {
-  width: 90%;
+  width: 60%;
   padding: 20px;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar {
@@ -225,7 +226,7 @@ h2 {
 .calendar-section .hero-img .box-calendar .container .left .calendar .month .prev:hover,
 .calendar-section .hero-img .box-calendar .container .left .calendar .month .next:hover {
   transform: scale(1.3);
-  color: #B51B75;
+  color: #b51b75;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .weekdays {
   width: 100%;
@@ -263,7 +264,7 @@ h2 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #B51B75;
+  color: #b51b75;
   box-shadow: 1px 3px 1px rgba(240, 248, 255, 0.582);
   border-radius: 5px;
   padding: 0.64%;
@@ -272,7 +273,7 @@ h2 {
 .calendar-section .hero-img .box-calendar .container .left .calendar .days .day:not(.prev-date, .next-date):hover {
   color: aliceblue;
   transform: scale(1.2);
-  background-color: #B51B75;
+  background-color: #b51b75;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .days .prev-date,
 .calendar-section .hero-img .box-calendar .container .left .calendar .days .next-date {
@@ -282,7 +283,7 @@ h2 {
   position: relative;
   font-size: 2rem;
   color: aliceblue;
-  background-color: #B51B75;
+  background-color: #b51b75;
   transform: scale(1.05);
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .days .active::before {
@@ -310,7 +311,7 @@ h2 {
   height: 6px;
   border-radius: 30px;
   transform: translateX(-50%);
-  background-color: #7ABA78;
+  background-color: #7aba78;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .event:hover::after {
   background-color: aliceblue;
@@ -331,21 +332,20 @@ h2 {
   gap: 5px;
   padding: 0 20px;
   margin-bottom: 20px;
-  color: #B51B75;
+  color: #b51b75;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .goto-today .goto {
   display: flex;
   align-items: center;
   border-radius: 5px;
   overflow: hidden;
-  border: 2px solid #B51B75;
+  border: 2px solid #b51b75;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .goto-today .goto input {
   width: 100%;
   height: 30px;
   outline: none;
   border: none;
-  border-radius: 5px;
   padding: 0 20px;
   font-weight: 500;
   border-radius: 5px;
@@ -353,20 +353,256 @@ h2 {
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .goto-today .goto button {
   border: none;
-  border-left: 2px solid #B51B75;
+  font-weight: 500;
+  border-left: 2px solid #b51b75;
   border-radius: 0;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .goto-today button {
   padding: 5px 10px;
-  border: 2px solid #B51B75;
+  border: 2px solid #b51b75;
   border-radius: 5px;
   background-color: transparent;
   cursor: pointer;
+  font-weight: 500;
   transition: 0.3s ease;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .goto-today button:hover {
   color: aliceblue;
-  background-color: #B51B75;
+  background-color: #b51b75;
+}
+.calendar-section .hero-img .box-calendar .container .right {
+  position: relative;
+  width: 40%;
+  min-height: 100%;
+  padding: 20px 0;
+}
+.calendar-section .hero-img .box-calendar .container .right .today-date {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  align-content: flex-start;
+  padding: 0 40px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-transform: capitalize;
+}
+.calendar-section .hero-img .box-calendar .container .right .today-date .event-day {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.calendar-section .hero-img .box-calendar .container .right .today-date .event-date {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #878895;
+}
+.calendar-section .hero-img .box-calendar .container .right .events {
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event {
+  position: relative;
+  width: 95%;
+  min-height: 70px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  margin-left: 5px;
+  gap: 5px;
+  padding: 0 20px;
+  padding-left: 40px;
+  color: #fff;
+  background: linear-gradient(90deg, #3f4458, transparent);
+  cursor: pointer;
+  border-radius: 5px;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event:nth-child(even) {
+  background: transparent;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event:hover {
+  background: linear-gradient(90deg, #b51b75, transparent);
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event .title {
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event .title .event-title {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-left: 20px;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event i {
+  color: #b51b75;
+  font-size: 0.5rem;
+  transition: color 0.3s ease;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event:hover i {
+  color: #fff;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event::after {
+  content: "❖";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  font-size: 2rem;
+  line-height: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  color: #b51b75;
+  transform: translateY(-50%);
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event:hover::after {
+  display: flex;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .no-event {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #7c84a3;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  width: 90%;
+  max-height: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  background: #e0eafc;
+  background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+  transform: translateX(-50%);
+  transition: max-height 0.5s ease;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper.active {
+  max-height: 300px;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: #373c4f;
+  border-bottom: 1px solid #f5f5f5;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-header .close {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-header .close:hover {
+  transform: scale(1.2);
+  color: #b51b75;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-header .title {
+  color: #373c4f;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-body .add-event-input {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-body .add-event-input input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  border: 2px solid #f5f5f5;
+  padding: 0 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #373c4f;
+  border-radius: 5px;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-body .add-event-input input:focus {
+  outline: none;
+  border-color: #b51b75;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-footer .add-event-btn {
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  color: aliceblue;
+  background-color: #b51b75;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 2px solid #b51b75;
+  transition: 0.3s ease;
+}
+.calendar-section .hero-img .box-calendar .container .right .add-event-wrapper .add-event-footer .add-event-btn:hover {
+  background-color: transparent;
+  color: #373c4f;
+}
+.calendar-section .hero-img .box-calendar .container .add-event {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #878895;
+  border: 2px solid #878895;
+  opacity: 0.5;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.calendar-section .hero-img .box-calendar .container .add-event:hover {
+  opacity: 1;
+}
+.calendar-section .hero-img .box-calendar .container .add-event:hover:hover {
+  transform: scale(1.2);
+  color: #b51b75;
+}
+.calendar-section .hero-img .box-calendar .container .add-event i {
+  pointer-events: none;
 }
 
 .contact {
@@ -419,10 +655,26 @@ h2 {
   color: antiquewhite;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1000px) {
   .calendar-section .hero-img .box-calendar {
     width: 100%;
-    top: 12vh;
     left: 0px;
+  }
+  .navbar-left {
+    display: none;
+  }
+  .navbar-left .navbar-nav .logout {
+    display: block;
+  }
+  .navbar-top button {
+    display: block;
+  }
+  .navbar-top .box-account {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .calendar-section .hero-img .box-calendar .container {
+    max-width: 100%;
   }
 }/*# sourceMappingURL=calendar.css.map */

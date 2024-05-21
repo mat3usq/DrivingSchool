@@ -1,153 +1,154 @@
 <!DOCTYPE html>
 <html
-	lang="pl"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Kalendarz</title>
+        lang="pl"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Kalendarz</title>
 
-		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
 
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;700&display=swap"
+          rel="stylesheet"/>
 
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-			crossorigin="anonymous" />
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
 
-		<script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
 
-		<link rel="stylesheet" href="/assets/css/navigation.css" />
-		<link rel="stylesheet" href="/assets/css/calendar.css" />
-	</head>
-	<body>
-		<div th:replace="~{loadingCar :: loadingCar}"></div>
-		<div th:replace="~{navigation :: navigation-top}"></div>
-		<div th:replace="~{navigation :: navigation-left}"></div>
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/calendar.css"/>
+</head>
+<body>
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
 
-		<main>
-			<section class="calendar-section">
-				<div class="hero-img">
-					<div class="hero-shadow"></div>
-					<div class="box-calendar">
-						<div class="container">
-							<div class="left">
-								<div class="calendar">
-									<div class="month">
-										<i class="fas fa-angle-left prev"></i>
-										<div class="date">Maj 2024</div>
-										<i class="fas fa-angle-right next"></i>
-									</div>
-									<div class="weekdays">
-                                        <div>Pon</div>
-										<div>Wt</div>
-										<div>Sr</div>
-										<div>Czw</div>
-										<div>Pt</div>
-										<div>Sob</div>
-										<div>Nd</div>
-									</div>
-									<div class="days">
-                                    </div>
-									<div class="goto-today">
-										<div class="goto">
-											<input type="text" placeholder="mm/yyyy" class="date-input" />
-											<button class="goto-btn">Idz</button>
-										</div>
-										<button class="today-btn">Dziś</button>
-									</div>
-								</div>
-							</div>
-<!--							<div class="right">-->
-<!--								<div class="today-date">-->
-<!--									<div class="event-day">pon</div>-->
-<!--									<div class="event-date">20 maj 2024</div>-->
-<!--								</div>-->
-<!--								<div class="events"></div>-->
-<!--								<div class="add-event-wrapper">-->
-<!--									<div class="add-event-header">-->
-<!--										<div class="title">Dodaj Wydarzenie</div>-->
-<!--										<i class="fas fa-times close"></i>-->
-<!--									</div>-->
-<!--									<div class="add-event-body">-->
-<!--										<div class="add-event-input">-->
-<!--											<input type="text" placeholder="Nazwa Wydarzenia" class="event-name" />-->
-<!--										</div>-->
-<!--										<div class="add-event-input">-->
-<!--											<input type="text" placeholder="Początek Wydarzenia" class="event-time-from" />-->
-<!--										</div>-->
-<!--										<div class="add-event-input">-->
-<!--											<input type="text" placeholder="Koniec Wydarzenia" class="event-time-to" />-->
-<!--										</div>-->
-<!--									</div>-->
-<!--									<div class="add-event-footer">-->
-<!--										<button class="add-event-btn">Dodaj Wydarzenie</button>-->
-<!--									</div>-->
-<!--								</div>-->
-<!--							</div>-->
-<!--							<button class="add-event">-->
-<!--								<i class="fas fa-plus"></i>-->
-<!--							</button>-->
-						</div>
-					</div>
-				</div>
-			</section>
+<main>
+    <section class="calendar-section">
+        <div class="hero-img">
+            <div class="hero-shadow"></div>
+            <div class="box-calendar">
+                <div class="container">
+                    <div class="left">
+                        <div class="calendar">
+                            <div class="month">
+                                <i class="fas fa-angle-left prev"></i>
+                                <div class="date">Maj 2024</div>
+                                <i class="fas fa-angle-right next"></i>
+                            </div>
+                            <div class="weekdays">
+                                <div>Pon</div>
+                                <div>Wt</div>
+                                <div>Sr</div>
+                                <div>Czw</div>
+                                <div>Pt</div>
+                                <div>Sob</div>
+                                <div>Nd</div>
+                            </div>
+                            <div class="days">
+                            </div>
+                            <div class="goto-today">
+                                <div class="goto">
+                                    <input type="text" placeholder="mm/yyyy" class="date-input"/>
+                                    <button class="goto-btn">Idz</button>
+                                </div>
+                                <button class="today-btn">Dziś</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="today-date">
+                            <div class="event-day">pon</div>
+                            <div class="event-date">20 maj 2024</div>
+                        </div>
+                        <div class="events"></div>
+                        <div class="add-event-wrapper">
+                            <div class="add-event-header">
+                                <div class="title">Dodaj Wydarzenie</div>
+                                <i class="fas fa-times close"></i>
+                            </div>
+                            <div class="add-event-body">
+                                <div class="add-event-input">
+                                    <input type="text" placeholder="Nazwa Wydarzenia" class="event-name"/>
+                                </div>
+                                <div class="add-event-input">
+                                    <input type="text" placeholder="Początek Wydarzenia" class="event-time-from"/>
+                                </div>
+                                <div class="add-event-input">
+                                    <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"/>
+                                </div>
+                            </div>
+                            <div class="add-event-footer">
+                                <button class="add-event-btn">Dodaj Wydarzenie</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-event">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-			<br />
-			<br />
+    <br/>
+    <br/>
 
-			<h2>Kontakt</h2>
-			<div class="underline"></div>
+    <h2>Kontakt</h2>
+    <div class="underline"></div>
 
-			<section id="contact" class="contact">
-				<div class="container">
-					<div class="row text-center contact-us">
-						<div class="order-1 col-sm-6 col-lg-4 contact-item">
-							<h3>Główna Siedziba</h3>
-							<p>ul. Złota 44</p>
-							<p>12-432 Warszawa</p>
-							<p>+48 492 345 234</p>
-							<p>DrivingSchool@gmail.com</p>
-						</div>
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="row text-center contact-us">
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Główna Siedziba</h3>
+                    <p>ul. Złota 44</p>
+                    <p>12-432 Warszawa</p>
+                    <p>+48 492 345 234</p>
+                    <p>DrivingSchool@gmail.com</p>
+                </div>
 
-						<div class="order-0 order-lg-1 col-lg-4 contact-item">
-							<h3>Social Media</h3>
-							<div class="social-media">
-								<a href="#"><i class="fab fa-facebook"></i></a>
-								<a href="#"><i class="fab fa-twitter"></i></a>
-								<a href="#"><i class="fab fa-linkedin-in"></i></a>
-							</div>
-						</div>
+                <div class="order-0 order-lg-1 col-lg-4 contact-item">
+                    <h3>Social Media</h3>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
 
-						<div class="order-1 col-sm-6 col-lg-4 contact-item">
-							<h3>Siedziba Poboczna</h3>
-							<p>ul. Wiejska 45A</p>
-							<p>32-643 Białystok</p>
-							<p>+48 537 943 743</p>
-							<p>DrivingSchool@apple.pl</p>
-						</div>
-					</div>
-				</div>
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Siedziba Poboczna</h3>
+                    <p>ul. Wiejska 45A</p>
+                    <p>32-643 Białystok</p>
+                    <p>+48 537 943 743</p>
+                    <p>DrivingSchool@apple.pl</p>
+                </div>
+            </div>
+        </div>
 
-				<div class="contact-shadow"></div>
-			</section>
-		</main>
+        <div class="contact-shadow"></div>
+    </section>
+</main>
 
-		<footer class="py-4 text-center">
-			<p class="mb-0">
-				&copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
-				<span class="orange-text">Driving</span> <span class="gold-text">School</span>
-			</p>
-		</footer>
+<footer class="py-4 text-center">
+    <p class="mb-0">
+        &copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+        <span class="orange-text">Driving</span> <span class="gold-text">School</span>
+    </p>
+</footer>
 
-		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-		<script src="/assets/js/aosSettings.js"></script>
-		<script src="/assets/js/navigation.js"></script>
-		<script src="/assets/js/calendar.js"></script>
-	</body>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/calendar.js"></script>
+</body>
 </html>
