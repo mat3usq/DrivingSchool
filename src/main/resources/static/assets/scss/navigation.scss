@@ -2,139 +2,139 @@
 @import '_animation.scss';
 
 .navbar-left.show {
-  display: block;
+	display: block;
 }
 
 nav {
-  position: absolute;
-  z-index: 100;
-  font-size: 16px;
-  text-transform: uppercase;
+	position: absolute;
+	z-index: 100;
+	font-size: 16px;
+	text-transform: uppercase;
 
-  a {
-    text-decoration: none;
-  }
+	a {
+		text-decoration: none;
+	}
 
-  i,
-  .nav-link {
-    padding: 6px;
-  }
+	i,
+	.nav-link {
+		padding: 6px;
+	}
 
-  .nav-link {
-    color: $nav-color;
-  }
+	.nav-link {
+		color: $nav-color;
+	}
 
-  .fa-arrow-right-to-bracket {
-    color: $icon-color;
-    font-size: 1.2em;
-  }
+	.fa-arrow-right-to-bracket {
+		color: $icon-color;
+		font-size: 1.2em;
+	}
 
-  .fa-arrow-right-to-bracket:hover {
-    color: $primary-color;
-  }
+	.fa-arrow-right-to-bracket:hover {
+		color: $primary-color;
+	}
 
-  .navbar-nav .nav-link.active {
-    border-left: 5px solid $nav-color;
-    background-color: #ffd16682;
-    font-weight: bold;
-  }
+	.navbar-nav .nav-link.active {
+		border-left: 5px solid $nav-color;
+		background-color: #ffd16682;
+		font-weight: bold;
+	}
 
-  .nav-link:hover {
-    font-weight: bold;
-    color: $secondary-color;
-  }
+	.nav-link:hover {
+		font-weight: bold;
+		color: $secondary-color;
+	}
 
-  .navbar-brand {
-    font-size: 18px;
-    font-weight: bold;
-    color: $secondary-color;
-  }
+	.navbar-brand {
+		font-size: 18px;
+		font-weight: bold;
+		color: $secondary-color;
+	}
 
-  .active {
-    color: $primary-color;
-  }
+	.active {
+		color: $primary-color;
+	}
 
-  .fa-bars {
-    color: $secondary-color;
-  }
+	.fa-bars {
+		color: $secondary-color;
+	}
 
-  .fa-bars:hover {
-    color: $primary-color;
-  }
+	.fa-bars:hover {
+		color: $primary-color;
+	}
 }
 
 .navbar-left {
-  top: 12vh;
-  width: 300px;
-  height: 98vh;
+	top: 90px;
+	width: 300px;
+	height: 100.4vh;
 
-  .navbar-nav {
-    display: flex;
-    flex-direction: column;
+	.navbar-nav {
+		display: flex;
+		flex-direction: column;
 
-    .title {
-      font-size: 18px;
-      font-style: italic;
-      letter-spacing: 2px;
-      text-align: center;
-    }
+		.title {
+			font-size: 18px;
+			font-style: italic;
+			letter-spacing: 2px;
+			text-align: center;
+		}
 
-    .underline {
-      width: 250px;
-      border-radius: 5px;
-    }
+		.underline {
+			width: 250px;
+			border-radius: 5px;
+		}
 
-    hr {
-      margin: 0px auto 10px;
-      width: 200px;
-    }
+		hr {
+			margin: 0px auto 10px;
+			width: 200px;
+		}
 
-    .nav-link {
-      padding: 10px 20px;
-    }
+		.nav-link {
+			padding: 10px 20px;
+		}
 
-    .logout {
-      display: none;
-      .fa-arrow-right-to-bracket {
-        color: $icon-color;
-      }
-    }
-  }
+		.logout {
+			display: none;
+			.fa-arrow-right-to-bracket {
+				color: $icon-color;
+			}
+		}
+	}
 
-  i {
-    font-size: 20px;
-    margin-right: 10px;
-    color: $category-icon;
-  }
+	i {
+		font-size: 20px;
+		margin-right: 10px;
+		color: $category-icon;
+	}
 }
 
 .navbar-top {
-  width: 100vw;
-  height: 12vh;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
+	width: 100vw;
+	height: 90px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
 
-  button {
-    margin: 20px;
-    padding: 6px;
-    background: transparent;
-    border: none;
-    font-size: 30px;
-    display: none;
-  }
+	button {
+		margin: 20px;
+		padding: 6px;
+		background: transparent;
+		border: none;
+		font-size: 30px;
+		display: none;
+	}
 
-  .navbar-brand,
-  .box-account {
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
+	.navbar-brand,
+	.box-account {
+		padding: 10px 20px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+	}
 }
 
 .user-box {
@@ -154,33 +154,33 @@ nav {
 }
 
 @media (max-width: 720px) {
-  .navbar-left {
-    display: none;
+	.navbar-left {
+		display: none;
 
-    .navbar-nav {
-      .logout {
-        display: block;
-      }
-    }
-  }
+		.navbar-nav {
+			.logout {
+				display: block;
+			}
+		}
+	}
 
-  .navbar-top {
-    button {
-      display: block;
-    }
+	.navbar-top {
+		button {
+			display: block;
+		}
 
-    .box-account {
-      display: none;
-    }
-  }
+		.box-account {
+			display: none;
+		}
+	}
 }
 
 @media (max-width: 400px) {
-  .navbar-top {
-    .navbar-brand {
-      span {
-        font-size: 14px;
-      }
-    }
-  }
+	.navbar-top {
+		.navbar-brand {
+			span {
+				font-size: 14px;
+			}
+		}
+	}
 }

@@ -91,10 +91,10 @@ todayBtn.addEventListener("click", () => {
 });
 
 dateInput.addEventListener("input", (e) => {
-    dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
+    dateInput.value = dateInput.value.replace(/[^0-9]/g, "");
 
-    if (dateInput.value.length === 2)
-        dateInput.value += "/";
+    if (dateInput.value.length >= 2 && !dateInput.value.includes("/"))
+        dateInput.value = dateInput.value.slice(0, 2) + "/" + dateInput.value.slice(2);
 
     if (dateInput.value.length > 7)
         dateInput.value = dateInput.value.slice(0, 7);

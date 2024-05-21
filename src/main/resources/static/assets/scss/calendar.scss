@@ -48,11 +48,14 @@ h2 {
 	margin: 0 auto 30px;
 }
 
+.navbar-left {
+	height: 760px;
+}
 
 .calendar-section {
 	.hero-img {
 		position: relative;
-		height: 110vh;
+		min-height: 850px;
 		background-image: url('/assets/img/backgroundCalendar.png');
 		background-position: center;
 		background-size: cover;
@@ -69,10 +72,10 @@ h2 {
 
 		.box-calendar {
 			position: absolute;
-			top: 12vh;
+			top: 30px;
 			left: 300px;
-			height: 97vh;
 			width: calc(100% - 300px);
+			height: 100%;
 			padding: 20px;
 			overflow: hidden;
 			flex-direction: column;
@@ -393,30 +396,30 @@ h2 {
 	}
 }
 
-@media (min-width: 576px) and (max-width: 720px) {
-	.calendar-section {
-		max-width: 100%;
-	}
-}
+// @media (min-width: 576px) and (max-width: 720px) {
+// 	.calendar-section {
+// 		max-width: 100%;
+// 	}
+// }
 
-@media (max-width: 540px) {
-	.calendar-section {
-		.hero-img {
-			height: 117vh;
-			.box-calendar {
-				height: 102vh;
-			}
-		}
-	}
-}
+// @media (max-width: 540px) {
+// 	.calendar-section {
+// 		.hero-img {
+// 			height: 117vh;
+// 			.box-calendar {
+// 				height: 102vh;
+// 			}
+// 		}
+// 	}
+// }
 
-@media (max-width: 400px) {
-	.calendar-section {
-		.hero-img {
-			height: 150vh;
-			.box-calendar {
-				height: 130vh;
-			}
-		}
-	}
-}
+// @media (max-width: 400px) {
+// 	.calendar-section {
+// 		.hero-img {
+// 			height: 150vh;
+// 			.box-calendar {
+// 				height: 130vh;
+// 			}
+// 		}
+// 	}
+// }
