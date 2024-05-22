@@ -78,6 +78,7 @@ h2 {
 			height: 100%;
 			padding: 20px;
 			overflow: hidden;
+			display: flex;
 			flex-direction: column;
 			text-align: center;
 			flex-wrap: nowrap;
@@ -341,7 +342,6 @@ h2 {
 						align-content: flex-start;
 						padding: 0 40px;
 						margin-top: 50px;
-						margin-bottom: 30px;
 						text-transform: capitalize;
 
 						.event-day {
@@ -376,8 +376,8 @@ h2 {
 							justify-content: center;
 							flex-direction: column;
 							align-content: center;
+							margin-top: 15px;
 							margin-left: 5px;
-							gap: 5px;
 							padding: 0 20px;
 							padding-left: 40px;
 							color: #fff;
@@ -443,7 +443,7 @@ h2 {
 							justify-content: center;
 							font-size: 1.5rem;
 							font-weight: 500;
-							color: lighten($color: $calendar-font-color, $amount: 30%) ;
+							color: lighten($color: $calendar-font-color, $amount: 30%);
 						}
 					}
 
@@ -651,12 +651,86 @@ h2 {
 	}
 }
 
-@media (max-width: 1000px) {
+@media (min-width: 768px) {
 	.calendar-section {
 		.hero-img {
 			.box-calendar {
+				.container {
+					max-width: 100%;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	.calendar-section {
+		.hero-img {
+			min-height: 1500px;
+			.box-calendar {
 				width: 100%;
+				top: 110px;
 				left: 0px;
+				align-items: flex-start;
+				justify-content: flex-start;
+
+				.container {
+					min-height: 100vh;
+					flex-direction: column;
+
+					.left {
+						width: 100%;
+						height: 100%;
+						display: flex;
+						flex-direction: row;
+						justify-content: center;
+
+						.calendar {
+							width: 90%;
+							box-shadow: 1px 3px 1px rgba(159, 164, 169, 0.582);
+
+							&::after,
+							&::before {
+								top: 100%;
+								left: 50%;
+								width: 97%;
+								height: 12px;
+								border-radius: 0 0 5px 5px;
+								transform: translateX(-50%);
+								box-shadow: 1px 3px 1px rgba(159, 164, 169, 0.582);
+							}
+
+							&::before {
+								width: 94%;
+								top: calc(100% + 12px);
+							}
+						}
+					}
+
+					.right {
+						width: 100%;
+						height: 100%;
+						padding: 20px 0;
+
+						.events {
+							padding-bottom: 100px;
+
+							.no-event {
+								height: 30%;
+							}
+						}
+
+						.add-event-wrapper {
+							background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 1));
+							box-shadow: 0px 0px 10px rgba(45, 76, 103, 0.654);
+							bottom: 710px;
+						}
+
+						.today-date {
+							margin-top: 30px;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -682,12 +756,41 @@ h2 {
 	}
 }
 
-@media (min-width: 768px) {
+@media screen and (max-width: 500px) {
 	.calendar-section {
 		.hero-img {
+			min-height: 1300px;
 			.box-calendar {
 				.container {
-					max-width: 100%;
+					.left {
+						.calendar {
+							.month {
+								height: 75px;
+							}
+
+							.weekdays {
+								height: 50px;
+							}
+
+							.days {
+								.day {
+									height: 40px;
+									font-size: 0.8rem;
+
+									&.active,
+									&.today {
+										font-size: 1rem;
+									}
+								}
+							}
+						}
+					}
+
+					.right {
+						.today-date {
+							padding: 20px;
+						}
+					}
 				}
 			}
 		}
