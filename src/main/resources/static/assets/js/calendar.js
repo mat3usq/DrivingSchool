@@ -47,37 +47,40 @@ const days = [
     'Ndz',
 ];
 
-const eventsArr = [
-    {
-        day: 20,
-        month: 5,
-        year: 2024,
-        events: [
-            {
-                title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-                timeFrom: "10:00",
-                timeTo: "12:00",
-            },
-            {
-                title: "Event 2",
-                timeFrom: "11:00",
-                timeTo: "12:00",
-            },
-        ],
-    },
-    {
-        day: 24,
-        month: 5,
-        year: 2024,
-        events: [
-            {
-                title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-                timeFrom: "10:00",
-                timeTo: "12:00",
-            },
-        ],
-    },
-];
+// const eventsArr = [
+//     {
+//         day: 20,
+//         month: 5,
+//         year: 2024,
+//         events: [
+//             {
+//                 title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
+//                 timeFrom: "10:00",
+//                 timeTo: "12:00",
+//             },
+//             {
+//                 title: "Event 2",
+//                 timeFrom: "11:00",
+//                 timeTo: "12:00",
+//             },
+//         ],
+//     },
+//     {
+//         day: 24,
+//         month: 5,
+//         year: 2024,
+//         events: [
+//             {
+//                 title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
+//                 timeFrom: "10:00",
+//                 timeTo: "12:00",
+//             },
+//         ],
+//     },
+// ];
+
+let eventsArr = [];
+getEvents();
 
 function initCalendar() {
     const firstDay = new Date(year, month, 1);
@@ -335,4 +338,129 @@ function updateEvents(date) {
         </div>`;
     }
     eventsContainer.innerHTML = events;
+    saveEvents();
+}
+
+// Dodawanie wydarzenia
+addEventSubmit.addEventListener("click", () => {
+    const eventTitle = addEventTitle.value;
+    const eventTimeFrom = addEventFrom.value;
+    const eventTimeTo = addEventTo.value;
+    if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
+        alert("Wypełnij wszystkie pola");
+        return;
+    }
+
+    const timeFromArr = eventTimeFrom.split(":");
+    const timeToArr = eventTimeTo.split(":");
+    if (
+        timeFromArr.length !== 2 ||
+        timeToArr.length !== 2 ||
+        timeFromArr[0] > 23 ||
+        timeFromArr[1] > 59 ||
+        timeToArr[0] > 23 ||
+        timeToArr[1] > 59
+    ) {
+        alert("Niepoprawny format godzin");
+        return;
+    }
+
+    const timeFrom = convertTime(eventTimeFrom);
+    const timeTo = convertTime(eventTimeTo);
+
+    const newEvent = {
+        title: eventTitle,
+        timeFrom: timeFrom,
+        timeTo: timeTo
+    };
+
+    let eventAdded = false;
+    if (eventsArr.length > 0) {
+        eventsArr.forEach((item) => {
+            if (
+                item.day === activeDay &&
+                item.month === month + 1 &&
+                item.year === year
+            ) {
+                item.events.push(newEvent);
+                eventAdded = true;
+            }
+        });
+    }
+
+    if (!eventAdded) {
+        eventsArr.push({
+            day: activeDay,
+            month: month + 1,
+            year: year,
+            events: [newEvent],
+        });
+    }
+
+    // dodawanie do bazki elementu eventAdded
+
+    addEventWrapper.classList.remove("active");
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
+    updateEvents(activeDay);
+
+    const activeDayEl = document.querySelector(".day.active");
+    if (!activeDayEl.classList.contains("event")) {
+        activeDayEl.classList.add("event");
+    }
+});
+
+function convertTime(time) {
+    let timeArr = time.split(":");
+    let timeHour = timeArr[0];
+    let timeMin = timeArr[1];
+    time = timeHour + ":" + timeMin;
+    return time;
+}
+
+// funkcja do usuwania wydarzenia gdy sie kliknie na niego
+eventsContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("event")) {
+        if (confirm("Czy chcial(a)bys usunac te wydarzenie?")) {
+            const eventTitle = e.target.children[0].children[1].innerHTML;
+            eventsArr.forEach((event) => {
+                if (
+                    event.day === activeDay &&
+                    event.month === month + 1 &&
+                    event.year === year
+                ) {
+                    event.events.forEach((item, index) => {
+                        if (item.title === eventTitle) {
+                            event.events.splice(index, 1);
+                            // tutaj mozna usuwac element z bazki
+                            console.log(item)
+                        }
+                    });
+
+                    if (event.events.length === 0) {
+                        eventsArr.splice(eventsArr.indexOf(event), 1);
+                        const activeDayEl = document.querySelector(".day.active");
+                        if (activeDayEl.classList.contains("event")) {
+                            activeDayEl.classList.remove("event");
+                        }
+                    }
+                }
+            });
+            updateEvents(activeDay);
+        }
+    }
+});
+
+// zapis wydarzen
+function saveEvents() {
+    localStorage.setItem("events", JSON.stringify(eventsArr));
+}
+
+// odczyt wydarzen
+function getEvents() {
+    if (localStorage.getItem("events") === null) {
+        return;
+    }
+    eventsArr.push(...JSON.parse(localStorage.getItem("events")));
 }
