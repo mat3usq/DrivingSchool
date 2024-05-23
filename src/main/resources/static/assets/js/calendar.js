@@ -47,40 +47,7 @@ const days = [
     'Ndz',
 ];
 
-// const eventsArr = [
-//     {
-//         day: 20,
-//         month: 5,
-//         year: 2024,
-//         events: [
-//             {
-//                 title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-//                 timeFrom: "10:00",
-//                 timeTo: "12:00",
-//             },
-//             {
-//                 title: "Event 2",
-//                 timeFrom: "11:00",
-//                 timeTo: "12:00",
-//             },
-//         ],
-//     },
-//     {
-//         day: 24,
-//         month: 5,
-//         year: 2024,
-//         events: [
-//             {
-//                 title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-//                 timeFrom: "10:00",
-//                 timeTo: "12:00",
-//             },
-//         ],
-//     },
-// ];
-
-let eventsArr = [];
-getEvents();
+let eventsArr = parseEvents();
 
 function initCalendar() {
     const firstDay = new Date(year, month, 1);
@@ -104,7 +71,8 @@ function initCalendar() {
 
     for (let i = 1; i <= lastDate; i++) {
         let event = false;
-        eventsArr.forEach((eventObj) => {
+        if(eventsArr)
+            eventsArr.forEach((eventObj) => {
             if (
                 eventObj.day === i &&
                 eventObj.month === month + 1 &&
@@ -142,22 +110,22 @@ function initCalendar() {
 }
 
 // zmiana miesiąca
+// TODO: ogolnie zamysl jest taki ze wysylasz date i
+// TODO: potem controller ciebie spowrotem tutaj przekierowuje
+// TODO: to nie dziala musisz to jakos naprawic XD
 function prevMonth() {
-    month--;
-    if (month < 0) {
-        month = 11;
-        year--;
-    }
-    initCalendar();
+    if (month === 0)
+        window.location.href = `/calendar?month=${12}&year=${year - 1}&day=${activeDay}`;
+    else
+    window.location.href = `/calendar?month=${month}&year=${year}&day=${activeDay}`;
 }
 
+// TODO: to nie dziala musisz to jakos naprawic XD
 function nextMonth() {
-    month++;
-    if (month > 11) {
-        month = 0;
-        year++;
-    }
-    initCalendar();
+    if (month === 11)
+        window.location.href = `/calendar?month=${1}&year=${year + 1}&day=${activeDay}`;
+    else
+        window.location.href = `/calendar?month=${month}&year=${year}&day=${activeDay}`;
 }
 
 prev.addEventListener('click', prevMonth);
@@ -365,50 +333,50 @@ addEventSubmit.addEventListener("click", () => {
         return;
     }
 
-    const timeFrom = convertTime(eventTimeFrom);
-    const timeTo = convertTime(eventTimeTo);
-
-    const newEvent = {
-        title: eventTitle,
-        timeFrom: timeFrom,
-        timeTo: timeTo
-    };
-
-    let eventAdded = false;
-    if (eventsArr.length > 0) {
-        eventsArr.forEach((item) => {
-            if (
-                item.day === activeDay &&
-                item.month === month + 1 &&
-                item.year === year
-            ) {
-                item.events.push(newEvent);
-                eventAdded = true;
-            }
-        });
-    }
-
-    if (!eventAdded) {
-        eventsArr.push({
-            day: activeDay,
-            month: month + 1,
-            year: year,
-            events: [newEvent],
-        });
-    }
-
-    // dodawanie do bazki elementu eventAdded
-
-    addEventWrapper.classList.remove("active");
-    addEventTitle.value = "";
-    addEventFrom.value = "";
-    addEventTo.value = "";
-    updateEvents(activeDay);
-
-    const activeDayEl = document.querySelector(".day.active");
-    if (!activeDayEl.classList.contains("event")) {
-        activeDayEl.classList.add("event");
-    }
+    // const timeFrom = convertTime(eventTimeFrom);
+    // const timeTo = convertTime(eventTimeTo);
+    //
+    // const newEvent = {
+    //     title: eventTitle,
+    //     timeFrom: timeFrom,
+    //     timeTo: timeTo
+    // };
+    //
+    // let eventAdded = false;
+    // if (eventsArr.length > 0) {
+    //     eventsArr.forEach((item) => {
+    //         if (
+    //             item.day === activeDay &&
+    //             item.month === month + 1 &&
+    //             item.year === year
+    //         ) {
+    //             item.events.push(newEvent);
+    //             eventAdded = true;
+    //         }
+    //     });
+    // }
+    //
+    // if (!eventAdded) {
+    //     eventsArr.push({
+    //         day: activeDay,
+    //         month: month + 1,
+    //         year: year,
+    //         events: [newEvent],
+    //     });
+    // }
+    //
+    // // dodawanie do bazki elementu eventAdded
+    //
+    // addEventWrapper.classList.remove("active");
+    // addEventTitle.value = "";
+    // addEventFrom.value = "";
+    // addEventTo.value = "";
+    // updateEvents(activeDay);
+    //
+    // const activeDayEl = document.querySelector(".day.active");
+    // if (!activeDayEl.classList.contains("event")) {
+    //     activeDayEl.classList.add("event");
+    // }
 });
 
 function convertTime(time) {
@@ -457,10 +425,37 @@ function saveEvents() {
     localStorage.setItem("events", JSON.stringify(eventsArr));
 }
 
-// odczyt wydarzen
-function getEvents() {
-    if (localStorage.getItem("events") === null) {
-        return;
-    }
-    eventsArr.push(...JSON.parse(localStorage.getItem("events")));
+function parseEvents() {
+    const eventElements = document.querySelectorAll('.event');
+    const eventsArr = [];
+
+    eventElements.forEach(eventEl => {
+        const titleEl = eventEl.querySelector('.title');
+        const timeEl = eventEl.querySelector('.event-time');
+
+        if (titleEl && timeEl) {
+            const title = titleEl.innerText.trim();
+            const timeText = timeEl.innerText.trim();
+
+            const [start, end] = timeText.split(' - ').map(time => new Date(time));
+            const day = start.getDate();
+            const month = start.getMonth() + 1;
+            const year = start.getFullYear();
+            const timeFrom = start.toTimeString().slice(0, 5);
+            const timeTo = end.toTimeString().slice(0, 5);
+
+            let eventDay = eventsArr.find(event => event.day === day && event.month === month && event.year === year);
+
+            if (!eventDay) {
+                eventDay = {day, month, year, events: []};
+                eventsArr.push(eventDay);
+            }
+
+            eventDay.events.push({title, timeFrom, timeTo});
+
+            eventEl.remove();
+        }
+    });
+
+    return eventsArr;
 }

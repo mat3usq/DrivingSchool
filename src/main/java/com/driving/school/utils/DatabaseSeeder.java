@@ -1,10 +1,7 @@
 package com.driving.school.utils;
 
 import com.driving.school.model.*;
-import com.driving.school.repository.LectureRepository;
-import com.driving.school.repository.SchoolUserRepository;
-import com.driving.school.repository.SubjectRepository;
-import com.driving.school.repository.SublectureRepository;
+import com.driving.school.repository.*;
 import com.driving.school.service.LectureService;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.SchoolUserService;
@@ -24,6 +21,8 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,17 +35,19 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final SublectureRepository sublectureRepository;
     private final SubjectRepository subjectRepository;
     private final TestService testService;
+    private final InstructionEventRepository eventRepository;
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
             schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
-                          SubjectRepository subjectRepository, TestService testService) {
+                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
         this.sublectureRepository = sublectureRepository;
         this.subjectRepository = subjectRepository;
         this.testService = testService;
+        this.eventRepository = eventRepository;
     }
 
     @Override
@@ -55,6 +56,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         createUsers();
         createLectures();
         addTeststoDb();
+        createEvents();
     }
 
     private void createUsers() {
@@ -154,5 +156,81 @@ public class DatabaseSeeder implements CommandLineRunner {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ImageIO.write(bImage, "jpg", bos);
         return bos.toByteArray();
+    }
+
+    private void createEvents() {
+        SchoolUser schoolUser = schoolUserRepository.findById(1L).orElse(null);
+
+        InstructionEvent event1 = new InstructionEvent();
+        event1.setStartTime(LocalDateTime.of(2024, 5, 1, 10, 0));
+        event1.setEndTime(LocalDateTime.of(2024, 5, 1, 12, 0));
+        event1.setSchoolUser(schoolUser);
+        event1.setStatus("Scheduled");
+        event1.setEventType("Driving Lesson");
+
+        InstructionEvent event2 = new InstructionEvent();
+        event2.setStartTime(LocalDateTime.of(2024, 5, 2, 14, 0));
+        event2.setEndTime(LocalDateTime.of(2024, 5, 2, 16, 0));
+        event2.setSchoolUser(schoolUser);
+        event2.setStatus("Completed");
+        event2.setEventType("Theory Lesson");
+
+        InstructionEvent event3 = new InstructionEvent();
+        event3.setStartTime(LocalDateTime.of(2024, 5, 3, 9, 0));
+        event3.setEndTime(LocalDateTime.of(2024, 5, 3, 11, 0));
+        event3.setSchoolUser(schoolUser);
+        event3.setStatus("Cancelled");
+        event3.setEventType("Driving Lesson");
+
+        InstructionEvent event4 = new InstructionEvent();
+        event4.setStartTime(LocalDateTime.of(2024, 5, 4, 15, 0));
+        event4.setEndTime(LocalDateTime.of(2024, 5, 4, 17, 0));
+        event4.setSchoolUser(schoolUser);
+        event4.setStatus("Scheduled");
+        event4.setEventType("Driving Test");
+
+        InstructionEvent event5 = new InstructionEvent();
+        event5.setStartTime(LocalDateTime.of(2024, 5, 5, 8, 0));
+        event5.setEndTime(LocalDateTime.of(2024, 5, 5, 10, 0));
+        event5.setSchoolUser(schoolUser);
+        event5.setStatus("Scheduled");
+        event5.setEventType("Practice Session");
+
+        InstructionEvent event6 = new InstructionEvent();
+        event6.setStartTime(LocalDateTime.of(2024, 5, 6, 13, 0));
+        event6.setEndTime(LocalDateTime.of(2024, 5, 6, 15, 0));
+        event6.setSchoolUser(schoolUser);
+        event6.setStatus("Scheduled");
+        event6.setEventType("Theory Lesson");
+
+        InstructionEvent event7 = new InstructionEvent();
+        event7.setStartTime(LocalDateTime.of(2024, 5, 7, 11, 0));
+        event7.setEndTime(LocalDateTime.of(2024, 5, 7, 13, 0));
+        event7.setSchoolUser(schoolUser);
+        event7.setStatus("Completed");
+        event7.setEventType("Driving Lesson");
+
+        InstructionEvent event8 = new InstructionEvent();
+        event8.setStartTime(LocalDateTime.of(2024, 5, 8, 12, 0));
+        event8.setEndTime(LocalDateTime.of(2024, 5, 8, 14, 0));
+        event8.setSchoolUser(schoolUser);
+        event8.setStatus("Scheduled");
+        event8.setEventType("Driving Lesson");
+
+        InstructionEvent event9 = new InstructionEvent();
+        event9.setStartTime(LocalDateTime.of(2024, 5, 9, 16, 0));
+        event9.setEndTime(LocalDateTime.of(2024, 5, 9, 18, 0));
+        event9.setSchoolUser(schoolUser);
+        event9.setStatus("Completed");
+        event9.setEventType("Theory Lesson");
+
+        InstructionEvent event10 = new InstructionEvent();
+        event10.setStartTime(LocalDateTime.of(2024, 5, 10, 14, 0));
+        event10.setEndTime(LocalDateTime.of(2024, 5, 10, 16, 0));
+        event10.setSchoolUser(schoolUser);
+        event10.setStatus("Scheduled");
+        event10.setEventType("Driving Lesson");
+
+        eventRepository.saveAll(Arrays.asList(event1, event2, event3, event4, event5, event6, event7, event8, event9, event10));
     }
 }

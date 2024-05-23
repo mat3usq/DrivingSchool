@@ -69,7 +69,17 @@
                             <div class="event-day">pon</div>
                             <div class="event-date">20 maj 2024</div>
                         </div>
-                        <div class="events"></div>
+                        <div class="events">
+                            <div hidden="hidden" th:each="event : ${events}" class="event">
+                                <div class="title">
+                                    <i class="fas fa-circle"></i>
+                                    <h3 class="event-title" th:text="${event.eventType}">Event Title</h3>
+                                </div>
+                                <div class="event-time">
+                                    <span class="event-time" th:text="${event.startTime} + ' - ' + ${event.endTime}">Event Time</span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="add-event-wrapper">
                             <div class="add-event-header">
                                 <div class="title">Dodaj Wydarzenie</div>
