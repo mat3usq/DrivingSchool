@@ -40,9 +40,17 @@
                     <div class="left">
                         <div class="calendar">
                             <div class="month">
-                                <i class="fas fa-angle-left prev"></i>
-                                <div class="date">Maj 2024</div>
-                                <i class="fas fa-angle-right next"></i>
+                                <form th:action="@{/calendar}" method="post">
+                                    <input type="hidden" name="date" th:value="${date}"/>
+                                    <input type="hidden" name="month" value="-1"/>
+                                    <button class="fas fa-angle-left prev"></button>
+                                </form>
+                                <div class="date" th:text="${date}">Date</div>
+                                <form th:action="@{/calendar}" method="post">
+                                    <input type="hidden" name="date" th:value="${date}"/>
+                                    <input type="hidden" name="month" value="1"/>
+                                    <button class="fas fa-angle-right next"></button>
+                                </form>
                             </div>
                             <div class="weekdays">
                                 <div>Pon</div>

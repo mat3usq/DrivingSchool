@@ -17,7 +17,8 @@ const calendar = document.querySelector('.calendar'),
     addEventTo = document.querySelector(".event-time-to "),
     addEventSubmit = document.querySelector(".add-event-btn ");
 
-let today = new Date();
+let today = new Date(date.textContent);
+console.log(date.textContent);
 let activeDay;
 let month = today.getMonth();
 let year = today.getFullYear();
