@@ -68,7 +68,11 @@
                                     <input type="text" placeholder="mm/yyyy" class="date-input"/>
                                     <button class="goto-btn">Idz</button>
                                 </div>
-                                <button class="today-btn">Dziś</button>
+                                <form th:action="@{/calendar}" method="post" id="calendarForm">
+                                    <input type="hidden" name="date" id="dateInput"/>
+                                    <input type="hidden" name="month" value="0"/>
+                                    <button class="today-btn" onclick="submitFormWithDate()">Dziś</button>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -460,3 +460,12 @@ function parseEvents() {
 
     return eventsArr;
 }
+
+
+function submitFormWithDate() {
+    var dateValue = new Date().toISOString();
+
+    document.getElementById('dateInput').value = dateValue;
+
+    document.getElementById('calendarForm').submit();
+}
