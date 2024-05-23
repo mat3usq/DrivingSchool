@@ -64,10 +64,14 @@
                             <div class="days">
                             </div>
                             <div class="goto-today">
+                                <form th:action="@{/calendar}" method="post" id="gotoForm" onsubmit="return processDate();">
                                 <div class="goto">
                                     <input type="text" placeholder="mm/yyyy" class="date-input"/>
-                                    <button class="goto-btn">Idz</button>
+                                    <input type="hidden" name="date" id="date-input"/>
+                                    <input type="hidden" name="month" value="0">
+                                    <button type="submit" onclick="processDate()">Idz</button>
                                 </div>
+                                </form>
                                 <form th:action="@{/calendar}" method="post" id="calendarForm">
                                     <input type="hidden" name="date" id="dateInput"/>
                                     <input type="hidden" name="month" value="0"/>

@@ -214,18 +214,18 @@ dateInput.addEventListener('input', e => {
 
 gotoBtn.addEventListener('click', gotoDate);
 
-function gotoDate() {
-    const dateArr = dateInput.value.split('/');
-    if (dateArr.length === 2) {
-        if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
-            month = dateArr[0] - 1;
-            year = dateArr[1];
-            initCalendar();
-            return;
-        }
-    }
-    alert('Nieprawidłowa Data');
-}
+// function gotoDate() {
+//     const dateArr = dateInput.value.split('/');
+//     if (dateArr.length === 2) {
+//         if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
+//             month = dateArr[0] - 1;
+//             year = dateArr[1];
+//             initCalendar();
+//             return;
+//         }
+//     }
+//     alert('Nieprawidłowa Data');
+// }
 
 // ustawienie listenerów na guziki
 addEventBtn.addEventListener('click', () => {
@@ -468,4 +468,22 @@ function submitFormWithDate() {
     document.getElementById('dateInput').value = dateValue;
 
     document.getElementById('calendarForm').submit();
+}
+
+function processDate() {
+    event.preventDefault();
+
+    var userDateValue = document.getElementById('userDateInput').value;
+    var [month, year] = userDateValue.split('/');
+
+    if (month && year) {
+        var date = new Date(year, month - 1, 1);
+        var isoDate = date.toISOString();
+
+
+        document.getElementById('date-input').value = isoDate;
+
+
+        document.getElementById('gotoForm').submit();
+    }
 }
