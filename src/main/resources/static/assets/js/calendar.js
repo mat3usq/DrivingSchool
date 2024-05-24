@@ -110,9 +110,8 @@ function addListener() {
     days.forEach((day) => {
         day.addEventListener("click", (e) => {
             const target = e.target;
-            updateEvents(Number(target.innerHTML));
-
             if (!target.classList.contains("prev-date") && !target.classList.contains("next-date")) {
+                updateEvents(Number(target.innerHTML));
                 days.forEach((day) => {
                     day.classList.remove("active");
                 });
@@ -156,6 +155,7 @@ function getActiveDay(date) {
 }
 
 function updateEvents(date) {
+    const role = document.querySelector(".user_role").innerHTML
     let events = "";
     eventsArr.forEach((event) => {
         if (
@@ -164,7 +164,15 @@ function updateEvents(date) {
             year === event.year
         ) {
             event.events.forEach((event) => {
-                events += `<div class="event">
+                let actionLink;
+                if (role === '[STUDENT]') {
+                    actionLink = `<a href="/calendar/assignEvent?id=${event.id}"><i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i></a>`;
+                } else {
+                    actionLink = `<a href="/calendar/deleteEvent?id=${event.id}"><i class="fas fa-trash delete-icon"></i></a>`;
+                }
+                events += `
+        <div class="event" onclick="toggleEvent(this)">
+            ${actionLink}
             <div class="title">
               <i class="fas fa-font"></i>
               <h3 class="event-title">${event.title}</h3>
@@ -189,16 +197,22 @@ function updateEvents(date) {
     eventsContainer.innerHTML = events;
 }
 
+function toggleEvent(element) {
+    element.classList.toggle('clicked');
+}
+
 function parseEvents() {
     const eventElements = document.querySelectorAll('.event');
     const eventsArr = [];
 
     eventElements.forEach(eventEl => {
+        const elId = eventEl.querySelector('.id');
         const titleEl = eventEl.querySelector('.title');
         const subjectEl = eventEl.querySelector('.subject');
         const timeEl = eventEl.querySelector('.event-time');
 
         if (titleEl && timeEl) {
+            const id = elId.innerText.trim();
             const title = titleEl.innerText.trim();
             const subject = subjectEl.innerText.trim();
             const timeText = timeEl.innerText.trim();
@@ -217,7 +231,7 @@ function parseEvents() {
                 eventsArr.push(eventDay);
             }
 
-            eventDay.events.push({title, subject, timeFrom, timeTo});
+            eventDay.events.push({id, title, subject, timeFrom, timeTo});
 
             eventEl.remove();
         }
@@ -305,35 +319,4 @@ addEventCloseBtn.addEventListener('click', () => {
 document.addEventListener('click', e => {
     if (e.target !== addEventBtn && !addEventWrapper.contains(e.target))
         addEventWrapper.classList.remove('active');
-});
-eventsContainer.addEventListener("click", (e) => {
-    if (e.target.classList.contains("event")) {
-        if (confirm("Czy chcial(a)bys usunac te wydarzenie?")) {
-            const eventTitle = e.target.children[0].children[1].innerHTML;
-            eventsArr.forEach((event) => {
-                if (
-                    event.day === activeDay &&
-                    event.month === month + 1 &&
-                    event.year === year
-                ) {
-                    event.events.forEach((item, index) => {
-                        if (item.title === eventTitle) {
-                            event.events.splice(index, 1);
-                            // tutaj mozna usuwac element z bazki
-                            console.log(item)
-                        }
-                    });
-
-                    if (event.events.length === 0) {
-                        eventsArr.splice(eventsArr.indexOf(event), 1);
-                        const activeDayEl = document.querySelector(".day.active");
-                        if (activeDayEl.classList.contains("event")) {
-                            activeDayEl.classList.remove("event");
-                        }
-                    }
-                }
-            });
-            updateEvents(activeDay);
-        }
-    }
 });

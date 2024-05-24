@@ -432,12 +432,42 @@ h2 {
   background: linear-gradient(90deg, #3f4458, transparent);
   cursor: pointer;
   border-radius: 5px;
+  transition: transform 0.3s ease;
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event:nth-child(even) {
   background: transparent;
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event:hover {
   background: linear-gradient(90deg, #b51b75, transparent);
+  transform: translateX(30px);
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event:hover .delete-icon, .calendar-section .hero-img .box-calendar .container .right .events .event:hover .assign-icon {
+  opacity: 1;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event:hover .delete-icon:hover {
+  color: #ef476f;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event:hover .assign-icon:hover {
+  color: #4cc9f0;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event.clicked {
+  background: linear-gradient(90deg, #b51b75, transparent);
+  transform: translateX(30px);
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event.clicked .delete-icon, .calendar-section .hero-img .box-calendar .container .right .events .event.clicked .assign-icon {
+  opacity: 1;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event a {
+  font-size: 20px;
+  transition: opacity 0.3s ease;
+}
+.calendar-section .hero-img .box-calendar .container .right .events .event .delete-icon, .calendar-section .hero-img .box-calendar .container .right .events .event .assign-icon {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  padding: 35px 15px 30px 0px;
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event .title, .calendar-section .hero-img .box-calendar .container .right .events .event .subject {
   display: flex;

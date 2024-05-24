@@ -87,6 +87,10 @@
                         </div>
                         <div class="events">
                             <div hidden="hidden" th:each="event : ${events}" class="event">
+                                <div class="id">
+                                    <i class="fas fa-circle"></i>
+                                    <h3 class="event-id" th:text="${event.id}">Event Id</h3>
+                                </div>
                                 <div class="subject">
                                     <i class="fas fa-circle"></i>
                                     <h3 class="event-subject" th:text="${event.subject}">Event Subject</h3>

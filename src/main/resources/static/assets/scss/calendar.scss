@@ -388,6 +388,7 @@ h2 {
 							background: linear-gradient(90deg, #3f4458, transparent);
 							cursor: pointer;
 							border-radius: 5px;
+							transition: transform 0.3s ease;
 
 							&:nth-child(even) {
 								background: transparent;
@@ -395,6 +396,42 @@ h2 {
 
 							&:hover {
 								background: linear-gradient(90deg, $calendar-color, transparent);
+								transform: translateX(30px);
+							}
+							
+							&:hover .delete-icon, &:hover .assign-icon {
+								opacity: 1;
+							}
+							
+							&:hover .delete-icon:hover {
+								color: $primary-color;
+							}
+
+							&:hover .assign-icon:hover {
+								color: $category-icon;
+							}
+
+							&.clicked {
+								background: linear-gradient(90deg, $calendar-color, transparent);
+								transform: translateX(30px);
+
+								.delete-icon, .assign-icon {
+									opacity: 1;
+								}
+							}
+
+							a {
+								font-size: 20px;
+								transition: opacity 0.3s ease;
+							}
+
+							.delete-icon, .assign-icon {
+								position: absolute;
+								left: -30px;
+								top: 50%;
+								transform: translateY(-50%);
+								opacity: 0;
+								padding: 35px 15px 30px 0px;
 							}
 
 							.title, .subject {
