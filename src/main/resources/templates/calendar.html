@@ -64,16 +64,16 @@
                             <div class="days">
                             </div>
                             <div class="goto-today">
-                                <form th:action="@{/calendar}" method="post" id="gotoForm" onsubmit="return processDate();">
-                                <div class="goto">
-                                    <input type="text" placeholder="mm/yyyy" class="date-input"/>
-                                    <input type="hidden" name="date" id="date-input"/>
-                                    <input type="hidden" name="month" value="0">
-                                    <button type="submit" onclick="processDate()">Idz</button>
-                                </div>
+                                <form th:action="@{/calendar}" method="post" id="gotoForm">
+                                    <div class="goto">
+                                        <input type="text" placeholder="mm/yyyy" class="date-input" id="userDateInput"/>
+                                        <input type="hidden" name="date" id="dateInputGoTo"/>
+                                        <input type="hidden" name="month" id="monthDifference"/>
+                                        <button class="goto-btn" onclick="processDate()">Idź</button>
+                                    </div>
                                 </form>
                                 <form th:action="@{/calendar}" method="post" id="calendarForm">
-                                    <input type="hidden" name="date" id="dateInput"/>
+                                    <input type="hidden" name="date" id="dateInputToday"/>
                                     <input type="hidden" name="month" value="0"/>
                                     <button class="today-btn" onclick="submitFormWithDate()">Dziś</button>
                                 </form>
@@ -82,8 +82,8 @@
                     </div>
                     <div class="right">
                         <div class="today-date">
-                            <div class="event-day">pon</div>
-                            <div class="event-date">20 maj 2024</div>
+                            <div class="event-day" th:text="${formattedDay}">pon</div>
+                            <div class="event-date" th:text="${formattedDate}">20 maj 2024</div>
                         </div>
                         <div class="events">
                             <div hidden="hidden" th:each="event : ${events}" class="event">

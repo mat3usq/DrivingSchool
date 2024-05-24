@@ -18,6 +18,12 @@ public class InstructionEvent {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+    @Column(name = "SUBJECT", length = 128)
+    private String subject;
+
+    @Column(name = "EVENTTYPE", length = 128)
+    private String eventType;
+
     @Column(name = "STARTTIME")
     private LocalDateTime startTime;
 
@@ -31,7 +37,4 @@ public class InstructionEvent {
 
     @Column(name = "STATUS", length = 64)
     private String status;
-
-    @Column(name = "EVENTTYPE", length = 128)
-    private String eventType;
 }

@@ -223,6 +223,9 @@ h2 {
   padding: 5px;
   cursor: pointer;
   transition: 0.3s ease;
+  font-size: 20px;
+  border: none;
+  background: transparent;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .month .prev:hover,
 .calendar-section .hero-img .box-calendar .container .left .calendar .month .next:hover {
@@ -278,6 +281,7 @@ h2 {
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .days .prev-date,
 .calendar-section .hero-img .box-calendar .container .left .calendar .days .next-date {
+  cursor: not-allowed;
   color: #b3b3b3;
 }
 .calendar-section .hero-img .box-calendar .container .left .calendar .days .active {
@@ -489,7 +493,8 @@ h2 {
   overflow: hidden;
   border-radius: 5px;
   background: #e0eafc;
-  background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+  background: linear-gradient(to left, #cfdef3, rgb(252, 240, 221));
+  box-shadow: 0px 0px 10px rgba(45, 76, 103, 0.654);
   transform: translateX(-50%);
   transition: max-height 0.5s ease;
 }
@@ -711,8 +716,6 @@ h2 {
     height: 30%;
   }
   .calendar-section .hero-img .box-calendar .container .right .add-event-wrapper {
-    background: linear-gradient(to left, #cfdef3, rgb(252, 240, 221));
-    box-shadow: 0px 0px 10px rgba(45, 76, 103, 0.654);
     bottom: 710px;
   }
   .calendar-section .hero-img .box-calendar .container .right .today-date {

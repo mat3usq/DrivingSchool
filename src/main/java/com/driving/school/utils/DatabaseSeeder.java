@@ -231,6 +231,13 @@ public class DatabaseSeeder implements CommandLineRunner {
         event10.setStatus("Scheduled");
         event10.setEventType("Driving Lesson");
 
-        eventRepository.saveAll(Arrays.asList(event1, event2, event3, event4, event5, event6, event7, event8, event9, event10));
+        InstructionEvent event11 = new InstructionEvent();
+        event11.setStartTime(LocalDateTime.of(2025, 5, 24, 14, 0));
+        event11.setEndTime(LocalDateTime.of(2025, 5, 24, 16, 0));
+        event11.setSchoolUser(schoolUser);
+        event11.setStatus("Scheduled");
+        event11.setEventType("Driving Lesson");
+
+        eventRepository.saveAll(Arrays.asList(event1, event2, event3, event4, event5, event6, event7, event8, event9, event10, event11));
     }
 }

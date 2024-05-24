@@ -27,7 +27,6 @@ public class SecurityConfig {
                         .requestMatchers("/lecture").authenticated()
                         .requestMatchers("/lecture/**").hasAnyRole("INSTRUCTOR", "ADMIN")
                         .requestMatchers("/calendar/**").authenticated()
-                        .requestMatchers("/callendar-next").authenticated()
                         .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()
@@ -45,9 +44,7 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll())
-                .exceptionHandling(handler -> {
-                    handler.accessDeniedHandler(new CustomAccessDeniedHandler());
-                })
+                .exceptionHandling(handler -> handler.accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
@@ -70,6 +67,8 @@ public class SecurityConfig {
             if (auth != null && auth.isAuthenticated())
                 if (request.getRequestURI().startsWith("/lecture"))
                     response.sendRedirect("/lecture");
+                else if (request.getRequestURI().startsWith("/calendar"))
+                    response.sendRedirect("/calendar");
                 else
                     response.sendRedirect("/dashboard");
             else

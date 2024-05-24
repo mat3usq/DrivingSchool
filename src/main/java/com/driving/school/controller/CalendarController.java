@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class CalendarController {
@@ -29,7 +30,6 @@ public class CalendarController {
     public ModelAndView displayCalendar(@RequestParam(required = false) Integer month,
                                         @RequestParam(required = false) Integer year) {
         ModelAndView modelAndView = new ModelAndView("calendar");
-
         LocalDateTime startDateTime;
         LocalDateTime endDateTime;
 
@@ -61,12 +61,17 @@ public class CalendarController {
         LocalDateTime startOfMonth = localDateTime.withDayOfMonth(1).toLocalDate().atStartOfDay();
         LocalDateTime endOfMonth = localDateTime.with(TemporalAdjusters.lastDayOfMonth()).toLocalDate().atTime(23, 59, 59);
 
-
-
         List<InstructionEvent> events = instructionEventRepository.findByStartTimeBetween(startOfMonth, endOfMonth);
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEE", new Locale("pl"));
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", new Locale("pl"));
+        String formattedDay = localDateTime.format(dayFormatter);
+        String formattedDate = localDateTime.format(dateFormatter);
+
+        modelAndView.addObject("formattedDay", formattedDay);
+        modelAndView.addObject("formattedDate", formattedDate);
         modelAndView.addObject("events", events);
         modelAndView.addObject("date", localDateTime);
+
         return modelAndView;
     }
-
 }
