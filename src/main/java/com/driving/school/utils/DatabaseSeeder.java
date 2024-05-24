@@ -161,83 +161,29 @@ public class DatabaseSeeder implements CommandLineRunner {
     private void createEvents() {
         SchoolUser schoolUser = schoolUserRepository.findById(1L).orElse(null);
 
-        InstructionEvent event1 = new InstructionEvent();
-        event1.setStartTime(LocalDateTime.of(2024, 5, 1, 10, 0));
-        event1.setEndTime(LocalDateTime.of(2024, 5, 1, 12, 0));
-        event1.setSchoolUser(schoolUser);
-        event1.setStatus("Scheduled");
-        event1.setEventType("Driving Lesson");
+        List<InstructionEvent> events = Arrays.asList(
+                new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 1, 10, 0), LocalDateTime.of(2024, 5, 1, 12, 0), schoolUser),
+                new InstructionEvent("Teoria jazdy: Zasady, przepisy i najlepsze praktyki", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 2, 14, 0), LocalDateTime.of(2024, 5, 2, 16, 0), schoolUser),
+                new InstructionEvent("Ćwiczenia praktyczne: Bezpieczne poruszanie się po drogach", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 3, 9, 0), LocalDateTime.of(2024, 5, 3, 11, 0), schoolUser),
+                new InstructionEvent("Spotkanie informacyjne: Wprowadzenie do kursu jazdy", Constants.INFORMATION_SESSIONS, LocalDateTime.of(2024, 5, 4, 15, 0), LocalDateTime.of(2024, 5, 4, 17, 0), schoolUser),
+                new InstructionEvent("Trening manewrów: Parkowanie, cofanie i zawracanie", Constants.BASIC_MANEUVERS, LocalDateTime.of(2024, 5, 5, 8, 0), LocalDateTime.of(2024, 5, 5, 10, 0), schoolUser),
+                new InstructionEvent("Kurs pierwszej pomocy: Reagowanie na wypadki drogowe", Constants.FIRST_AID_CLASSES, LocalDateTime.of(2024, 5, 6, 13, 0), LocalDateTime.of(2024, 5, 6, 15, 0), schoolUser),
+                new InstructionEvent("Jazda miejska: Radzenie sobie z ruchem ulicznym", Constants.CITY_DRIVING, LocalDateTime.of(2024, 5, 7, 11, 0), LocalDateTime.of(2024, 5, 7, 13, 0), schoolUser),
+                new InstructionEvent("Zaawansowane techniki jazdy: Skuteczność i bezpieczeństwo", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 8, 12, 0), LocalDateTime.of(2024, 5, 8, 14, 0), schoolUser),
+                new InstructionEvent("Dogłębna analiza przepisów ruchu drogowego", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 9, 16, 0), LocalDateTime.of(2024, 5, 9, 18, 0), schoolUser),
+                new InstructionEvent("Praktyczna nauka jazdy: Techniki zaawansowane", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 10, 14, 0), LocalDateTime.of(2024, 5, 10, 16, 0), schoolUser),
+                new InstructionEvent("Aktualizacja przepisów drogowych: Co nowego w 2024?", Constants.TRAFFIC_RULES_LECTURES, LocalDateTime.of(2024, 5, 11, 10, 0), LocalDateTime.of(2024, 5, 11, 12, 0), schoolUser),
+                new InstructionEvent("Nocna jazda: Jak bezpiecznie poruszać się po zmroku", Constants.NIGHT_DRIVING, LocalDateTime.of(2024, 5, 12, 14, 0), LocalDateTime.of(2024, 5, 12, 16, 0), schoolUser),
+                new InstructionEvent("Jazda ekonomiczna: Techniki oszczędzania paliwa", Constants.ECO_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 13, 9, 0), LocalDateTime.of(2024, 5, 13, 11, 0), schoolUser),
+                new InstructionEvent("Dodatkowe lekcje: Przygotowanie do egzaminu praktycznego", Constants.ADDITIONAL_DRIVING_LESSONS, LocalDateTime.of(2024, 5, 14, 15, 0), LocalDateTime.of(2024, 5, 14, 17, 0), schoolUser),
+                new InstructionEvent("Intensywny trening na placu manewrowym: Doskonalenie umiejętności", Constants.PRACTICAL_CLASSES_ON_MANEUVERING_GROUND, LocalDateTime.of(2024, 5, 15, 8, 0), LocalDateTime.of(2024, 5, 15, 10, 0), schoolUser),
+                new InstructionEvent("Warsztaty z technik awaryjnych: Jak reagować w sytuacjach kryzysowych", Constants.EMERGENCY_TECHNIQUES_TRAINING, LocalDateTime.of(2024, 5, 16, 13, 0), LocalDateTime.of(2024, 5, 16, 15, 0), schoolUser),
+                new InstructionEvent("Jazda poza miastem: Techniki jazdy na trasach szybkiego ruchu", Constants.OUT_OF_TOWN_DRIVING, LocalDateTime.of(2024, 5, 17, 11, 0), LocalDateTime.of(2024, 5, 17, 13, 0), schoolUser),
+                new InstructionEvent("Podstawy obsługi technicznej pojazdu: Co każdy kierowca powinien wiedzieć", Constants.CAR_MAINTENANCE_TRAINING, LocalDateTime.of(2024, 5, 18, 12, 0), LocalDateTime.of(2024, 5, 18, 14, 0), schoolUser),
+                new InstructionEvent("Spotkanie organizacyjne: Planowanie harmonogramu kursu", Constants.INFORMATION_AND_ORGANIZATIONAL_MEETINGS, LocalDateTime.of(2024, 5, 19, 16, 0), LocalDateTime.of(2024, 5, 19, 18, 0), schoolUser),
+                new InstructionEvent("Konsultacje z egzaminatorem: Przygotowanie do testów", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 5, 20, 14, 0), LocalDateTime.of(2024, 5, 20, 16, 0), schoolUser)
+        );
 
-        InstructionEvent event2 = new InstructionEvent();
-        event2.setStartTime(LocalDateTime.of(2024, 5, 2, 14, 0));
-        event2.setEndTime(LocalDateTime.of(2024, 5, 2, 16, 0));
-        event2.setSchoolUser(schoolUser);
-        event2.setStatus("Completed");
-        event2.setEventType("Theory Lesson");
-
-        InstructionEvent event3 = new InstructionEvent();
-        event3.setStartTime(LocalDateTime.of(2024, 5, 3, 9, 0));
-        event3.setEndTime(LocalDateTime.of(2024, 5, 3, 11, 0));
-        event3.setSchoolUser(schoolUser);
-        event3.setStatus("Cancelled");
-        event3.setEventType("Driving Lesson");
-
-        InstructionEvent event4 = new InstructionEvent();
-        event4.setStartTime(LocalDateTime.of(2024, 5, 4, 15, 0));
-        event4.setEndTime(LocalDateTime.of(2024, 5, 4, 17, 0));
-        event4.setSchoolUser(schoolUser);
-        event4.setStatus("Scheduled");
-        event4.setEventType("Driving Test");
-
-        InstructionEvent event5 = new InstructionEvent();
-        event5.setStartTime(LocalDateTime.of(2024, 5, 5, 8, 0));
-        event5.setEndTime(LocalDateTime.of(2024, 5, 5, 10, 0));
-        event5.setSchoolUser(schoolUser);
-        event5.setStatus("Scheduled");
-        event5.setEventType("Practice Session");
-
-        InstructionEvent event6 = new InstructionEvent();
-        event6.setStartTime(LocalDateTime.of(2024, 5, 6, 13, 0));
-        event6.setEndTime(LocalDateTime.of(2024, 5, 6, 15, 0));
-        event6.setSchoolUser(schoolUser);
-        event6.setStatus("Scheduled");
-        event6.setEventType("Theory Lesson");
-
-        InstructionEvent event7 = new InstructionEvent();
-        event7.setStartTime(LocalDateTime.of(2024, 5, 7, 11, 0));
-        event7.setEndTime(LocalDateTime.of(2024, 5, 7, 13, 0));
-        event7.setSchoolUser(schoolUser);
-        event7.setStatus("Completed");
-        event7.setEventType("Driving Lesson");
-
-        InstructionEvent event8 = new InstructionEvent();
-        event8.setStartTime(LocalDateTime.of(2024, 5, 8, 12, 0));
-        event8.setEndTime(LocalDateTime.of(2024, 5, 8, 14, 0));
-        event8.setSchoolUser(schoolUser);
-        event8.setStatus("Scheduled");
-        event8.setEventType("Driving Lesson");
-
-        InstructionEvent event9 = new InstructionEvent();
-        event9.setStartTime(LocalDateTime.of(2024, 5, 9, 16, 0));
-        event9.setEndTime(LocalDateTime.of(2024, 5, 9, 18, 0));
-        event9.setSchoolUser(schoolUser);
-        event9.setStatus("Completed");
-        event9.setEventType("Theory Lesson");
-
-        InstructionEvent event10 = new InstructionEvent();
-        event10.setStartTime(LocalDateTime.of(2024, 5, 10, 14, 0));
-        event10.setEndTime(LocalDateTime.of(2024, 5, 10, 16, 0));
-        event10.setSchoolUser(schoolUser);
-        event10.setStatus("Scheduled");
-        event10.setEventType("Driving Lesson");
-
-        InstructionEvent event11 = new InstructionEvent();
-        event11.setStartTime(LocalDateTime.of(2025, 5, 24, 14, 0));
-        event11.setEndTime(LocalDateTime.of(2025, 5, 24, 16, 0));
-        event11.setSchoolUser(schoolUser);
-        event11.setStatus("Scheduled");
-        event11.setEventType("Driving Lesson");
-
-        eventRepository.saveAll(Arrays.asList(event1, event2, event3, event4, event5, event6, event7, event8, event9, event10, event11));
+        eventRepository.saveAll(events);
     }
 }

@@ -9,11 +9,10 @@ const date = document.querySelector('.date'),
     addEventCloseBtn = document.querySelector('.close'),
     addEventTitle = document.querySelector(".event-name "),
     addEventFrom = document.querySelector(".event-time-from "),
-    addEventTo = document.querySelector(".event-time-to "),
-    addEventSubmit = document.querySelector(".add-event-btn ");
+    addEventTo = document.querySelector(".event-time-to ")
 
 let today = new Date(date.textContent);
-let activeDay;
+let activeDay = (Number(eventDate.innerHTML.slice(0, 2)));
 let month = today.getMonth();
 let year = today.getFullYear();
 const months = [
@@ -22,7 +21,7 @@ const months = [
     'Mar',
     'Kwi',
     'Maj',
-    'Czer',
+    'Cze',
     'Lip',
     'Sie',
     'Wrz',
@@ -40,6 +39,7 @@ const days = [
     'Niedz.',
 ];
 let eventsArr = parseEvents();
+
 initCalendar();
 updateEvents(activeDay);
 handleTimeInput(addEventFrom);
@@ -104,6 +104,7 @@ function initCalendar() {
     daysContainer.innerHTML = daysHtml;
     addListener();
 }
+
 function addListener() {
     const days = document.querySelectorAll(".day");
     days.forEach((day) => {
@@ -122,6 +123,7 @@ function addListener() {
         });
     });
 }
+
 function handleTimeInput(inputElement) {
     inputElement.addEventListener('input', e => {
         inputElement.value = inputElement.value.replace(/[^0-9:]/g, '');
@@ -144,6 +146,7 @@ function handleTimeInput(inputElement) {
             inputElement.value = hours + ':59';
     });
 }
+
 function getActiveDay(date) {
     const day = new Date(year, month, date);
     let dayOfWeek = day.getDay();
@@ -151,6 +154,7 @@ function getActiveDay(date) {
     eventDay.innerHTML = days[dayOfWeek];
     eventDate.innerHTML = date + " " + months[month] + " " + year;
 }
+
 function updateEvents(date) {
     let events = "";
     eventsArr.forEach((event) => {
@@ -162,8 +166,13 @@ function updateEvents(date) {
             event.events.forEach((event) => {
                 events += `<div class="event">
             <div class="title">
-              <i class="fas fa-circle"></i>
+              <i class="fas fa-font"></i>
               <h3 class="event-title">${event.title}</h3>
+            </div>
+            <div class="subject">
+              <i class="fas fa-quote-left"></i>
+              <h3 class="event-subject">${event.subject}</h3>
+              <i class="fas fa-quote-right"></i>
             </div>
             <div class="event-time">
               <span class="event-time">${event.timeFrom} - ${event.timeTo}</span>
@@ -179,16 +188,19 @@ function updateEvents(date) {
     }
     eventsContainer.innerHTML = events;
 }
+
 function parseEvents() {
     const eventElements = document.querySelectorAll('.event');
     const eventsArr = [];
 
     eventElements.forEach(eventEl => {
         const titleEl = eventEl.querySelector('.title');
+        const subjectEl = eventEl.querySelector('.subject');
         const timeEl = eventEl.querySelector('.event-time');
 
         if (titleEl && timeEl) {
             const title = titleEl.innerText.trim();
+            const subject = subjectEl.innerText.trim();
             const timeText = timeEl.innerText.trim();
 
             const [start, end] = timeText.split(' - ').map(time => new Date(time));
@@ -205,7 +217,7 @@ function parseEvents() {
                 eventsArr.push(eventDay);
             }
 
-            eventDay.events.push({title, timeFrom, timeTo});
+            eventDay.events.push({title, subject, timeFrom, timeTo});
 
             eventEl.remove();
         }
@@ -213,9 +225,11 @@ function parseEvents() {
 
     return eventsArr;
 }
+
 function submitFormWithDate() {
     document.getElementById('dateInputToday').value = new Date().toISOString();
 }
+
 function processDate() {
     const userDateValue = document.getElementById('userDateInput').value;
     const [userMonth, userYear] = userDateValue.split('/');
@@ -237,6 +251,20 @@ function processDate() {
         document.getElementById('dateInputGoTo').value = currentDate.toISOString();
         document.getElementById('monthDifference').value = monthDifference;
     }
+}
+
+function addEvent() {
+    const startTimeInput = document.getElementById('startTime');
+    const endTimeInput = document.getElementById('endTime');
+
+    const startTimeValue = startTimeInput.value;
+    const endTimeValue = endTimeInput.value;
+
+    const startDateTime = `${year}-${String(month + 1).padStart(2, '0')}-${String(activeDay).padStart(2, '0')}T${startTimeValue}:00`;
+    const endDateTime = `${year}-${String(month + 1).padStart(2, '0')}-${String(activeDay).padStart(2, '0')}T${endTimeValue}:00`;
+    console.log(startDateTime);
+    startTimeInput.value = startDateTime;
+    endTimeInput.value = endDateTime;
 }
 
 dateInput.addEventListener('input', e => {

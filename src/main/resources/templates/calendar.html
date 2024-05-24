@@ -87,9 +87,13 @@
                         </div>
                         <div class="events">
                             <div hidden="hidden" th:each="event : ${events}" class="event">
+                                <div class="subject">
+                                    <i class="fas fa-circle"></i>
+                                    <h3 class="event-subject" th:text="${event.subject}">Event Subject</h3>
+                                </div>
                                 <div class="title">
                                     <i class="fas fa-circle"></i>
-                                    <h3 class="event-title" th:text="${event.eventType}">Event Title</h3>
+                                    <h3 class="event-title" th:text="${event.eventType}">Event Type</h3>
                                 </div>
                                 <div class="event-time">
                                     <span class="event-time" th:text="${event.startTime} + ' - ' + ${event.endTime}">Event Time</span>
@@ -101,20 +105,26 @@
                                 <div class="title">Dodaj Wydarzenie</div>
                                 <i class="fas fa-times close"></i>
                             </div>
-                            <div class="add-event-body">
+                            <form class="add-event-body" th:action="@{/calendar/addEvent}" method="post" th:object="${newEvent}">
                                 <div class="add-event-input">
-                                    <input type="text" placeholder="Nazwa Wydarzenia" class="event-name"/>
+                                    <select class="event-name" th:name="eventType" th:field="*{eventType}">
+                                        <option value="" disabled selected>Wybierz Typ Wydarzenia</option>
+                                        <option th:each="eventType : ${eventTypes}" th:value="${eventType}" th:text="${eventType}"></option>
+                                    </select>
                                 </div>
                                 <div class="add-event-input">
-                                    <input type="text" placeholder="Początek Wydarzenia" class="event-time-from"/>
+                                    <input type="text" placeholder="Nazwa Wydarzenia" class="event-name" th:field="*{subject}"/>
                                 </div>
                                 <div class="add-event-input">
-                                    <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"/>
+                                    <input type="text" placeholder="Początek Wydarzenia" class="event-time-from" id="startTime" th:field="*{startTime}"/>
                                 </div>
-                            </div>
-                            <div class="add-event-footer">
-                                <button class="add-event-btn">Dodaj Wydarzenie</button>
-                            </div>
+                                <div class="add-event-input">
+                                    <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to" id="endTime" th:field="*{endTime}"/>
+                                </div>
+                                <div class="add-event-footer">
+                                    <button class="add-event-btn" onclick="addEvent()">Dodaj Wydarzenie</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <button class="add-event">

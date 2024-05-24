@@ -2,6 +2,7 @@ package com.driving.school.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "INSTRUCTIONEVENTS")
 public class InstructionEvent {
     @Id
@@ -30,11 +32,16 @@ public class InstructionEvent {
     @Column(name = "ENDTIME")
     private LocalDateTime endTime;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "SCHOOLUSERID", nullable = false)
+    @JoinColumn(name = "SCHOOLUSERID")
     private SchoolUser schoolUser;
 
-    @Column(name = "STATUS", length = 64)
-    private String status;
+    public InstructionEvent(String subject, String eventType, LocalDateTime startTime, LocalDateTime endTime, SchoolUser schoolUser) {
+        this.subject = subject;
+        this.eventType = eventType;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.schoolUser = schoolUser;
+    }
 }
