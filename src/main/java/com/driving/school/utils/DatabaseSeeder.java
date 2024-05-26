@@ -176,7 +176,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 new InstructionEvent("Zaawansowane techniki jazdy: Skuteczność i bezpieczeństwo", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 8, 12, 0), LocalDateTime.of(2024, 5, 8, 14, 0), schoolUser),
                 new InstructionEvent("Dogłębna analiza przepisów ruchu drogowego", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 9, 16, 0), LocalDateTime.of(2024, 5, 9, 18, 0), schoolUser),
                 new InstructionEvent("Praktyczna nauka jazdy: Techniki zaawansowane", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 10, 14, 0), LocalDateTime.of(2024, 5, 10, 16, 0), schoolUser),
-                new InstructionEvent("Aktualizacja przepisów drogowych: Co nowego w 2024?", Constants.TRAFFIC_RULES_LECTURES, LocalDateTime.of(2024, 5, 11, 10, 0), LocalDateTime.of(2024, 5, 11, 12, 0), schoolUser),
+                new InstructionEvent("Aktualizacja przepisów drogowych: Co nowego w 2024?", Constants.LECTURES, LocalDateTime.of(2024, 5, 11, 10, 0), LocalDateTime.of(2024, 5, 11, 12, 0), schoolUser),
                 new InstructionEvent("Nocna jazda: Jak bezpiecznie poruszać się po zmroku", Constants.NIGHT_DRIVING, LocalDateTime.of(2024, 5, 12, 14, 0), LocalDateTime.of(2024, 5, 12, 16, 0), schoolUser),
                 new InstructionEvent("Jazda ekonomiczna: Techniki oszczędzania paliwa", Constants.ECO_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 13, 9, 0), LocalDateTime.of(2024, 5, 13, 11, 0), schoolUser),
                 new InstructionEvent("Dodatkowe lekcje: Przygotowanie do egzaminu praktycznego", Constants.ADDITIONAL_DRIVING_LESSONS, LocalDateTime.of(2024, 5, 14, 15, 0), LocalDateTime.of(2024, 5, 14, 17, 0), schoolUser),

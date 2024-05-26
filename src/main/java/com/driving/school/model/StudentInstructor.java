@@ -20,13 +20,11 @@ public class StudentInstructor {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @MapsId("studentId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "STUDENTID", nullable = false)
     private SchoolUser student;
 
-    @MapsId("instructorId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "INSTRUCTORID", nullable = false)

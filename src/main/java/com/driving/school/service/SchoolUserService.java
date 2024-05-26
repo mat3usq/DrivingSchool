@@ -36,16 +36,7 @@ public class SchoolUserService {
         return isSaved;
     }
 
-    public void setInstructorForUser(SchoolUser user, SchoolUser userInstructor) {
-        if (user != null && userInstructor != null) {
-            user.setInstructor(userInstructor.getId());
-            schoolUserRepository.save(user);
-        }
-    }
-
     public Optional<SchoolUser> findUserById(Long id) {
         return schoolUserRepository.findById(id);
     }
-
-
 }

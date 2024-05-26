@@ -11,7 +11,7 @@ public interface Constants {
 
     // Spotkania
     String THEORETICAL_CLASSES = "Teoretyczne Zajęcia";
-    String TRAFFIC_RULES_LECTURES = "Wykłady z Przepisów Ruchu Drogowego";
+    String LECTURES = "Wykłady";
     String FIRST_AID_CLASSES = "Zajęcia z Pierwszej Pomocy";
     String THEORY_OF_DRIVING_CLASSES = "Zajęcia z Teorii Jazdy";
     String PRACTICAL_CLASSES_ON_MANEUVERING_GROUND = "Praktyczne Zajęcia na Placu Manewrowym";
@@ -28,11 +28,12 @@ public interface Constants {
     String INFORMATION_AND_ORGANIZATIONAL_MEETINGS = "Spotkania Informacyjne i Organizacyjne";
     String INFORMATION_SESSIONS = "Sesje Informacyjne";
     String MEETINGS_WITH_EXAMINERS = "Spotkania z Egzaminatorami";
+    String OTHER = "Inne";
 
     static List<String> getAllEventTypes() {
         return Arrays.asList(
                 THEORETICAL_CLASSES,
-                TRAFFIC_RULES_LECTURES,
+                LECTURES,
                 FIRST_AID_CLASSES,
                 THEORY_OF_DRIVING_CLASSES,
                 PRACTICAL_CLASSES_ON_MANEUVERING_GROUND,
@@ -48,7 +49,8 @@ public interface Constants {
                 CAR_MAINTENANCE_TRAINING,
                 INFORMATION_AND_ORGANIZATIONAL_MEETINGS,
                 INFORMATION_SESSIONS,
-                MEETINGS_WITH_EXAMINERS
+                MEETINGS_WITH_EXAMINERS,
+                OTHER
         );
     }
 }
