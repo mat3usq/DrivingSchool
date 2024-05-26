@@ -14,7 +14,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -41,33 +43,11 @@ public class SchoolUser {
     @Column(name = "EMAIL", length = 64)
     private String email;
 
-    @Column(name ="INSTRUCTOR")
-    private Long instructor;
-
-    @CreatedDate
-    @Column(name = "CREATEDAT")
-    private LocalDateTime createdAt;
-
-    @CreatedBy
-    @Column(name = "CREATEDBY", length = 64)
-    private String createdBy;
-
-    @LastModifiedDate
-    @Column(name = "LASTUPDATEDAT")
-    private LocalDateTime lastUpdatedAt;
-
-    @LastModifiedBy
-    @Column(name = "LASTUPDATEDBY", length = 64)
-    private String lastUpdatedBy;
-
     @Column(name = "ROLENAME", length = 128)
     private String roleName;
 
-    @OneToMany(mappedBy = "schoolUser")
-    private Set<DrivingLesson> drivingLessons = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "schoolUser")
-    private Set<Lecturemeeting> lectureMeetings = new LinkedHashSet<>();
+    @ManyToMany(mappedBy = "students")
+    private List<InstructionEvent> studentEvents = new ArrayList<>();
 
     @OneToMany(mappedBy = "schoolUser")
     private Set<Payment> payments = new LinkedHashSet<>();
@@ -86,6 +66,22 @@ public class SchoolUser {
 
     @OneToOne(mappedBy = "schoolUser")
     private UserStatistic userStatistic;
+
+    @CreatedDate
+    @Column(name = "CREATEDAT")
+    private LocalDateTime createdAt;
+
+    @CreatedBy
+    @Column(name = "CREATEDBY", length = 64)
+    private String createdBy;
+
+    @LastModifiedDate
+    @Column(name = "LASTUPDATEDAT")
+    private LocalDateTime lastUpdatedAt;
+
+    @LastModifiedBy
+    @Column(name = "LASTUPDATEDBY", length = 64)
+    private String lastUpdatedBy;
 
     public SchoolUser(String name, String surname, String password, String email, String roleName) {
         this.name = name;

@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,14 +35,25 @@ public class InstructionEvent {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "SCHOOLUSERID")
-    private SchoolUser schoolUser;
+    @JoinColumn(name = "INSTRUCTORID")
+    private SchoolUser instructor;
 
-    public InstructionEvent(String subject, String eventType, LocalDateTime startTime, LocalDateTime endTime, SchoolUser schoolUser) {
+    @ManyToMany
+    @JoinTable(
+            name = "EVENTSTUDENTS",
+            joinColumns = @JoinColumn(name = "EVENTID"),
+            inverseJoinColumns = @JoinColumn(name = "STUDENTID")
+    )
+    private List<SchoolUser> students;
+
+    @Column(name = "STATUS", length = 64)
+    private String status;
+
+    public InstructionEvent(String subject, String eventType, LocalDateTime startTime, LocalDateTime endTime, SchoolUser instructor) {
         this.subject = subject;
         this.eventType = eventType;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.schoolUser = schoolUser;
+        this.instructor = instructor;
     }
 }
