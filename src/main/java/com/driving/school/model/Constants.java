@@ -53,4 +53,13 @@ public interface Constants {
                 OTHER
         );
     }
+
+    // Relacja Student - Instruktor
+    String ACTIVE = "Akytwny";
+    String COMPLETED = "Zakonczony";
+    String PENDING = "Oczekiwanie";
+    String CANCELLED = "Anulowany";
+    String SUSPENDED = "Zawieszony";
+    String TERMINATED = "Zakonczony Przed";
+    String EXPIRED = "Wygasly";
 }

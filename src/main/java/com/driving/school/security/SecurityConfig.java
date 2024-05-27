@@ -27,6 +27,7 @@ public class SecurityConfig {
                         .requestMatchers("/lecture").authenticated()
                         .requestMatchers("/lecture/**").hasAnyRole("INSTRUCTOR", "ADMIN")
                         .requestMatchers("/calendar/**").authenticated()
+                        .requestMatchers("/account/**").authenticated()
                         .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()
@@ -69,6 +70,8 @@ public class SecurityConfig {
                     response.sendRedirect("/lecture");
                 else if (request.getRequestURI().startsWith("/calendar"))
                     response.sendRedirect("/calendar");
+                else if (request.getRequestURI().startsWith("/account"))
+                    response.sendRedirect("/account");
                 else
                     response.sendRedirect("/dashboard");
             else

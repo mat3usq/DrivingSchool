@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "STUDENTINSTRUCTOR")
+@EntityListeners(AuditingEntityListener.class)
 public class StudentInstructor {
 
     @Id
@@ -30,6 +33,7 @@ public class StudentInstructor {
     @JoinColumn(name = "INSTRUCTORID", nullable = false)
     private SchoolUser instructor;
 
+    @CreatedDate
     @Column(name = "STARTAT")
     private LocalDateTime startedAt;
 

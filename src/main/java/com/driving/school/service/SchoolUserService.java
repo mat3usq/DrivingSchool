@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class SchoolUserService {
@@ -36,7 +34,12 @@ public class SchoolUserService {
         return isSaved;
     }
 
-    public Optional<SchoolUser> findUserById(Long id) {
-        return schoolUserRepository.findById(id);
+    public SchoolUser findUserById(Long id) {
+        return schoolUserRepository.findById(id).orElse(null);
     }
+
+    public List<SchoolUser> findAllInstructors() {
+        return schoolUserRepository.findAll().stream().filter(u -> u.getRoleName().equals(Constants.INSTRUCTOR_ROLE)).toList();
+    }
+
 }

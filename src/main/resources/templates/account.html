@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Moje Konto</title>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/account.css"/>
+</head>
+<body>
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="account">
+        <div class="hero-img">
+            <div class="hero-shadow"></div>
+            <div class="box-account">
+                <div class="box-container">
+                    <p class="title" data-aos="fade-down" data-aos-delay="100">Moje Konto</p>
+                    <div data-aos="zoom-in" data-aos-delay="150" class="container-account">
+                        <div class="account-details">
+                            <p class="title-header">Imie oraz Nazwisko</p>
+                            <p class="content">
+                                <th:block th:text="${session.loggedInUser.name}"></th:block>
+                                <span th:text="${session.loggedInUser.surname}"></span></p>
+                        </div>
+                        <hr/>
+                        <div class="account-details">
+                            <p class="title-header">Adres E-mail</p>
+                            <p class="content" th:text="${session.loggedInUser.email}"></p>
+                        </div>
+                        <hr/>
+                        <div class="account-details">
+                            <p class="title-header">Haslo</p>
+                            <p class="content"
+                               th:text="${#strings.substring(session.loggedInUser.password, 10, 30)}"></p>
+                        </div>
+                        <hr/>
+                        <div class="account-details">
+                            <p class="title-header">Dostępne Kategorie</p>
+                            <p class="content">--------------------</p>
+                        </div>
+                        <th:block sec:authorize="hasRole('ROLE_STUDENT')">
+                            <hr/>
+                            <div class="account-instructor">
+                                <th:block th:if="${instructorStudents.size() != 0}">
+                                    <p class="title-header">Twoi Instruktorzy</p>
+                                    <div class="instructors-list">
+                                        <table class="instructors-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Imie</th>
+                                                <th>Nazwisko</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="element : ${instructorStudents}">
+                                                <td th:text="${element.instructor.name}"></td>
+                                                <td th:text="${element.instructor.surname}"></td>
+                                                <td th:text="${element.instructor.email}"></td>
+                                                <td th:text="${element.status}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </th:block>
+
+                                <p class="title-header" th:if="${instructorStudents.size() == 0}">Brak instruktorów.
+                                    Zaaplikuj do któregoś z poniższych!</p>
+                                <form class="select-instructor" th:action="@{/account/assignInstructor}" method="post">
+                                    <select name="selectedInstructor">
+                                        <option value="" disabled selected>Wybierz Instruktora</option>
+                                        <option th:each="instructor : ${instructors}" th:value="${instructor.id}"
+                                                th:text="${instructor.email}"></option>
+                                    </select>
+                                    <button class="info-btn">Aplikuje</button>
+                                </form>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <h2>Kontakt</h2>
+    <div class="underline"></div>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="row text-center contact-us">
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Główna Siedziba</h3>
+                    <p>ul. Złota 44</p>
+                    <p>12-432 Warszawa</p>
+                    <p>+48 492 345 234</p>
+                    <p>DrivingSchool@gmail.com</p>
+                </div>
+
+                <div class="order-0 order-lg-1 col-lg-4 contact-item">
+                    <h3>Social Media</h3>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Siedziba Poboczna</h3>
+                    <p>ul. Wiejska 45A</p>
+                    <p>32-643 Białystok</p>
+                    <p>+48 537 943 743</p>
+                    <p>DrivingSchool@apple.pl</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-shadow"></div>
+    </section>
+</main>
+
+<footer class="py-4 text-center">
+    <p class="mb-0">
+        &copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+        <span class="orange-text">Driving</span> <span class="gold-text">School</span>
+    </p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+</body>
+</html>
