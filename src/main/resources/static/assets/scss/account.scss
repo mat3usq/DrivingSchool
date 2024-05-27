@@ -132,7 +132,7 @@ h2 {
 						.instructors-list {
 							width: 100%;
 							margin-top: 20px;
-                            overflow: scroll;
+							overflow: scroll;
 
 							.instructors-table {
 								width: 80%;
@@ -141,11 +141,10 @@ h2 {
 								background-color: rgba(0, 0, 0, 0.85);
 								border-radius: 10px;
 								overflow: hidden;
-								box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
 								th,
 								td {
-                                    text-align: center;
+									text-align: center;
 									font-size: 15px;
 									padding: 7px;
 									color: #f5f5f5;
@@ -165,6 +164,29 @@ h2 {
 								tbody tr {
 									&:nth-child(even) {
 										background-color: rgb(109, 107, 107);
+									}
+								}
+
+								.table-student-row {
+									position: relative;
+									transition: transform 0.3s ease;
+
+									.cancel-instructor {
+										position: absolute;
+										left: -120px;
+										padding-right: 20px;
+										transition: transform 0.3s ease;
+									}
+
+									&:hover {
+										cursor: pointer;
+										background-color: black;
+										padding-left: 100px;
+										transform: translateX(120px);
+									}
+
+									&.clicked {
+										transform: translateX(120px);
 									}
 								}
 							}
@@ -205,7 +227,8 @@ h2 {
 
 						button.correct-btn,
 						.delete-btn,
-						.info-btn {
+						.info-btn,
+						.cancel-btn {
 							font-size: 18px;
 							height: 35px;
 							padding: 0px 10px;
@@ -242,6 +265,13 @@ h2 {
 							background-color: $primary-color;
 							&:hover {
 								background-color: darken($primary-color, 10%);
+							}
+						}
+
+						button.cancel-btn {
+							background-color: $secondary-color;
+							&:hover {
+								background-color: darken($secondary-color, 10%);
 							}
 						}
 					}
@@ -313,19 +343,13 @@ h2 {
 	}
 }
 
-@media (max-width: 720px) {
+@media (max-width: 950px) {
 	.account {
 		.hero-img {
 			.box-account {
-				top: 12vh;
+				top: 90px;
 				left: 0px;
 				width: 100%;
-
-				.box-container {
-					.title {
-						margin-top: 45px;
-					}
-				}
 
 				.container-account {
 					width: 100%;
@@ -344,6 +368,26 @@ h2 {
 					}
 				}
 			}
+		}
+	}
+
+	.navbar-left {
+		display: none;
+
+		.navbar-nav {
+			.logout {
+				display: block;
+			}
+		}
+	}
+
+	.navbar-top {
+		button {
+			display: block;
+		}
+
+		.box-account {
+			display: none;
 		}
 	}
 }
