@@ -7,6 +7,7 @@ import com.driving.school.repository.StudentInstructorRepository;
 import com.driving.school.service.SchoolUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,10 +27,16 @@ public class AccountController {
     }
 
     @GetMapping("/account")
-    public ModelAndView displayAccount(HttpSession session) {
+    public ModelAndView displayAccount(HttpSession session, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView("account");
-        modelAndView.addObject("instructorStudents", studentInstructorRepository.
-                findByStudentId(((SchoolUser) session.getAttribute("loggedInUser")).getId()));
+
+        if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_" + Constants.STUDENT_ROLE))
+            modelAndView.addObject("instructorStudents", studentInstructorRepository.
+                    findByStudentId(((SchoolUser) session.getAttribute("loggedInUser")).getId()));
+        else if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_" + Constants.INSTRUCTOR_ROLE))
+            modelAndView.addObject("instructorStudents", studentInstructorRepository.
+                    findByInstructorId(((SchoolUser) session.getAttribute("loggedInUser")).getId()));
+
         modelAndView.addObject("instructors", schoolUserService.findAllInstructors());
         return modelAndView;
     }
@@ -61,9 +68,35 @@ public class AccountController {
 
         if (loggedInUser.getId().equals(studentId)) {
             StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
-            if (studentInstructor != null) {
+            if (studentInstructor != null)
                 studentInstructorRepository.delete(studentInstructor);
-            }
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/account/acceptStudent")
+    public ModelAndView acceptStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/account");
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (loggedInUser.getId().equals(instructorId)) {
+            StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
+            studentInstructor.setStatus(Constants.ACTIVE);
+            studentInstructorRepository.save(studentInstructor);
+        }
+
+        return modelAndView;
+    }
+
+    @PostMapping("/account/cancelStudent")
+    public ModelAndView cancelStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/account");
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (loggedInUser.getId().equals(instructorId)) {
+            StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
+            if (studentInstructor != null)
+                studentInstructorRepository.delete(studentInstructor);
         }
         return modelAndView;
     }

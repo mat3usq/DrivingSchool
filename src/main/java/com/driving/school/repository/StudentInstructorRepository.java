@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface StudentInstructorRepository extends JpaRepository<StudentInstructor, Long> {
     List<StudentInstructor> findByStudentId(Long studentId);
+    List<StudentInstructor> findByInstructorId(Long instructorId);
     StudentInstructor findByStudentIdAndInstructorId(Long studentId, Long instructorId);
     boolean existsByStudentAndInstructor(SchoolUser student, SchoolUser instructor);
 }

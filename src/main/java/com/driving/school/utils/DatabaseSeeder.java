@@ -36,11 +36,12 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final SubjectRepository subjectRepository;
     private final TestService testService;
     private final InstructionEventRepository eventRepository;
+    private final StudentInstructorRepository studentInstructorRepository;
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
             schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
-                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository) {
+                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository, StudentInstructorRepository studentInstructorRepository) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
@@ -48,6 +49,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.subjectRepository = subjectRepository;
         this.testService = testService;
         this.eventRepository = eventRepository;
+        this.studentInstructorRepository = studentInstructorRepository;
     }
 
     @Override
@@ -61,11 +63,27 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void createUsers() {
         // haslo: admin
-        schoolUserRepository.save(new SchoolUser("admin", "admin", "$100801$cfJJlxSl83FjJ2mh+6yUcdxxksVm3XlOzhBr4gLHFEOhdeWmaf2H6Lki/fe99YUMduDoX/LGHUcodWe9SkhVnw==$Q1yyulzoYXseBJ/OmM/xgcYD9fFPaw2bRzBHRW7RgG4=", "admin", Constants.ADMIN_ROLE));
+        SchoolUser admin = new SchoolUser("admin", "admin", "$100801$cfJJlxSl83FjJ2mh+6yUcdxxksVm3XlOzhBr4gLHFEOhdeWmaf2H6Lki/fe99YUMduDoX/LGHUcodWe9SkhVnw==$Q1yyulzoYXseBJ/OmM/xgcYD9fFPaw2bRzBHRW7RgG4=", "admin", Constants.ADMIN_ROLE);
+        schoolUserRepository.save(admin);
+
         // haslo: student
-        schoolUserRepository.save(new SchoolUser("student", "student", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student", Constants.STUDENT_ROLE));
+        SchoolUser student = new SchoolUser("student", "student", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student", Constants.STUDENT_ROLE);
+        SchoolUser student2 = new SchoolUser("student2", "student2", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student2", Constants.STUDENT_ROLE);
+        schoolUserRepository.save(student);
+        schoolUserRepository.save(student2);
+
         // haslo: instructor
-        schoolUserRepository.save(new SchoolUser("instructor", "instructor", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor", Constants.INSTRUCTOR_ROLE));
+        SchoolUser instructor = new SchoolUser("instructor", "instructor", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor", Constants.INSTRUCTOR_ROLE);
+        SchoolUser instructor2 = new SchoolUser("instructor2", "instructor2", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor2", Constants.INSTRUCTOR_ROLE);
+        SchoolUser instructor3 = new SchoolUser("instructor3", "instructor3", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor3", Constants.INSTRUCTOR_ROLE);
+        schoolUserRepository.save(instructor);
+        schoolUserRepository.save(instructor2);
+        schoolUserRepository.save(instructor3);
+
+        studentInstructorRepository.save(new StudentInstructor(student, instructor, Constants.PENDING));
+        studentInstructorRepository.save(new StudentInstructor(student, instructor2, Constants.ACTIVE));
+        studentInstructorRepository.save(new StudentInstructor(student2, instructor, Constants.ACTIVE));
+        studentInstructorRepository.save(new StudentInstructor(student2, instructor2, Constants.PENDING));
     }
 
     private void createLectures() {
@@ -139,17 +157,18 @@ public class DatabaseSeeder implements CommandLineRunner {
         }
     }
 
-    public void addTeststoDb(){
+    public void addTeststoDb() {
         List<String> normalnames = TestNames.getNames();
         List<String> specialnames = TestNames.getSpecialtestnames();
-        for(String name : normalnames){
-            addTestToDb(name,false);
+        for (String name : normalnames) {
+            addTestToDb(name, false);
         }
-        for(String name : specialnames){
-            addTestToDb(name,true);
+        for (String name : specialnames) {
+            addTestToDb(name, true);
         }
     }
-    public void addTestToDb(String Name, Boolean isSpecialistic){
+
+    public void addTestToDb(String Name, Boolean isSpecialistic) {
         Test test = new Test();
         test.setName(Name);
         test.setCategory("B");

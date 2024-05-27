@@ -2,6 +2,7 @@ package com.driving.school.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "STUDENTINSTRUCTOR")
 @EntityListeners(AuditingEntityListener.class)
 public class StudentInstructor {
@@ -42,4 +44,10 @@ public class StudentInstructor {
 
     @Column(name = "STATUS", length = 128)
     private String status;
+
+    public StudentInstructor(SchoolUser student, SchoolUser instructor, String status) {
+        this.student = student;
+        this.instructor = instructor;
+        this.status = status;
+    }
 }
