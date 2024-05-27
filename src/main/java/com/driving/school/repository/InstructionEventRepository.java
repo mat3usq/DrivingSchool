@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface InstructionEventRepository extends JpaRepository<InstructionEvent, Long> {
     List<InstructionEvent> findByStartTimeBetween(LocalDateTime startTime, LocalDateTime endTime);
-//    List<InstructionEvent> findByStartTimeBetweenAndSchoolUserId(LocalDateTime startTime, LocalDateTime endTime, Long schoolUserId);
+    List<InstructionEvent> findByStartTimeBetweenAndInstructorId(LocalDateTime startTime, LocalDateTime endTime, Long instructorId);
 }

@@ -186,6 +186,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void createEvents() {
         SchoolUser schoolUser = schoolUserRepository.findById(1L).orElse(null);
+        SchoolUser schoolUser2 = schoolUserRepository.findByEmail("instructor");
 
         List<InstructionEvent> events = Arrays.asList(
                 new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 1, 10, 0), LocalDateTime.of(2024, 5, 1, 12, 0), schoolUser),
@@ -207,7 +208,8 @@ public class DatabaseSeeder implements CommandLineRunner {
                 new InstructionEvent("Jazda poza miastem: Techniki jazdy na trasach szybkiego ruchu", Constants.OUT_OF_TOWN_DRIVING, LocalDateTime.of(2024, 5, 17, 11, 0), LocalDateTime.of(2024, 5, 17, 13, 0), schoolUser),
                 new InstructionEvent("Podstawy obsługi technicznej pojazdu: Co każdy kierowca powinien wiedzieć", Constants.CAR_MAINTENANCE_TRAINING, LocalDateTime.of(2024, 5, 18, 12, 0), LocalDateTime.of(2024, 5, 18, 14, 0), schoolUser),
                 new InstructionEvent("Spotkanie organizacyjne: Planowanie harmonogramu kursu", Constants.INFORMATION_AND_ORGANIZATIONAL_MEETINGS, LocalDateTime.of(2024, 5, 19, 16, 0), LocalDateTime.of(2024, 5, 19, 18, 0), schoolUser),
-                new InstructionEvent("Konsultacje z egzaminatorem: Przygotowanie do testów", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 5, 20, 14, 0), LocalDateTime.of(2024, 5, 20, 16, 0), schoolUser)
+                new InstructionEvent("Konsultacje z egzaminatorem: Przygotowanie do testów", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 5, 20, 14, 0), LocalDateTime.of(2024, 5, 20, 16, 0), schoolUser),
+                new InstructionEvent("Konsultacje z egzaminatorem: Przygotowanie do testów", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 6, 20, 14, 0), LocalDateTime.of(2024, 6, 20, 16, 0), schoolUser2)
         );
 
         eventRepository.saveAll(events);

@@ -2,61 +2,91 @@ package com.driving.school.controller;
 
 import com.driving.school.model.Constants;
 import com.driving.school.model.InstructionEvent;
+import com.driving.school.model.SchoolUser;
+import com.driving.school.model.StudentInstructor;
 import com.driving.school.repository.InstructionEventRepository;
+import com.driving.school.service.InstructorEventService;
+import com.driving.school.service.StudentInstructorService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 @Controller
 public class CalendarController {
     private final InstructionEventRepository instructionEventRepository;
-
+    private final InstructorEventService instructorEventService;
+    private final StudentInstructorService studentInstructorService;
     @Autowired
-    public CalendarController(InstructionEventRepository instructionEventRepository) {
+    public CalendarController(InstructionEventRepository instructionEventRepository, InstructorEventService instructorEventService,
+                              StudentInstructorService studentInstructorService) {
         this.instructionEventRepository = instructionEventRepository;
+        this.instructorEventService = instructorEventService;
+        this.studentInstructorService = studentInstructorService;
     }
 
     @GetMapping("/calendar")
     public ModelAndView displayCalendar(@RequestParam(required = false) Integer month,
-                                        @RequestParam(required = false) Integer year) {
+                                        @RequestParam(required = false) Integer year,
+                                        HttpSession session, Authentication auth) {
         YearMonth yearMonth = (month == null || year == null) ? YearMonth.now() : YearMonth.of(year, month);
-        return getCalendarModelAndView(yearMonth, LocalDateTime.now());
+        return getCalendarModelAndView(yearMonth, LocalDateTime.now(), session, auth);
     }
 
     @PostMapping("/calendar")
     public ModelAndView displayCalendarForNextMonth(@RequestParam(required = false) String date,
-                                                    @RequestParam(required = false) Integer month) {
+                                                    @RequestParam(required = false) Integer month,
+                                                    HttpSession session, Authentication auth) {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         LocalDateTime localDateTime = LocalDateTime.parse(date, formatter).plusMonths(month);
         YearMonth yearMonth = YearMonth.from(localDateTime);
-        return getCalendarModelAndView(yearMonth, localDateTime);
+        return getCalendarModelAndView(yearMonth, localDateTime, session, auth);
     }
 
     @PostMapping("/calendar/addEvent")
-    public ModelAndView addEvent(@ModelAttribute InstructionEvent event) {
+    public ModelAndView addEvent(@ModelAttribute InstructionEvent event, HttpSession session, Authentication authentication) {
         instructionEventRepository.save(event);
         YearMonth yearMonth = YearMonth.from(event.getStartTime());
-        return getCalendarModelAndView(yearMonth, event.getStartTime());
+        return getCalendarModelAndView(yearMonth, event.getStartTime(),session, authentication);
     }
 
-    private ModelAndView getCalendarModelAndView(YearMonth yearMonth, LocalDateTime localDateTime) {
+    private ModelAndView getCalendarModelAndView(YearMonth yearMonth, LocalDateTime localDateTime,
+                                                 HttpSession session, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView("calendar");
         LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = yearMonth.atEndOfMonth().atTime(23, 59, 59);
-        List<InstructionEvent> events = instructionEventRepository.findByStartTimeBetween(startOfMonth, endOfMonth);
 
+
+        List<InstructionEvent> events = new ArrayList<>();
+        if(authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
+            SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
+            List<StudentInstructor> studentInstructors = studentInstructorService.findByStudentId(schoolUser.getId());
+            for (StudentInstructor si : studentInstructors) {
+                if(!si.getStatus().equals(Constants.PENDING)) {
+                    List<InstructionEvent> eventsByInstructor = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, si.getInstructor().getId());
+                    events.addAll(eventsByInstructor);
+                }
+            }
+
+        }
+        else if(authentication.getAuthorities().toArray()[0].toString().equals("ROLE_INSTRUCTOR")){
+            SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
+            events = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth,endOfMonth, schoolUser.getId());
+        }
+        else if(authentication.getAuthorities().toArray()[0].toString().equals("ROLE_ADMIN")){
+            events = instructorEventService.findInstructionEventsByTimeRange(startOfMonth,endOfMonth);
+        }
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEE", new Locale("pl"));
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", new Locale("pl"));
         String formattedDay = localDateTime.format(dayFormatter);
