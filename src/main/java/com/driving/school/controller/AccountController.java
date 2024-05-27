@@ -29,18 +29,18 @@ public class AccountController {
     public ModelAndView displayAccount(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("account");
         modelAndView.addObject("instructorStudents", studentInstructorRepository.
-                findByStudentId(((SchoolUser)session.getAttribute("loggedInUser")).getId()));
+                findByStudentId(((SchoolUser) session.getAttribute("loggedInUser")).getId()));
         modelAndView.addObject("instructors", schoolUserService.findAllInstructors());
         return modelAndView;
     }
 
     @PostMapping("/account/assignInstructor")
-    public ModelAndView assignInstructor(@RequestParam("selectedInstructor") String instructorId, HttpSession session) {
+    public ModelAndView assignInstructor(@RequestParam("selectedInstructor") Long instructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
 
-        if(instructorId != null) {
+        if (instructorId != null) {
             SchoolUser student = (SchoolUser) session.getAttribute("loggedInUser");
-            SchoolUser instructor = schoolUserService.findUserById(Long.valueOf(instructorId));
+            SchoolUser instructor = schoolUserService.findUserById(instructorId);
 
             if (!studentInstructorRepository.existsByStudentAndInstructor(student, instructor)) {
                 StudentInstructor studentInstructor = new StudentInstructor();
@@ -51,6 +51,20 @@ public class AccountController {
             }
         }
 
+        return modelAndView;
+    }
+
+    @PostMapping("/account/cancelInstructor")
+    public ModelAndView cancelInstructor(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/account");
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (loggedInUser.getId().equals(studentId)) {
+            StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
+            if (studentInstructor != null) {
+                studentInstructorRepository.delete(studentInstructor);
+            }
+        }
         return modelAndView;
     }
 }

@@ -67,18 +67,29 @@
                                         <table class="instructors-table">
                                             <thead>
                                             <tr>
-                                                <th>Imie</th>
+                                                <th>Imię</th>
                                                 <th>Nazwisko</th>
                                                 <th>Email</th>
                                                 <th>Status</th>
+                                                <th>Początek</th>
+                                                <th>Koniec</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="element : ${instructorStudents}">
+                                            <tr th:each="element : ${instructorStudents}" class="table-student-row">
                                                 <td th:text="${element.instructor.name}"></td>
                                                 <td th:text="${element.instructor.surname}"></td>
                                                 <td th:text="${element.instructor.email}"></td>
                                                 <td th:text="${element.status}"></td>
+                                                <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td class="cancel-instructor">
+                                                    <form th:action="@{/account/cancelInstructor}" method="post">
+                                                        <input type="hidden" name="studentId" th:value="${element.student.id}"/>
+                                                        <input type="hidden" name="instructorId" th:value="${element.instructor.id}"/>
+                                                        <button type="submit" class="cancel-btn">Anuluj</button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -96,6 +107,7 @@
                                     <button class="info-btn">Aplikuje</button>
                                 </form>
                             </div>
+
                         </th:block>
                     </div>
                 </div>
@@ -153,5 +165,6 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="/assets/js/aosSettings.js"></script>
 <script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/account.js"></script>
 </body>
 </html>

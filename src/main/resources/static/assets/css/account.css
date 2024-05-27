@@ -215,7 +215,6 @@ h2 {
   background-color: rgba(0, 0, 0, 0.85);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table th,
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table td,
@@ -240,6 +239,29 @@ h2 {
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table tbody tr:nth-child(even),
 .account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .instructors-table tbody tr:nth-child(even) {
   background-color: rgb(109, 107, 107);
+}
+.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table .table-student-row,
+.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .instructors-table .table-student-row {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table .table-student-row .cancel-instructor,
+.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .instructors-table .table-student-row .cancel-instructor {
+  position: absolute;
+  left: -120px;
+  padding-right: 20px;
+  transition: transform 0.3s ease;
+}
+.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table .table-student-row:hover,
+.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .instructors-table .table-student-row:hover {
+  cursor: pointer;
+  background-color: black;
+  padding-left: 100px;
+  transform: translateX(120px);
+}
+.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table .table-student-row.clicked,
+.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .instructors-table .table-student-row.clicked {
+  transform: translateX(120px);
 }
 .account .hero-img .box-account .box-container .container-account .account-details .select-instructor,
 .account .hero-img .box-account .box-container .container-account .account-instructor .select-instructor {
@@ -281,9 +303,11 @@ h2 {
 .account .hero-img .box-account .box-container .container-account .account-details button.correct-btn,
 .account .hero-img .box-account .box-container .container-account .account-details .delete-btn,
 .account .hero-img .box-account .box-container .container-account .account-details .info-btn,
+.account .hero-img .box-account .box-container .container-account .account-details .cancel-btn,
 .account .hero-img .box-account .box-container .container-account .account-instructor button.correct-btn,
 .account .hero-img .box-account .box-container .container-account .account-instructor .delete-btn,
-.account .hero-img .box-account .box-container .container-account .account-instructor .info-btn {
+.account .hero-img .box-account .box-container .container-account .account-instructor .info-btn,
+.account .hero-img .box-account .box-container .container-account .account-instructor .cancel-btn {
   font-size: 18px;
   height: 35px;
   padding: 0px 10px;
@@ -299,9 +323,11 @@ h2 {
 .account .hero-img .box-account .box-container .container-account .account-details button.correct-btn:hover,
 .account .hero-img .box-account .box-container .container-account .account-details .delete-btn:hover,
 .account .hero-img .box-account .box-container .container-account .account-details .info-btn:hover,
+.account .hero-img .box-account .box-container .container-account .account-details .cancel-btn:hover,
 .account .hero-img .box-account .box-container .container-account .account-instructor button.correct-btn:hover,
 .account .hero-img .box-account .box-container .container-account .account-instructor .delete-btn:hover,
-.account .hero-img .box-account .box-container .container-account .account-instructor .info-btn:hover {
+.account .hero-img .box-account .box-container .container-account .account-instructor .info-btn:hover,
+.account .hero-img .box-account .box-container .container-account .account-instructor .cancel-btn:hover {
   transform: scale(1.05);
 }
 .account .hero-img .box-account .box-container .container-account .account-details button.add-btn,
@@ -327,6 +353,14 @@ h2 {
 .account .hero-img .box-account .box-container .container-account .account-details button.delete-btn:hover,
 .account .hero-img .box-account .box-container .container-account .account-instructor button.delete-btn:hover {
   background-color: #eb184a;
+}
+.account .hero-img .box-account .box-container .container-account .account-details button.cancel-btn,
+.account .hero-img .box-account .box-container .container-account .account-instructor button.cancel-btn {
+  background-color: #ffd166;
+}
+.account .hero-img .box-account .box-container .container-account .account-details button.cancel-btn:hover,
+.account .hero-img .box-account .box-container .container-account .account-instructor button.cancel-btn:hover {
+  background-color: #ffc233;
 }
 .account .hero-img .box-account .box-container .container-account .account-instructor {
   width: 100%;
@@ -382,14 +416,11 @@ h2 {
   color: antiquewhite;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 950px) {
   .account .hero-img .box-account {
-    top: 12vh;
+    top: 90px;
     left: 0px;
     width: 100%;
-  }
-  .account .hero-img .box-account .box-container .title {
-    margin-top: 45px;
   }
   .account .hero-img .box-account .container-account {
     width: 100%;
@@ -405,5 +436,17 @@ h2 {
   .account .hero-img .box-account .container-account .account-instructor p {
     text-align: center;
     font-size: 13px;
+  }
+  .navbar-left {
+    display: none;
+  }
+  .navbar-left .navbar-nav .logout {
+    display: block;
+  }
+  .navbar-top button {
+    display: block;
+  }
+  .navbar-top .box-account {
+    display: none;
   }
 }/*# sourceMappingURL=account.css.map */
