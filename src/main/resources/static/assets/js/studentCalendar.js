@@ -1,5 +1,6 @@
 function updateEvents(date) {
     let events = "";
+
     eventsArr.forEach((event) => {
         if (
             date === event.day &&
@@ -8,7 +9,12 @@ function updateEvents(date) {
         ) {
             event.events.forEach((event) => {
                 let actionLink;
-                actionLink = `<a href="/calendar/assignEvent?id=${event.id}"><i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i></a>`;
+                actionLink = `<form action="/calendar/assignEvent" method="post">
+                                    <input type="hidden" name="eventId" value="${event.id}">
+                                    <button type="submit">
+                                     <i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i>
+                                    </button>
+                                </form>`;
                 events += `
         <div class="event" onclick="toggleEvent(this)">
             ${actionLink}

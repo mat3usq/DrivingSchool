@@ -22,6 +22,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Controller
 public class CalendarController {
@@ -100,5 +101,19 @@ public class CalendarController {
         modelAndView.addObject("eventTypes", Constants.getAllEventTypes());
 
         return modelAndView;
+    }
+
+//TODO: ograniczenie ilościowe
+    @PostMapping("/calendar/assignEvent")
+    public ModelAndView signUpForEvent(@RequestParam("eventId") Long id, HttpSession session, Authentication authentication){
+        Optional<InstructionEvent> optionalevent = instructorEventService.findById(id);
+        InstructionEvent event = optionalevent.get();
+        SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
+        if(authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")){
+            instructorEventService.addStudentToInstructionEvent(event.getId(),schoolUser.getId());
+        }
+
+
+        return getCalendarModelAndView(YearMonth.from(event.getStartTime()),event.getStartTime() ,session, authentication);
     }
 }

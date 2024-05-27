@@ -2,7 +2,9 @@ package com.driving.school.service;
 
 
 import com.driving.school.model.InstructionEvent;
+import com.driving.school.model.SchoolUser;
 import com.driving.school.repository.InstructionEventRepository;
+import com.driving.school.repository.SchoolUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,18 @@ public class InstructorEventService {
     @Autowired
     InstructionEventRepository instructionEventRepository;
 
-    public InstructorEventService(InstructionEventRepository instructionEventRepository) {
+    @Autowired
+    SchoolUserRepository schoolUserRepository;
+
+    public InstructorEventService(InstructionEventRepository instructionEventRepository, SchoolUserRepository schoolUserRepository) {
         this.instructionEventRepository = instructionEventRepository;
+        this.schoolUserRepository = schoolUserRepository;
     }
+
+    public Optional<InstructionEvent> findById(Long id) {
+        return instructionEventRepository.findById(id);
+    }
+
     public Optional<InstructionEvent> getInstructionEventById(Long id) {
         return instructionEventRepository.findById(id);
     }
@@ -55,6 +66,21 @@ public class InstructorEventService {
 
     public List<InstructionEvent> findInstructionEventsByTimeRangeAndInstructor(LocalDateTime startTime, LocalDateTime endTime, Long instructorId) {
         return instructionEventRepository.findByStartTimeBetweenAndInstructorId(startTime, endTime, instructorId);
+    }
+
+    public InstructionEvent addStudentToInstructionEvent(Long eventId, Long studentId) {
+        Optional<InstructionEvent> optionalInstructionEvent = instructionEventRepository.findById(eventId);
+        Optional<SchoolUser> optionalStudent = schoolUserRepository.findById(studentId);
+
+        if (optionalInstructionEvent.isPresent() && optionalStudent.isPresent()) {
+            InstructionEvent instructionEvent = optionalInstructionEvent.get();
+            SchoolUser student = optionalStudent.get();
+
+            instructionEvent.getStudents().add(student);
+            return instructionEventRepository.save(instructionEvent);
+        } else {
+            throw new RuntimeException("InstructionEvent or Student not found with the provided IDs");
+        }
     }
 
 }
