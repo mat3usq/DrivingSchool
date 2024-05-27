@@ -113,6 +113,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     private void mapQuestionsToDb() {
         try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/questions/questions.csv"))) {
             List<String[]> records = reader.readAll();
+            Integer iteration = 0;
             for (String[] record : records) {
                 Question question = new Question();
                 question.setQuestion(record[0]);
@@ -125,6 +126,8 @@ public class DatabaseSeeder implements CommandLineRunner {
                 question.setQuestionType(record[7]);
 
 //                System.out.println(question);
+//                System.out.println(++iteration);
+
 //                questionService.save(question);
             }
             List<Question> questions = questionService.findAll();
