@@ -164,14 +164,11 @@ function parseEvents() {
 
     eventElements.forEach(eventEl => {
         const elId = eventEl.querySelector('.id');
-        const titleEl = eventEl.querySelector('.title');
-        const subjectEl = eventEl.querySelector('.subject');
-        const timeEl = eventEl.querySelector('.event-time');
+        const timeEl = eventEl.querySelector('.eventTime');
+        timeEl.remove()
 
-        if (titleEl && timeEl) {
+        if (elId && timeEl) {
             const id = elId.innerText.trim();
-            const title = titleEl.innerText.trim();
-            const subject = subjectEl.innerText.trim();
             const timeText = timeEl.innerText.trim();
 
             const [start, end] = timeText.split(' - ').map(time => new Date(time));
@@ -188,13 +185,33 @@ function parseEvents() {
                 eventsArr.push(eventDay);
             }
 
-            eventDay.events.push({id, title, subject, timeFrom, timeTo});
+            eventDay.events.push({id, timeFrom, timeTo});
 
-            eventEl.remove();
+            eventEl.classList.add('hidden');
         }
     });
 
     return eventsArr;
+}
+
+function updateEvents(date) {
+    let empty = true;
+    eventsArr.forEach((event) => {
+        if (
+            date === event.day &&
+            month + 1 === event.month &&
+            year === event.year
+        ) {
+            empty = false;
+            event.events.forEach(e => document.getElementById('event-' + e.id).classList.remove("hidden"))
+        } else
+            event.events.forEach(e => document.getElementById('event-' + e.id).classList.add("hidden"))
+    });
+
+    if (empty)
+        document.querySelector(".no-event").classList.remove("hidden")
+    else
+        document.querySelector(".no-event").classList.add("hidden")
 }
 
 function submitFormWithDate() {
@@ -233,7 +250,6 @@ function addEvent() {
 
     const startDateTime = `${year}-${String(month + 1).padStart(2, '0')}-${String(activeDay).padStart(2, '0')}T${startTimeValue}:00`;
     const endDateTime = `${year}-${String(month + 1).padStart(2, '0')}-${String(activeDay).padStart(2, '0')}T${endTimeValue}:00`;
-    console.log(startDateTime);
     startTimeInput.value = startDateTime;
     endTimeInput.value = endDateTime;
 }

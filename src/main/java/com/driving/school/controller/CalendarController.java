@@ -11,14 +11,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +27,7 @@ public class CalendarController {
     private final InstructionEventRepository instructionEventRepository;
     private final InstructorEventService instructorEventService;
     private final StudentInstructorService studentInstructorService;
+
     @Autowired
     public CalendarController(InstructionEventRepository instructionEventRepository, InstructorEventService instructorEventService,
                               StudentInstructorService studentInstructorService) {
@@ -59,35 +58,32 @@ public class CalendarController {
     public ModelAndView addEvent(@ModelAttribute InstructionEvent event, HttpSession session, Authentication authentication) {
         instructionEventRepository.save(event);
         YearMonth yearMonth = YearMonth.from(event.getStartTime());
-        return getCalendarModelAndView(yearMonth, event.getStartTime(),session, authentication);
+        return getCalendarModelAndView(yearMonth, event.getStartTime(), session, authentication);
     }
 
-    private ModelAndView getCalendarModelAndView(YearMonth yearMonth, LocalDateTime localDateTime,
-                                                 HttpSession session, Authentication authentication) {
+    private ModelAndView getCalendarModelAndView(YearMonth yearMonth, LocalDateTime localDateTime, HttpSession session, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView("calendar");
         LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = yearMonth.atEndOfMonth().atTime(23, 59, 59);
 
 
         List<InstructionEvent> events = new ArrayList<>();
-        if(authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
+        if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
             SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
             List<StudentInstructor> studentInstructors = studentInstructorService.findByStudentId(schoolUser.getId());
             for (StudentInstructor si : studentInstructors) {
-                if(!si.getStatus().equals(Constants.PENDING)) {
+                if (si.getStatus().equals(Constants.ACTIVE)) {
                     List<InstructionEvent> eventsByInstructor = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, si.getInstructor().getId());
                     events.addAll(eventsByInstructor);
                 }
             }
-
-        }
-        else if(authentication.getAuthorities().toArray()[0].toString().equals("ROLE_INSTRUCTOR")){
+        } else if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_INSTRUCTOR")) {
             SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
-            events = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth,endOfMonth, schoolUser.getId());
-        }
-        else if(authentication.getAuthorities().toArray()[0].toString().equals("ROLE_ADMIN")){
-            events = instructorEventService.findInstructionEventsByTimeRange(startOfMonth,endOfMonth);
-        }
+            events = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, schoolUser.getId());
+        } else if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_ADMIN"))
+            events = instructorEventService.findInstructionEventsByTimeRange(startOfMonth, endOfMonth);
+
+
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEE", new Locale("pl"));
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", new Locale("pl"));
         String formattedDay = localDateTime.format(dayFormatter);
@@ -103,17 +99,16 @@ public class CalendarController {
         return modelAndView;
     }
 
-//TODO: ograniczenie ilościowe
+    //TODO: ograniczenie ilościowe
     @PostMapping("/calendar/assignEvent")
-    public ModelAndView signUpForEvent(@RequestParam("eventId") Long id, HttpSession session, Authentication authentication){
+    public ModelAndView signUpForEvent(@RequestParam("eventId") Long id, HttpSession session, Authentication authentication) {
         Optional<InstructionEvent> optionalevent = instructorEventService.findById(id);
         InstructionEvent event = optionalevent.get();
         SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
-        if(authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")){
-            instructorEventService.addStudentToInstructionEvent(event.getId(),schoolUser.getId());
+        if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
+            instructorEventService.addStudentToInstructionEvent(event.getId(), schoolUser.getId());
         }
 
-
-        return getCalendarModelAndView(YearMonth.from(event.getStartTime()),event.getStartTime() ,session, authentication);
+        return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
 }
