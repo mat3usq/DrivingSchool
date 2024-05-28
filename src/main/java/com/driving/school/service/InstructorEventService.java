@@ -26,8 +26,8 @@ public class InstructorEventService {
         this.schoolUserRepository = schoolUserRepository;
     }
 
-    public Optional<InstructionEvent> findById(Long id) {
-        return instructionEventRepository.findById(id);
+    public InstructionEvent findById(Long id) {
+        return instructionEventRepository.findById(id).orElse(null);
     }
 
     public Optional<InstructionEvent> getInstructionEventById(Long id) {
@@ -68,7 +68,7 @@ public class InstructorEventService {
         return instructionEventRepository.findByStartTimeBetweenAndInstructorId(startTime, endTime, instructorId);
     }
 
-    public InstructionEvent addStudentToInstructionEvent(Long eventId, Long studentId) {
+    public void addStudentToInstructionEvent(Long eventId, Long studentId) {
         Optional<InstructionEvent> optionalInstructionEvent = instructionEventRepository.findById(eventId);
         Optional<SchoolUser> optionalStudent = schoolUserRepository.findById(studentId);
 
@@ -77,10 +77,9 @@ public class InstructorEventService {
             SchoolUser student = optionalStudent.get();
 
             instructionEvent.getStudents().add(student);
-            return instructionEventRepository.save(instructionEvent);
+            instructionEventRepository.save(instructionEvent);
         } else {
             throw new RuntimeException("InstructionEvent or Student not found with the provided IDs");
         }
     }
-
 }

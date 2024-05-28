@@ -87,13 +87,13 @@
                         </div>
                         <div class="events">
                             <div th:each="event : ${events}" class="event" th:id="'event-'+${event.id}" onclick="toggleEvent(this)">
-                                <form sec:authorize="hasRole('ROLE_STUDENT')" action="/calendar/assignEvent" method="post">
+                                <form sec:authorize="hasRole('ROLE_STUDENT')" th:action="@{/calendar/assignEvent}" method="post">
                                     <input type="hidden" name="eventId" th:value="${event.id}">
                                     <button type="submit">
                                         <i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i>
                                     </button>
                                 </form>
-                                <form sec:authorize="!hasRole('ROLE_STUDENT')" action="/calendar/deleteEvent" method="post">
+                                <form sec:authorize="!hasRole('ROLE_STUDENT')" th:action="@{/calendar/deleteEvent}" method="post">
                                     <input type="hidden" name="eventId" th:value="${event.id}">
                                     <button type="submit">
                                         <i class="fas fa-trash delete-icon"></i>

@@ -466,6 +466,7 @@ h2 {
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event .delete-icon, .calendar-section .hero-img .box-calendar .container .right .events .event .assign-icon {
   position: absolute;
+  font-size: 20px;
   left: -30px;
   top: 50%;
   transform: translateY(-50%);

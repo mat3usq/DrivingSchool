@@ -165,6 +165,7 @@ function parseEvents() {
     eventElements.forEach(eventEl => {
         const elId = eventEl.querySelector('.id');
         const timeEl = eventEl.querySelector('.eventTime');
+        elId.remove()
         timeEl.remove()
 
         if (elId && timeEl) {

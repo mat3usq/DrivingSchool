@@ -46,6 +46,7 @@
   - Ograniczenie ilościowe do spotkań
   - Student nie może dodawać wydarzenia
   - Zabezpieczenie kalendarza
+  - Gdy sie wchodzi lub sie dodaje lub cos to niech podswietla spowrotem ten dzien co sie bylo na nim
 - ~~Wybór instruktora~~
 - ~~Funkcja dodawania i przeglądania materiałów edukacyjnych przez studentów~~
 - Rozwiązywanie testów i podział testów na kategorie

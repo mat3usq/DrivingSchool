@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
+import java.util.Objects;
 
 @Controller
 public class CalendarController {
@@ -56,6 +56,7 @@ public class CalendarController {
 
     @PostMapping("/calendar/addEvent")
     public ModelAndView addEvent(@ModelAttribute InstructionEvent event, HttpSession session, Authentication authentication) {
+        event.setInstructor((SchoolUser) session.getAttribute("loggedInUser"));
         instructionEventRepository.save(event);
         YearMonth yearMonth = YearMonth.from(event.getStartTime());
         return getCalendarModelAndView(yearMonth, event.getStartTime(), session, authentication);
@@ -65,7 +66,6 @@ public class CalendarController {
         ModelAndView modelAndView = new ModelAndView("calendar");
         LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = yearMonth.atEndOfMonth().atTime(23, 59, 59);
-
 
         List<InstructionEvent> events = new ArrayList<>();
         if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
@@ -101,13 +101,13 @@ public class CalendarController {
 
     //TODO: ograniczenie ilościowe
     @PostMapping("/calendar/assignEvent")
-    public ModelAndView signUpForEvent(@RequestParam("eventId") Long id, HttpSession session, Authentication authentication) {
-        Optional<InstructionEvent> optionalevent = instructorEventService.findById(id);
-        InstructionEvent event = optionalevent.get();
-        SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
-        if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
-            instructorEventService.addStudentToInstructionEvent(event.getId(), schoolUser.getId());
-        }
+    public ModelAndView signUpForEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
+        InstructionEvent event = instructorEventService.findById(eventId);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (studentInstructorService.existsByStudentAndInstructor(user, event.getInstructor()) &&
+                event.getStudents().stream().noneMatch(s -> Objects.equals(s.getId(), user.getId())))
+            instructorEventService.addStudentToInstructionEvent(eventId, user.getId());
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
