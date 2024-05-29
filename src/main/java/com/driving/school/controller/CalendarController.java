@@ -135,4 +135,15 @@ public class CalendarController {
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
+
+    @PostMapping("/calendar/deleteEvent")
+    public ModelAndView deleteEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
+        InstructionEvent event = instructorEventService.findById(eventId);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE))
+            instructionEventRepository.delete(event);
+
+        return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
+    }
 }
