@@ -49,11 +49,19 @@ public class InstructionEvent {
     @Column(name = "STATUS", length = 64)
     private String status;
 
-    public InstructionEvent(String subject, String eventType, LocalDateTime startTime, LocalDateTime endTime, SchoolUser instructor) {
+    @Column(name = "MEETINGCAPACITY")
+    private Integer eventCapacity;
+
+    @Column(name = "CURRENTMEETINGCAPACITY")
+    private Integer currentEventCapacity;
+
+
+    public InstructionEvent(String subject, String eventType, LocalDateTime startTime, LocalDateTime endTime, SchoolUser instructor, Integer eventCapacity) {
         this.subject = subject;
         this.eventType = eventType;
         this.startTime = startTime;
         this.endTime = endTime;
         this.instructor = instructor;
+        this.eventCapacity = eventCapacity;
     }
 }

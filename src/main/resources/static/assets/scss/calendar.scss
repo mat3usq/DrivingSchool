@@ -439,13 +439,13 @@ h2 {
 								padding: 35px 17px 30px 0px;
 							}
 
-							.title, .subject {
+							.title, .subject, .time, .capacity {
 								display: flex;
 								align-items: center;
 								pointer-events: none;
 								justify-content: center;
 
-								.event-title, .event-subject {
+								.event-title, .event-subject, .event-time, .event-capacity {
 									font-size: 1rem;
 									font-weight: 400;
 									margin-left: 10px;
@@ -453,8 +453,17 @@ h2 {
 								}
 							}
 
+							.capacity {
+								.event-capacity-number {
+									font-family: 'Roboto', sans-serif;
+									font-size: 1.1rem;
+									font-weight: 500;
+									letter-spacing: 1px;
+									color: $category-icon;
+								}
+							}
+
 							i {
-								margin-top: -9px;
 								color: $calendar-color;
 								transition: color 0.3s ease;
 							}
