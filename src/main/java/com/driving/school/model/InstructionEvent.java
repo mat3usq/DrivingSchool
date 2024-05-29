@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,12 +50,14 @@ public class InstructionEvent {
     @Column(name = "STATUS", length = 64)
     private String status;
 
-    @Column(name = "MEETINGCAPACITY")
+    @Column(name = "EVENTCAPACITY")
     private Integer eventCapacity;
 
-    @Column(name = "CURRENTMEETINGCAPACITY")
+    @Column(name = "CURRENTEVENTCAPACITY")
     private Integer currentEventCapacity;
 
+    @Transient
+    private Boolean isAssigned;
 
     public InstructionEvent(String subject, String eventType, LocalDateTime startTime, LocalDateTime endTime, SchoolUser instructor, Integer eventCapacity) {
         this.subject = subject;
@@ -63,5 +66,6 @@ public class InstructionEvent {
         this.endTime = endTime;
         this.instructor = instructor;
         this.eventCapacity = eventCapacity;
+        this.currentEventCapacity = eventCapacity;
     }
 }

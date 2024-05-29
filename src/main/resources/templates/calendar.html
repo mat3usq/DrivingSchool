@@ -26,6 +26,15 @@
 
     <link rel="stylesheet" href="/assets/css/navigation.css"/>
     <link rel="stylesheet" href="/assets/css/calendar.css"/>
+    <style sec:authorize="hasRole('ROLE_ADMIN')">
+        .event:hover {
+            transform: translateX(0) !important;
+        }
+
+        .event.clicked {
+            transform: translateX(0) !important;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{loadingCar :: loadingCar}"></div>
@@ -87,14 +96,26 @@
                             <div class="event-date" th:text="${formattedDate}">20 maj 2024</div>
                         </div>
                         <div class="events">
-                            <div th:each="event : ${events}" class="event" th:id="'event-'+${event.id}" onclick="toggleEvent(this)">
-                                <form hidden="hidden" sec:authorize="hasRole('ROLE_STUDENT')" th:action="@{/calendar/assignEvent}" method="post">
-                                    <input type="hidden" name="eventId" th:value="${event.id}">
-                                    <button type="submit">
-                                        <i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i>
-                                    </button>
-                                </form>
-                                <form hidden="hidden" sec:authorize="!hasRole('ROLE_STUDENT')" th:action="@{/calendar/deleteEvent}" method="post">
+                            <div th:each="event : ${events}" class="event" th:id="'event-'+${event.id}"
+                                 onclick="toggleEvent(this)">
+                                <th:block sec:authorize="hasRole('ROLE_STUDENT')">
+                                    <form th:if="${!event.isAssigned}" class="assign-form"
+                                          th:action="@{/calendar/assignEvent}" method="post">
+                                        <input type="hidden" name="eventId" th:value="${event.id}">
+                                        <button type="submit">
+                                            <i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i>
+                                        </button>
+                                    </form>
+                                    <form th:if="${event.isAssigned}" class="left-form"
+                                          th:action="@{/calendar/leftEvent}" method="post">
+                                        <input type="hidden" name="eventId" th:value="${event.id}">
+                                        <button type="submit">
+                                            <i class="fa-solid fa-arrow-right-to-bracket left-icon"></i>
+                                        </button>
+                                    </form>
+                                </th:block>
+                                <form class="delete-form" sec:authorize="!hasRole('ROLE_STUDENT')"
+                                      th:action="@{/calendar/deleteEvent}" method="post">
                                     <input type="hidden" name="eventId" th:value="${event.id}">
                                     <button type="submit">
                                         <i class="fas fa-trash delete-icon"></i>
@@ -115,11 +136,28 @@
                                 </div>
                                 <div class="time">
                                     <i class="fa-regular fa-clock"></i>
-                                    <span class="event-time" th:text="${#temporals.format(event.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(event.endTime, 'HH:mm')}">Event Time</span>
+                                    <span class="event-time"
+                                          th:text="${#temporals.format(event.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(event.endTime, 'HH:mm')}">Event Time</span>
                                 </div>
-                                <div class="capacity">
+                                <div class="capacity" sec:authorize="!hasRole('ROLE_STUDENT')">
                                     <i class="fa-solid fa-people-arrows"></i>
-                                    <span class="event-capacity">Wolne Miejsca: <span class="event-capacity-number" th:text="${event.eventCapacity}">Event Capacity</span></span>
+                                    <span th:if="${event.currentEventCapacity != 0}" class="event-capacity">Wolne Miejsca: <span
+                                            class="event-capacity-number" th:text="${event.currentEventCapacity}">Event Capacity</span></span>
+                                    <span th:if="${event.currentEventCapacity == 0}" class="event-capacity">Brak Wolnych<span
+                                            class="event-capacity-number">Miejsc</span></span>
+                                </div>
+
+                                <div class="capacity" sec:authorize="hasRole('ROLE_STUDENT')">
+                                    <i class="fa-solid fa-people-arrows"></i>
+                                    <th:block th:if="${!event.isAssigned}">
+                                        <span th:if="${event.currentEventCapacity != 0}" class="event-capacity">Wolne Miejsca: <span
+                                                class="event-capacity-number" th:text="${event.currentEventCapacity}">Event Capacity</span></span>
+                                        <span th:if="${event.currentEventCapacity == 0}" class="event-capacity">Brak Wolnych <span
+                                                class="event-capacity-number">Miejsc</span></span>
+                                    </th:block>
+                                    <th:block th:if="${event.isAssigned}">
+                                        <span class="event-capacity">Jesteś: <span class="event-capacity-number">Zapisany</span></span>
+                                    </th:block>
                                 </div>
                                 <div hidden="hidden" class="eventTime">
                                     <span th:text="${event.startTime} + ' - ' + ${event.endTime}">Event Time</span>
@@ -134,21 +172,30 @@
                                 <div class="title">Dodaj Wydarzenie</div>
                                 <i class="fas fa-times close"></i>
                             </div>
-                            <form class="add-event-body" th:action="@{/calendar/addEvent}" method="post" th:object="${newEvent}">
+                            <form class="add-event-body" th:action="@{/calendar/addEvent}" method="post"
+                                  th:object="${newEvent}">
                                 <div class="add-event-input">
-                                    <select class="event-name" th:name="eventType" th:field="*{eventType}">
+                                    <select class="event-name" th:field="*{eventType}">
                                         <option value="" disabled selected>Wybierz Typ Wydarzenia</option>
-                                        <option th:each="eventType : ${eventTypes}" th:value="${eventType}" th:text="${eventType}"></option>
+                                        <option th:each="eventType : ${eventTypes}" th:value="${eventType}"
+                                                th:text="${eventType}"></option>
                                     </select>
                                 </div>
                                 <div class="add-event-input">
-                                    <input type="text" placeholder="Nazwa Wydarzenia" class="event-name" th:field="*{subject}"/>
+                                    <input type="text" placeholder="Nazwa Wydarzenia" class="event-name"
+                                           th:field="*{subject}"/>
                                 </div>
                                 <div class="add-event-input">
-                                    <input type="text" placeholder="Początek Wydarzenia" class="event-time-from" id="startTime" th:field="*{startTime}"/>
+                                    <input type="text" placeholder="Początek Wydarzenia" class="event-time-from"
+                                           id="startTime" th:field="*{startTime}"/>
                                 </div>
                                 <div class="add-event-input">
-                                    <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to" id="endTime" th:field="*{endTime}"/>
+                                    <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"
+                                           id="endTime" th:field="*{endTime}"/>
+                                </div>
+                                <div class="add-event-input">
+                                    <input type="number" placeholder="Liczba Miejsc na Wydarzenie"
+                                           class="event-capacity" th:field="*{eventCapacity}" min="0"/>
                                 </div>
                                 <div class="add-event-footer">
                                     <button class="add-event-btn" onclick="addEvent()">Dodaj Wydarzenie</button>

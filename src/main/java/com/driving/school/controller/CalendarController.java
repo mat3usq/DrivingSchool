@@ -66,11 +66,11 @@ public class CalendarController {
         ModelAndView modelAndView = new ModelAndView("calendar");
         LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = yearMonth.atEndOfMonth().atTime(23, 59, 59);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
         List<InstructionEvent> events = new ArrayList<>();
         if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
-            SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
-            List<StudentInstructor> studentInstructors = studentInstructorService.findByStudentId(schoolUser.getId());
+            List<StudentInstructor> studentInstructors = studentInstructorService.findByStudentId(user.getId());
             for (StudentInstructor si : studentInstructors) {
                 if (si.getStatus().equals(Constants.ACTIVE)) {
                     List<InstructionEvent> eventsByInstructor = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, si.getInstructor().getId());
@@ -78,11 +78,13 @@ public class CalendarController {
                 }
             }
         } else if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_INSTRUCTOR")) {
-            SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
-            events = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, schoolUser.getId());
+            events = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, user.getId());
         } else if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_ADMIN"))
             events = instructorEventService.findInstructionEventsByTimeRange(startOfMonth, endOfMonth);
 
+        events.forEach(e -> {
+            e.setIsAssigned(e.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId())));
+        });
 
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEE", new Locale("pl"));
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", new Locale("pl"));
