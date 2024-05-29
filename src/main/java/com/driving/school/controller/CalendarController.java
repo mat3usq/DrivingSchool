@@ -146,4 +146,20 @@ public class CalendarController {
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
+
+    @PostMapping("/calendar/editEvent")
+    public ModelAndView editEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
+        InstructionEvent event = instructorEventService.findById(eventId);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)){
+            ModelAndView modelAndView = new ModelAndView("editEventCalendar");
+            modelAndView.addObject("formattedDay", event.getStartTime().format(DateTimeFormatter.ofPattern("EEE", new Locale("pl"))));
+            modelAndView.addObject("formattedDate", event.getStartTime().format(DateTimeFormatter.ofPattern("dd MMM yyyy", new Locale("pl"))));
+            modelAndView.addObject("editedEvent", event);
+            return modelAndView;
+        }
+        else
+            return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
+    }
 }

@@ -39,12 +39,8 @@
 ## TODO must have
 - ~~Baza danych~~
 - Kalendarz z jazdami i wykładami
-  - Student może zapisać się na wydarzenie
-  - Student może wyjść ze spotkania
   - Instruktor moze edytowac spotkanie
   - Instruktor może wywalić jakiegoś studenta
-  - Instruktor moze usunac wydarzenie
-  - Ograniczenie ilościowe do spotkań
   - Zabezpieczenie kalendarza (Student nie może dodawać wydarzenia)
   - Gdy sie wchodzi lub sie dodaje lub cos to niech podswietla spowrotem ten dzien co sie bylo na nim
 - ~~Wybór instruktora~~

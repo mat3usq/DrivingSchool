@@ -406,7 +406,8 @@ h2 {
 
 							&:hover .delete-icon,
 							&:hover .assign-icon,
-							&:hover .leave-icon {
+							&:hover .leave-icon,
+							&:hover .edit-icon {
 								opacity: 1;
 							}
 
@@ -423,13 +424,18 @@ h2 {
 								color: $category-icon;
 							}
 
+							&:hover .edit-icon:hover {
+								color: $btn-bg-color;
+							}
+
 							&.clicked {
 								background: linear-gradient(90deg, $calendar-color, transparent);
 								transform: translateX(30px);
 
 								.delete-icon,
 								.assign-icon,
-								.leave-icon {
+								.leave-icon,
+								.edit-icon {
 									opacity: 1;
 								}
 
@@ -445,21 +451,27 @@ h2 {
 
 							.assign-form,
 							.delete-form,
-							.leave-form {
+							.leave-form,
+							.edit-form {
+								height: 100%;
+								width: 40px;
+								display: flex;
 								position: absolute;
 								left: -30px;
 								top: 50%;
 								transform: translateY(-50%);
 
 								button {
-									padding: 35px 17px 30px 0px;
+									width: 100%;
+									padding-right: 20px;
 									background: transparent;
 								}
 							}
 
 							.delete-icon,
 							.assign-icon,
-							.leave-icon {
+							.leave-icon,
+							.edit-icon {
 								font-size: 22px;
 								opacity: 0;
 								transition: 0.3s ease;
@@ -532,6 +544,27 @@ h2 {
 
 							&:hover::after {
 								display: flex;
+							}
+
+							.operation-box {
+								height: 100%;
+								display: flex;
+								flex-direction: column;
+								justify-content: space-evenly;
+								align-items: center;
+								position: absolute;
+								left: -30px;
+								top: 50%;
+								transform: translateY(-50%);
+								padding-right: 20px;
+
+								.delete-form,
+								.edit-form {
+									position: relative;
+									left: 0;
+									top: 0;
+									transform: translateY(0);
+								}
 							}
 
 							button {
