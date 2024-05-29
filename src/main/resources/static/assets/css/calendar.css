@@ -445,14 +445,14 @@ h2 {
   background: linear-gradient(90deg, #b51b75, transparent);
   transform: translateX(30px);
 }
-.calendar-section .hero-img .box-calendar .container .right .events .event:hover .delete-icon, .calendar-section .hero-img .box-calendar .container .right .events .event:hover .assign-icon, .calendar-section .hero-img .box-calendar .container .right .events .event:hover .left-icon {
+.calendar-section .hero-img .box-calendar .container .right .events .event:hover .delete-icon, .calendar-section .hero-img .box-calendar .container .right .events .event:hover .assign-icon, .calendar-section .hero-img .box-calendar .container .right .events .event:hover .leave-icon {
   opacity: 1;
 }
-.calendar-section .hero-img .box-calendar .container .right .events .event:hover .left-icon {
+.calendar-section .hero-img .box-calendar .container .right .events .event:hover .leave-icon {
   transform: rotate(-180deg);
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event:hover .delete-icon:hover,
-.calendar-section .hero-img .box-calendar .container .right .events .event .left-icon:hover {
+.calendar-section .hero-img .box-calendar .container .right .events .event .leave-icon:hover {
   color: #ef476f;
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event:hover .assign-icon:hover {
@@ -464,10 +464,10 @@ h2 {
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event.clicked .delete-icon,
 .calendar-section .hero-img .box-calendar .container .right .events .event.clicked .assign-icon,
-.calendar-section .hero-img .box-calendar .container .right .events .event.clicked .left-icon {
+.calendar-section .hero-img .box-calendar .container .right .events .event.clicked .leave-icon {
   opacity: 1;
 }
-.calendar-section .hero-img .box-calendar .container .right .events .event.clicked .left-icon {
+.calendar-section .hero-img .box-calendar .container .right .events .event.clicked .leave-icon {
   transform: rotate(-180deg);
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event a {
@@ -476,7 +476,7 @@ h2 {
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event .assign-form,
 .calendar-section .hero-img .box-calendar .container .right .events .event .delete-form,
-.calendar-section .hero-img .box-calendar .container .right .events .event .left-form {
+.calendar-section .hero-img .box-calendar .container .right .events .event .leave-form {
   position: absolute;
   left: -30px;
   top: 50%;
@@ -484,23 +484,23 @@ h2 {
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event .assign-form button,
 .calendar-section .hero-img .box-calendar .container .right .events .event .delete-form button,
-.calendar-section .hero-img .box-calendar .container .right .events .event .left-form button {
+.calendar-section .hero-img .box-calendar .container .right .events .event .leave-form button {
   padding: 35px 17px 30px 0px;
   background: transparent;
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event .delete-icon,
 .calendar-section .hero-img .box-calendar .container .right .events .event .assign-icon,
-.calendar-section .hero-img .box-calendar .container .right .events .event .left-icon {
+.calendar-section .hero-img .box-calendar .container .right .events .event .leave-icon {
   font-size: 22px;
   opacity: 0;
   transition: 0.3s ease;
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event .delete-icon:hover,
 .calendar-section .hero-img .box-calendar .container .right .events .event .assign-icon:hover,
-.calendar-section .hero-img .box-calendar .container .right .events .event .left-icon:hover {
+.calendar-section .hero-img .box-calendar .container .right .events .event .leave-icon:hover {
   transform: scale(1.15);
 }
-.calendar-section .hero-img .box-calendar .container .right .events .event .left-icon:hover {
+.calendar-section .hero-img .box-calendar .container .right .events .event .leave-icon:hover {
   font-size: 25px;
   transform: rotate(180deg);
 }

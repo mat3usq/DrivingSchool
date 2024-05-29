@@ -26,15 +26,6 @@
 
     <link rel="stylesheet" href="/assets/css/navigation.css"/>
     <link rel="stylesheet" href="/assets/css/calendar.css"/>
-    <style sec:authorize="hasRole('ROLE_ADMIN')">
-        .event:hover {
-            transform: translateX(0) !important;
-        }
-
-        .event.clicked {
-            transform: translateX(0) !important;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="~{loadingCar :: loadingCar}"></div>
@@ -98,7 +89,7 @@
                         <div class="events">
                             <div th:each="event : ${events}" class="event" th:id="'event-'+${event.id}"
                                  onclick="toggleEvent(this)">
-                                <th:block sec:authorize="hasRole('ROLE_STUDENT')">
+                                <th:block sec:authorize="hasRole('ROLE_STUDENT')" th:if="${event.currentEventCapacity != 0}">
                                     <form th:if="${!event.isAssigned}" class="assign-form"
                                           th:action="@{/calendar/assignEvent}" method="post">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
@@ -106,11 +97,11 @@
                                             <i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i>
                                         </button>
                                     </form>
-                                    <form th:if="${event.isAssigned}" class="left-form"
-                                          th:action="@{/calendar/leftEvent}" method="post">
+                                    <form th:if="${event.isAssigned}" class="leave-form"
+                                          th:action="@{/calendar/leaveEvent}" method="post">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
                                         <button type="submit">
-                                            <i class="fa-solid fa-arrow-right-to-bracket left-icon"></i>
+                                            <i class="fa-solid fa-arrow-right-to-bracket leave-icon"></i>
                                         </button>
                                     </form>
                                 </th:block>
@@ -143,8 +134,7 @@
                                     <i class="fa-solid fa-people-arrows"></i>
                                     <span th:if="${event.currentEventCapacity != 0}" class="event-capacity">Wolne Miejsca: <span
                                             class="event-capacity-number" th:text="${event.currentEventCapacity}">Event Capacity</span></span>
-                                    <span th:if="${event.currentEventCapacity == 0}" class="event-capacity">Brak Wolnych<span
-                                            class="event-capacity-number">Miejsc</span></span>
+                                    <span th:if="${event.currentEventCapacity == 0}" class="event-capacity">Brak Wolnych <span class="event-capacity-number">Miejsc</span></span>
                                 </div>
 
                                 <div class="capacity" sec:authorize="hasRole('ROLE_STUDENT')">

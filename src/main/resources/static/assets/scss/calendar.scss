@@ -406,16 +406,16 @@ h2 {
 
 							&:hover .delete-icon,
 							&:hover .assign-icon,
-							&:hover .left-icon {
+							&:hover .leave-icon {
 								opacity: 1;
 							}
 
-							&:hover .left-icon {
+							&:hover .leave-icon {
 								transform: rotate(-180deg);
 							}
 
 							&:hover .delete-icon:hover,
-							.left-icon:hover {
+							.leave-icon:hover {
 								color: $primary-color;
 							}
 
@@ -429,11 +429,11 @@ h2 {
 
 								.delete-icon,
 								.assign-icon,
-								.left-icon {
+								.leave-icon {
 									opacity: 1;
 								}
 
-								.left-icon {
+								.leave-icon {
 									transform: rotate(-180deg);
 								}
 							}
@@ -445,7 +445,7 @@ h2 {
 
 							.assign-form,
 							.delete-form,
-							.left-form {
+							.leave-form {
 								position: absolute;
 								left: -30px;
 								top: 50%;
@@ -459,7 +459,7 @@ h2 {
 
 							.delete-icon,
 							.assign-icon,
-							.left-icon {
+							.leave-icon {
 								font-size: 22px;
 								opacity: 0;
 								transition: 0.3s ease;
@@ -469,7 +469,7 @@ h2 {
 								}
 							}
 
-							.left-icon {
+							.leave-icon {
 								&:hover {
 									font-size: 25px;
 									transform: rotate(180deg);

@@ -57,6 +57,9 @@ public class CalendarController {
     @PostMapping("/calendar/addEvent")
     public ModelAndView addEvent(@ModelAttribute InstructionEvent event, HttpSession session, Authentication authentication) {
         event.setInstructor((SchoolUser) session.getAttribute("loggedInUser"));
+        if (event.getEventCapacity() < 0)
+            event.setEventCapacity(0);
+        event.setCurrentEventCapacity(event.getEventCapacity());
         instructionEventRepository.save(event);
         YearMonth yearMonth = YearMonth.from(event.getStartTime());
         return getCalendarModelAndView(yearMonth, event.getStartTime(), session, authentication);
@@ -83,7 +86,8 @@ public class CalendarController {
             events = instructorEventService.findInstructionEventsByTimeRange(startOfMonth, endOfMonth);
 
         events.forEach(e -> {
-            e.setIsAssigned(e.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId())));
+            if (e.getStudents() != null)
+                e.setIsAssigned(e.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId())));
         });
 
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEE", new Locale("pl"));
@@ -101,15 +105,33 @@ public class CalendarController {
         return modelAndView;
     }
 
-    //TODO: ograniczenie ilościowe
     @PostMapping("/calendar/assignEvent")
     public ModelAndView signUpForEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (studentInstructorService.existsByStudentAndInstructor(user, event.getInstructor()) &&
-                event.getStudents().stream().noneMatch(s -> Objects.equals(s.getId(), user.getId())))
-            instructorEventService.addStudentToInstructionEvent(eventId, user.getId());
+        if (studentInstructorService.existsByStudentAndInstructor(user, event.getInstructor()))
+            if (event.getCurrentEventCapacity() != 0)
+                if (event.getStudents().stream().noneMatch(s -> Objects.equals(s.getId(), user.getId()))) {
+                    instructorEventService.addStudentToInstructionEvent(eventId, user.getId());
+                    event.setCurrentEventCapacity(event.getCurrentEventCapacity() - 1);
+                    instructionEventRepository.save(event);
+                }
+
+        return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
+    }
+
+    @PostMapping("/calendar/leaveEvent")
+    public ModelAndView leaveEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
+        InstructionEvent event = instructorEventService.findById(eventId);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (studentInstructorService.existsByStudentAndInstructor(user, event.getInstructor()))
+            if (event.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId()))) {
+                instructorEventService.removeStudentFromInstructionEvent(eventId, user.getId());
+                event.setCurrentEventCapacity(event.getCurrentEventCapacity() + 1);
+                instructionEventRepository.save(event);
+            }
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }

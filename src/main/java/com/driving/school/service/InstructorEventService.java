@@ -82,4 +82,19 @@ public class InstructorEventService {
             throw new RuntimeException("InstructionEvent or Student not found with the provided IDs");
         }
     }
+
+    public void removeStudentFromInstructionEvent(Long eventId, Long studentId) {
+        Optional<InstructionEvent> optionalInstructionEvent = instructionEventRepository.findById(eventId);
+        Optional<SchoolUser> optionalStudent = schoolUserRepository.findById(studentId);
+
+        if (optionalInstructionEvent.isPresent() && optionalStudent.isPresent()) {
+            InstructionEvent instructionEvent = optionalInstructionEvent.get();
+            SchoolUser student = optionalStudent.get();
+
+            instructionEvent.getStudents().remove(student);
+            instructionEventRepository.save(instructionEvent);
+        } else {
+            throw new RuntimeException("InstructionEvent or Student not found with the provided IDs");
+        }
+    }
 }
