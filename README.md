@@ -38,11 +38,9 @@
 
 ## TODO must have
 - ~~Baza danych~~
-- Kalendarz z jazdami i wykładami
-  - Instruktor moze edytowac spotkanie
-  - Instruktor może wywalić jakiegoś studenta
-  - Zabezpieczenie kalendarza (Student nie może dodawać wydarzenia)
-  - Gdy sie wchodzi lub sie dodaje lub cos to niech podswietla spowrotem ten dzien co sie bylo na nim
+- PRZEPISANIE KONTROLLERÓW ZA DUZO W NICH SIE DZIEJE SERWISY MUSZA OGARNIAC SPRAWDZANIE ITP
+- ZMIANA REPOSITORIÓW NA SERVICES
+- Dodanie strony error...
 - ~~Wybór instruktora~~
 - ~~Funkcja dodawania i przeglądania materiałów edukacyjnych przez studentów~~
 - Rozwiązywanie testów i podział testów na kategorie
