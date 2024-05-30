@@ -92,14 +92,14 @@
                                 <th:block sec:authorize="hasRole('ROLE_STUDENT')"
                                           th:if="${event.getAvailableEventSlots != 0}">
                                     <form th:if="${!event.isAssigned}" class="assign-form"
-                                          th:action="@{/calendar/assignEvent}" method="post">
+                                          th:action="@{/calendar/student/assignEvent}" method="post">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
                                         <button type="submit">
                                             <i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i>
                                         </button>
                                     </form>
                                     <form th:if="${event.isAssigned}" class="leave-form"
-                                          th:action="@{/calendar/leaveEvent}" method="post">
+                                          th:action="@{/calendar/student/leaveEvent}" method="post">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
                                         <button type="submit">
                                             <i class="fa-solid fa-arrow-right-to-bracket leave-icon"></i>
@@ -108,14 +108,14 @@
                                 </th:block>
                                 <div class="operation-box" sec:authorize="!hasRole('ROLE_STUDENT')">
                                     <form class="edit-form"
-                                          th:action="@{/calendar/editEvent}" method="get">
+                                          th:action="@{/calendar/operation/editEvent}" method="get">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
                                         <button type="submit">
                                             <i class="fa-solid fa-circle-info edit-icon"></i>
                                         </button>
                                     </form>
                                     <form class="delete-form"
-                                          th:action="@{/calendar/deleteEvent}" method="post">
+                                          th:action="@{/calendar/operation/deleteEvent}" method="post">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
                                         <button type="submit">
                                             <i class="fas fa-trash delete-icon"></i>
@@ -168,12 +168,12 @@
                                 <h3>Brak Wydarzen</h3>
                             </div>
                         </div>
-                        <div class="add-event-wrapper">
+                        <div sec:authorize="!hasRole('ROLE_STUDENT')" class="add-event-wrapper">
                             <div class="add-event-header">
                                 <div class="title">Dodaj Wydarzenie</div>
                                 <i class="fas fa-times close"></i>
                             </div>
-                            <form class="add-event-body" th:action="@{/calendar/addEvent}" method="post"
+                            <form class="add-event-body" th:action="@{/calendar/operation/addEvent}" method="post"
                                   th:object="${newEvent}">
                                 <div class="add-event-input">
                                     <select class="event-name" th:field="*{eventType}">
@@ -206,7 +206,7 @@
                             </form>
                         </div>
                     </div>
-                    <button class="add-event">
+                    <button sec:authorize="!hasRole('ROLE_STUDENT')" class="add-event">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>

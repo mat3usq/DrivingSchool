@@ -226,6 +226,14 @@ h2 {
 					padding: 20px 0;
 					margin-left: 8px;
 
+					.capacity-number {
+						font-family: 'Roboto', sans-serif;
+						font-size: 1.1rem;
+						font-weight: 500;
+						letter-spacing: 1px;
+						color: $category-icon;
+					}
+
 					.today-date {
 						width: 100%;
 						height: 50px;
@@ -501,14 +509,13 @@ h2 {
 						.edit-event-wrapper {
 							width: 75%;
 
-							.edit-event-body{
-								.edit-event-input{
+							.edit-event-body {
+								.edit-event-input {
 									p {
 										font-size: 12px;
 									}
 								}
 							}
-
 						}
 					}
 

@@ -23,13 +23,20 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository()))
                 .authorizeHttpRequests(requests -> requests
+                        // dashboard
                         .requestMatchers("/dashboard/**").authenticated()
+                        // lecture
                         .requestMatchers("/lecture").authenticated()
                         .requestMatchers("/lecture/**").hasAnyRole("INSTRUCTOR", "ADMIN")
-                        .requestMatchers("/calendar/**").authenticated()
+                        // calendar
+                        .requestMatchers("/calendar").authenticated()
+                        .requestMatchers("/calendar/operation/**").hasAnyRole("INSTRUCTOR", "ADMIN")
+                        .requestMatchers("/calendar/student/**").hasRole("STUDENT")
+                        // account
                         .requestMatchers("/account").authenticated()
                         .requestMatchers("/account/cancelInstructor", "/account/assignInstructor").hasRole("STUDENT")
                         .requestMatchers("/account/cancelStudent", "/account/acceptStudent").hasRole("INSTRUCTOR")
+                        // log / reg
                         .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()

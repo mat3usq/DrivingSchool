@@ -104,6 +104,7 @@ public class InstructorEventService {
             SchoolUser student = optionalStudent.get();
 
             instructionEvent.getStudents().remove(student);
+            instructionEvent.setAvailableEventSlots(instructionEvent.getAvailableEventSlots() + 1);
             instructionEventRepository.save(instructionEvent);
         } else {
             throw new RuntimeException("InstructionEvent or Student not found with the provided IDs");

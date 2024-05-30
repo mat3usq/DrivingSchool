@@ -40,8 +40,10 @@ let eventsArr = parseEvents();
 
 initCalendar();
 updateEvents(activeDay);
-handleTimeInput(addEventFrom);
-handleTimeInput(addEventTo);
+if (addEventFrom && addEventTo) {
+    handleTimeInput(addEventFrom);
+    handleTimeInput(addEventTo);
+}
 
 function initCalendar() {
     const firstDay = new Date(year, month, 1);
@@ -83,15 +85,15 @@ function initCalendar() {
             activeDay = i;
             getActiveDay(i);
             if (event) {
-                daysHtml += `<div class="day today event">${i}</div>`;
+                daysHtml += `<div class="day today event" id="day-${i}">${i}</div>`;
             } else {
-                daysHtml += `<div class="day today">${i}</div>`;
+                daysHtml += `<div class="day today" id="day-${i}">${i}</div>`;
             }
         } else {
             if (event) {
-                daysHtml += `<div class="day event">${i}</div>`;
+                daysHtml += `<div class="day event" id="day-${i}">${i}</div>`;
             } else {
-                daysHtml += `<div class="day">${i}</div>`;
+                daysHtml += `<div class="day" id="day-${i}">${i}</div>`;
             }
         }
     }
@@ -195,6 +197,7 @@ function parseEvents() {
 
 function updateEvents(date) {
     let empty = true;
+    document.getElementById(`day-${date}`).click()
     eventsArr.forEach((event) => {
         if (
             date === event.day &&
@@ -279,13 +282,16 @@ dateInput.addEventListener('input', e => {
 
     dateInput.value = value;
 });
-addEventBtn.addEventListener('click', () => {
-    addEventWrapper.classList.toggle('active');
-});
-addEventCloseBtn.addEventListener('click', () => {
-    addEventWrapper.classList.remove('active');
-});
-document.addEventListener('click', e => {
-    if (e.target !== addEventBtn && !addEventWrapper.contains(e.target))
+
+if (addEventBtn && addEventCloseBtn && addEventWrapper) {
+    addEventBtn.addEventListener('click', () => {
+        addEventWrapper.classList.toggle('active');
+    });
+    addEventCloseBtn.addEventListener('click', () => {
         addEventWrapper.classList.remove('active');
-});
+    });
+    document.addEventListener('click', e => {
+        if (e.target !== addEventBtn && !addEventWrapper.contains(e.target))
+            addEventWrapper.classList.remove('active');
+    });
+}

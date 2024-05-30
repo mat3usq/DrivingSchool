@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html
         lang="pl"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+        xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;700&display=swap"
           rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;400;500;600;700&display=swap" rel="stylesheet">
 
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
@@ -42,7 +42,7 @@
                             <div class="edit-event-header">
                                 <div class="title">Edycja Wydarzenia</div>
                             </div>
-                            <form class="edit-event-body" th:action="@{/calendar/editEvent}" method="post"
+                            <form class="edit-event-body" th:action="@{/calendar/operation/editEvent}" method="post"
                                   th:object="${editedEvent}">
                                 <div class="edit-event-input">
                                     <p>Typ Wydarzenia</p>
@@ -93,36 +93,38 @@
                     </div>
                     <div class="right">
                         <div class="today-date">
-                            <p class="event-day" th:text="${formattedDay}">pon.</p>
-                            <p class="event-date" th:text="${formattedDate}">20 maj 2024</p>
+                                <p class="event-day" th:text="${formattedDay}">pon.</p>
+                                <p class="event-date" th:text="${formattedDate}">20 maj 2024</p>
                         </div>
+
+                        <p th:if="${!editedEvent.students.isEmpty()}" >Uczestnicy: <span class="capacity-number" th:text="${editedEvent.eventCapacity - editedEvent.availableEventSlots}"></span></p>
 
                         <div class="assignPeople">
                             <div th:if="${!editedEvent.students.isEmpty()}" th:each="student : ${editedEvent.students}"
                                  class="person" onclick="togglePerson(this)">
                                 <form class="delete-form"
-                                      th:action="@{/calendar/deleteUserFromEvent}" method="post">
+                                      th:action="@{/calendar/operation/deleteUserFromEvent}" method="post">
                                     <input type="hidden" name="eventId" th:value="${editedEvent.id}">
-                                    <input type="hidden" name="userId" th:value="${student.name}">
+                                    <input type="hidden" name="studentId" th:value="${student.id}">
                                     <button type="submit">
                                         <i class="fas fa-trash delete-icon"></i>
                                     </button>
                                 </form>
                                 <div class="name">
-                                    <i class="fas fa-font"></i>
+                                    <i class="fa-regular fa-user"></i>
                                     <h3 class="person-name" th:text="${student.name}">Person Name</h3>
                                 </div>
                                 <div class="surname">
-                                    <i class="fas fa-quote-left"></i>
+                                    <i class="fa-solid fa-signature"></i>
                                     <h3 class="person-surname" th:text="${student.surname}">Person Surname</h3>
                                 </div>
                                 <div class="email">
-                                    <i class="fa-regular fa-clock"></i>
+                                    <i class="fa-regular fa-envelope"></i>
                                     <span class="person-email" th:text="${student.email}">Person Email</span>
                                 </div>
                             </div>
                             <div th:if="${editedEvent.students.isEmpty()}" class="no-people">
-                                <h3>Brak Przypisanych Ludzi</h3>
+                                <h3>Brak Uczestników</h3>
                             </div>
                         </div>
                     </div>

@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 @Controller
+@RequestMapping("/calendar")
 public class CalendarController {
     private final InstructionEventRepository instructionEventRepository;
     private final InstructorEventService instructorEventService;
@@ -33,7 +34,7 @@ public class CalendarController {
         this.studentInstructorService = studentInstructorService;
     }
 
-    @GetMapping("/calendar")
+    @GetMapping("")
     public ModelAndView displayCalendar(@RequestParam(required = false) Integer month,
                                         @RequestParam(required = false) Integer year,
                                         HttpSession session, Authentication auth) {
@@ -41,7 +42,7 @@ public class CalendarController {
         return getCalendarModelAndView(yearMonth, LocalDateTime.now(), session, auth);
     }
 
-    @PostMapping("/calendar")
+    @PostMapping("")
     public ModelAndView displayCalendarForNextMonth(@RequestParam(required = false) String date,
                                                     @RequestParam(required = false) Integer month,
                                                     HttpSession session, Authentication auth) {
@@ -49,17 +50,6 @@ public class CalendarController {
         LocalDateTime localDateTime = LocalDateTime.parse(date, formatter).plusMonths(month);
         YearMonth yearMonth = YearMonth.from(localDateTime);
         return getCalendarModelAndView(yearMonth, localDateTime, session, auth);
-    }
-
-    @PostMapping("/calendar/addEvent")
-    public ModelAndView addEvent(@ModelAttribute InstructionEvent event, HttpSession session, Authentication authentication) {
-        event.setInstructor((SchoolUser) session.getAttribute("loggedInUser"));
-        if (event.getEventCapacity() < 0)
-            event.setEventCapacity(0);
-        event.setAvailableEventSlots(event.getEventCapacity());
-        instructionEventRepository.save(event);
-        YearMonth yearMonth = YearMonth.from(event.getStartTime());
-        return getCalendarModelAndView(yearMonth, event.getStartTime(), session, authentication);
     }
 
     private ModelAndView getCalendarModelAndView(YearMonth yearMonth, LocalDateTime localDateTime, HttpSession session, Authentication authentication) {
@@ -102,7 +92,7 @@ public class CalendarController {
         return modelAndView;
     }
 
-    @PostMapping("/calendar/assignEvent")
+    @PostMapping("/student/assignEvent")
     public ModelAndView signUpForEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
@@ -118,7 +108,7 @@ public class CalendarController {
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
 
-    @PostMapping("/calendar/leaveEvent")
+    @PostMapping("/student/leaveEvent")
     public ModelAndView leaveEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
@@ -133,7 +123,18 @@ public class CalendarController {
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
 
-    @PostMapping("/calendar/deleteEvent")
+    @PostMapping("/operation/addEvent")
+    public ModelAndView addEvent(@ModelAttribute InstructionEvent event, HttpSession session, Authentication authentication) {
+        event.setInstructor((SchoolUser) session.getAttribute("loggedInUser"));
+        if (event.getEventCapacity() < 0)
+            event.setEventCapacity(0);
+        event.setAvailableEventSlots(event.getEventCapacity());
+        instructionEventRepository.save(event);
+        YearMonth yearMonth = YearMonth.from(event.getStartTime());
+        return getCalendarModelAndView(yearMonth, event.getStartTime(), session, authentication);
+    }
+
+    @PostMapping("/operation/deleteEvent")
     public ModelAndView deleteEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
@@ -144,7 +145,7 @@ public class CalendarController {
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
 
-    @GetMapping("/calendar/editEvent")
+    @GetMapping("/operation/editEvent")
     public ModelAndView displayEditEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
@@ -161,7 +162,7 @@ public class CalendarController {
             return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
 
-    @PostMapping("/calendar/editEvent")
+    @PostMapping("/operation/editEvent")
     public ModelAndView editEvent(@ModelAttribute("editedEvent") InstructionEvent editedEvent, HttpSession session, Authentication authentication) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         InstructionEvent event = (InstructionEvent) session.getAttribute("eventToEdit");
@@ -170,5 +171,16 @@ public class CalendarController {
             instructorEventService.updateInstructionEvent(event.getId(), editedEvent);
 
         return getCalendarModelAndView(YearMonth.from(editedEvent.getStartTime()), editedEvent.getStartTime(), session, authentication);
+    }
+
+    @PostMapping("/operation/deleteUserFromEvent")
+    public ModelAndView deleteStudentFromEvent(@RequestParam("eventId") Long eventId, @RequestParam("studentId") Long studentId, HttpSession session, Authentication authentication) {
+        InstructionEvent event = instructorEventService.findById(eventId);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE))
+            instructorEventService.removeStudentFromInstructionEvent(eventId, studentId);
+
+        return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
 }
