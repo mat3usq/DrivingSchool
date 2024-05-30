@@ -6,7 +6,6 @@ const date = document.querySelector('.date'),
     addEventBtn = document.querySelector('.add-event'),
     addEventWrapper = document.querySelector('.add-event-wrapper'),
     addEventCloseBtn = document.querySelector('.close'),
-    addEventTitle = document.querySelector(".event-name "),
     addEventFrom = document.querySelector(".event-time-from "),
     addEventTo = document.querySelector(".event-time-to ")
 
@@ -242,16 +241,16 @@ function processDate() {
 }
 
 function addEvent() {
-    const startTimeInput = document.getElementById('startTime');
-    const endTimeInput = document.getElementById('endTime');
+    const startTimeInput = document.getElementById('start-Time');
+    const endTimeInput = document.getElementById('end-Time');
 
     const startTimeValue = startTimeInput.value;
     const endTimeValue = endTimeInput.value;
 
     const startDateTime = `${year}-${String(month + 1).padStart(2, '0')}-${String(activeDay).padStart(2, '0')}T${startTimeValue}:00`;
     const endDateTime = `${year}-${String(month + 1).padStart(2, '0')}-${String(activeDay).padStart(2, '0')}T${endTimeValue}:00`;
-    startTimeInput.value = startDateTime;
-    endTimeInput.value = endDateTime;
+    document.getElementById('startTime').value = startDateTime;
+    document.getElementById('endTime').value = endDateTime;
 }
 
 dateInput.addEventListener('input', e => {
@@ -279,9 +278,6 @@ dateInput.addEventListener('input', e => {
         value = value.slice(0, 2);
 
     dateInput.value = value;
-});
-addEventTitle.addEventListener("input", () => {
-    addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
 addEventBtn.addEventListener('click', () => {
     addEventWrapper.classList.toggle('active');

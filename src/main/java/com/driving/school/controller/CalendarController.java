@@ -1,9 +1,6 @@
 package com.driving.school.controller;
 
-import com.driving.school.model.Constants;
-import com.driving.school.model.InstructionEvent;
-import com.driving.school.model.SchoolUser;
-import com.driving.school.model.StudentInstructor;
+import com.driving.school.model.*;
 import com.driving.school.repository.InstructionEventRepository;
 import com.driving.school.service.InstructorEventService;
 import com.driving.school.service.StudentInstructorService;
@@ -59,7 +56,7 @@ public class CalendarController {
         event.setInstructor((SchoolUser) session.getAttribute("loggedInUser"));
         if (event.getEventCapacity() < 0)
             event.setEventCapacity(0);
-        event.setCurrentEventCapacity(event.getEventCapacity());
+        event.setAvailableEventSlots(event.getEventCapacity());
         instructionEventRepository.save(event);
         YearMonth yearMonth = YearMonth.from(event.getStartTime());
         return getCalendarModelAndView(yearMonth, event.getStartTime(), session, authentication);
@@ -111,10 +108,10 @@ public class CalendarController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
         if (studentInstructorService.existsByStudentAndInstructor(user, event.getInstructor()))
-            if (event.getCurrentEventCapacity() != 0)
+            if (event.getAvailableEventSlots() != 0)
                 if (event.getStudents().stream().noneMatch(s -> Objects.equals(s.getId(), user.getId()))) {
                     instructorEventService.addStudentToInstructionEvent(eventId, user.getId());
-                    event.setCurrentEventCapacity(event.getCurrentEventCapacity() - 1);
+                    event.setAvailableEventSlots(event.getAvailableEventSlots() - 1);
                     instructionEventRepository.save(event);
                 }
 
@@ -129,7 +126,7 @@ public class CalendarController {
         if (studentInstructorService.existsByStudentAndInstructor(user, event.getInstructor()))
             if (event.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId()))) {
                 instructorEventService.removeStudentFromInstructionEvent(eventId, user.getId());
-                event.setCurrentEventCapacity(event.getCurrentEventCapacity() + 1);
+                event.setAvailableEventSlots(event.getAvailableEventSlots() + 1);
                 instructionEventRepository.save(event);
             }
 
@@ -147,19 +144,31 @@ public class CalendarController {
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
 
-    @PostMapping("/calendar/editEvent")
-    public ModelAndView editEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
+    @GetMapping("/calendar/editEvent")
+    public ModelAndView displayEditEvent(@RequestParam("eventId") Long eventId, HttpSession session, Authentication authentication) {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)){
+        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)) {
+            session.setAttribute("eventToEdit", event);
             ModelAndView modelAndView = new ModelAndView("editEventCalendar");
             modelAndView.addObject("formattedDay", event.getStartTime().format(DateTimeFormatter.ofPattern("EEE", new Locale("pl"))));
             modelAndView.addObject("formattedDate", event.getStartTime().format(DateTimeFormatter.ofPattern("dd MMM yyyy", new Locale("pl"))));
             modelAndView.addObject("editedEvent", event);
+            modelAndView.addObject("eventTypes", Constants.getAllEventTypes());
             return modelAndView;
-        }
-        else
+        } else
             return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
+    }
+
+    @PostMapping("/calendar/editEvent")
+    public ModelAndView editEvent(@ModelAttribute("editedEvent") InstructionEvent editedEvent, HttpSession session, Authentication authentication) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        InstructionEvent event = (InstructionEvent) session.getAttribute("eventToEdit");
+
+        if ((event != null && user.getId().equals(event.getInstructor().getId())) || user.getRoleName().equals(Constants.ADMIN_ROLE))
+            instructorEventService.updateInstructionEvent(event.getId(), editedEvent);
+
+        return getCalendarModelAndView(YearMonth.from(editedEvent.getStartTime()), editedEvent.getStartTime(), session, authentication);
     }
 }

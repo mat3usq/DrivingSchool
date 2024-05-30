@@ -41,16 +41,18 @@
                         <div class="edit-event-wrapper">
                             <div class="edit-event-header">
                                 <div class="title">Edycja Wydarzenia</div>
-                                <i class="fas fa-times close"></i>
                             </div>
                             <form class="edit-event-body" th:action="@{/calendar/editEvent}" method="post"
                                   th:object="${editedEvent}">
                                 <div class="edit-event-input">
                                     <p>Typ Wydarzenia</p>
                                     <select class="event-name" th:field="*{eventType}">
-                                        <option value="" disabled selected>Zaktualizuj Typ Wydarzenia</option>
-                                        <option th:each="eventType : ${eventTypes}" th:value="${eventType}"
-                                                th:text="${eventType}"></option>
+                                        <option value="" disabled>Zaktualizuj Typ Wydarzenia</option>
+                                        <option th:each="eventType : ${eventTypes}"
+                                                th:value="${eventType}"
+                                                th:text="${eventType}"
+                                                th:selected="${eventType == editedEvent.eventType}">
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="edit-event-input">
@@ -60,24 +62,33 @@
                                 </div>
                                 <div class="edit-event-input">
                                     <p>Początek Wydarzenia</p>
+                                    <input type="hidden" id="startTime" th:field="*{startTime}"/>
                                     <input type="text" placeholder="Początek Wydarzenia" class="event-time-from"
-                                           id="startTime" th:field="*{startTime}"/>
+                                           id="start-Time"
+                                           th:value="${#temporals.format(editedEvent.startTime, 'HH:mm')}"/>
                                 </div>
                                 <div class="edit-event-input">
                                     <p>Koniec Wydarzenia</p>
+                                    <input type="hidden" id="endTime" th:field="*{endTime}"/>
                                     <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"
-                                           id="endTime" th:field="*{endTime}"/>
+                                           id="end-Time" th:value="${#temporals.format(editedEvent.endTime, 'HH:mm')}"/>
                                 </div>
                                 <div class="edit-event-input">
                                     <p>Liczba Miejsc na Wydarzenie</p>
                                     <input type="number" placeholder="Liczba Miejsc na Wydarzenie"
                                            class="event-capacity" th:field="*{eventCapacity}" min="0"/>
                                 </div>
-                                <div class="edit-event-footer">
-                                    <button class="back-event-btn">Wróć</button>
-                                    <button type="submit" class="edit-event-btn" onclick="editEvent()">Zaktualizuj</button>
-                                </div>
+
                             </form>
+                            <div class="edit-event-footer">
+                                <form th:action="@{/calendar}" method="post">
+                                    <input hidden="hidden" name="date" th:value="${editedEvent.startTime}">
+                                    <input hidden="hidden" name="month" value="0">
+                                    <button class="back-event-btn">Wróć</button>
+                                </form>
+                                <button class="edit-event-btn" onclick="editEvent()">Zaktualizuj
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="right">
@@ -85,7 +96,35 @@
                             <p class="event-day" th:text="${formattedDay}">pon.</p>
                             <p class="event-date" th:text="${formattedDate}">20 maj 2024</p>
                         </div>
-                        <p>Zapisani Użytkownicy</p>
+
+                        <div class="assignPeople">
+                            <div th:if="${!editedEvent.students.isEmpty()}" th:each="student : ${editedEvent.students}"
+                                 class="person" onclick="togglePerson(this)">
+                                <form class="delete-form"
+                                      th:action="@{/calendar/deleteUserFromEvent}" method="post">
+                                    <input type="hidden" name="eventId" th:value="${editedEvent.id}">
+                                    <input type="hidden" name="userId" th:value="${student.name}">
+                                    <button type="submit">
+                                        <i class="fas fa-trash delete-icon"></i>
+                                    </button>
+                                </form>
+                                <div class="name">
+                                    <i class="fas fa-font"></i>
+                                    <h3 class="person-name" th:text="${student.name}">Person Name</h3>
+                                </div>
+                                <div class="surname">
+                                    <i class="fas fa-quote-left"></i>
+                                    <h3 class="person-surname" th:text="${student.surname}">Person Surname</h3>
+                                </div>
+                                <div class="email">
+                                    <i class="fa-regular fa-clock"></i>
+                                    <span class="person-email" th:text="${student.email}">Person Email</span>
+                                </div>
+                            </div>
+                            <div th:if="${editedEvent.students.isEmpty()}" class="no-people">
+                                <h3>Brak Przypisanych Ludzi</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

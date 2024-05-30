@@ -47,9 +47,21 @@ public class InstructorEventService {
             instructionEvent.setEventType(instructionEventDetails.getEventType());
             instructionEvent.setStartTime(instructionEventDetails.getStartTime());
             instructionEvent.setEndTime(instructionEventDetails.getEndTime());
-            instructionEvent.setInstructor(instructionEventDetails.getInstructor());
-            instructionEvent.setStudents(instructionEventDetails.getStudents());
-            instructionEvent.setStatus(instructionEventDetails.getStatus());
+            Integer diffSlots = instructionEvent.getEventCapacity() - instructionEvent.getAvailableEventSlots();
+            if (instructionEvent.getEventCapacity() > instructionEventDetails.getEventCapacity())
+                if (diffSlots > instructionEventDetails.getEventCapacity()) {
+                    instructionEvent.setEventCapacity(diffSlots);
+                    instructionEvent.setAvailableEventSlots(0);
+                } else {
+                    instructionEvent.setEventCapacity(instructionEventDetails.getEventCapacity());
+                    instructionEvent.setAvailableEventSlots(instructionEventDetails.getEventCapacity() - diffSlots);
+                }
+            else {
+                diffSlots = instructionEventDetails.getEventCapacity() - instructionEvent.getEventCapacity();
+                instructionEvent.setEventCapacity(instructionEventDetails.getEventCapacity());
+                instructionEvent.setAvailableEventSlots(instructionEvent.getAvailableEventSlots() + diffSlots);
+            }
+
             return instructionEventRepository.save(instructionEvent);
         } else {
             throw new RuntimeException("InstructionEvent not found with id " + id);

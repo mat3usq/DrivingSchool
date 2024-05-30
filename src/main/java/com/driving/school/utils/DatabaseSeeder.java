@@ -80,7 +80,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         schoolUserRepository.save(instructor2);
         schoolUserRepository.save(instructor3);
 
-        studentInstructorRepository.save(new StudentInstructor(student, instructor, Constants.PENDING));
+        studentInstructorRepository.save(new StudentInstructor(student, instructor, Constants.ACTIVE));
         studentInstructorRepository.save(new StudentInstructor(student, instructor2, Constants.ACTIVE));
         studentInstructorRepository.save(new StudentInstructor(student2, instructor, Constants.ACTIVE));
         studentInstructorRepository.save(new StudentInstructor(student2, instructor2, Constants.PENDING));
@@ -188,9 +188,13 @@ public class DatabaseSeeder implements CommandLineRunner {
         SchoolUser schoolUser = schoolUserRepository.findByEmail("instructor");
         SchoolUser schoolUser2 = schoolUserRepository.findByEmail("instructor2");
         SchoolUser schoolUser3 = schoolUserRepository.findByEmail("instructor3");
+        SchoolUser student = schoolUserRepository.findByEmail("student");
+        InstructionEvent ie = new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 1, 10, 0), LocalDateTime.of(2024, 5, 1, 12, 0), schoolUser,12);
+        ie.setStudents(Arrays.asList(student));
+        ie.setAvailableEventSlots(11);
 
         List<InstructionEvent> events = Arrays.asList(
-                new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 1, 10, 0), LocalDateTime.of(2024, 5, 1, 12, 0), schoolUser,12),
+                ie,
                 new InstructionEvent("Teoria jazdy: Zasady, przepisy i najlepsze praktyki", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 2, 14, 0), LocalDateTime.of(2024, 5, 2, 16, 0), schoolUser, 10),
                 new InstructionEvent("Ćwiczenia praktyczne: Bezpieczne poruszanie się po drogach", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 3, 9, 0), LocalDateTime.of(2024, 5, 3, 11, 0), schoolUser, 3),
                 new InstructionEvent("Spotkanie informacyjne: Wprowadzenie do kursu jazdy", Constants.INFORMATION_SESSIONS, LocalDateTime.of(2024, 5, 4, 15, 0), LocalDateTime.of(2024, 5, 4, 17, 0), schoolUser, 100),

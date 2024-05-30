@@ -90,7 +90,7 @@
                             <div th:each="event : ${events}" class="event" th:id="'event-'+${event.id}"
                                  onclick="toggleEvent(this)">
                                 <th:block sec:authorize="hasRole('ROLE_STUDENT')"
-                                          th:if="${event.currentEventCapacity != 0}">
+                                          th:if="${event.getAvailableEventSlots != 0}">
                                     <form th:if="${!event.isAssigned}" class="assign-form"
                                           th:action="@{/calendar/assignEvent}" method="post">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
@@ -108,7 +108,7 @@
                                 </th:block>
                                 <div class="operation-box" sec:authorize="!hasRole('ROLE_STUDENT')">
                                     <form class="edit-form"
-                                          th:action="@{/calendar/editEvent}" method="post">
+                                          th:action="@{/calendar/editEvent}" method="get">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
                                         <button type="submit">
                                             <i class="fa-solid fa-circle-info edit-icon"></i>
@@ -142,18 +142,18 @@
                                 </div>
                                 <div class="capacity" sec:authorize="!hasRole('ROLE_STUDENT')">
                                     <i class="fa-solid fa-people-arrows"></i>
-                                    <span th:if="${event.currentEventCapacity != 0}" class="event-capacity">Wolne Miejsca: <span
-                                            class="event-capacity-number" th:text="${event.currentEventCapacity}">Event Capacity</span></span>
-                                    <span th:if="${event.currentEventCapacity == 0}" class="event-capacity">Brak Wolnych <span
+                                    <span th:if="${event.getAvailableEventSlots != 0}" class="event-capacity">Wolne Miejsca: <span
+                                            class="event-capacity-number" th:text="${event.getAvailableEventSlots}">Event Capacity</span></span>
+                                    <span th:if="${event.getAvailableEventSlots == 0}" class="event-capacity">Brak Wolnych <span
                                             class="event-capacity-number">Miejsc</span></span>
                                 </div>
 
                                 <div class="capacity" sec:authorize="hasRole('ROLE_STUDENT')">
                                     <i class="fa-solid fa-people-arrows"></i>
                                     <th:block th:if="${!event.isAssigned}">
-                                        <span th:if="${event.currentEventCapacity != 0}" class="event-capacity">Wolne Miejsca: <span
-                                                class="event-capacity-number" th:text="${event.currentEventCapacity}">Event Capacity</span></span>
-                                        <span th:if="${event.currentEventCapacity == 0}" class="event-capacity">Brak Wolnych <span
+                                        <span th:if="${event.getAvailableEventSlots != 0}" class="event-capacity">Wolne Miejsca: <span
+                                                class="event-capacity-number" th:text="${event.getAvailableEventSlots}">Event Capacity</span></span>
+                                        <span th:if="${event.getAvailableEventSlots == 0}" class="event-capacity">Brak Wolnych <span
                                                 class="event-capacity-number">Miejsc</span></span>
                                     </th:block>
                                     <th:block th:if="${event.isAssigned}">
@@ -165,7 +165,7 @@
                                 </div>
                             </div>
                             <div class="no-event">
-                                <h3>No Events</h3>
+                                <h3>Brak Wydarzen</h3>
                             </div>
                         </div>
                         <div class="add-event-wrapper">
@@ -187,12 +187,14 @@
                                            th:field="*{subject}"/>
                                 </div>
                                 <div class="add-event-input">
+                                    <input type="hidden" id="startTime" th:field="*{startTime}"/>
                                     <input type="text" placeholder="Początek Wydarzenia" class="event-time-from"
-                                           id="startTime" th:field="*{startTime}"/>
+                                           id="start-Time"/>
                                 </div>
                                 <div class="add-event-input">
+                                    <input type="hidden" id="endTime" th:field="*{endTime}"/>
                                     <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"
-                                           id="endTime" th:field="*{endTime}"/>
+                                           id="end-Time"/>
                                 </div>
                                 <div class="add-event-input">
                                     <input type="number" placeholder="Liczba Miejsc na Wydarzenie"
