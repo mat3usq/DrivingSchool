@@ -2,9 +2,7 @@ package com.driving.school.utils;
 
 import com.driving.school.model.*;
 import com.driving.school.repository.*;
-import com.driving.school.service.LectureService;
 import com.driving.school.service.QuestionService;
-import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.TestService;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -18,10 +16,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -158,14 +152,11 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     public void addTeststoDb() {
-        List<String> normalnames = TestNames.getNames();
-        List<String> specialnames = TestNames.getSpecialtestnames();
-        for (String name : normalnames) {
+        for (String name : TestNames.getNames())
             addTestToDb(name, false);
-        }
-        for (String name : specialnames) {
+
+        for (String name : TestNames.getSpecialTestNames())
             addTestToDb(name, true);
-        }
     }
 
     public void addTestToDb(String Name, Boolean isSpecialistic) {
@@ -189,7 +180,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         SchoolUser schoolUser2 = schoolUserRepository.findByEmail("instructor2");
         SchoolUser schoolUser3 = schoolUserRepository.findByEmail("instructor3");
         SchoolUser student = schoolUserRepository.findByEmail("student");
-        InstructionEvent ie = new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 1, 10, 0), LocalDateTime.of(2024, 5, 1, 12, 0), schoolUser,12);
+        InstructionEvent ie = new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 1, 10, 0), LocalDateTime.of(2024, 5, 1, 12, 0), schoolUser, 12);
         ie.setStudents(Arrays.asList(student));
         ie.setAvailableEventSlots(11);
 
@@ -209,7 +200,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 new InstructionEvent("Jazda ekonomiczna: Techniki oszczędzania paliwa", Constants.ECO_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 13, 9, 0), LocalDateTime.of(2024, 5, 13, 11, 0), schoolUser, 54),
                 new InstructionEvent("Dodatkowe lekcje: Przygotowanie do egzaminu praktycznego", Constants.ADDITIONAL_DRIVING_LESSONS, LocalDateTime.of(2024, 5, 14, 15, 0), LocalDateTime.of(2024, 5, 14, 17, 0), schoolUser, 12),
                 new InstructionEvent("Intensywny trening na placu manewrowym: Doskonalenie umiejętności", Constants.PRACTICAL_CLASSES_ON_MANEUVERING_GROUND, LocalDateTime.of(2024, 5, 15, 8, 0), LocalDateTime.of(2024, 5, 15, 10, 0), schoolUser, 56),
-                new InstructionEvent("Warsztaty z technik awaryjnych: Jak reagować w sytuacjach kryzysowych", Constants.EMERGENCY_TECHNIQUES_TRAINING, LocalDateTime.of(2024, 5, 16, 13, 0), LocalDateTime.of(2024, 5, 16, 15, 0), schoolUser,43),
+                new InstructionEvent("Warsztaty z technik awaryjnych: Jak reagować w sytuacjach kryzysowych", Constants.EMERGENCY_TECHNIQUES_TRAINING, LocalDateTime.of(2024, 5, 16, 13, 0), LocalDateTime.of(2024, 5, 16, 15, 0), schoolUser, 43),
                 new InstructionEvent("Jazda poza miastem: Techniki jazdy na trasach szybkiego ruchu", Constants.OUT_OF_TOWN_DRIVING, LocalDateTime.of(2024, 5, 17, 11, 0), LocalDateTime.of(2024, 5, 17, 13, 0), schoolUser, 54),
                 new InstructionEvent("Podstawy obsługi technicznej pojazdu: Co każdy kierowca powinien wiedzieć", Constants.CAR_MAINTENANCE_TRAINING, LocalDateTime.of(2024, 5, 18, 12, 0), LocalDateTime.of(2024, 5, 18, 14, 0), schoolUser, 23),
                 new InstructionEvent("Spotkanie organizacyjne: Planowanie harmonogramu kursu", Constants.INFORMATION_AND_ORGANIZATIONAL_MEETINGS, LocalDateTime.of(2024, 5, 19, 16, 0), LocalDateTime.of(2024, 5, 19, 18, 0), schoolUser, 67),

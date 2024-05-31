@@ -1,10 +1,14 @@
 package com.driving.school.utils;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 
 public class TestNames {
+    @Getter
     private static final ArrayList<String> names = new ArrayList<>();
-    private static final ArrayList<String> specialtestnames = new ArrayList<>();
+    @Getter
+    private static final ArrayList<String> specialTestNames = new ArrayList<>();
 
     static {
         names.add("Znaki Ostrzegawcze");
@@ -18,23 +22,16 @@ public class TestNames {
         names.add("Wyprzedzanie, omijanie, wymijanie cofanie");
         names.add("Szczególna ostrożnosć");
         names.add("Warunki drogowe");
+        names.add("Prędkość, hamowanie, odstępy");
         names.add("Technika jazdy");
-        names.add("Obowiązki kierującego,dokumenty");
+        names.add("Obowiązki kierującego, dokumenty");
         names.add("Awaria pojazdu, pierwsza pomoc");
         names.add("Inne");
-        specialtestnames.add("Warunki drogowe");
-        specialtestnames.add("Prędkość hamowania");
-        specialtestnames.add("Technika jazdy");
-        specialtestnames.add("Obowiązki kierującego, dokumenty");
-        specialtestnames.add("Awaria pojazdu, pierwsza pmoc");
-        specialtestnames.add("Inne");
-    }
-
-    public static ArrayList<String> getNames() {
-        return names;
-    }
-
-    public static ArrayList<String> getSpecialtestnames() {
-        return specialtestnames;
+        specialTestNames.add("Warunki drogowe");
+        specialTestNames.add("Prędkość hamowania");
+        specialTestNames.add("Technika jazdy");
+        specialTestNames.add("Obowiązki kierującego, dokumenty");
+        specialTestNames.add("Awaria pojazdu, pierwsza pomoc");
+        specialTestNames.add("Inne");
     }
 }
