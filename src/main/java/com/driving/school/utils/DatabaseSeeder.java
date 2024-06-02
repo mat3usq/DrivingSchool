@@ -6,6 +6,8 @@ import com.driving.school.service.QuestionService;
 import com.driving.school.service.TestService;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
@@ -32,6 +34,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final TestService testService;
     private final InstructionEventRepository eventRepository;
     private final StudentInstructorRepository studentInstructorRepository;
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
@@ -128,6 +131,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/questions/questions.csv"))) {
             List<String[]> records = reader.readAll();
             Integer iteration = 0;
+            long startTime = System.nanoTime();
             for (String[] record : records) {
                 Question question = new Question();
                 question.setQuestion(record[0]);
@@ -153,10 +157,18 @@ public class DatabaseSeeder implements CommandLineRunner {
                     }
                 });
 
-                System.out.println("Zapisano pytanie: " + iteration);
                 if (++iteration == 500)
                     break;
             }
+
+            long durationNano = System.nanoTime() - startTime;
+            long durationMillis = durationNano / 1_000_000;
+            long durationSeconds = durationMillis / 1000;
+            long minutes = durationSeconds / 60;
+            long seconds = durationSeconds % 60;
+
+            logger.info("Zmapowano Pytania w czasie: " + minutes + "minut " + seconds + "sekund");
+
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
