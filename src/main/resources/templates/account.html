@@ -77,13 +77,7 @@
                                             </thead>
                                             <tbody>
                                             <tr th:each="element : ${instructorStudents}" class="table-instructor-row">
-                                                <td th:text="${element.instructor.name}"></td>
-                                                <td th:text="${element.instructor.surname}"></td>
-                                                <td th:text="${element.instructor.email}"></td>
-                                                <td th:text="${element.status}"></td>
-                                                <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                <td class="cancel-instructor">
+                                                <td class="operation-student">
                                                     <form th:action="@{/account/cancelInstructor}" method="post">
                                                         <input type="hidden" name="studentId"
                                                                th:value="${element.student.id}"/>
@@ -92,6 +86,12 @@
                                                         <button type="submit" class="cancel-btn">Anuluj</button>
                                                     </form>
                                                 </td>
+                                                <td th:text="${element.instructor.name}"></td>
+                                                <td th:text="${element.instructor.surname}"></td>
+                                                <td th:text="${element.instructor.email}"></td>
+                                                <td th:text="${element.status}"></td>
+                                                <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -151,12 +151,6 @@
                                                     </td>
                                                 </tr>
                                                 <tr th:if="${element.status.equals(Constants.ACTIVE)}" class="table-instructor-row">
-                                                    <td th:text="${element.student.name}"></td>
-                                                    <td th:text="${element.student.surname}"></td>
-                                                    <td th:text="${element.student.email}"></td>
-                                                    <td th:text="${element.status}"></td>
-                                                    <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                    <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                     <td class="operation-student">
                                                         <form th:action="@{/account/cancelStudent}" method="post">
                                                             <input type="hidden" name="studentId" th:value="${element.student.id}"/>
@@ -164,6 +158,12 @@
                                                             <button type="submit" class="cancel-btn">Anuluj</button>
                                                         </form>
                                                     </td>
+                                                    <td th:text="${element.student.name}"></td>
+                                                    <td th:text="${element.student.surname}"></td>
+                                                    <td th:text="${element.student.email}"></td>
+                                                    <td th:text="${element.status}"></td>
+                                                    <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                    <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                 </tr>
                                             </th:block>
                                             </tbody>

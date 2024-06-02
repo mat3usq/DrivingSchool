@@ -229,7 +229,6 @@ h2 {
   margin: 0 auto;
   border-collapse: collapse;
   background-color: rgba(0, 0, 0, 0.85);
-  border-radius: 10px;
   overflow: hidden;
 }
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table th,
@@ -260,6 +259,8 @@ h2 {
   font-size: 15px;
   padding: 7px;
   color: #f5f5f5;
+  max-width: 110px;
+  min-width: 110px;
 }
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table th,
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .students-table th,
@@ -277,6 +278,8 @@ h2 {
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 1px;
+  max-width: 110px;
+  min-width: 110px;
 }
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table td,
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .students-table td,
@@ -292,20 +295,6 @@ h2 {
 .account .hero-img .box-account .box-container .container-account .account-instructor .students-list .students-table td {
   background-color: rgba(0, 0, 0, 0.75);
 }
-.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .students-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-details .students-list .instructors-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-details .students-list .students-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-student .instructors-list .instructors-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-student .instructors-list .students-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-student .students-list .instructors-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-student .students-list .students-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .instructors-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .students-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-instructor .students-list .instructors-table tbody tr:nth-child(even),
-.account .hero-img .box-account .box-container .container-account .account-instructor .students-list .students-table tbody tr:nth-child(even) {
-  background-color: rgb(109, 107, 107);
-}
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table .table-instructor-row,
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .students-table .table-instructor-row,
 .account .hero-img .box-account .box-container .container-account .account-details .students-list .instructors-table .table-instructor-row,
@@ -320,6 +309,7 @@ h2 {
 .account .hero-img .box-account .box-container .container-account .account-instructor .students-list .students-table .table-instructor-row {
   position: relative;
   transition: transform 0.3s ease;
+  left: -110px;
 }
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table .table-instructor-row .operation-student,
 .account .hero-img .box-account .box-container .container-account .account-details .instructors-list .students-table .table-instructor-row .operation-student,
@@ -336,7 +326,6 @@ h2 {
   background: transparent;
   position: absolute;
   top: 6px;
-  left: -120px;
   padding-right: 20px;
   transition: transform 0.3s ease;
 }
@@ -593,7 +582,7 @@ h2 {
 }
 .account .hero-img .box-account .box-container .container-account .account-student,
 .account .hero-img .box-account .box-container .container-account .account-instructor {
-  width: 100%;
+  width: 86%;
 }
 .account .hero-img .box-account .box-container .container-account .account-student p,
 .account .hero-img .box-account .box-container .container-account .account-instructor p {
@@ -665,7 +654,6 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 100%;
   }
   .account .hero-img .box-account .container-account .account-details p,
   .account .hero-img .box-account .container-account .account-instructor p,
