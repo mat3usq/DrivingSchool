@@ -321,18 +321,18 @@ h2 {
   position: relative;
   transition: transform 0.3s ease;
 }
-.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .students-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-details .students-list .instructors-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-details .students-list .students-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-student .instructors-list .instructors-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-student .instructors-list .students-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-student .students-list .instructors-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-student .students-list .students-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .instructors-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .students-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-instructor .students-list .instructors-table .table-instructor-row .cancel-instructor,
-.account .hero-img .box-account .box-container .container-account .account-instructor .students-list .students-table .table-instructor-row .cancel-instructor {
+.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .instructors-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-details .instructors-list .students-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-details .students-list .instructors-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-details .students-list .students-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-student .instructors-list .instructors-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-student .instructors-list .students-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-student .students-list .instructors-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-student .students-list .students-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .instructors-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-instructor .instructors-list .students-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-instructor .students-list .instructors-table .table-instructor-row .operation-student,
+.account .hero-img .box-account .box-container .container-account .account-instructor .students-list .students-table .table-instructor-row .operation-student {
   background: transparent;
   position: absolute;
   top: 6px;

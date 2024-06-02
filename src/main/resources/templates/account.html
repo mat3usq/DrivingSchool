@@ -139,17 +139,13 @@
                                                     <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                     <td class="operation-student">
                                                         <form th:action="@{/account/cancelStudent}" method="post">
-                                                            <input type="hidden" name="studentId"
-                                                                   th:value="${element.student.id}"/>
-                                                            <input type="hidden" name="instructorId"
-                                                                   th:value="${element.instructor.id}"/>
+                                                            <input type="hidden" name="studentId" th:value="${element.student.id}"/>
+                                                            <input type="hidden" name="instructorId" th:value="${element.instructor.id}"/>
                                                             <button type="submit" class="cancel-btn">Odrzuc</button>
                                                         </form>
                                                         <form th:action="@{/account/acceptStudent}" method="post">
-                                                            <input type="hidden" name="studentId"
-                                                                   th:value="${element.student.id}"/>
-                                                            <input type="hidden" name="instructorId"
-                                                                   th:value="${element.instructor.id}"/>
+                                                            <input type="hidden" name="studentId" th:value="${element.student.id}"/>
+                                                            <input type="hidden" name="instructorId" th:value="${element.instructor.id}"/>
                                                             <button type="submit" class="correct-btn">Akceptuj</button>
                                                         </form>
                                                     </td>
@@ -162,15 +158,11 @@
                                                     <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                     <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                     <td class="operation-student">
-                                                    <td class="cancel-instructor">
                                                         <form th:action="@{/account/cancelStudent}" method="post">
-                                                            <input type="hidden" name="studentId"
-                                                                   th:value="${element.student.id}"/>
-                                                            <input type="hidden" name="instructorId"
-                                                                   th:value="${element.instructor.id}"/>
+                                                            <input type="hidden" name="studentId" th:value="${element.student.id}"/>
+                                                            <input type="hidden" name="instructorId" th:value="${element.instructor.id}"/>
                                                             <button type="submit" class="cancel-btn">Anuluj</button>
                                                         </form>
-                                                    </td>
                                                     </td>
                                                 </tr>
                                             </th:block>
