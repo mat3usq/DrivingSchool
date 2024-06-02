@@ -29,7 +29,6 @@ public class TestService {
         return testRepository.findAll();
     }
 
-
     public void deleteTestById(Long id) {
         testRepository.deleteById(id);
     }
@@ -42,7 +41,7 @@ public class TestService {
             test.setName(testDetails.getName());
             test.setNumberQuestions(testDetails.getNumberQuestions());
             test.setImage(testDetails.getImage());
-            test.setQuestionType(testDetails.getQuestionType());
+            test.setTestType(testDetails.getTestType());
             return testRepository.save(test);
         } else {
             return null;

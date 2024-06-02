@@ -28,7 +28,7 @@ public class TestNames {
         names.add("Awaria pojazdu, pierwsza pomoc");
         names.add("Inne");
         specialTestNames.add("Warunki drogowe");
-        specialTestNames.add("Prędkość hamowania");
+        specialTestNames.add("Prędkość, hamowanie, odstępy");
         specialTestNames.add("Technika jazdy");
         specialTestNames.add("Obowiązki kierującego, dokumenty");
         specialTestNames.add("Awaria pojazdu, pierwsza pomoc");

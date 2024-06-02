@@ -31,8 +31,8 @@ public class Question {
     @Column(name = "ANSWERC", length = 512)
     private String answerC;
 
-    @Column(name = "AVAILABLEQUESTIONS")
-    private Long availableQuestions;
+    @Column(name = "AVAILABLEANSWERS")
+    private Long availableAnswers;
 
     @Column(name = "CORRECTANSWER")
     private String correctAnswer;
@@ -44,10 +44,10 @@ public class Question {
     private String explanation;
 
     @Column(name = "QUESTIONTYPE", length = 512)
-    private String questionType;
+    private Boolean questionType;
 
     @Column(name = "CATEGORY", length = 128)
-    private String category;
+    private String drivingCategory;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -71,12 +71,12 @@ public class Question {
                 ", answerA='" + answerA + '\'' +
                 ", answerB='" + answerB + '\'' +
                 ", answerC='" + answerC + '\'' +
-                ", availableQuestions=" + availableQuestions +
+                ", availableAnswers=" + availableAnswers +
                 ", correctAnswer='" + correctAnswer + '\'' +
                 ", mediaName='" + mediaName + '\'' +
                 ", explanation='" + explanation + '\'' +
                 ", questionType='" + questionType + '\'' +
-                ", category='" + category + '\'' +
+                ", category='" + drivingCategory + '\'' +
                 ", test=" + test +
                 ", exams=" + exams +
                 ", studentAnswersTests=" + studentAnswersTests +

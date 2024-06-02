@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -20,25 +19,25 @@ public class Test {
     @Column(name = "NAME", length = 512)
     private String name;
 
-    @Column(name = "ISSPECALISTICQUESTIONTEST")
-    private Boolean isSpecialistQuestionTest;
-
     @Column(name = "CATEGORY")
-    private String category;
+    private String drivingCategory;
 
     @Column(name = "NUMBERQUESTIONS")
     private Long numberQuestions;
 
-    @Column(name = "IMAGE")
+    @Column(name = "IMAGE", columnDefinition = "LONGBLOB")
     private byte[] image;
 
-    @Column(name = "QUESTIONTYPE", length = 512)
-    private String questionType;
+    @Column(name = "TESTTYPE", length = 512)
+    private Boolean testType;
 
     @OneToMany(mappedBy = "test")
-    private Set<Question> questions = new LinkedHashSet<>();
+    private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "test")
-    private Set<StudentAnswersTest> studentAnswersTests = new LinkedHashSet<>();
+    private List<StudentAnswersTest> studentAnswersTests = new ArrayList<>();
 
+    public String getImageBase64() {
+        return (this.image != null) ? "data:image/svg+xml;base64," + Base64.getEncoder().encodeToString(this.image) : null;
+    }
 }

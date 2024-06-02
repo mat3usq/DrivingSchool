@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,10 +49,10 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        mapQuestionsToDb();
         createUsers();
         createLectures();
         addTeststoDb();
+        mapQuestionsToDb();
         createEvents();
     }
 
@@ -123,7 +124,8 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     private void mapQuestionsToDb() {
-        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/questions/questions.csv"))) {
+        List<Test> tests = testService.getAllTests();
+        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/questions/categories_questions.csv"))) {
             List<String[]> records = reader.readAll();
             Integer iteration = 0;
             for (String[] record : records) {
@@ -132,15 +134,25 @@ public class DatabaseSeeder implements CommandLineRunner {
                 question.setAnswerA(record[1]);
                 question.setAnswerB(record[2]);
                 question.setAnswerC(record[3]);
-                question.setCorrectAnswer(record[4]);
-                question.setCategory(record[5]);
+                if (record[3].equals("BRAK"))
+                    question.setAvailableAnswers(2L);
+                else
+                    question.setAvailableAnswers(3L);
+                question.setCorrectAnswer(record[4].toUpperCase());
+                question.setDrivingCategory(record[5]);
                 question.setMediaName(record[6]);
-                question.setQuestionType(record[7]);
+                question.setQuestionType(record[7].equals("tak"));
+//                tests.forEach(t -> {
+//                    if (t.getName().equals(record[8]) && record[5].contains("B")) {
+//                        t.getQuestions().add(question);
+//                        t.setNumberQuestions(t.getNumberQuestions() + 1);
+//                        testService.saveTest(t);
+//                    }
+//                });
 
 //                System.out.println(question);
-//                System.out.println(++iteration);
-
 //                questionService.save(question);
+//                System.out.println("Zapisano Pytanie:" + ++iteration);
             }
             List<Question> questions = questionService.findAll();
             for (Question question : questions) {
@@ -159,20 +171,18 @@ public class DatabaseSeeder implements CommandLineRunner {
             addTestToDb(name, true);
     }
 
-    public void addTestToDb(String Name, Boolean isSpecialistic) {
+    public void addTestToDb(String name, Boolean isSpecialistic) {
         Test test = new Test();
-        test.setName(Name);
-        test.setCategory("B");
-        test.setIsSpecialistQuestionTest(isSpecialistic);
+        test.setName(name);
+        test.setDrivingCategory("B");
+        test.setTestType(isSpecialistic);
+        try {
+            test.setImage(convertSvg("/data/testImageSvgs/" + name + ".svg"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        test.setNumberQuestions(0L);
         testService.saveTest(test);
-    }
-
-    public static byte[] convertImage(String resourcePath) throws Exception {
-        ClassPathResource imgFile = new ClassPathResource(resourcePath);
-        BufferedImage bImage = ImageIO.read(imgFile.getInputStream());
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(bImage, "jpg", bos);
-        return bos.toByteArray();
     }
 
     private void createEvents() {
@@ -210,5 +220,25 @@ public class DatabaseSeeder implements CommandLineRunner {
         );
 
         eventRepository.saveAll(events);
+    }
+
+    public static byte[] convertImage(String resourcePath) throws Exception {
+        ClassPathResource imgFile = new ClassPathResource(resourcePath);
+        BufferedImage bImage = ImageIO.read(imgFile.getInputStream());
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(bImage, "jpg", bos);
+        return bos.toByteArray();
+    }
+
+    public static byte[] convertSvg(String resourcePath) throws Exception {
+        ClassPathResource svgFile = new ClassPathResource(resourcePath);
+        try (InputStream inputStream = svgFile.getInputStream();
+             ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1)
+                bos.write(buffer, 0, bytesRead);
+            return bos.toByteArray();
+        }
     }
 }
