@@ -18,7 +18,7 @@ public class TestController {
     @GetMapping(value = {"/tests"})
     public ModelAndView displayTestsPage() {
         ModelAndView modelAndView = new ModelAndView("tests");
-        modelAndView.addObject("tests", testService.getAllTests());
+        modelAndView.addObject("tests", testService.getAllTestsByCategory("B"));
         return modelAndView;
     }
 }

@@ -29,6 +29,10 @@ public class TestService {
         return testRepository.findAll();
     }
 
+    public List<Test> getAllTestsByCategory(String category) {
+        return testRepository.findAll().stream().filter(t -> t.getDrivingCategory().contains(category)).toList();
+    }
+
     public void deleteTestById(Long id) {
         testRepository.deleteById(id);
     }

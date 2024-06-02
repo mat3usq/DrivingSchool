@@ -124,8 +124,8 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     private void mapQuestionsToDb() {
-        List<Test> tests = testService.getAllTests();
-        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/questions/categories_questions.csv"))) {
+        List<Test> tests = testService.getAllTestsByCategory("B");
+        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/questions/questions.csv"))) {
             List<String[]> records = reader.readAll();
             Integer iteration = 0;
             for (String[] record : records) {
@@ -143,20 +143,19 @@ public class DatabaseSeeder implements CommandLineRunner {
                 question.setMediaName(record[6]);
                 question.setQuestionType(record[7].equals("tak"));
                 tests.forEach(t -> {
-                    if (t.getName().equals(record[8]) && record[5].contains("B")) {
-                        t.getQuestions().add(question);
+                    if (t.getName().equals(record[8]) && t.getTestType() == question.getQuestionType()) {
+                        List<Test> questionTests = question.getTests();
+                        questionTests.add(t);
+                        question.setTests(questionTests);
+                        questionService.save(question);
                         t.setNumberQuestions(t.getNumberQuestions() + 1);
                         testService.saveTest(t);
                     }
                 });
 
-//                System.out.println(question);
-//                questionService.save(question);
-//                System.out.println("Zapisano Pytanie:" + ++iteration);
-            }
-            List<Question> questions = questionService.findAll();
-            for (Question question : questions) {
-                System.out.println(question.getQuestion());
+                System.out.println("Zapisano pytanie: " + iteration);
+                if (++iteration == 500)
+                    break;
             }
         } catch (IOException | CsvException e) {
             e.printStackTrace();
