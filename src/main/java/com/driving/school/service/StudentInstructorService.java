@@ -1,6 +1,7 @@
 package com.driving.school.service;
 
 
+import com.driving.school.model.Constants;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.model.StudentInstructor;
 import com.driving.school.repository.StudentInstructorRepository;
@@ -64,4 +65,25 @@ public class StudentInstructorService {
         studentInstructorRepository.deleteById(id);
     }
 
+    public void createStudentInstructor(SchoolUser student, SchoolUser instructor) {
+        if (!studentInstructorRepository.existsByStudentAndInstructor(student, instructor)) {
+            StudentInstructor studentInstructor = new StudentInstructor();
+            studentInstructor.setStudent(student);
+            studentInstructor.setInstructor(instructor);
+            studentInstructor.setStatus(Constants.PENDING);
+            studentInstructorRepository.save(studentInstructor);
+        }
+    }
+
+    public void deleteStudentInstructor(Long studentId, Long instructorId) {
+        StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
+        if (studentInstructor != null)
+            studentInstructorRepository.delete(studentInstructor);
+    }
+
+    public void acceptStudent(Long studentId, Long instructorId) {
+        StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
+        studentInstructor.setStatus(Constants.ACTIVE);
+        studentInstructorRepository.save(studentInstructor);
+    }
 }

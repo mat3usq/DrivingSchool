@@ -2,12 +2,10 @@ package com.driving.school.controller;
 
 import com.driving.school.model.Constants;
 import com.driving.school.model.SchoolUser;
-import com.driving.school.model.StudentInstructor;
-import com.driving.school.repository.StudentInstructorRepository;
 import com.driving.school.service.SchoolUserService;
+import com.driving.school.service.StudentInstructorService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,24 +16,23 @@ import org.springframework.web.servlet.ModelAndView;
 public class AccountController {
 
     private final SchoolUserService schoolUserService;
-    private final StudentInstructorRepository studentInstructorRepository;
+    private final StudentInstructorService studentInstructorService;
 
     @Autowired
-    public AccountController(SchoolUserService schoolUserService, StudentInstructorRepository studentInstructorRepository) {
+    public AccountController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService) {
         this.schoolUserService = schoolUserService;
-        this.studentInstructorRepository = studentInstructorRepository;
+        this.studentInstructorService = studentInstructorService;
     }
 
     @GetMapping("/account")
-    public ModelAndView displayAccount(HttpSession session, Authentication authentication) {
+    public ModelAndView displayAccount(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("account");
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_" + Constants.STUDENT_ROLE))
-            modelAndView.addObject("instructorStudents", studentInstructorRepository.
-                    findByStudentId(((SchoolUser) session.getAttribute("loggedInUser")).getId()));
-        else if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_" + Constants.INSTRUCTOR_ROLE))
-            modelAndView.addObject("instructorStudents", studentInstructorRepository.
-                    findByInstructorId(((SchoolUser) session.getAttribute("loggedInUser")).getId()));
+        if (user.getRoleName().equals(Constants.STUDENT_ROLE))
+            modelAndView.addObject("instructorStudents", studentInstructorService.findByStudentId(user.getId()));
+        else if (user.getRoleName().equals(Constants.INSTRUCTOR_ROLE))
+            modelAndView.addObject("instructorStudents", studentInstructorService.findByInstructorId(user.getId()));
 
         modelAndView.addObject("instructors", schoolUserService.findAllInstructors());
         return modelAndView;
@@ -44,20 +41,7 @@ public class AccountController {
     @PostMapping("/account/assignInstructor")
     public ModelAndView assignInstructor(@RequestParam("selectedInstructor") Long instructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
-
-        if (instructorId != null) {
-            SchoolUser student = (SchoolUser) session.getAttribute("loggedInUser");
-            SchoolUser instructor = schoolUserService.findUserById(instructorId);
-
-            if (!studentInstructorRepository.existsByStudentAndInstructor(student, instructor)) {
-                StudentInstructor studentInstructor = new StudentInstructor();
-                studentInstructor.setStudent(student);
-                studentInstructor.setInstructor(instructor);
-                studentInstructor.setStatus(Constants.PENDING);
-                studentInstructorRepository.save(studentInstructor);
-            }
-        }
-
+        studentInstructorService.createStudentInstructor((SchoolUser) session.getAttribute("loggedInUser"), schoolUserService.findUserById(instructorId));
         return modelAndView;
     }
 
@@ -65,12 +49,8 @@ public class AccountController {
     public ModelAndView cancelInstructor(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-
-        if (loggedInUser.getId().equals(studentId)) {
-            StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
-            if (studentInstructor != null)
-                studentInstructorRepository.delete(studentInstructor);
-        }
+        if (loggedInUser.getId().equals(studentId))
+            studentInstructorService.deleteStudentInstructor(studentId, instructorId);
         return modelAndView;
     }
 
@@ -78,13 +58,8 @@ public class AccountController {
     public ModelAndView acceptStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-
-        if (loggedInUser.getId().equals(instructorId)) {
-            StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
-            studentInstructor.setStatus(Constants.ACTIVE);
-            studentInstructorRepository.save(studentInstructor);
-        }
-
+        if (loggedInUser.getId().equals(instructorId))
+            studentInstructorService.acceptStudent(studentId, instructorId);
         return modelAndView;
     }
 
@@ -92,12 +67,8 @@ public class AccountController {
     public ModelAndView cancelStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-
-        if (loggedInUser.getId().equals(instructorId)) {
-            StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
-            if (studentInstructor != null)
-                studentInstructorRepository.delete(studentInstructor);
-        }
+        if (loggedInUser.getId().equals(instructorId))
+           studentInstructorService.deleteStudentInstructor(studentId, instructorId);
         return modelAndView;
     }
 }
