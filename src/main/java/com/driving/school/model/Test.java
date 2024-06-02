@@ -31,7 +31,12 @@ public class Test {
     @Column(name = "TESTTYPE", length = 512)
     private Boolean testType;
 
-    @OneToMany(mappedBy = "test")
+    @ManyToMany
+    @JoinTable(
+            name = "QUESTIONTEST",
+            joinColumns = @JoinColumn(name = "TESTID"),
+            inverseJoinColumns = @JoinColumn(name = "QUESTIONID")
+    )
     private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "test")

@@ -6,7 +6,9 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -49,10 +51,14 @@ public class Question {
     @Column(name = "CATEGORY", length = 128)
     private String drivingCategory;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToMany(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "TESTID", nullable = true)
-    private Test test;
+    @JoinTable(
+            name = "QUESTIONTEST",
+            joinColumns = @JoinColumn(name = "QUESTIONID"),
+            inverseJoinColumns = @JoinColumn(name = "TESTID")
+    )
+    private List<Test> tests = new ArrayList<>();
 
     @ManyToMany(mappedBy = "questions")
     private Set<Exam> exams = new LinkedHashSet<>();
@@ -77,7 +83,7 @@ public class Question {
                 ", explanation='" + explanation + '\'' +
                 ", questionType='" + questionType + '\'' +
                 ", category='" + drivingCategory + '\'' +
-                ", test=" + test +
+                ", test=" + tests +
                 ", exams=" + exams +
                 ", studentAnswersTests=" + studentAnswersTests +
                 ", studentExamAnswers=" + studentExamAnswers +
