@@ -18,9 +18,9 @@ public class TestNames {
         names.add("Sygnalizacja świetlna");
         names.add("Pierwszeństwo przejazdu");
         names.add("Zatrzymanie, postój, włączenie się do ruchu");
-        names.add("Zmiana kieruynku jazdy, przejazdy kolejowe");
+        names.add("Zmiana kierunku jazdy, przejazdy kolejowe");
         names.add("Wyprzedzanie, omijanie, wymijanie cofanie");
-        names.add("Szczególna ostrożnosć");
+        names.add("Szczególna ostrożność");
         names.add("Warunki drogowe");
         names.add("Prędkość, hamowanie, odstępy");
         names.add("Technika jazdy");
