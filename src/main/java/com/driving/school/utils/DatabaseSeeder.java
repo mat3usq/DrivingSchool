@@ -142,13 +142,13 @@ public class DatabaseSeeder implements CommandLineRunner {
                 question.setDrivingCategory(record[5]);
                 question.setMediaName(record[6]);
                 question.setQuestionType(record[7].equals("tak"));
-//                tests.forEach(t -> {
-//                    if (t.getName().equals(record[8]) && record[5].contains("B")) {
-//                        t.getQuestions().add(question);
-//                        t.setNumberQuestions(t.getNumberQuestions() + 1);
-//                        testService.saveTest(t);
-//                    }
-//                });
+                tests.forEach(t -> {
+                    if (t.getName().equals(record[8]) && record[5].contains("B")) {
+                        t.getQuestions().add(question);
+                        t.setNumberQuestions(t.getNumberQuestions() + 1);
+                        testService.saveTest(t);
+                    }
+                });
 
 //                System.out.println(question);
 //                questionService.save(question);
