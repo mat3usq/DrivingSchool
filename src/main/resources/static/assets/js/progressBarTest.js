@@ -1,10 +1,10 @@
 function updateProgressBars() {
-	var testDetails = document.querySelectorAll('.tests-details')
+	const testDetails = document.querySelectorAll('.tests-details');
 
 	testDetails.forEach(detail => {
-		var progressBar = detail.querySelector('.progres-bar')
-		var progressText = detail.querySelector('.progres-span')
-		var progress = parseInt(progressText.textContent)
+		const progressBar = detail.querySelector('.progres-bar')
+		const progressText = detail.querySelector('.progres-span')
+		const progress = parseInt(progressText.textContent)
 
 		progressBar.style.width = progress + '%'
 
@@ -52,4 +52,12 @@ function updateProgressBars() {
 	})
 }
 
-document.addEventListener('DOMContentLoaded', updateProgressBars)
+document.addEventListener("DOMContentLoaded", function() {
+	updateProgressBars();
+	const forms = document.querySelectorAll(".tests-details");
+	forms.forEach(form => {
+		form.addEventListener("click", function() {
+			form.submit();
+		});
+	});
+});

@@ -40,34 +40,38 @@
                     </p>
                     <div data-aos="zoom-in" data-aos-delay="150" class="container-tests">
                         <p class="side-title">Pytania Podstawowe</p>
-                        <form th:each="test : ${tests}" th:if="${!test.testType}" th:action="@{/tests/solveTest}" method="post" class="tests-details">
-                                <div class="container-info">
-                                    <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
-                                    <p th:text="${test.name}"></p>
-                                    <p th:text="${test.numberQuestions} + ' pytań'"></p>
+                        <form th:each="test : ${tests}" th:if="${!test.testType}" th:action="@{/tests/solveTest}"
+                              method="post" class="tests-details">
+                            <input type="hidden" name="testId" th:value="${test.id}"/>
+                            <div class="container-info">
+                                <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
+                                <p th:text="${test.name}"></p>
+                                <p th:text="${test.numberQuestions} + ' pytań'"></p>
+                            </div>
+                            <div class="container-stats">
+                                <span class="progres-span"> 0%</span>
+                                <div class="progres-box">
+                                    <div class="progres-bar"></div>
                                 </div>
-                                <div class="container-stats">
-                                    <span class="progres-span"> 0%</span>
-                                    <div class="progres-box">
-                                        <div class="progres-bar"></div>
-                                    </div>
-                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="container-tests">
                         <p class="side-title">Pytania Specjalistyczne</p>
-                        <form th:each="test : ${tests}" th:if="${test.testType}" th:action="@{/tests/solveTest}" method="post" class="tests-details">
-                                <div class="container-info">
-                                    <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
-                                    <p th:text="${test.name}"></p>
-                                    <p th:text="${test.numberQuestions} + ' pytań'"></p>
+                        <form th:each="test : ${tests}" th:if="${test.testType}" th:action="@{/tests/solveTest}"
+                              method="post" class="tests-details">
+                            <input type="hidden" name="testId" th:value="${test.id}"/>
+                            <div class="container-info">
+                                <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
+                                <p th:text="${test.name}"></p>
+                                <p th:text="${test.numberQuestions} + ' pytań'"></p>
+                            </div>
+                            <div class="container-stats">
+                                <span class="progres-span"> 0%</span>
+                                <div class="progres-box">
+                                    <div class="progres-bar"></div>
                                 </div>
-                                <div class="container-stats">
-                                    <span class="progres-span"> 0%</span>
-                                    <div class="progres-box">
-                                        <div class="progres-bar"></div>
-                                    </div>
-                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
