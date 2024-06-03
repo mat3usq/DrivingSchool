@@ -51,6 +51,9 @@ public class Question {
     @Column(name = "CATEGORY", length = 128)
     private String drivingCategory;
 
+    @Transient
+    private Integer questionNumber;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinTable(

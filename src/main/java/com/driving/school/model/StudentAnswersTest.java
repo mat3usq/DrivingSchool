@@ -16,8 +16,8 @@ public class StudentAnswersTest {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "ANSWERTYPE")
-    private Long answerType;
+    @Column(name = "CORRECTNESS")
+    private Boolean correctness;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
