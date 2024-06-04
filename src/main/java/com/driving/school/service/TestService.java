@@ -20,8 +20,8 @@ public class TestService {
     }
 
 
-    public Optional<Test> getTestById(Long id) {
-        return testRepository.findById(id);
+    public Test getTestById(Long id) {
+        return testRepository.findById(id).orElse(null);
     }
 
 

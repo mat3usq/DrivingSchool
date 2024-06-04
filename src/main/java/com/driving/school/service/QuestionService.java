@@ -39,8 +39,10 @@ public class QuestionService {
         List<Question> usersQuestions = studentAnswersTestRepository.findQuestionsByUserIdAndTestId(userId, testId);
         List<Question> remainingQuestions = new ArrayList<>(allQuestions);
         remainingQuestions.removeAll(usersQuestions);
+        if (remainingQuestions.isEmpty())
+            return null;
         Question nextQuestion = remainingQuestions.getFirst();
-        nextQuestion.setQuestionNumber(allQuestions.size() - remainingQuestions.size());
+        nextQuestion.setQuestionNumber(allQuestions.size() - remainingQuestions.size() + 1);
         return nextQuestion;
     }
 }
