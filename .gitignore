@@ -19,7 +19,6 @@ target/
 *.iml
 *.ipr
 *.xml
-*.map
 
 ### NetBeans ###
 /nbproject/private/
@@ -33,3 +32,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Driving-School ###
+*.map
+Visualization_Of_Questions/
