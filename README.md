@@ -54,7 +54,16 @@
 - Walidacja do dodawania wykladu/podwykladu/rozdzialu
 - Przeniesienie formularzy w wykladach do sekcji nizej
 - Poprawienie responsywnosci w wykladzie
-- Testy - gdy nie ma pytan + gdy wszystkie pytania zostana realizowane
+- Testy: 
+  - Widok 
+    - gdy nie ma pytan  
+    - gdy wszystkie pytania zostana realizowane
+  - Wyswietlanie aktualnych postepow testu
+  - Oznaczanie pytan w testach np. gwiazdką
+  - Powtarzanie pytan w testach:
+    - z oznaczonymi odp, 
+    - z niepoprawnymi odp, 
+    - z poprawnymi odp
 - Zamiana footera i ostatniej sekcji na th:fragment
 - Dodanie do pytan wyjasnien bedzie lux wygladalo to wtedy 
 
