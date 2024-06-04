@@ -170,6 +170,9 @@ h2 {
   margin: 10px;
   width: 80%;
 }
+.test .hero-img .box-test .box-container .header-test .box img {
+  width: 50px;
+}
 .test .hero-img .box-test .box-container .header-test div {
   display: flex;
   flex-direction: row;
@@ -203,15 +206,16 @@ h2 {
   align-content: space-between;
   justify-content: space-evenly;
   padding: 20px;
-  align-items: stretch;
+  align-items: center;
 }
-.test .hero-img .box-test .box-container .container-test .test-info img {
-  width: 60%;
+.test .hero-img .box-test .box-container .container-test .test-info img,
+.test .hero-img .box-test .box-container .container-test .test-info video {
+  width: 90%;
   border-radius: 20px;
   margin: 10px;
 }
 .test .hero-img .box-test .box-container .container-test #wrong {
-  display: none;
+  display: block;
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 22px;
@@ -219,7 +223,7 @@ h2 {
   text-align: center;
 }
 .test .hero-img .box-test .box-container .container-test #correct {
-  display: none;
+  display: block;
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 22px;
@@ -239,11 +243,8 @@ h2 {
   margin: 10px;
   display: flex;
   flex-direction: row;
-}
-.test .hero-img .box-test .box-container .container-test .question .button-box .first-box,
-.test .hero-img .box-test .box-container .container-test .question .button-box .second-box {
-  display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .test .hero-img .box-test .box-container .container-test .question .info-container {
   display: flex;
@@ -276,7 +277,7 @@ h2 {
   text-transform: uppercase;
   font-weight: 600;
   transition: 0.5s;
-  margin: 10px 20px;
+  margin: 10px;
   padding: 10px 20px;
   background: transparent;
 }
@@ -288,9 +289,11 @@ h2 {
 .test .hero-img .box-test .box-container .container-test .question a:not(:disabled) {
   cursor: pointer;
 }
-.test .hero-img .box-test .box-container .container-test .question .next,
-.test .hero-img .box-test .box-container .container-test .question .back {
+.test .hero-img .box-test .box-container .container-test .question .next {
   background-color: #4d84e2;
+}
+.test .hero-img .box-test .box-container .container-test .question .back {
+  background-color: #ffb200;
 }
 .test .hero-img .box-test .box-container .container-test .question #yes,
 .test .hero-img .box-test .box-container .container-test .question #no {
@@ -382,21 +385,17 @@ h2 {
   .test .hero-img .box-test .box-container .header-test span {
     font-size: 20px;
   }
-  .test .hero-img .box-test .box-container .container-test .test-info img {
-    width: 60%;
-  }
   .test .hero-img .box-test .box-container .container-test .question .info-container {
     flex-direction: column;
   }
 }
 @media (max-width: 700px) {
-  .test .hero-img {
-    height: 140vh;
-  }
   .test .hero-img .box-test .box-container .container-test .test-info {
     flex-direction: column;
+    padding: 0;
   }
-  .test .hero-img .box-test .box-container .container-test .test-info img {
+  .test .hero-img .box-test .box-container .container-test .test-info img,
+  .test .hero-img .box-test .box-container .container-test .test-info video {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -404,30 +403,13 @@ h2 {
   .test .hero-img .box-test .box-container .header-test {
     flex-direction: column;
   }
-  .navbar-left {
-    height: 128vh;
-  }
 }
 @media (max-width: 500px) {
   .test .hero-img .box-test .box-container .container-test .question .info-container .content {
+    margin: 5px;
     font-size: 14px;
   }
   .test .hero-img .box-test .box-container .container-test .question .info-container .explain .content {
     font-size: 14px;
-  }
-  .test .hero-img .box-test .box-container .container-test .question .button-box .first-box,
-  .test .hero-img .box-test .box-container .container-test .question .button-box .second-box {
-    flex-direction: column;
-  }
-  .test .hero-img .box-test .box-container .container-test .question .button-box .first-box {
-    flex-direction: column-reverse;
-  }
-}
-@media (max-width: 400px) {
-  .test .hero-img {
-    height: 145vh;
-  }
-  .navbar-left {
-    height: 133vh;
   }
 }/*# sourceMappingURL=solveBasicTest.css.map */

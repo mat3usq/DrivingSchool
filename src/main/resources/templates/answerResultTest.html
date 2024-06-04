@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Pytanie Podstawowe</title>
+    <title>Wynik Odpowiedzi</title>
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
 
@@ -52,7 +52,7 @@
                             </th:block>
 
                             <th:block th:if="${#strings.endsWith(question.mediaName, '.mp4')}">
-                                <video controls autoplay muted>
+                                <video muted>
                                     <source th:src="@{'/assets/Visualization_Of_Questions/' + ${question.mediaName}}"
                                             type="video/mp4">
                                     Twoja przeglądarka nie wspiera tagu filmu.
@@ -60,6 +60,8 @@
                             </th:block>
 
                         </div>
+                        <p th:if="${answer.correctness}" id="correct">Prawidlowa odpowiedz</p>
+                        <p th:if="${!answer.correctness}" id="wrong">Zla odpowiedz</p>
 
                         <div class="question">
                             <div class="info-container">
@@ -68,6 +70,13 @@
                                     poruszanie sie
                                     dowolonych pojazdow?
                                 </p>
+                                <!--                                <div class="explain">-->
+                                <!--                                    <span>Wyjasnienie</span>-->
+                                <!--                                    <p class="content">-->
+                                <!--                                        A-2 Niebezpieczny zakręt w lewo. Ostrzega o jedynym niebezpiecznym zakręcie w kierunku wskazanym-->
+                                <!--                                        na znaku.-->
+                                <!--                                    </p>-->
+                                <!--                                </div>-->
                             </div>
 
                             <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
@@ -77,10 +86,10 @@
                             </form>
 
                             <div class="button-box">
-                                <button id="no">Nie</button>
-                                <button id="skip" th:if="${question.questionNumber != test.numberQuestions}"
-                                        class="next">Pomiń</button>
-                                <button id="yes">Tak</button>
+                                <button id="back" class="back">Powrót</button>
+                                <button id="next" th:if="${question.questionNumber != test.numberQuestions}"
+                                        class="next">Następne
+                                </button>
                             </div>
                         </div>
                     </div>

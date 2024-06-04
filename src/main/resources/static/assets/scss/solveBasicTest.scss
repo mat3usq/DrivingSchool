@@ -94,6 +94,12 @@ h2 {
 					margin: 10px;
 					width: 80%;
 
+					.box {
+						img {
+							width: 50px;
+						}
+					}
+
 					div {
 						display: flex;
 						flex-direction: row;
@@ -132,17 +138,18 @@ h2 {
 						align-content: space-between;
 						justify-content: space-evenly;
 						padding: 20px;
-						align-items: stretch;
+						align-items: center;
 
-						img {
-							width: 60%;
+						img,
+						video {
+							width: 90%;
 							border-radius: 20px;
 							margin: 10px;
 						}
 					}
 
 					#wrong {
-						display: none;
+						display: block;
 						font-weight: bold;
 						letter-spacing: 1px;
 						font-size: 22px;
@@ -151,7 +158,7 @@ h2 {
 					}
 
 					#correct {
-						display: none;
+						display: block;
 						font-weight: bold;
 						letter-spacing: 1px;
 						font-size: 22px;
@@ -172,12 +179,8 @@ h2 {
 							margin: 10px;
 							display: flex;
 							flex-direction: row;
-
-							.first-box,
-							.second-box {
-								display: flex;
-								flex-direction: row;
-							}
+							flex-wrap: wrap;
+							justify-content: center;
 						}
 
 						.info-container {
@@ -215,7 +218,7 @@ h2 {
 							text-transform: uppercase;
 							font-weight: 600;
 							transition: 0.5s;
-							margin: 10px 20px;
+							margin: 10px;
 							padding: 10px 20px;
 							background: transparent;
 
@@ -229,9 +232,12 @@ h2 {
 							cursor: pointer;
 						}
 
-						.next,
-						.back {
+						.next {
 							background-color: $btn-bg-color;
+						}
+						
+						.back{
+							background-color: darken($secondary-color, 20%);
 						}
 
 						#yes,
@@ -348,11 +354,6 @@ h2 {
 					}
 
 					.container-test {
-						.test-info {
-							img {
-								width: 60%;
-							}
-						}
 						.question {
 							.info-container {
 								flex-direction: column;
@@ -368,13 +369,15 @@ h2 {
 @media (max-width: 700px) {
 	.test {
 		.hero-img {
-			height: 140vh;
 			.box-test {
 				.box-container {
 					.container-test {
 						.test-info {
 							flex-direction: column;
-							img {
+							padding: 0;
+
+							img,
+							video {
 								width: 100%;
 								padding: 0;
 								margin: 0;
@@ -389,10 +392,6 @@ h2 {
 			}
 		}
 	}
-
-	.navbar-left {
-		height: 128vh;
-	}
 }
 
 @media (max-width: 500px) {
@@ -404,6 +403,7 @@ h2 {
 						.question {
 							.info-container {
 								.content {
+									margin: 5px;
 									font-size: 14px;
 								}
 
@@ -411,33 +411,10 @@ h2 {
 									font-size: 14px;
 								}
 							}
-
-							.button-box {
-								.first-box,
-								.second-box {
-									flex-direction: column;
-								}
-
-								.first-box {
-									flex-direction: column-reverse;
-								}
-							}
 						}
 					}
 				}
 			}
 		}
-	}
-}
-
-@media (max-width: 400px) {
-	.test {
-		.hero-img {
-			height: 145vh;
-		}
-	}
-
-	.navbar-left {
-		height: 133vh;
 	}
 }

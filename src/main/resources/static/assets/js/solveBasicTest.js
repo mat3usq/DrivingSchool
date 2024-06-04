@@ -1,14 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
-	document.getElementById('yes').addEventListener('click', function () {
-		document.getElementById('yes').style.border = '2px solid springgreen'
-		document.getElementById('yes').style.color = 'springgreen'
-		document.getElementById('correct').style.display = 'block'
-	})
+    const backBtn = document.getElementById('back');
+    const skipBtn = document.getElementById('skip');
+    const nextBtn = document.getElementById('next');
+    const noBtn = document.getElementById('no');
+    const yesBtn = document.getElementById('yes');
 
-	document.getElementById('no').addEventListener('click', function () {
-		document.getElementById('no').style.border = '2px solid #EF476F'
-		document.getElementById('no').style.color = '#EF476F'
-		document.getElementById('wrong').style.display = 'block'
-		document.querySelector('.explain').style.display = 'block'
-	})
-})
+    if (backBtn)
+        backBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = '/tests';
+        });
+
+    if (skipBtn)
+        skipBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('input[name="action"]').value = 'SKIP';
+            document.getElementById('form').submit();
+        });
+
+    if (nextBtn)
+        nextBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('input[name="action"]').value = 'NEXT';
+            document.getElementById('form').submit();
+        });
+
+    if (noBtn)
+        noBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('input[name="action"]').value = 'NIE';
+            document.getElementById('form').submit();
+        });
+
+    if (yesBtn)
+        yesBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('input[name="action"]').value = 'TAK';
+            document.getElementById('form').submit();
+        });
+});
