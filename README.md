@@ -38,8 +38,6 @@
 
 ## TODO must have
 - ~~Baza danych~~
-- PRZEPISANIE KONTROLLERÓW ZA DUZO W NICH SIE DZIEJE SERWISY MUSZA OGARNIAC SPRAWDZANIE ITP
-- ZMIANA REPOSITORIÓW NA SERVICES
 - Dodanie strony error...
 - ~~Wybór instruktora~~
 - ~~Funkcja dodawania i przeglądania materiałów edukacyjnych przez studentów~~
