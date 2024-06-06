@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextBtn = document.getElementById('next');
     const noBtn = document.getElementById('no');
     const yesBtn = document.getElementById('yes');
+    const answerA = document.getElementById('answerA');
+    const answerB = document.getElementById('answerB');
+    const answerC = document.getElementById('answerC');
 
     if (backBtn)
         backBtn.addEventListener('click', function (event) {
@@ -36,6 +39,27 @@ document.addEventListener('DOMContentLoaded', function () {
         yesBtn.addEventListener('click', function (event) {
             event.preventDefault();
             document.querySelector('input[name="action"]').value = 'TAK';
+            document.getElementById('form').submit();
+        });
+
+    if (answerA)
+        answerA.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('input[name="action"]').value = 'A';
+            document.getElementById('form').submit();
+        });
+
+    if (answerB)
+        answerB.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('input[name="action"]').value = 'B';
+            document.getElementById('form').submit();
+        });
+
+    if (answerC)
+        answerC.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('input[name="action"]').value = 'C';
             document.getElementById('form').submit();
         });
 });

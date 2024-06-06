@@ -33,7 +33,8 @@
             <div class="hero-shadow"></div>
             <div class="box-test">
                 <div class="box-container">
-                    <th:block th:if="${question.questionNumber != 0 && question.questionNumber != test.numberQuestions + 1}">
+                    <th:block
+                            th:if="${question.questionNumber != 0 && question.questionNumber != test.numberQuestions + 1}">
                         <div class="header-test">
                             <div class="box">
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
@@ -67,7 +68,13 @@
 
                             </div>
 
-                            <div class="question">
+                            <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
+                                <input type="hidden" name="testId" th:value="${test.id}"/>
+                                <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                <input type="hidden" name="action"/>
+                            </form>
+
+                            <div th:if="${question.availableAnswers == 2}" class="normal-question">
                                 <div class="info-container">
                                     <p th:text="${question.question}" class="content">
                                         Czy w tej sytuacji bezposrednio za pojazdem uprzywilejowanym dozwolone jest
@@ -76,17 +83,31 @@
                                     </p>
                                 </div>
 
-                                <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
-                                    <input type="hidden" name="testId" th:value="${test.id}"/>
-                                    <input type="hidden" name="questionId" th:value="${question.id}"/>
-                                    <input type="hidden" name="action"/>
-                                </form>
-
                                 <div class="button-box">
                                     <button id="no">Nie</button>
                                     <button id="skip" class="next">Pomiń</button>
                                     <button id="yes">Tak</button>
                                 </div>
+                            </div>
+
+                            <div th:if="${question.availableAnswers == 3}" class="specific-question">
+                                <div class="info-container">
+                                    <p th:text="${question.question}" class="content">
+                                        Czy w tej sytuacji bezposrednio za pojazdem uprzywilejowanym dozwolone jest
+                                        poruszanie sie
+                                        dowolonych pojazdow?
+                                    </p>
+                                </div>
+                                <div class="button-box">
+                                    <button th:text="${question.answerA}" class="answer" id="answerA">Bezpieczny, mniejszy niz 1 metr.
+                                    </button
+                                    >
+                                    <button th:text="${question.answerB}" class="answer" id="answerB">Kazdy odstep, ale bezpieczny.
+                                    </button
+                                    >
+                                    <button th:text="${question.answerC}" class="answer" id="answerC">Nie mniejszy niz 1 metr.</button>
+                                </div>
+                                <button class="next" id="skip">Pomiń</button>
                             </div>
                         </div>
                     </th:block>
@@ -106,7 +127,7 @@
                                     <th:block th:replace="~{carAnimation :: crash-car}"></th:block>
                                 </div>
                             </div>
-                            <div class="question">
+                            <div class="normal-question">
                                 <div class="info-container">
                                     <p>Brak dostępnych pytań w danym teście!</p>
                                 </div>
@@ -133,7 +154,7 @@
                             <div class="test-info">
                                 <th:block th:replace="~{carAnimation :: sport-car}"></th:block>
                             </div>
-                            <div class="question">
+                            <div class="normal-question">
                                 <div class="info-container">
                                     <p>Gratulacje ukończyłeś ten dział!</p>
                                 </div>

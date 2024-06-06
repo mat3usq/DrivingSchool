@@ -44,13 +44,13 @@ h2 {
 }
 
 .navbar-left {
-	height: 128vh;
+	height: 158vh;
 }
 
 .test {
 	.hero-img {
 		position: relative;
-		height: 140vh;
+		height: 170vh;
 		background-image: url('../img/backgroundTest.png');
 		background-position: center;
 		background-size: cover;
@@ -172,7 +172,8 @@ h2 {
 						text-align: center;
 					}
 
-					.question {
+					.normal-question,
+					.specific-question {
 						display: flex;
 						flex-direction: column;
 						align-items: center;
@@ -180,13 +181,21 @@ h2 {
 						text-align: center;
 						font-size: 20px;
 						margin: 10px 30px;
-
+						
 						.button-box {
 							margin: 10px;
 							display: flex;
 							flex-direction: row;
 							flex-wrap: wrap;
 							justify-content: center;
+
+							.correct {
+								border: 2px solid $icon-color;
+								color: $icon-color;
+								scale: 1.1;
+								font-weight: bold;
+								padding: 0px 20px;
+							}
 						}
 
 						.info-container {
@@ -257,8 +266,124 @@ h2 {
 							border: 2px solid $text-color;
 						}
 
-						button:hover, a:hover {
+						button:hover,
+						a:hover {
 							scale: 1.1;
+						}
+					}
+
+					.specific-question {
+						.button-box, .button-action {
+							display: flex;
+							flex-direction: column;
+							flex-wrap: wrap;
+							justify-content: center;
+							align-content: center;
+							align-items: center;
+
+							.correct {
+								padding: 0px 10px;
+							}
+
+							.back {
+								font-weight: bold;
+								font-size: 20px;
+							}
+						}
+
+						.button-action {
+							flex-direction: row;
+						}
+
+						button {
+							border: none;
+							outline: none;
+							height: 49px;
+							border-radius: 49px;
+							color: $text-color;
+							background-color: transparent;
+							transition: 0.3s;
+							margin: 10px 20px;
+							padding: 0px 10px;
+							position: relative;
+							font-weight: normal;
+							text-transform: none;
+							font-size: 18px;
+						}
+
+						button:not(:disabled) {
+							cursor: pointer;
+						}
+
+						.answer:nth-child(1)::before {
+							content: 'A';
+							background-color: $bg-category-color;
+							padding: 5px 10px;
+							position: absolute;
+							border-radius: 10px;
+							left: -40px;
+							font-weight: bold;
+							top: 50%;
+							transform: translateY(-50%);
+						}
+
+						.answer:nth-child(2)::before {
+							content: 'B';
+							background-color: $bg-category-color;
+							padding: 5px 10px;
+							position: absolute;
+							border-radius: 10px;
+							left: -40px;
+							font-weight: bold;
+							top: 50%;
+							transform: translateY(-50%);
+						}
+
+						.answer:nth-child(3)::before {
+							content: 'C';
+							background-color: $bg-category-color;
+							padding: 5px 10px;
+							position: absolute;
+							border-radius: 10px;
+							left: -40px;
+							font-weight: bold;
+							top: 50%;
+							transform: translateY(-50%);
+						}
+
+						.answer:nth-child(4)::before {
+							content: 'D';
+							background-color: $bg-category-color;
+							padding: 5px 10px;
+							position: absolute;
+							border-radius: 10px;
+							left: -40px;
+							font-weight: bold;
+							top: 50%;
+							transform: translateY(-50%);
+						}
+
+						.answer:nth-child(5)::before {
+							content: 'E';
+							background-color: $bg-category-color;
+							padding: 5px 10px;
+							position: absolute;
+							border-radius: 10px;
+							left: -40px;
+							font-weight: bold;
+							top: 50%;
+							transform: translateY(-50%);
+						}
+
+						.next {
+							font-weight: bold;
+							text-transform: uppercase;
+							width: 180px;
+							background-color: $btn-bg-color;
+						}
+
+						button:hover {
+							scale: 1.05;
 						}
 					}
 				}
@@ -364,7 +489,8 @@ h2 {
 					}
 
 					.container-test {
-						.question {
+						.normal-question,
+						.specific-question {
 							.info-container {
 								flex-direction: column;
 							}
@@ -414,7 +540,8 @@ h2 {
 			.box-test {
 				.box-container {
 					.container-test {
-						.question {
+						.normal-question,
+						.specific-question {
 							.info-container {
 								.content {
 									margin: 5px;
@@ -424,6 +551,12 @@ h2 {
 								.explain .content {
 									font-size: 14px;
 								}
+							}
+
+							button {
+								margin: 0;
+								margin-top: 10px;
+								font-size: 13px;
 							}
 						}
 					}

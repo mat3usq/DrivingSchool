@@ -68,7 +68,13 @@
                             <p th:if="${answer.correctness}" id="correct">Prawidlowa odpowiedz</p>
                             <p th:if="${!answer.correctness}" id="wrong">Zla odpowiedz</p>
 
-                            <div class="question">
+                            <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
+                                <input type="hidden" name="testId" th:value="${test.id}"/>
+                                <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                <input type="hidden" name="action"/>
+                            </form>
+
+                            <div th:if="${question.availableAnswers == 2}" class="normal-question">
                                 <div class="info-container">
                                     <p th:text="${question.question}" class="content">
                                         Czy w tej sytuacji bezposrednio za pojazdem uprzywilejowanym dozwolone jest
@@ -84,13 +90,37 @@
                                     <!--                                </div>-->
                                 </div>
 
-                                <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
-                                    <input type="hidden" name="testId" th:value="${test.id}"/>
-                                    <input type="hidden" name="questionId" th:value="${question.id}"/>
-                                    <input type="hidden" name="action"/>
-                                </form>
+                                <div class="button-box">
+                                    <button th:classappend="${question.correctAnswer.equals('NIE')} ? 'correct' : ''">Nie</button>
+                                    <button th:classappend="${question.correctAnswer.equals('TAK')} ? 'correct' : ''">Tak</button>
+                                </div>
 
                                 <div class="button-box">
+                                    <button id="back" class="back">Powrót</button>
+                                    <button id="next" class="next">Następne</button>
+                                </div>
+                            </div>
+
+                            <div th:if="${question.availableAnswers == 3}" class="specific-question">
+                                <div class="info-container">
+                                    <p th:text="${question.question}" class="content">
+                                        Czy w tej sytuacji bezposrednio za pojazdem uprzywilejowanym dozwolone jest
+                                        poruszanie sie
+                                        dowolonych pojazdow?
+                                    </p>
+                                </div>
+
+                                <div class="button-box">
+                                    <button th:text="${question.answerA}" th:classappend="${question.correctAnswer.equals('A')} ? 'correct' : 'answer'">Bezpieczny, mniejszy niz 1 metr.
+                                    </button
+                                    >
+                                    <button th:text="${question.answerB}" th:classappend="${question.correctAnswer.equals('B')} ? 'correct' : 'answer'">Kazdy odstep, ale bezpieczny.
+                                    </button
+                                    >
+                                    <button th:text="${question.answerC}" th:classappend="${question.correctAnswer.equals('C')} ? 'correct' : 'answer'">Nie mniejszy niz 1 metr.</button>
+                                </div>
+
+                                <div class="button-action">
                                     <button id="back" class="back">Powrót</button>
                                     <button id="next" class="next">Następne</button>
                                 </div>

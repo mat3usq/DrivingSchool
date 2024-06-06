@@ -50,6 +50,9 @@ public class TestController {
         ModelAndView modelAndView;
 
         switch (action) {
+            case "A":
+            case "B":
+            case "C":
             case "TAK":
             case "NIE":
                 modelAndView = getTestToSolve(testId, session);
