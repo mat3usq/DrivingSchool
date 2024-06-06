@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentAnswersTestService {
@@ -30,7 +29,6 @@ public class StudentAnswersTestService {
     public StudentAnswersTest saveTest(StudentAnswersTest test) {
         return studentAnswersTestRepository.save(test);
     }
-
 
     public StudentAnswersTest getTestById(Long id) {
         return studentAnswersTestRepository.findById(id).orElse(null);
@@ -55,5 +53,11 @@ public class StudentAnswersTestService {
         else
             studentAnswersTest.setCorrectness(false);
         return studentAnswersTestRepository.save(studentAnswersTest);
+    }
+
+    public void setStatisticForTest(List<Test> tests, Long userId) {
+        tests.forEach(test -> {
+            test.setCounter(studentAnswersTestRepository.countCorrectAnswersByUserIdAndTestId(userId, test.getId()));
+        });
     }
 }

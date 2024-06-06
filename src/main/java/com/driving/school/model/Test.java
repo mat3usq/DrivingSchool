@@ -31,6 +31,9 @@ public class Test {
     @Column(name = "TESTTYPE", length = 512)
     private Boolean testType;
 
+    @Transient
+    private Integer counter;
+
     @ManyToMany
     @JoinTable(
             name = "QUESTIONTEST",

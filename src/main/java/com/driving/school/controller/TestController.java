@@ -1,8 +1,7 @@
 package com.driving.school.controller;
 
 import com.driving.school.model.SchoolUser;
-import com.driving.school.model.StudentAnswersTest;
-import com.driving.school.repository.StudentAnswersTestRepository;
+import com.driving.school.model.Test;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.StudentAnswersTestService;
 import com.driving.school.service.TestService;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 public class TestController {
@@ -28,9 +29,11 @@ public class TestController {
     }
 
     @GetMapping(value = {"/tests"})
-    public ModelAndView displayTestsPage() {
+    public ModelAndView displayTestsPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("tests");
-        modelAndView.addObject("tests", testService.getAllTestsByCategory("B"));
+        List<Test> tests = testService.getAllTestsByCategory("B");
+        studentAnswersTestService.setStatisticForTest(tests, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
+        modelAndView.addObject("tests", tests);
         return modelAndView;
     }
 

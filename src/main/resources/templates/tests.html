@@ -49,7 +49,7 @@
                                 <p th:text="${test.numberQuestions} + ' pytań'"></p>
                             </div>
                             <div class="container-stats">
-                                <span class="progres-span"> 0%</span>
+                                <span class="progres-span"> <th:block th:text="${test.counter}"></th:block>%</span>
                                 <div class="progres-box">
                                     <div class="progres-bar"></div>
                                 </div>
@@ -67,7 +67,7 @@
                                 <p th:text="${test.numberQuestions} + ' pytań'"></p>
                             </div>
                             <div class="container-stats">
-                                <span class="progres-span"> 0%</span>
+                                <span class="progres-span"> <th:block th:text="${test.counter}"></th:block>%</span>
                                 <div class="progres-box">
                                     <div class="progres-bar"></div>
                                 </div>

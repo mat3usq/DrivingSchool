@@ -11,4 +11,7 @@ import java.util.List;
 public interface StudentAnswersTestRepository extends JpaRepository<StudentAnswersTest, Long> {
     @Query("SELECT sat.question FROM StudentAnswersTest sat WHERE sat.schoolUser.id = :userId AND sat.test.id = :testId")
     List<Question> findQuestionsByUserIdAndTestId(@Param("userId") Long userId, @Param("testId") Long testId);
+
+    @Query("SELECT COUNT(sat) FROM StudentAnswersTest sat WHERE sat.schoolUser.id = :userId AND sat.test.id = :testId")
+    Integer countCorrectAnswersByUserIdAndTestId(@Param("userId") Long userId, @Param("testId") Long testId);
 }

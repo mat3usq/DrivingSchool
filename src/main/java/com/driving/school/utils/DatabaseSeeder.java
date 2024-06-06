@@ -147,7 +147,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 question.setMediaName(record[6]);
                 question.setQuestionType(record[7].equals("tak"));
                 tests.forEach(t -> {
-                    if (t.getName().equals(record[8]) && t.getTestType() == question.getQuestionType()) {
+                    if (t.getName().equals(record[8]) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
                         List<Test> questionTests = question.getTests();
                         questionTests.add(t);
                         question.setTests(questionTests);
@@ -157,8 +157,8 @@ public class DatabaseSeeder implements CommandLineRunner {
                     }
                 });
 
-                if (++iteration == 500)
-                    break;
+//                if (++iteration == 500)
+//                    break;
             }
 
             long durationNano = System.nanoTime() - startTime;

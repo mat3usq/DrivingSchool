@@ -52,7 +52,7 @@
                                     </th:block>
 
                                     <th:block th:if="${#strings.endsWith(question.mediaName, '.mp4')}">
-                                        <video controls autoplay muted>
+                                        <video autoplay muted>
                                             <source th:src="@{'/assets/Visualization_Of_Questions/' + ${question.mediaName}}"
                                                     type="video/mp4">
                                             Twoja przeglądarka nie wspiera tagu filmu.

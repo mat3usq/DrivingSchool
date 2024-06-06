@@ -53,10 +53,7 @@
 - Przeniesienie formularzy w wykladach do sekcji nizej
 - Poprawienie responsywnosci w wykladzie
 - Testy: 
-  - Widok 
-    - gdy nie ma pytan  
-    - gdy wszystkie pytania zostana realizowane
-  - Wyswietlanie aktualnych postepow testu
+  - Dodanie mozliwosci rozwiazywania testow specjalistycznych
   - Oznaczanie pytan w testach np. gwiazdką
   - Powtarzanie pytan w testach:
     - z oznaczonymi odp, 
