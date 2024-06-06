@@ -38,11 +38,16 @@ public class QuestionService {
         List<Question> allQuestions = findAllByCategoryAndTestId("B", testId);
         List<Question> usersQuestions = studentAnswersTestRepository.findQuestionsByUserIdAndTestId(userId, testId);
         List<Question> remainingQuestions = new ArrayList<>(allQuestions);
+        Question nextQuestion = new Question();
         remainingQuestions.removeAll(usersQuestions);
         if (remainingQuestions.isEmpty())
-            return null;
-        Question nextQuestion = remainingQuestions.getFirst();
-        nextQuestion.setQuestionNumber(allQuestions.size() - remainingQuestions.size() + 1);
+            if (allQuestions.isEmpty())
+                nextQuestion.setQuestionNumber(0);
+            else nextQuestion.setQuestionNumber(allQuestions.size() + 1);
+        else {
+            nextQuestion = remainingQuestions.getFirst();
+            nextQuestion.setQuestionNumber(allQuestions.size() - remainingQuestions.size() + 1);
+        }
         return nextQuestion;
     }
 }

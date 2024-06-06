@@ -44,7 +44,7 @@ public class TestController {
 
     @PostMapping(value = {"/tests/action"})
     public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam("questionId") Long questionId, @RequestParam("action") String action, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView;
 
         switch (action) {
             case "TAK":
