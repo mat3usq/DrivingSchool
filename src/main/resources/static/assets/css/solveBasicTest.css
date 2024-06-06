@@ -122,12 +122,12 @@ h2 {
 }
 
 .navbar-left {
-  height: 114vh;
+  height: 128vh;
 }
 
 .test .hero-img {
   position: relative;
-  height: 126vh;
+  height: 140vh;
   background-image: url("../img/backgroundTest.png");
   background-position: center;
   background-size: cover;
@@ -145,7 +145,7 @@ h2 {
   position: absolute;
   top: 12vh;
   left: 150px;
-  height: 95vh;
+  height: 100%;
   width: 100%;
 }
 .test .hero-img .box-test .box-container {
@@ -214,6 +214,11 @@ h2 {
   border-radius: 20px;
   margin: 10px;
 }
+.test .hero-img .box-test .box-container .container-test .test-info svg {
+  width: 450px;
+  border-radius: 20px;
+  margin: 10px;
+}
 .test .hero-img .box-test .box-container .container-test #wrong {
   display: block;
   font-weight: bold;
@@ -267,6 +272,9 @@ h2 {
 .test .hero-img .box-test .box-container .container-test .question .content {
   font-weight: bold;
 }
+.test .hero-img .box-test .box-container .container-test .question a {
+  text-decoration: none;
+}
 .test .hero-img .box-test .box-container .container-test .question button,
 .test .hero-img .box-test .box-container .container-test .question a {
   border: none;
@@ -301,7 +309,7 @@ h2 {
   padding: 5px 20px;
   border: 2px solid aliceblue;
 }
-.test .hero-img .box-test .box-container .container-test .question button:hover {
+.test .hero-img .box-test .box-container .container-test .question button:hover, .test .hero-img .box-test .box-container .container-test .question a:hover {
   scale: 1.1;
 }
 
@@ -399,6 +407,9 @@ h2 {
     width: 100%;
     padding: 0;
     margin: 0;
+  }
+  .test .hero-img .box-test .box-container .container-test .test-info svg {
+    width: 300px;
   }
   .test .hero-img .box-test .box-container .header-test {
     flex-direction: column;

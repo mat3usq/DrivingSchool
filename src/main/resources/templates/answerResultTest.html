@@ -33,66 +33,69 @@
             <div class="hero-shadow"></div>
             <div class="box-test">
                 <div class="box-container">
-                    <div class="header-test">
-                        <div class="box">
-                            <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
-                            <p th:text="${test.name}">Znaki ostrzegawcze</p>
-                        </div>
-                        <p><span th:text="${question.questionNumber}">3</span> /
-                            <th:block th:text="${test.numberQuestions}"></th:block>
-                            pytań
-                        </p>
-                    </div>
-
-                    <div class="container-test">
-                        <div class="test-info">
-                            <th:block th:if="${#strings.endsWith(question.mediaName, '.jpg')}">
-                                <img th:src="'/assets/Visualization_Of_Questions/' + ${question.mediaName}"
-                                     th:alt="${question.mediaName}">
-                            </th:block>
-
-                            <th:block th:if="${#strings.endsWith(question.mediaName, '.mp4')}">
-                                <video muted>
-                                    <source th:src="@{'/assets/Visualization_Of_Questions/' + ${question.mediaName}}"
-                                            type="video/mp4">
-                                    Twoja przeglądarka nie wspiera tagu filmu.
-                                </video>
-                            </th:block>
-
-                        </div>
-                        <p th:if="${answer.correctness}" id="correct">Prawidlowa odpowiedz</p>
-                        <p th:if="${!answer.correctness}" id="wrong">Zla odpowiedz</p>
-
-                        <div class="question">
-                            <div class="info-container">
-                                <p th:text="${question.question}" class="content">
-                                    Czy w tej sytuacji bezposrednio za pojazdem uprzywilejowanym dozwolone jest
-                                    poruszanie sie
-                                    dowolonych pojazdow?
-                                </p>
-                                <!--                                <div class="explain">-->
-                                <!--                                    <span>Wyjasnienie</span>-->
-                                <!--                                    <p class="content">-->
-                                <!--                                        A-2 Niebezpieczny zakręt w lewo. Ostrzega o jedynym niebezpiecznym zakręcie w kierunku wskazanym-->
-                                <!--                                        na znaku.-->
-                                <!--                                    </p>-->
-                                <!--                                </div>-->
+                        <div class="header-test">
+                            <div class="box">
+                                <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
+                                <p th:text="${test.name}">Znaki ostrzegawcze</p>
                             </div>
+                            <p><span th:text="${question.questionNumber}">3</span> /
+                                <th:block th:text="${test.numberQuestions}"></th:block>
+                                pytań
+                            </p>
+                        </div>
+                        <div class="container-test">
+                            <div class="test-info">
+                                <th:block th:if="${!question.mediaName.equals('BRAK')}">
+                                    <th:block th:if="${#strings.endsWith(question.mediaName, '.jpg')}">
+                                        <img th:src="'/assets/Visualization_Of_Questions/' + ${question.mediaName}"
+                                             th:alt="${question.mediaName}">
+                                    </th:block>
 
-                            <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
-                                <input type="hidden" name="testId" th:value="${test.id}"/>
-                                <input type="hidden" name="questionId" th:value="${question.id}"/>
-                                <input type="hidden" name="action"/>
-                            </form>
+                                    <th:block th:if="${#strings.endsWith(question.mediaName, '.mp4')}">
+                                        <video controls autoplay muted>
+                                            <source th:src="@{'/assets/Visualization_Of_Questions/' + ${question.mediaName}}"
+                                                    type="video/mp4">
+                                            Twoja przeglądarka nie wspiera tagu filmu.
+                                        </video>
+                                    </th:block>
+                                </th:block>
 
-                            <div class="button-box">
-                                <button id="back" class="back">Powrót</button>
-                                <button id="next" th:if="${question.questionNumber != test.numberQuestions}"
-                                        class="next">Następne
-                                </button>
+                                <th:block th:if="${question.mediaName.equals('BRAK')}">
+                                    <th:block th:replace="~{carAnimation :: driving-school-car}"></th:block>
+                                </th:block>
+
+                            </div>
+                            <p th:if="${answer.correctness}" id="correct">Prawidlowa odpowiedz</p>
+                            <p th:if="${!answer.correctness}" id="wrong">Zla odpowiedz</p>
+
+                            <div class="question">
+                                <div class="info-container">
+                                    <p th:text="${question.question}" class="content">
+                                        Czy w tej sytuacji bezposrednio za pojazdem uprzywilejowanym dozwolone jest
+                                        poruszanie sie
+                                        dowolonych pojazdow?
+                                    </p>
+                                    <!--                                <div class="explain">-->
+                                    <!--                                    <span>Wyjasnienie</span>-->
+                                    <!--                                    <p class="content">-->
+                                    <!--                                        A-2 Niebezpieczny zakręt w lewo. Ostrzega o jedynym niebezpiecznym zakręcie w kierunku wskazanym-->
+                                    <!--                                        na znaku.-->
+                                    <!--                                    </p>-->
+                                    <!--                                </div>-->
+                                </div>
+
+                                <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
+                                    <input type="hidden" name="testId" th:value="${test.id}"/>
+                                    <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                    <input type="hidden" name="action"/>
+                                </form>
+
+                                <div class="button-box">
+                                    <button id="back" class="back">Powrót</button>
+                                    <button id="next" class="next">Następne</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
