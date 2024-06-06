@@ -23,7 +23,7 @@ public class Test {
     private String drivingCategory;
 
     @Column(name = "NUMBERQUESTIONS")
-    private Long numberQuestions;
+    private Integer numberQuestions;
 
     @Column(name = "IMAGE", columnDefinition = "LONGBLOB")
     private byte[] image;

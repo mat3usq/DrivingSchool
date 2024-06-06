@@ -57,7 +57,13 @@ public class StudentAnswersTestService {
 
     public void setStatisticForTest(List<Test> tests, Long userId) {
         tests.forEach(test -> {
-            test.setCounter(studentAnswersTestRepository.countCorrectAnswersByUserIdAndTestId(userId, test.getId()));
+            if(test.getNumberQuestions() != 0) {
+                double answers = (double) studentAnswersTestRepository.countCorrectAnswersByUserIdAndTestId(userId, test.getId());
+                double questions = (double) test.getNumberQuestions();
+                double result = answers / questions * 100;
+                test.setCounter((int) result);
+            }
+            else test.setCounter(0);
         });
     }
 }

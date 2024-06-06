@@ -157,8 +157,8 @@ public class DatabaseSeeder implements CommandLineRunner {
                     }
                 });
 
-//                if (++iteration == 500)
-//                    break;
+                if (++iteration == 500)
+                    break;
             }
 
             long durationNano = System.nanoTime() - startTime;
@@ -192,7 +192,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        test.setNumberQuestions(0L);
+        test.setNumberQuestions(0);
         testService.saveTest(test);
     }
 
