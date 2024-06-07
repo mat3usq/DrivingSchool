@@ -282,7 +282,13 @@ h2 {
 							align-items: center;
 
 							.correct {
+								border: none;
 								padding: 0px 10px;
+							}
+
+							.correct.answer::before {
+								background-color: $icon-color;
+								color: $text-color;
 							}
 
 							.back {
@@ -341,30 +347,6 @@ h2 {
 
 						.answer:nth-child(3)::before {
 							content: 'C';
-							background-color: $bg-category-color;
-							padding: 5px 10px;
-							position: absolute;
-							border-radius: 10px;
-							left: -40px;
-							font-weight: bold;
-							top: 50%;
-							transform: translateY(-50%);
-						}
-
-						.answer:nth-child(4)::before {
-							content: 'D';
-							background-color: $bg-category-color;
-							padding: 5px 10px;
-							position: absolute;
-							border-radius: 10px;
-							left: -40px;
-							font-weight: bold;
-							top: 50%;
-							transform: translateY(-50%);
-						}
-
-						.answer:nth-child(5)::before {
-							content: 'E';
 							background-color: $bg-category-color;
 							padding: 5px 10px;
 							position: absolute;

@@ -20,7 +20,7 @@
     <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="/assets/css/navigation.css"/>
-    <link rel="stylesheet" href="/assets/css/solveBasicTest.css"/>
+    <link rel="stylesheet" href="/assets/css/solveTest.css"/>
 </head>
 <body>
 <div th:replace="~{loadingCar :: loadingCar}"></div>
@@ -111,13 +111,13 @@
                                 </div>
 
                                 <div class="button-box">
-                                    <button th:text="${question.answerA}" th:classappend="${question.correctAnswer.equals('A')} ? 'correct' : 'answer'">Bezpieczny, mniejszy niz 1 metr.
+                                    <button th:text="${question.answerA}" th:classappend="${question.correctAnswer.equals('A')} ? 'correct' : ''" class="answer">Bezpieczny, mniejszy niz 1 metr.
                                     </button
                                     >
-                                    <button th:text="${question.answerB}" th:classappend="${question.correctAnswer.equals('B')} ? 'correct' : 'answer'">Kazdy odstep, ale bezpieczny.
+                                    <button th:text="${question.answerB}" th:classappend="${question.correctAnswer.equals('B')} ? 'correct' : ''" class="answer">Kazdy odstep, ale bezpieczny.
                                     </button
                                     >
-                                    <button th:text="${question.answerC}" th:classappend="${question.correctAnswer.equals('C')} ? 'correct' : 'answer'">Nie mniejszy niz 1 metr.</button>
+                                    <button th:text="${question.answerC}" th:classappend="${question.correctAnswer.equals('C')} ? 'correct' : ''" class="answer">Nie mniejszy niz 1 metr.</button>
                                 </div>
 
                                 <div class="button-action">
@@ -181,6 +181,6 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="/assets/js/aosSettings.js"></script>
 <script src="/assets/js/navigation.js"></script>
-<script src="/assets/js/solveBasicTest.js"></script>
+<script src="/assets/js/solveTest.js"></script>
 </body>
 </html>

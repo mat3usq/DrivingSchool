@@ -39,7 +39,7 @@ public class TestController {
 
     @PostMapping(value = {"/tests/solveTest"})
     public ModelAndView getTestToSolve(@RequestParam("testId") Long testId, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("solveBasicTest");
+        ModelAndView modelAndView = new ModelAndView("solveTest");
         modelAndView.addObject("question", questionService.getNextQuestion(testId, ((SchoolUser) session.getAttribute("loggedInUser")).getId()));
         modelAndView.addObject("test", testService.getTestById(testId));
         return modelAndView;

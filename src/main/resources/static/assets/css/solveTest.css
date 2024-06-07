@@ -350,7 +350,12 @@ h2 {
   align-items: center;
 }
 .test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct, .test .hero-img .box-test .box-container .container-test .specific-question .button-action .correct {
+  border: none;
   padding: 0px 10px;
+}
+.test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct.answer::before, .test .hero-img .box-test .box-container .container-test .specific-question .button-action .correct.answer::before {
+  background-color: springgreen;
+  color: aliceblue;
 }
 .test .hero-img .box-test .box-container .container-test .specific-question .button-box .back, .test .hero-img .box-test .box-container .container-test .specific-question .button-action .back {
   font-weight: bold;
@@ -401,28 +406,6 @@ h2 {
 }
 .test .hero-img .box-test .box-container .container-test .specific-question .answer:nth-child(3)::before {
   content: "C";
-  background-color: #118ab2;
-  padding: 5px 10px;
-  position: absolute;
-  border-radius: 10px;
-  left: -40px;
-  font-weight: bold;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.test .hero-img .box-test .box-container .container-test .specific-question .answer:nth-child(4)::before {
-  content: "D";
-  background-color: #118ab2;
-  padding: 5px 10px;
-  position: absolute;
-  border-radius: 10px;
-  left: -40px;
-  font-weight: bold;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.test .hero-img .box-test .box-container .container-test .specific-question .answer:nth-child(5)::before {
-  content: "E";
   background-color: #118ab2;
   padding: 5px 10px;
   position: absolute;
@@ -561,4 +544,4 @@ h2 {
     margin-top: 10px;
     font-size: 13px;
   }
-}/*# sourceMappingURL=solveBasicTest.css.map */
+}/*# sourceMappingURL=solveTest.css.map */
