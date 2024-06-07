@@ -53,7 +53,6 @@
 - Przeniesienie formularzy w wykladach do sekcji nizej
 - Poprawienie responsywnosci w wykladzie
 - Testy: 
-  - Dodanie mozliwosci rozwiazywania testow specjalistycznych
   - Oznaczanie pytan w testach np. gwiazdką
   - Powtarzanie pytan w testach:
     - z oznaczonymi odp, 
