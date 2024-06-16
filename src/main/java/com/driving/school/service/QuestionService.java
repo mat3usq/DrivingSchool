@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -49,5 +51,27 @@ public class QuestionService {
             nextQuestion.setQuestionNumber(allQuestions.size() - remainingQuestions.size() + 1);
         }
         return nextQuestion;
+    }
+
+    public List<Question> getAllNoSpecialisticQuestionByCategory(String category){
+        List<Question> allQuestion = findAll().stream().filter(q -> q.getDrivingCategory().contains(category)  && Boolean.FALSE.equals(q.getQuestionType())).toList();
+        return allQuestion;
+    }
+
+    public List<Question> getAllSpecialisticQuestionByCategory(String category){
+        List<Question> allQuestion = findAll().stream().filter(q -> q.getDrivingCategory().contains(category)  && Boolean.TRUE.equals(q.getQuestionType())).toList();
+        return allQuestion;
+    }
+
+    public List<Question> getRandomNoSpecialistcQuestionsByCategory(String category, int numberOfQuestions) {
+        List<Question> filteredQuestions = getAllNoSpecialisticQuestionByCategory(category);
+        Collections.shuffle(filteredQuestions);
+        return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
+    }
+
+    public List<Question> getRandomSpecialistcQuestionsByCategory(String category, int numberOfQuestions) {
+        List<Question> filteredQuestions = getAllSpecialisticQuestionByCategory(category);
+        Collections.shuffle(filteredQuestions);
+        return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
     }
 }
