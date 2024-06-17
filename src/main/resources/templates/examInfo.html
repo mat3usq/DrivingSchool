@@ -37,10 +37,13 @@
             <div class="box-instruction">
                 <div class="box-container">
                     <p class="title" data-aos="fade-down" data-aos-delay="100">Instrukcja Egzaminu</p>
+                    <form th:action="@{/exam/generate}" method="post">
+                        <button type="submit"> Rozpocznij egzamin</button>
+                    </form>
                     <div class="container-instruction">
                         <div class="instruction">
                             <p>Zdjecie Pogladowe Egzaminu</p>
-                            <img src="../img/instructionExam.png" alt="Zdjecie pogladowe egzaminu" />
+                            <img src="/assets/img/imgInstrucion.png" alt="Zdjecie pogladowe egzaminu" />
                             <p>
                                 Poznaj zasady oficjalnego egzaminu na prawo jazdy kategorii:
                                 <span>A, B, C, D, T, AM, A1, A2, B1, C1, D1.</span>
@@ -79,6 +82,7 @@
                                 &nbsp;
                             </p>
                         </div>
+                        <
                         <div class="instruction">
                             <h3>Pytania podstawowe:</h3>
 

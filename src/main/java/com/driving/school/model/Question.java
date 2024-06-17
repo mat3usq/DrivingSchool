@@ -36,6 +36,9 @@ public class Question {
     @Column(name = "AVAILABLEANSWERS")
     private Long availableAnswers;
 
+    @Column(name = "POINTS")
+    private Long points;
+
     @Column(name = "CORRECTANSWER")
     private String correctAnswer;
 

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edycja PodWykładu</title>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/examResult.css"/>
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar">
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+
+<main>
+    <section class="examResult">
+        <div class="hero-img">
+            <div class="hero-shadow"></div>
+            <div class="box-examResult">
+                <div class="box-container">
+                    <div class="header-examResult">
+                        <div class="header-info">
+                            <p>Niestety! Wynik egzaminu</p>
+                            <span class="red">Negatywny</span>
+                        </div>
+                        <div class="header-info">
+                            <p>Koncowa liczba punktow</p>
+                            <p><span class="red" th:text="${points} + '/74'">36/74</span> pkt</p>
+                        </div>
+                    </div>
+
+                    <div class="container-examResult">
+                        <div class="examResult-info">
+                            <img src="../img/exam-negative.svg" alt="Negatywny wynik egzaminu" />
+                            <div class="box-info">
+                                <h4>Poprawne odpowiedzi</h4>
+                                <div class="info-container">
+                                    <div>
+                                        <p class="info">Czesc Podstawowa</p>
+                                        <p class="counter"><span>9</span> /20</p>
+                                    </div>
+                                    <div>
+                                        <p class="info">Czesc Specjalistyczna</p>
+                                        <p class="counter"><span>3</span> /12</p>
+                                    </div>
+                                </div>
+                                <div class="bottom-container">
+                                    <p class="info">Pominiete Pytania</p>
+                                    <p class="counter"><span class="red">8</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="questions">
+                            <div class="answer-box">
+                                <h4 class="content">Czesc Podstawowa</h4>
+                                <div class="answer-container">
+                                    <div class="container">
+                                        <span class="answer correct">1</span>
+                                        <span class="answer none">2</span>
+                                        <span class="answer correct">3</span>
+                                        <span class="answer wrong">4</span>
+                                        <span class="answer none">5</span>
+                                    </div>
+                                    <div class="container">
+                                        <span class="answer correct">6</span>
+                                        <span class="answer correct">7</span>
+                                        <span class="answer wrong">8</span>
+                                        <span class="answer wrong">9</span>
+                                        <span class="answer correct">10</span>
+                                    </div>
+                                    <div class="container">
+                                        <span class="answer correct">11</span>
+                                        <span class="answer none">12</span>
+                                        <span class="answer wrong">13</span>
+                                        <span class="answer none">14</span>
+                                        <span class="answer correct">15</span>
+                                    </div>
+                                    <div class="container">
+                                        <span class="answer wrong">16</span>
+                                        <span class="answer correct">17</span>
+                                        <span class="answer none">18</span>
+                                        <span class="answer correct">19</span>
+                                        <span class="answer wrong">20</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="answer-box">
+                                <h4 class="content">Czesc Specjalistyczna</h4>
+                                <div class="answer-container">
+                                    <div class="container">
+                                        <span class="answer wrong">1</span>
+                                        <span class="answer correct">2</span>
+                                        <span class="answer wrong">3</span>
+                                        <span class="answer correct">4</span>
+                                        <span class="answer none">5</span>
+                                    </div>
+                                    <div class="container">
+                                        <span class="answer wrong">6</span>
+                                        <span class="answer wrong">7</span>
+                                        <span class="answer none">8</span>
+                                        <span class="answer wrong">9</span>
+                                        <span class="answer correct">10</span>
+                                    </div>
+                                    <div class="container">
+                                        <span class="answer none">11</span>
+                                        <span class="answer wrong">12</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="back"><a href="categoryPanel.html">Powrot</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+
+
+
+
+    <footer class="py-4 text-center">
+        <p class="mb-0">
+            &copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+            <span class="orange-text">Driving</span> <span class="gold-text">School</span>
+        </p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/assets/js/solveExam.js"></script>
+    <script src="/assets/js/aosSettings.js"></script>
+    <script src="/assets/js/navigation.js"></script>
+ </main>
+</body>
+</html>

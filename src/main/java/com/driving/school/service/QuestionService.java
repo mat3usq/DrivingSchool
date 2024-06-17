@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +36,12 @@ public class QuestionService {
     public List<Question> findAllByCategoryAndTestId(String category, Long testId) {
         return questionRepository.findAllByTestId(testId).stream().filter(q -> q.getDrivingCategory().contains(category)).toList();
     }
+
+    public Optional<Question> findById(Long id) {
+        return questionRepository.findById(id);
+    }
+
+
 
     public Question getNextQuestion(Long testId, Long userId) {
         List<Question> allQuestions = findAllByCategoryAndTestId("B", testId);
@@ -64,8 +71,9 @@ public class QuestionService {
     }
 
     public List<Question> getRandomNoSpecialistcQuestionsByCategory(String category, int numberOfQuestions) {
-        List<Question> filteredQuestions = getAllNoSpecialisticQuestionByCategory(category);
+        List<Question> filteredQuestions = new ArrayList<>(getAllNoSpecialisticQuestionByCategory(category));
         Collections.shuffle(filteredQuestions);
+        filteredQuestions = setPointsToNonSpecialisticQuestions(filteredQuestions);
         return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
     }
 
@@ -73,5 +81,22 @@ public class QuestionService {
         List<Question> filteredQuestions = getAllSpecialisticQuestionByCategory(category);
         Collections.shuffle(filteredQuestions);
         return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
+    }
+
+    public List<Question> setPointsToNonSpecialisticQuestions(List<Question> questionList){
+        int i=1;
+        for(Question question : questionList){
+            if(i<=10){
+                question.setPoints(Long.valueOf("3"));
+            }
+            else if(i>10 && i<=16){
+                question.setPoints(Long.valueOf("2"));
+            }
+            else if(i>16){
+                question.setPoints(Long.valueOf("1"));
+            }
+            i++;
+        }
+        return questionList;
     }
 }
