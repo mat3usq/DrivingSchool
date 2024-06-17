@@ -39,6 +39,8 @@ public class SecurityConfig {
                         // tests
                         .requestMatchers("/tests/**").authenticated()
                         // log / reg
+                        .requestMatchers("/exam/**").authenticated()
+                        //exam
                         .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()
@@ -83,6 +85,8 @@ public class SecurityConfig {
                     response.sendRedirect("/calendar");
                 else if (request.getRequestURI().startsWith("/account"))
                     response.sendRedirect("/account");
+                else if(request.getRequestURI().startsWith("/exam"))
+                    response.sendRedirect("/exam");
                 else if (request.getRequestURI().startsWith("/tests"))
                     response.sendRedirect("/tests");
                 else

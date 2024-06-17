@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nauka Testów</title>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/examInfo.css"/>
+</head>
+<body>
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+
+<main>
+    <section class="instruction">
+        <div class="hero-img">
+            <div class="hero-shadow"></div>
+            <div class="box-instruction">
+                <div class="box-container">
+                    <p class="title" data-aos="fade-down" data-aos-delay="100">Instrukcja Egzaminu</p>
+                    <div class="container-instruction">
+                        <div class="instruction">
+                            <p>Zdjecie Pogladowe Egzaminu</p>
+                            <img src="../img/instructionExam.png" alt="Zdjecie pogladowe egzaminu" />
+                            <p>
+                                Poznaj zasady oficjalnego egzaminu na prawo jazdy kategorii:
+                                <span>A, B, C, D, T, AM, A1, A2, B1, C1, D1.</span>
+                            </p>
+
+                            <p>
+                                Egzamin teoretyczny obowiązuje w 2021 oraz 2022 roku i jest zgodny z Rozporządzeniem Ministra
+                                Infrastruktury i Budownictwa z dnia 24 lutego 2016 r. (ze zmianami z dnia 20 września i 23 grudnia
+                                2016 r.)
+                            </p>
+                        </div>
+                        <div class="instruction">
+                            <h2>Zasady:</h2>
+
+                            <p>
+                                Ilość pytań egzaminacyjnych:
+                                <span>32 pytania (20 podstawowych oraz 12 specjalistycznych)</span><br />
+                                Czas trwania egzaminu: <strong>25 minut</strong><br />
+                                Maksymalna liczba punktów do uzyskania: <strong>74 PKT</strong><br />
+                                Minimalny wynik punktowy egzaminu pozytywnego:
+                                <span style="color: #16a085"><strong>68 PKT</strong></span>
+                            </p>
+
+                            <p>
+                                <span>Podział pytań podstawowych w egzaminie:</span><br />
+                                10 pytań o wysokim znaczeniu dla bezpieczeństwa - <strong>3 pkt za pytanie.</strong><br />
+                                6 pytań o średnim znaczeniu dla bezpieczeństwa - <strong>2 pkt za pytanie.</strong><br />
+                                4 pytań o średnim znaczeniu dla bezpieczeństwa - <strong>1 pkt za pytanie.</strong>
+                            </p>
+
+                            <p>
+                                <span>Podział pytań specjalistycznych w egzaminie:</span><br />
+                                6 pytań o wysokim znaczeniu dla bezpieczeństwa - <strong>3 pkt za pytanie.</strong><br />
+                                4 pytań o średnim znaczeniu dla bezpieczeństwa - <strong>2 pkt za pytanie.</strong><br />
+                                2 pytań o średnim znaczeniu dla bezpieczeństwa - <strong>1 pkt za pytanie.</strong><br />
+                                &nbsp;
+                            </p>
+                        </div>
+                        <div class="instruction">
+                            <h3>Pytania podstawowe:</h3>
+
+                            <p>
+                                W każdym pytaniu możesz zaznaczyć tylko<span style="color: #2ecc71"><strong> </strong></span
+                            ><span style="color: #16a085"><strong>jedną prawidłową odpowiedź</strong></span
+                            >. W momencie, gdy przejdziesz do następnego pytania, nie masz możliwości powrotu.
+                            </p>
+
+                            <p>
+                                Przed wyświetleniem filmu lub obrazu masz <strong>20 sekund</strong> na zapoznanie się&nbsp;z
+                                pytaniem.<br />
+                                <strong>Film </strong>możesz wyświetlić <strong>tylko 1 raz</strong>.<br />
+                                Na pytanie podstawowe masz&nbsp;<strong>15 sekund</strong> na odpowiedź.<br />
+                                Masz 2 możliwe warianty odpowiedzi: TAK lub NIE.
+                            </p>
+
+                            <p>
+                                Kiedy udzielisz odpowiedzi przed upływem czasu, to możesz samodzielnie przejść do następnego
+                                pytania.&nbsp;&nbsp;<br />
+                                Nieudzielnie odpowiedzi jest traktowane jako
+                                <strong><span style="color: #e74c3c">odpowiedź błędna</span></strong
+                                >.&nbsp;
+                            </p>
+
+                            <h3>Pytania specjalistyczne:</h3>
+
+                            <p>
+                                Występują tylko w postaci pytania, obrazu oraz trzech możliwych odpowiedzi: A,B,C<br />
+                                <strong>Istnieje tylko jedna prawidłowa odpowiedź</strong>.<br />
+                                Na zapoznanie się z pytaniem i udzielenie odpowiedzi masz <strong>50 sekund</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+
+    <h2>Kontakt</h2>
+    <div class="underline"></div>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="row text-center contact-us">
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Główna Siedziba</h3>
+                    <p>ul. Złota 44</p>
+                    <p>12-432 Warszawa</p>
+                    <p>+48 492 345 234</p>
+                    <p>DrivingSchool@gmail.com</p>
+                </div>
+
+                <div class="order-0 order-lg-1 col-lg-4 contact-item">
+                    <h3>Social Media</h3>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Siedziba Poboczna</h3>
+                    <p>ul. Wiejska 45A</p>
+                    <p>32-643 Białystok</p>
+                    <p>+48 537 943 743</p>
+                    <p>DrivingSchool@apple.pl</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-shadow"></div>
+    </section>
+</main>
+
+
+
+<footer class="py-4 text-center">
+    <p class="mb-0">
+        &copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+        <span class="orange-text">Driving</span> <span class="gold-text">School</span>
+    </p>
+</footer>
+
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+
+</body>
+</html>
