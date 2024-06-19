@@ -9,16 +9,13 @@ import com.driving.school.service.ExamService;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.StudentExamService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class ExamController {
@@ -66,8 +63,7 @@ public class ExamController {
 
     @GetMapping("/exam")
     public ModelAndView examInfo(){
-        ModelAndView modelAndView = new ModelAndView("examInfo");
-        return modelAndView;
+        return new ModelAndView("instructionExam");
     }
 
     @GetMapping("/exam/result")

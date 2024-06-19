@@ -341,7 +341,8 @@ h2 {
 .test .hero-img .box-test .box-container .container-test .specific-question a:hover {
   scale: 1.1;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box, .test .hero-img .box-test .box-container .container-test .specific-question .button-action {
+.test .hero-img .box-test .box-container .container-test .specific-question .button-box,
+.test .hero-img .box-test .box-container .container-test .specific-question .button-action {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -349,15 +350,18 @@ h2 {
   align-content: center;
   align-items: center;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct, .test .hero-img .box-test .box-container .container-test .specific-question .button-action .correct {
+.test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct,
+.test .hero-img .box-test .box-container .container-test .specific-question .button-action .correct {
   border: none;
   padding: 0px 10px;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct.answer::before, .test .hero-img .box-test .box-container .container-test .specific-question .button-action .correct.answer::before {
+.test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct.answer::before,
+.test .hero-img .box-test .box-container .container-test .specific-question .button-action .correct.answer::before {
   background-color: springgreen;
   color: aliceblue;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box .back, .test .hero-img .box-test .box-container .container-test .specific-question .button-action .back {
+.test .hero-img .box-test .box-container .container-test .specific-question .button-box .back,
+.test .hero-img .box-test .box-container .container-test .specific-question .button-action .back {
   font-weight: bold;
   font-size: 20px;
 }

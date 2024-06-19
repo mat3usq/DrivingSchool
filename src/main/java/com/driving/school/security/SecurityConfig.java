@@ -38,9 +38,9 @@ public class SecurityConfig {
                         .requestMatchers("/account/cancelStudent", "/account/acceptStudent").hasRole("INSTRUCTOR")
                         // tests
                         .requestMatchers("/tests/**").authenticated()
-                        // log / reg
+                        // exam
                         .requestMatchers("/exam/**").authenticated()
-                        //exam
+                        // log / reg
                         .requestMatchers("/loginUser").permitAll()
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()

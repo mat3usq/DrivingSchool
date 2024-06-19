@@ -8,7 +8,7 @@
     transform: translateY(-45px);
     animation-timing-function: ease-in;
     opacity: 1;
-    color: #EF476F;
+    color: #ef476f;
   }
   24% {
     opacity: 1;
@@ -101,12 +101,12 @@ h2 {
 }
 
 .orange-text {
-  color: #EF476F;
+  color: #ef476f;
   font-weight: bold;
 }
 
 .gold-text {
-  color: #FFD166;
+  color: #ffd166;
   font-weight: bold;
 }
 
@@ -115,10 +115,14 @@ h2 {
 }
 
 .underline {
-  background-color: #EF476F;
+  background-color: #ef476f;
   width: 220px;
   height: 5px;
   margin: 0 auto 30px;
+}
+
+.navbar-left {
+  height: 99.2vh;
 }
 
 .instruction .hero-img {
@@ -186,6 +190,28 @@ h2 {
 .instruction .hero-img .box-instruction .box-container .container-instruction .instruction p {
   margin: 20px;
 }
+.instruction .hero-img .box-instruction .box-container button {
+  border: none;
+  outline: none;
+  height: 60px;
+  border-radius: 50px;
+  color: aliceblue;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: 0.5s;
+  margin: 10px;
+  padding: 15px 20px;
+  background: transparent;
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border: 2px solid #4d84e2;
+  font-size: 16px;
+}
+.instruction .hero-img .box-instruction .box-container button:hover {
+  scale: 1.1;
+  color: aliceblue;
+  background-color: #4d84e2;
+}
 
 .contact {
   padding: 20px;
@@ -203,7 +229,7 @@ h2 {
   transition: 0.3s;
 }
 .contact i:hover {
-  color: #FFD166;
+  color: #ffd166;
 }
 .contact h2 {
   font-size: 32px;
