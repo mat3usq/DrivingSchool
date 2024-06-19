@@ -40,7 +40,7 @@ public class ExamController {
     public String generateExam(HttpSession session) {
         List<Question> questionSet = generateQuestionSet();
         session.setAttribute("questionSet", questionSet);
-        session.setAttribute("currentQuestion", Integer.valueOf(0));
+        session.setAttribute("currentQuestion", 0);
         StudentExam studentExam = new StudentExam();
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         studentExam.setSchoolUser(user);
@@ -57,7 +57,7 @@ public class ExamController {
 
     @GetMapping("/exam/solve")
     public ModelAndView examSolve(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("examSolve");
+        ModelAndView modelAndView = new ModelAndView("solveExam");
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
         Integer currentQuestion = (Integer) session.getAttribute("currentQuestion");
         Question question = questionSet.get(currentQuestion);
@@ -78,21 +78,8 @@ public class ExamController {
         return modelAndView;
     }
 
-
-    private List<Question> generateQuestionSet() {
-        String category = "B";
-        int numberOfNoSpecialistQuestions = 4;
-        // int numberOfSpecialistQuestions = 12
-        List<Question> noSpecialistQuestions = questionService.getRandomNoSpecialistcQuestionsByCategory(category, numberOfNoSpecialistQuestions);
-        //   List<Question> specialistQuestions = questionService.getRandomSpecialistcQuestionsByCategory(category, numberOfSpecialistQuestions);
-
-        //    noSpecialistQuestions.addAll(specialistQuestions);
-        return noSpecialistQuestions;
-    }
-
     @PostMapping(value = {"/exam/action"})
     public ModelAndView getActionFromExam(@RequestParam("questionId") Long questionId, @RequestParam("action") String action, HttpSession session) {
-
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
         Integer currentQuestion = (Integer) session.getAttribute("currentQuestion");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
@@ -110,7 +97,17 @@ public class ExamController {
         else
             modelAndView = examSolve(session);
 
-
         return modelAndView;
+    }
+
+    private List<Question> generateQuestionSet() {
+        String category = "B";
+        int numberOfNoSpecialistQuestions = 4;
+//        int numberOfSpecialistQuestions = 12;
+        List<Question> noSpecialistQuestions = questionService.getRandomNoSpecialistcQuestionsByCategory(category, numberOfNoSpecialistQuestions);
+//        List<Question> specialistQuestions = questionService.getRandomSpecialistcQuestionsByCategory(category, numberOfSpecialistQuestions);
+
+//        noSpecialistQuestions.addAll(specialistQuestions);
+        return noSpecialistQuestions;
     }
 }

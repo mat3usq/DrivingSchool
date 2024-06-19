@@ -122,13 +122,13 @@ h2 {
 }
 
 .navbar-left {
-  height: 158vh;
+  height: 139.2vh;
 }
 
 .exam .hero-img {
   position: relative;
-  height: 170vh;
-  background-image: url("../img/backgroundTest.png");
+  height: 150vh;
+  background-image: url("../img/backgroundExam.png");
   background-position: center;
   background-size: cover;
   z-index: 0;
@@ -170,26 +170,49 @@ h2 {
   margin: 10px;
   width: 80%;
 }
-.exam .hero-img .box-exam .box-container .header-exam .box img {
-  width: 50px;
-}
-.exam .hero-img .box-exam .box-container .header-exam div {
-  display: flex;
-  flex-direction: row;
-}
 .exam .hero-img .box-exam .box-container .header-exam span {
   color: #4cc9f0;
-  font-size: 22px;
+  font-size: 20px;
   font-style: normal;
   font-weight: bold;
 }
-.exam .hero-img .box-exam .box-container .header-exam i {
-  font-size: 30px;
+.exam .hero-img .box-exam .box-container .header-exam p {
+  font-size: 18px;
   margin: 10px;
 }
-.exam .hero-img .box-exam .box-container .header-exam p {
-  font-size: 20px;
+.exam .hero-img .box-exam .box-container .header-exam-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  align-items: stretch;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: 1px;
   margin: 10px;
+  width: 80%;
+}
+.exam .hero-img .box-exam .box-container .header-exam-info .info {
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.exam .hero-img .box-exam .box-container .header-exam-info .info .counter {
+  font-size: 20px;
+  font-style: normal;
+}
+.exam .hero-img .box-exam .box-container .header-exam-info span {
+  font-size: 20px;
+  color: springgreen;
+  font-weight: bold;
+}
+.exam .hero-img .box-exam .box-container .header-exam-info p {
+  font-size: 18px;
 }
 .exam .hero-img .box-exam .box-container .container-exam {
   display: flex;
@@ -219,22 +242,6 @@ h2 {
   border-radius: 20px;
   margin: 10px;
 }
-.exam .hero-img .box-exam .box-container .container-exam #wrong {
-  display: block;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 22px;
-  color: #ef476f;
-  text-align: center;
-}
-.exam .hero-img .box-exam .box-container .container-exam #correct {
-  display: block;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 22px;
-  color: springgreen;
-  text-align: center;
-}
 .exam .hero-img .box-exam .box-container .container-exam .normal-question,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question {
   display: flex;
@@ -253,29 +260,12 @@ h2 {
   flex-wrap: wrap;
   justify-content: center;
 }
-.exam .hero-img .box-exam .box-container .container-exam .normal-question .button-box .correct,
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .button-box .correct {
-  border: 2px solid springgreen;
-  color: springgreen;
-  scale: 1.1;
-  font-weight: bold;
-  padding: 0px 20px;
-}
 .exam .hero-img .box-exam .box-container .container-exam .normal-question .info-container,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question .info-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
-.exam .hero-img .box-exam .box-container .container-exam .normal-question .info-container .explain,
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .info-container .explain {
-  transition: 0.3s;
-  display: none;
-}
-.exam .hero-img .box-exam .box-container .container-exam .normal-question .info-container .explain .content,
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .info-container .explain .content {
-  font-weight: normal;
 }
 .exam .hero-img .box-exam .box-container .container-exam .normal-question span,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question span {
@@ -319,14 +309,6 @@ h2 {
 .exam .hero-img .box-exam .box-container .container-exam .specific-question a:not(:disabled) {
   cursor: pointer;
 }
-.exam .hero-img .box-exam .box-container .container-exam .normal-question .next,
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .next {
-  background-color: #4d84e2;
-}
-.exam .hero-img .box-exam .box-container .container-exam .normal-question .back,
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .back {
-  background-color: #ffb200;
-}
 .exam .hero-img .box-exam .box-container .container-exam .normal-question #yes,
 .exam .hero-img .box-exam .box-container .container-exam .normal-question #no,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question #yes,
@@ -341,25 +323,14 @@ h2 {
 .exam .hero-img .box-exam .box-container .container-exam .specific-question a:hover {
   scale: 1.1;
 }
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .button-box, .exam .hero-img .box-exam .box-container .container-exam .specific-question .button-action {
+.exam .hero-img .box-exam .box-container .container-exam .specific-question .button-box,
+.exam .hero-img .box-exam .box-container .container-exam .specific-question .button-action {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
   align-items: center;
-}
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .button-box .correct, .exam .hero-img .box-exam .box-container .container-exam .specific-question .button-action .correct {
-  border: none;
-  padding: 0px 10px;
-}
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .button-box .correct.answer::before, .exam .hero-img .box-exam .box-container .container-exam .specific-question .button-action .correct.answer::before {
-  background-color: springgreen;
-  color: aliceblue;
-}
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .button-box .back, .exam .hero-img .box-exam .box-container .container-exam .specific-question .button-action .back {
-  font-weight: bold;
-  font-size: 20px;
 }
 .exam .hero-img .box-exam .box-container .container-exam .specific-question .button-action {
   flex-direction: row;
@@ -414,12 +385,6 @@ h2 {
   font-weight: bold;
   top: 50%;
   transform: translateY(-50%);
-}
-.exam .hero-img .box-exam .box-container .container-exam .specific-question .next {
-  font-weight: bold;
-  text-transform: uppercase;
-  width: 180px;
-  background-color: #4d84e2;
 }
 .exam .hero-img .box-exam .box-container .container-exam .specific-question button:hover {
   scale: 1.05;
@@ -498,11 +463,11 @@ h2 {
     width: 95%;
   }
   .exam .hero-img .box-exam .box-container .container-exam,
-  .exam .hero-img .box-exam .box-container .header-exam {
+  .exam .hero-img .box-exam .box-container .header-exam, .exam .hero-img .box-exam .box-container .header-exam-info {
     width: 100%;
   }
   .exam .hero-img .box-exam .box-container .container-exam span,
-  .exam .hero-img .box-exam .box-container .header-exam span {
+  .exam .hero-img .box-exam .box-container .header-exam span, .exam .hero-img .box-exam .box-container .header-exam-info span {
     font-size: 20px;
   }
   .exam .hero-img .box-exam .box-container .container-exam .normal-question .info-container,
@@ -524,7 +489,7 @@ h2 {
   .exam .hero-img .box-exam .box-container .container-exam .exam-info svg {
     width: 300px;
   }
-  .exam .hero-img .box-exam .box-container .header-exam {
+  .exam .hero-img .box-exam .box-container .header-exam, .exam .hero-img .box-exam .box-container .header-exam-info {
     flex-direction: column;
   }
 }
@@ -544,4 +509,4 @@ h2 {
     margin-top: 10px;
     font-size: 13px;
   }
-}/*# sourceMappingURL=solveTest.css.map */
+}/*# sourceMappingURL=solveExam.css.map */

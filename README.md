@@ -60,6 +60,7 @@
     - z poprawnymi odp
 - Zamiana footera i ostatniej sekcji na th:fragment
 - Dodanie do pytan wyjasnien bedzie lux wygladalo to wtedy 
+- Dodanie zdjec do instrukcji z rozwiązywania pytan specjalistycznych oraz podstawowych
 
 ## TODO optional
 - Podział na różne permisje dla kursu
