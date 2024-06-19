@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Edycja PodWykładu</title>
+    <title>Wyniki Wykładu</title>
 
     <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
@@ -20,14 +20,14 @@
 
     <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="/assets/css/examResult.css"/>
     <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/examResult.css"/>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar">
+
 <div th:replace="~{loadingCar :: loadingCar}"></div>
 <div th:replace="~{navigation :: navigation-top}"></div>
 <div th:replace="~{navigation :: navigation-left}"></div>
-
 
 <main>
     <section class="examResult">
@@ -42,13 +42,22 @@
                         </div>
                         <div class="header-info">
                             <p>Koncowa liczba punktow</p>
-                            <p><span class="red" th:text="${points} + '/74'">36/74</span> pkt</p>
+                            <p><span class="red" th:text="${points}"></span> /74pkt</p>
                         </div>
+
+<!--                        <div class="header-info">-->
+<!--                            <p>Gratulacje! Wynik egzaminu</p>-->
+<!--                            <span class="green">Pozytywny</span>-->
+<!--                        </div>-->
+<!--                        <div class="header-info">-->
+<!--                            <p>Koncowa liczba punktow</p>-->
+<!--                            <p><span class="green" th:text="${points}"></span> /74pkt</p>-->
+<!--                        </div>-->
                     </div>
 
                     <div class="container-examResult">
                         <div class="examResult-info">
-                            <img src="/assets/img/exam-negative.svg" alt="Negatywny wynik egzaminu" />
+                            <img src="/assets/img/exam-negative.svg" alt="Negatywny wynik egzaminu"/>
                             <div class="box-info">
                                 <h4>Poprawne odpowiedzi</h4>
                                 <div class="info-container">
@@ -124,7 +133,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="back"><a href="categoryPanel.html">Powrot</a></button>
+                            <div class="button-box">
+                                <button class="back"><a href="/exam">Powrot</a></button>
+                                <form th:action="@{/exam/generate}" method="post">
+                                    <button type="submit" class="next"><a>Rozwiąż Ponownie</a></button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -132,11 +146,44 @@
         </div>
     </section>
 
-    <br />
-    <br />
+    <br/>
+    <br/>
 
+    <h2>Kontakt</h2>
+    <div class="underline"></div>
 
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="row text-center contact-us">
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Główna Siedziba</h3>
+                    <p>ul. Złota 44</p>
+                    <p>12-432 Warszawa</p>
+                    <p>+48 492 345 234</p>
+                    <p>DrivingSchool@gmail.com</p>
+                </div>
 
+                <div class="order-0 order-lg-1 col-lg-4 contact-item">
+                    <h3>Social Media</h3>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Siedziba Poboczna</h3>
+                    <p>ul. Wiejska 45A</p>
+                    <p>32-643 Białystok</p>
+                    <p>+48 537 943 743</p>
+                    <p>DrivingSchool@apple.pl</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-shadow"></div>
+    </section>
 
     <footer class="py-4 text-center">
         <p class="mb-0">
@@ -149,6 +196,6 @@
     <script src="/assets/js/solveExam.js"></script>
     <script src="/assets/js/aosSettings.js"></script>
     <script src="/assets/js/navigation.js"></script>
- </main>
+</main>
 </body>
 </html>
