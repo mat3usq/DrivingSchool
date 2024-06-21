@@ -1,12 +1,10 @@
 package com.driving.school.controller;
 
 
-import com.driving.school.model.Exam;
-import com.driving.school.model.Question;
-import com.driving.school.model.SchoolUser;
-import com.driving.school.model.StudentExam;
+import com.driving.school.model.*;
 import com.driving.school.service.ExamService;
 import com.driving.school.service.QuestionService;
+import com.driving.school.service.StudentExamAnswerService;
 import com.driving.school.service.StudentExamService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +21,15 @@ public class ExamController {
     private final QuestionService questionService;
     private final ExamService examService;
     private final StudentExamService studentExamService;
+    private final StudentExamAnswerService studentExamAnswerService;
 
     @Autowired
-    public ExamController(QuestionService questionService, ExamService examService, StudentExamService studentExamService) {
+    public ExamController(QuestionService questionService, ExamService examService, StudentExamService studentExamService,
+    StudentExamAnswerService studentExamAnswerService) {
         this.questionService = questionService;
         this.examService = examService;
         this.studentExamService = studentExamService;
+        this.studentExamAnswerService = studentExamAnswerService;
     }
 
     @GetMapping("/exam")
@@ -85,11 +86,22 @@ public class ExamController {
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
         studentExam = studentExamService.getStudentExamById(studentExam.getId()).orElse(null);
         Question question = questionService.findById(questionId).orElse(null);
+        StudentExamAnswer studentExamAnswer = new StudentExamAnswer();
+        studentExamAnswer.setStudentExam(studentExam);
+        studentExamAnswer.setQuestion(question);
+        studentExamAnswer.setAnswer(action);
+        studentExamAnswer.setCorrectness(false);
+        studentExamAnswer.setOrder(currentQuestion);
+
+
 
         if (action.equals(question.getCorrectAnswer())) {
             studentExam.setPoints(studentExam.getPoints() + question.getPoints());
             studentExamService.updateStudentExam(studentExam.getId(), studentExam);
+            studentExamAnswer.setCorrectness(true);
         }
+
+        studentExamAnswerService.save(studentExamAnswer);
 
         ModelAndView modelAndView;
         if (questionSet.size() == currentQuestion)
