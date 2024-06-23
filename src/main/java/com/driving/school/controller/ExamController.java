@@ -51,8 +51,10 @@ public class ExamController {
         exam = examService.createExam(exam);
         studentExam.setExam(exam);
         studentExam.setPoints(Long.valueOf("0"));
+        studentExam.setCategory("B");
         studentExam = studentExamService.createStudentExam(studentExam);
         session.setAttribute("exam", studentExam);
+        System.out.println(studentExam);
         return "redirect:/exam/solve";
     }
 
@@ -73,7 +75,7 @@ public class ExamController {
         ModelAndView modelAndView = new ModelAndView("examResult");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
 
-        studentExam = studentExamService.getStudentExamById(studentExam.getId()).orElse(null);
+        studentExam = studentExamService.getStudentExamById(studentExam.getId());
         Long points = studentExam.getPoints();
         modelAndView.addObject("points", points);
         return modelAndView;
@@ -84,8 +86,14 @@ public class ExamController {
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
         Integer currentQuestion = (Integer) session.getAttribute("currentQuestion");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
-        studentExam = studentExamService.getStudentExamById(studentExam.getId()).orElse(null);
+        System.out.println(studentExam);
+        studentExam = studentExamService.getStudentExamById(studentExam.getId());
         Question question = questionService.findById(questionId).orElse(null);
+        if(studentExam==null){
+        System.out.println(studentExam);}
+        else{
+            System.out.println("jest nulem");
+        }
         StudentExamAnswer studentExamAnswer = new StudentExamAnswer();
         studentExamAnswer.setStudentExam(studentExam);
         studentExamAnswer.setQuestion(question);

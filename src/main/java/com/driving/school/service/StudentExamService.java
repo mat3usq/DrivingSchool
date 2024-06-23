@@ -22,8 +22,8 @@ public class StudentExamService {
     }
 
 
-    public Optional<StudentExam> getStudentExamById(Long id) {
-        return studentExamRepository.findById(id);
+    public StudentExam getStudentExamById(Long id) {
+        return studentExamRepository.findById(id).orElse(null);
     }
 
 

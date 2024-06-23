@@ -38,4 +38,12 @@ public class StudentExam {
     @OneToMany(mappedBy = "studentExam")
     private Set<StudentExamAnswer> studentExamAnswers = new LinkedHashSet<>();
 
+    @Override
+    public String toString() {
+        return "StudentExam{" +
+                "id=" + id +
+                ", category='" + category + '\'' +
+                ", points=" + points +
+                '}';
+    }
 }

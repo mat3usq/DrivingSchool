@@ -90,4 +90,27 @@ public class SchoolUser {
         this.email = email;
         this.roleName = roleName;
     }
+
+    @Override
+    public String toString() {
+        return "SchoolUser{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", roleName='" + roleName + '\'' +
+                ", studentEvents=" + studentEvents +
+                ", payments=" + payments +
+                ", sensitiveData=" + sensitiveData +
+                ", studentAnswersTests=" + studentAnswersTests +
+                ", studentCourses=" + studentCourses +
+                ", studentExams=" + studentExams +
+                ", userStatistic=" + userStatistic +
+                ", createdAt=" + createdAt +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastUpdatedAt=" + lastUpdatedAt +
+                ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
+                '}';
+    }
 }

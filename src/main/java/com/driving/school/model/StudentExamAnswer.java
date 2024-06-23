@@ -39,4 +39,16 @@ public class StudentExamAnswer {
     @Column(name = "ORDER")
     private Integer order;
 
+    @Override
+    public String toString() {
+        return "StudentExamAnswer{" +
+                "id=" + id +
+                ", studentExam=" + studentExam +
+                ", question=" + question +
+                ", answerType=" + answerType +
+                ", correctness=" + correctness +
+                ", answer='" + answer + '\'' +
+                ", order=" + order +
+                '}';
+    }
 }
