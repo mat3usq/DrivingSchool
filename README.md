@@ -68,6 +68,8 @@
 - Messenger
 - Ocenianie instruktora
 - Obecność na wykładach
+- Nie trzeba przewijać egzaminu
+- Poprawne włączanie filmu
 
 # Harmonogram Projektu
 
