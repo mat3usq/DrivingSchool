@@ -64,6 +64,10 @@ public class SchoolUser {
     @OneToMany(mappedBy = "schoolUser")
     private Set<StudentExam> studentExams = new LinkedHashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "USER_ID")
+    private Set<UserLikedQuestion> likedQuestions = new LinkedHashSet<>();
+
     @OneToOne(mappedBy = "schoolUser")
     private UserStatistic userStatistic;
 

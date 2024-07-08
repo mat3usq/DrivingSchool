@@ -41,8 +41,6 @@ public class QuestionService {
         return questionRepository.findById(id);
     }
 
-
-
     public Question getNextQuestion(Long testId, Long userId) {
         List<Question> allQuestions = findAllByCategoryAndTestId("B", testId);
         List<Question> usersQuestions = studentAnswersTestRepository.findQuestionsByUserIdAndTestId(userId, testId);
@@ -98,5 +96,9 @@ public class QuestionService {
             i++;
         }
         return questionList;
+    }
+
+    public Question getQuestion(Long questionId) {
+        return questionRepository.findById(questionId).orElse(null);
     }
 }

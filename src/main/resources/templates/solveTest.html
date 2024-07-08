@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Test</title>
+    <title>Pytanie w Tescie</title>
 
     <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
@@ -45,6 +45,16 @@
                                 <th:block th:text="${test.numberQuestions}"></th:block>
                                 pytań
                             </p>
+                            <div class="star-box">
+                                <i class="fas fa-star star" id="star"></i>
+                                <div class="circle c-1">
+                                    <div class="inner-circle"></div>
+                                    <div class="c-orange"></div>
+                                </div>
+                                <div class="circle c-2"></div>
+                                <div class="circle c-3"></div>
+                                <div class="circle c-4"></div>
+                            </div>
                         </div>
                         <div class="container-test">
                             <div class="test-info">
@@ -72,6 +82,7 @@
                             <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
                                 <input type="hidden" name="testId" th:value="${test.id}"/>
                                 <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                <input type="hidden" name="isLiked"/>
                                 <input type="hidden" name="action"/>
                             </form>
 
@@ -100,13 +111,17 @@
                                     </p>
                                 </div>
                                 <div class="button-box">
-                                    <button th:text="${question.answerA}" class="answer" id="answerA">Bezpieczny, mniejszy niz 1 metr.
+                                    <button th:text="${question.answerA}" class="answer" id="answerA">Bezpieczny,
+                                        mniejszy niz 1 metr.
                                     </button
                                     >
-                                    <button th:text="${question.answerB}" class="answer" id="answerB">Kazdy odstep, ale bezpieczny.
+                                    <button th:text="${question.answerB}" class="answer" id="answerB">Kazdy odstep, ale
+                                        bezpieczny.
                                     </button
                                     >
-                                    <button th:text="${question.answerC}" class="answer" id="answerC">Nie mniejszy niz 1 metr.</button>
+                                    <button th:text="${question.answerC}" class="answer" id="answerC">Nie mniejszy niz 1
+                                        metr.
+                                    </button>
                                 </div>
                                 <button class="next" id="skip">Pomiń</button>
                             </div>

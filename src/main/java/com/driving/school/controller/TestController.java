@@ -3,6 +3,7 @@ package com.driving.school.controller;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.model.Test;
 import com.driving.school.service.QuestionService;
+import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.StudentAnswersTestService;
 import com.driving.school.service.TestService;
 import jakarta.servlet.http.HttpSession;
@@ -20,12 +21,14 @@ public class TestController {
     private final TestService testService;
     private final QuestionService questionService;
     private final StudentAnswersTestService studentAnswersTestService;
+    private final SchoolUserService schoolUserService;
 
     @Autowired
-    public TestController(TestService testService, QuestionService questionService, StudentAnswersTestService studentAnswersTestService) {
+    public TestController(TestService testService, QuestionService questionService, StudentAnswersTestService studentAnswersTestService, SchoolUserService schoolUserService) {
         this.testService = testService;
         this.questionService = questionService;
         this.studentAnswersTestService = studentAnswersTestService;
+        this.schoolUserService = schoolUserService;
     }
 
     @GetMapping(value = {"/tests"})
@@ -46,8 +49,11 @@ public class TestController {
     }
 
     @PostMapping(value = {"/tests/action"})
-    public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam("questionId") Long questionId, @RequestParam("action") String action, HttpSession session) {
+    public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam("questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session) {
         ModelAndView modelAndView;
+
+        if (isLiked)
+            schoolUserService.addLikedQuestionToUser(questionId, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
 
         switch (action) {
             case "A":

@@ -121,6 +121,191 @@ h2 {
 						font-size: 20px;
 						margin: 10px;
 					}
+
+					.-is-running {
+						animation-play-state: running !important;
+					}
+
+					.star-box {
+						width: 60px;
+						height: 60px;
+						position: relative;
+						text-align: center;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+
+						.star {
+							display: inline-block;
+							cursor: pointer;
+							font-size: 2.2rem;
+							color: $calendar-font-color;
+							z-index: 50;
+							animation: starBounce 0.5s forwards 1 ease-in-out paused;
+						}
+
+						.circle {
+							position: absolute;
+							top: 55%;
+							left: 50%;
+							transform: translate(-50%, -50%) scale(0);
+							width: 80px;
+							height: 80px;
+							border-radius: 50%;
+							z-index: -1;
+
+							&:before,
+							&:after {
+								content: '';
+								display: block;
+								width: 10px;
+								height: 10px;
+								border-radius: 50%;
+								background: $primary-color;
+								position: absolute;
+								top: 3px;
+								left: 10px;
+							}
+
+							&:before {
+								animation: changeYellowToOrange 0.5s infinite forwards ease-in-out 0.5s;
+							}
+
+							&:after {
+								width: 8px;
+								height: 8px;
+								top: 12px;
+								left: 3px;
+								background: $secondary-color;
+								animation: changeOrangeToYellow 0.5s infinite forwards ease-in-out 0.5s;
+							}
+						}
+
+						.inner-circle {
+							position: absolute;
+							top: 55%;
+							left: 50%;
+							transform: translate(-50%, -50%) scale(0);
+							width: 80px;
+							height: 80px;
+							border-radius: 50%;
+							transition: all 0.2s ease;
+							background: $text-color;
+							z-index: 6;
+							animation: scaleWhiteCircle 0.5s ease-in-out forwards 1 0.2s paused;
+						}
+
+						.c-orange {
+							position: absolute;
+							top: 55%;
+							left: 50%;
+							transform: translate(-50%, -50%) scale(0);
+							width: 80px;
+							height: 80px;
+							border-radius: 50%;
+							z-index: -1;
+							transition: all 0.2s ease;
+							background: $primary-color;
+							animation: scaleOrangeCircle 0.4s ease-in-out forwards 1 0.1s paused;
+						}
+
+						.c-1,
+						.c-2,
+						.c-3,
+						.c-4 {
+							animation: scaleCircle 0.4s ease-in-out forwards 1 paused 0.2s;
+							z-index: 20;
+						}
+
+						.c-2 {
+							&:before {
+								top: 10px;
+								left: 65px;
+							}
+
+							&:after {
+								top: 3px;
+								left: 58px;
+							}
+						}
+
+						.c-3 {
+							&:before {
+								top: 65px;
+								left: 57px;
+							}
+
+							&:after {
+								top: 59px;
+								left: 67px;
+							}
+						}
+
+						.c-4 {
+							&:before {
+								top: 58px;
+								left: 3px;
+							}
+
+							&:after {
+								top: 67px;
+								left: 12px;
+							}
+						}
+					}
+
+					@keyframes scaleOrangeCircle {
+						80% {
+							transform: translate(-50%, -50%) scale(1);
+							opacity: 1;
+						}
+						100% {
+							transform: translate(-50%, -50%) scale(1);
+							opacity: 0;
+							background: $secondary-color;
+						}
+					}
+
+					@keyframes scaleWhiteCircle {
+						80% {
+							transform: translate(-50%, -50%) scale(1);
+							opacity: 1;
+						}
+						100% {
+							transform: translate(-50%, -50%) scale(1);
+							opacity: 0;
+						}
+					}
+
+					@keyframes starBounce {
+						20% {
+							transform: scale(1.2);
+							color: initial;
+						}
+						30%,
+						70% {
+							transform: scale(0);
+							color: $secondary-color;
+						}
+						85% {
+							transform: scale(1.2);
+						}
+						100% {
+							transform: scale(1);
+							color: $primary-color;
+						}
+					}
+
+					@keyframes scaleCircle {
+						80% {
+							transform: translate(-50%, -50%) scale(1);
+							opacity: 1;
+						}
+						100% {
+							transform: translate(-50%, -50%) scale(1);
+							opacity: 0;
+						}
+					}
 				}
 
 				.container-test {

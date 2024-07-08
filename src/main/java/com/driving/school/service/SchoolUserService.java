@@ -2,6 +2,7 @@ package com.driving.school.service;
 
 import com.driving.school.model.Constants;
 import com.driving.school.model.SchoolUser;
+import com.driving.school.model.UserLikedQuestion;
 import com.driving.school.repository.SchoolUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,4 +43,16 @@ public class SchoolUserService {
         return schoolUserRepository.findAll().stream().filter(u -> u.getRoleName().equals(Constants.INSTRUCTOR_ROLE)).toList();
     }
 
+    public void addLikedQuestionToUser(Long questionId, Long userId) {
+        SchoolUser user = findUserById(userId);
+        if (user != null) {
+            UserLikedQuestion userLikedQuestion = new UserLikedQuestion();
+            userLikedQuestion.setUserId(userId);
+            userLikedQuestion.setQuestionId(questionId);
+            userLikedQuestion.setCategory("B");
+            user.getLikedQuestions().add(userLikedQuestion);
+            user.setLikedQuestions(user.getLikedQuestions());
+            schoolUserRepository.save(user);
+        }
+    }
 }
