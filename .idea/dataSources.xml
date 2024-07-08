@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="drivingschool@driving-school.c5kee8q66i86.eu-central-1.rds.amazonaws.com" uuid="3e694ba5-a910-4b83-bbd2-1240dbb27b9b">
+    <data-source source="LOCAL" name="drivingschool@localhost" uuid="150c57ec-8fb6-4541-a11e-cea741883cc2">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://driving-school.c5kee8q66i86.eu-central-1.rds.amazonaws.com/drivingschool</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/drivingschool</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />

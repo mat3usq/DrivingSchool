@@ -37,10 +37,7 @@
 - Testowanie i weryfikacja poprawności działania aplikacji
 
 ## TODO must have
-- ~~Baza danych~~
 - Dodanie strony error...
-- ~~Wybór instruktora~~
-- ~~Funkcja dodawania i przeglądania materiałów edukacyjnych przez studentów~~
 - Rozwiązywanie testów i podział testów na kategorie
 - Statystyki rozwiązanych testów
 - Powiadomienia
