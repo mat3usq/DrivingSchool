@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (backBtn)
         backBtn.addEventListener('click', function (event) {
             event.preventDefault();
-            window.location.href = '/tests';
+            document.querySelector('input[name="action"]').value = 'BACK';
+            document.getElementById('form').submit();
         });
 
     if (skipBtn)
@@ -101,4 +102,10 @@ document.querySelector(".star").addEventListener("click", function () {
             element.style.animation = '';
         });
     }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    let isLiked = document.getElementById("isLiked").getAttribute("data-is-liked");
+    if (isLiked === "true")
+        document.getElementById("star").click();
 });

@@ -43,6 +43,17 @@
                                 <th:block th:text="${test.numberQuestions}"></th:block>
                                 pytań
                             </p>
+                            <p hidden="hidden" id="isLiked" th:data-is-liked="${isLiked}"></p>
+                            <div class="star-box">
+                                <i class="fas fa-star star" id="star"></i>
+                                <div class="circle c-1">
+                                    <div class="inner-circle"></div>
+                                    <div class="c-orange"></div>
+                                </div>
+                                <div class="circle c-2"></div>
+                                <div class="circle c-3"></div>
+                                <div class="circle c-4"></div>
+                            </div>
                         </div>
                         <div class="container-test">
                             <div class="test-info">
@@ -72,6 +83,7 @@
                             <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
                                 <input type="hidden" name="testId" th:value="${test.id}"/>
                                 <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                <input type="hidden" name="isLiked"/>
                                 <input type="hidden" name="action"/>
                             </form>
 
@@ -82,13 +94,13 @@
                                         poruszanie sie
                                         dowolonych pojazdow?
                                     </p>
-                                    <!--                                <div class="explain">-->
-                                    <!--                                    <span>Wyjasnienie</span>-->
-                                    <!--                                    <p class="content">-->
-                                    <!--                                        A-2 Niebezpieczny zakręt w lewo. Ostrzega o jedynym niebezpiecznym zakręcie w kierunku wskazanym-->
-                                    <!--                                        na znaku.-->
-                                    <!--                                    </p>-->
-                                    <!--                                </div>-->
+<!--                                                                    <div class="explain">-->
+<!--                                                                        <span>Wyjasnienie</span>-->
+<!--                                                                        <p class="content">-->
+<!--                                                                            A-2 Niebezpieczny zakręt w lewo. Ostrzega o jedynym niebezpiecznym zakręcie w kierunku wskazanym-->
+<!--                                                                            na znaku.-->
+<!--                                                                        </p>-->
+<!--                                                                    </div>-->
                                 </div>
 
                                 <div class="button-box">

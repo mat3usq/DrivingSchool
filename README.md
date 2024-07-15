@@ -50,7 +50,7 @@
 - Przeniesienie formularzy w wykladach do sekcji nizej
 - Poprawienie responsywnosci w wykladzie
 - Testy: 
-  - Oznaczanie pytan w testach np. gwiazdką
+  - Dodanie i ostylowanie wyjasnien w testach
   - Powtarzanie pytan w testach:
     - z oznaczonymi odp, 
     - z niepoprawnymi odp, 

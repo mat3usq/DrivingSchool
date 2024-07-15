@@ -53,7 +53,9 @@ public class TestController {
         ModelAndView modelAndView;
 
         if (isLiked)
-            schoolUserService.addLikedQuestionToUser(questionId, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
+            schoolUserService.addLikedQuestionToUser(questionId, ((SchoolUser) session.getAttribute("loggedInUser")));
+        else
+            schoolUserService.deleteLikedQuestionFromUser(questionId, ((SchoolUser) session.getAttribute("loggedInUser")));
 
         switch (action) {
             case "A":
@@ -64,12 +66,16 @@ public class TestController {
                 modelAndView = getTestToSolve(testId, session);
                 modelAndView.setViewName("answerResultTest");
                 modelAndView.addObject("answer", studentAnswersTestService.save((SchoolUser) session.getAttribute("loggedInUser"), testId, questionId, action));
+                modelAndView.addObject("isLiked", isLiked);
                 break;
 
             case "SKIP":
                 studentAnswersTestService.save((SchoolUser) session.getAttribute("loggedInUser"), testId, questionId, action);
                 modelAndView = getTestToSolve(testId, session);
                 break;
+
+            case "BACK":
+                return displayTestsPage(session);
 
             default:
                 modelAndView = getTestToSolve(testId, session);

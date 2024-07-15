@@ -13,8 +13,9 @@ public class UserLikedQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "USER_ID", nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private SchoolUser schoolUser;
 
     @Column(name = "QUESTION_ID", nullable = false)
     private Long questionId;
