@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -40,6 +43,20 @@ public class TestController {
         return modelAndView;
     }
 
+    @PostMapping(value = {"/tests/selectQuestions"})
+    public ModelAndView selectQuestions(@RequestParam("testId") Long testId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("selectedQuestionsInTest");
+        Long userId = ((SchoolUser) session.getAttribute("loggedInUser")).getId();
+        List<Test> tests = Collections.singletonList(testService.getTestById(testId));
+        studentAnswersTestService.setStatisticForTest(tests, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
+        modelAndView.addObject("test", tests.getFirst());
+        modelAndView.addObject("correctAnswers", studentAnswersTestService.getCorrectStudentAnswersTestByUserIdandTestId(userId, testId));
+        modelAndView.addObject("incorrectAnswers", studentAnswersTestService.getInCorrectStudentAnswersTestByUserIdandTestId(userId, testId));
+        modelAndView.addObject("skippedQuestions", studentAnswersTestService.getSkippedStudentAnswersTestByUserIdandTestId(userId, testId));
+        modelAndView.addObject("likedQuestions", schoolUserService.findAllLikedQuestionsByUserIdAndTestId(userId, testId));
+        return modelAndView;
+    }
+
     @PostMapping(value = {"/tests/solveTest"})
     public ModelAndView getTestToSolve(@RequestParam("testId") Long testId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("solveTest");
@@ -53,9 +70,9 @@ public class TestController {
         ModelAndView modelAndView;
 
         if (isLiked)
-            schoolUserService.addLikedQuestionToUser(questionId, ((SchoolUser) session.getAttribute("loggedInUser")));
+            schoolUserService.addLikedQuestionToUser(questionId, testId, ((SchoolUser) session.getAttribute("loggedInUser")));
         else
-            schoolUserService.deleteLikedQuestionFromUser(questionId, ((SchoolUser) session.getAttribute("loggedInUser")));
+            schoolUserService.deleteLikedQuestionFromUser(questionId, testId, ((SchoolUser) session.getAttribute("loggedInUser")));
 
         switch (action) {
             case "A":

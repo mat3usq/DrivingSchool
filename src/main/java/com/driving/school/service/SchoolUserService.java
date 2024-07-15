@@ -2,6 +2,7 @@ package com.driving.school.service;
 
 import com.driving.school.model.Constants;
 import com.driving.school.model.SchoolUser;
+import com.driving.school.model.StudentAnswersTest;
 import com.driving.school.model.UserLikedQuestion;
 import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.repository.UserLikedQuestionRepository;
@@ -50,15 +51,15 @@ public class SchoolUserService {
     }
 
     @Transactional
-    public void addLikedQuestionToUser(Long questionId, SchoolUser usr) {
+    public void addLikedQuestionToUser(Long questionId, Long testId, SchoolUser usr) {
         SchoolUser user = findUserById(usr.getId());
-        UserLikedQuestion existingRecord = userLikedQuestionRepository.findBySchoolUserAndQuestionIdAndCategory(user, questionId, "B");
+        UserLikedQuestion existingRecord = userLikedQuestionRepository.findBySchoolUserAndQuestionIdAndTestId(user, questionId, testId);
 
         if (user != null && existingRecord == null) {
             UserLikedQuestion userLikedQuestion = new UserLikedQuestion();
             userLikedQuestion.setSchoolUser(user);
             userLikedQuestion.setQuestionId(questionId);
-            userLikedQuestion.setCategory("B");
+            userLikedQuestion.setTestId(testId);
             user.getLikedQuestions().add(userLikedQuestion);
             user.setLikedQuestions(user.getLikedQuestions());
             schoolUserRepository.save(user);
@@ -66,8 +67,12 @@ public class SchoolUserService {
     }
 
     @Transactional
-    public void deleteLikedQuestionFromUser(Long questionId, SchoolUser user) {
+    public void deleteLikedQuestionFromUser(Long questionId, Long testId, SchoolUser user) {
         if (user != null)
-            userLikedQuestionRepository.deleteBySchoolUserAndQuestionIdAndCategory(user, questionId, "B");
+            userLikedQuestionRepository.deleteBySchoolUserAndQuestionIdAndTestId(user, questionId, testId);
+    }
+
+    public List<UserLikedQuestion> findAllLikedQuestionsByUserIdAndTestId(Long userId, Long testId) {
+        return userLikedQuestionRepository.findAllBySchoolUserAndTestId(schoolUserRepository.findById(userId).orElse(null), testId);
     }
 }

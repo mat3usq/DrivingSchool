@@ -20,6 +20,6 @@ public class UserLikedQuestion {
     @Column(name = "QUESTION_ID", nullable = false)
     private Long questionId;
 
-    @Column(name = "CATEGORY", nullable = false)
-    private String category;
+    @Column(name = "TEST_ID", nullable = false)
+    private Long testId;
 }

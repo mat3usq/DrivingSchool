@@ -19,6 +19,9 @@ public class StudentAnswersTest {
     @Column(name = "CORRECTNESS")
     private Boolean correctness;
 
+    @Column(name = "SKIPPED")
+    private Boolean skipped;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
@@ -33,5 +36,4 @@ public class StudentAnswersTest {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "TESTID", nullable = false)
     private Test test;
-
 }

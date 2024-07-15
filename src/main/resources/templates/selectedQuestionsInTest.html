@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Nauka Testów</title>
+    <title>Wybór Pytań w Testscie</title>
 
     <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
@@ -39,11 +38,12 @@
                     <p class="title" data-aos="fade-down" data-aos-delay="100">
                         Testy na prawo jazdy <span>Kategorii B</span>
                     </p>
-                    <div data-aos="zoom-in" data-aos-delay="150" class="container-tests">
-                        <p class="side-title">Pytania Podstawowe</p>
-                        <form th:each="test : ${tests}" th:if="${!test.testType}" th:action="@{/tests/selectQuestions}"
-                              method="post" class="tests-details">
+                    <div  data-aos="zoom-in" data-aos-delay="150" class="container-tests">
+                        <p th:if="${test.testType}" class="side-title">Pytania Specjalistyczne</p>
+                        <p th:if="${!test.testType}" class="side-title">Pytania Podstawowe</p>
+                        <form th:action="@{/tests/solveTest}" method="post" class="tests-details">
                             <input type="hidden" name="testId" th:value="${test.id}"/>
+                            <input type="hidden" name="selectedQuestions" value="default"/>
                             <div class="container-info">
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
                                 <p th:text="${test.name}"></p>
@@ -56,24 +56,10 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div class="container-tests">
-                        <p class="side-title">Pytania Specjalistyczne</p>
-                        <form th:each="test : ${tests}" th:if="${test.testType}" th:action="@{/tests/selectQuestions}"
-                              method="post" class="tests-details">
-                            <input type="hidden" name="testId" th:value="${test.id}"/>
-                            <div class="container-info">
-                                <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
-                                <p th:text="${test.name}"></p>
-                                <p th:text="${test.numberQuestions} + ' pytań'"></p>
-                            </div>
-                            <div class="container-stats">
-                                <span class="progres-span"> <th:block th:text="${test.counter}"></th:block>%</span>
-                                <div class="progres-box">
-                                    <div class="progres-bar"></div>
-                                </div>
-                            </div>
-                        </form>
+                        <p th:text="${'Polubione pytania: ' + likedQuestions.size()}"></p>
+                        <p th:text="${'Poprawne odpowiedzi: ' + correctAnswers.size()}"></p>
+                        <p th:text="${'Niepoprawne odpowiedzi: ' + incorrectAnswers.size()}"></p>
+                        <p th:text="${'Pominiete pytania: ' + skippedQuestions.size()}"></p>
                     </div>
                 </div>
             </div>
