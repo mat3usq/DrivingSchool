@@ -199,6 +199,26 @@ h2 {
   border-radius: 20px;
   height: 5px;
 }
+.tests .hero-img .box-tests .box-container .container-tests .header-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+.tests .hero-img .box-tests .box-container .container-tests .header-container img {
+  width: 50px;
+}
+.tests .hero-img .box-tests .box-container .container-tests .header-container p {
+  margin-right: 5px;
+  padding-left: 10px;
+  margin-bottom: 0;
+}
+.tests .hero-img .box-tests .box-container .container-tests .header-container .border-left {
+  border-left: 2px solid black;
+}
 .tests .hero-img .box-tests .box-container .container-tests .tests-details {
   display: flex;
   flex-direction: row;

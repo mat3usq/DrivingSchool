@@ -50,10 +50,16 @@ public class TestController {
         List<Test> tests = Collections.singletonList(testService.getTestById(testId));
         studentAnswersTestService.setStatisticForTest(tests, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
         modelAndView.addObject("test", tests.getFirst());
-        modelAndView.addObject("correctAnswers", studentAnswersTestService.getCorrectStudentAnswersTestByUserIdandTestId(userId, testId));
-        modelAndView.addObject("incorrectAnswers", studentAnswersTestService.getInCorrectStudentAnswersTestByUserIdandTestId(userId, testId));
-        modelAndView.addObject("skippedQuestions", studentAnswersTestService.getSkippedStudentAnswersTestByUserIdandTestId(userId, testId));
-        modelAndView.addObject("likedQuestions", schoolUserService.findAllLikedQuestionsByUserIdAndTestId(userId, testId));
+        Integer numberCorrectAnswers = studentAnswersTestService.getCorrectStudentAnswersTestByUserIdandTestId(userId, testId).size();
+        Integer numberIncorrectAnswers = studentAnswersTestService.getInCorrectStudentAnswersTestByUserIdandTestId(userId, testId).size();
+        Integer numberSkippedAnswers = studentAnswersTestService.getSkippedStudentAnswersTestByUserIdandTestId(userId, testId).size();
+        Integer numberLikedQuestions = schoolUserService.findAllLikedQuestionsByUserIdAndTestId(userId, testId).size();
+        Integer numberRemainingAnswers = tests.getFirst().getNumberQuestions() - numberCorrectAnswers - numberIncorrectAnswers - numberSkippedAnswers;
+        modelAndView.addObject("numberCorrectAnswers", numberCorrectAnswers);
+        modelAndView.addObject("numberIncorrectAnswers", numberIncorrectAnswers);
+        modelAndView.addObject("numberSkippedAnswers", numberSkippedAnswers);
+        modelAndView.addObject("numberLikedQuestions", numberLikedQuestions);
+        modelAndView.addObject("numberRemainingAnswers", numberRemainingAnswers);
         return modelAndView;
     }
 

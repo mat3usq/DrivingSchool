@@ -129,6 +129,30 @@ h2 {
 						height: 5px;
 					}
 
+					.header-container {
+						padding: 10px;
+						display: flex;
+						flex-direction: row;
+						align-content: center;
+						justify-content: space-between;
+						align-items: center;
+						gap: 5px;
+
+						img {
+							width: 50px;
+						}
+
+						p {
+							margin-right: 5px;
+							padding-left: 10px;
+							margin-bottom: 0;
+						}
+
+						.border-left {
+							border-left: 2px solid black;
+						}
+					}
+
 					.tests-details {
 						display: flex;
 						flex-direction: row;
