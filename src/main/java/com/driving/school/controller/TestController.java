@@ -2,6 +2,7 @@ package com.driving.school.controller;
 
 import com.driving.school.model.SchoolUser;
 import com.driving.school.model.Test;
+import com.driving.school.repository.UserLikedQuestionRepository;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.StudentAnswersTestService;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -25,13 +24,17 @@ public class TestController {
     private final QuestionService questionService;
     private final StudentAnswersTestService studentAnswersTestService;
     private final SchoolUserService schoolUserService;
+    private final UserLikedQuestionRepository likedQuestionRepository;
+    private final UserLikedQuestionRepository userLikedQuestionRepository;
 
     @Autowired
-    public TestController(TestService testService, QuestionService questionService, StudentAnswersTestService studentAnswersTestService, SchoolUserService schoolUserService) {
+    public TestController(TestService testService, QuestionService questionService, StudentAnswersTestService studentAnswersTestService, SchoolUserService schoolUserService, UserLikedQuestionRepository likedQuestionRepository, UserLikedQuestionRepository userLikedQuestionRepository) {
         this.testService = testService;
         this.questionService = questionService;
         this.studentAnswersTestService = studentAnswersTestService;
         this.schoolUserService = schoolUserService;
+        this.likedQuestionRepository = likedQuestionRepository;
+        this.userLikedQuestionRepository = userLikedQuestionRepository;
     }
 
     @GetMapping(value = {"/tests"})
@@ -64,9 +67,9 @@ public class TestController {
     }
 
     @PostMapping(value = {"/tests/solveTest"})
-    public ModelAndView getTestToSolve(@RequestParam("testId") Long testId, HttpSession session) {
+    public ModelAndView getTestToSolve(@RequestParam("testId") Long testId, @RequestParam("selectedTypeQuestions") String selectedTypeQuestions, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("solveTest");
-        modelAndView.addObject("question", questionService.getNextQuestion(testId, ((SchoolUser) session.getAttribute("loggedInUser")).getId()));
+        modelAndView.addObject("question", questionService.getNextQuestion(testId, (SchoolUser) session.getAttribute("loggedInUser"), selectedTypeQuestions));
         modelAndView.addObject("test", testService.getTestById(testId));
         return modelAndView;
     }
@@ -74,11 +77,7 @@ public class TestController {
     @PostMapping(value = {"/tests/action"})
     public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam("questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session) {
         ModelAndView modelAndView;
-
-        if (isLiked)
-            schoolUserService.addLikedQuestionToUser(questionId, testId, ((SchoolUser) session.getAttribute("loggedInUser")));
-        else
-            schoolUserService.deleteLikedQuestionFromUser(questionId, testId, ((SchoolUser) session.getAttribute("loggedInUser")));
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
         switch (action) {
             case "A":
@@ -86,24 +85,31 @@ public class TestController {
             case "C":
             case "TAK":
             case "NIE":
-                modelAndView = getTestToSolve(testId, session);
-                modelAndView.setViewName("answerResultTest");
-                modelAndView.addObject("answer", studentAnswersTestService.save((SchoolUser) session.getAttribute("loggedInUser"), testId, questionId, action));
+                modelAndView = new ModelAndView("answerResultTest");
+                modelAndView.addObject("question", questionService.getNextQuestion(testId, (SchoolUser) session.getAttribute("loggedInUser"), user.getSelectedTypeQuestions()));
+                modelAndView.addObject("answer", studentAnswersTestService.save(user, testId, questionId, action, isLiked));
+                modelAndView.addObject("test", testService.getTestById(testId));
                 modelAndView.addObject("isLiked", isLiked);
                 break;
 
             case "SKIP":
-                studentAnswersTestService.save((SchoolUser) session.getAttribute("loggedInUser"), testId, questionId, action);
-                modelAndView = getTestToSolve(testId, session);
+                studentAnswersTestService.save(user, testId, questionId, action, isLiked);
+                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
                 break;
 
             case "BACK":
-                return displayTestsPage(session);
+                modelAndView = displayTestsPage(session);
+                break;
 
             default:
-                modelAndView = getTestToSolve(testId, session);
+                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
                 break;
         }
+
+        if (isLiked)
+            schoolUserService.addLikedQuestionToUser(questionId, testId, user);
+        else
+            schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
 
         return modelAndView;
     }

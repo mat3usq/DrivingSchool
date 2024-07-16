@@ -18,4 +18,6 @@ public interface StudentAnswersTestRepository extends JpaRepository<StudentAnswe
     Integer countAnswersByUserIdAndTestId(@Param("userId") Long userId, @Param("testId") Long testId);
 
     List<StudentAnswersTest> findAllBySchoolUserAndTest(SchoolUser schoolUser, Test test);
+
+    StudentAnswersTest findBySchoolUserAndAndTestAndAndQuestion(SchoolUser schoolUser, Test test, Question question);
 }

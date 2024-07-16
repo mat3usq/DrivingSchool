@@ -47,7 +47,7 @@
 
 								<form th:action="@{/tests/solveTest}" method="post" class="tests-details">
 									<input type="hidden" name="testId" th:value="${test.id}" />
-									<input type="hidden" name="selectedTest" value="correctAnswers" />
+									<input type="hidden" name="selectedTypeQuestions" value="correctAnswers" />
 									<div class="container-info">
 										<img src="/assets/img/correct.svg" alt="Poprawne Odpowiedzi Zdjecie" />
 										<p>Poprawne odpowiedzi</p>
@@ -63,7 +63,7 @@
 
 								<form th:action="@{/tests/solveTest}" method="post" class="tests-details">
 									<input type="hidden" name="testId" th:value="${test.id}" />
-									<input type="hidden" name="selectedTest" value="incorrectAnswers" />
+									<input type="hidden" name="selectedTypeQuestions" value="incorrectAnswers" />
 									<div class="container-info">
 										<img src="/assets/img/incorrect.svg" alt="Niepoprawne Odpowiedzi Zdjecie" />
 										<p>Niepoprawne odpowiedzi</p>
@@ -79,7 +79,7 @@
 
 								<form th:action="@{/tests/solveTest}" method="post" class="tests-details">
 									<input type="hidden" name="testId" th:value="${test.id}" />
-									<input type="hidden" name="selectedTest" value="skippedQuestions" />
+									<input type="hidden" name="selectedTypeQuestions" value="skippedQuestions" />
 									<div class="container-info">
 										<img src="/assets/img/skipped.svg" alt="Pominete Pytania Zdjecie" />
 										<p>Pominiete pytania</p>
@@ -95,7 +95,7 @@
 
 								<form th:action="@{/tests/solveTest}" method="post" class="tests-details">
 									<input type="hidden" name="testId" th:value="${test.id}" />
-									<input type="hidden" name="selectedTest" value="likedQuestions" />
+									<input type="hidden" name="selectedTypeQuestions" value="likedQuestions" />
 									<div class="container-info">
 										<img src="/assets/img/liked.svg" alt="Polubione Pytania Zdjecie" />
 										<p>Polubione pytania</p>
@@ -111,7 +111,7 @@
 
 								<form th:action="@{/tests/solveTest}" method="post" class="tests-details">
 									<input type="hidden" name="testId" th:value="${test.id}" />
-									<input type="hidden" name="selectedTest" value="remainingQuestions" />
+									<input type="hidden" name="selectedTypeQuestions" value="remainingQuestions" />
 									<div class="container-info">
 										<img src="/assets/img/all.svg" alt="Pozostałe Pytania Zdjecie" />
 										<p>Pozostałe pytania</p>

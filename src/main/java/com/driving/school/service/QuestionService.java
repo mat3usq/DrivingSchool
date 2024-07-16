@@ -2,9 +2,12 @@ package com.driving.school.service;
 
 
 import com.driving.school.model.Question;
-import com.driving.school.model.StudentAnswersTest;
+import com.driving.school.model.SchoolUser;
+import com.driving.school.model.UserLikedQuestion;
 import com.driving.school.repository.QuestionRepository;
 import com.driving.school.repository.StudentAnswersTestRepository;
+import com.driving.school.repository.UserLikedQuestionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +21,13 @@ import java.util.stream.Collectors;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final StudentAnswersTestRepository studentAnswersTestRepository;
+    private final UserLikedQuestionRepository userLikedQuestionRepository;
 
     @Autowired
-    public QuestionService(QuestionRepository questionRepository, StudentAnswersTestRepository studentAnswersTestRepository) {
+    public QuestionService(QuestionRepository questionRepository, StudentAnswersTestRepository studentAnswersTestRepository, UserLikedQuestionRepository userLikedQuestionRepository) {
         this.questionRepository = questionRepository;
         this.studentAnswersTestRepository = studentAnswersTestRepository;
+        this.userLikedQuestionRepository = userLikedQuestionRepository;
     }
 
     public Question save(Question question) {
@@ -33,38 +38,59 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    public List<Question> findAllByCategoryAndTestId(String category, Long testId) {
-        return questionRepository.findAllByTestId(testId).stream().filter(q -> q.getDrivingCategory().contains(category)).toList();
-    }
-
     public Optional<Question> findById(Long id) {
         return questionRepository.findById(id);
     }
 
-    public Question getNextQuestion(Long testId, Long userId) {
-        List<Question> allQuestions = findAllByCategoryAndTestId("B", testId);
-        List<Question> usersQuestions = studentAnswersTestRepository.findQuestionsByUserIdAndTestId(userId, testId);
-        List<Question> remainingQuestions = new ArrayList<>(allQuestions);
+    public Question getNextQuestion(Long testId, SchoolUser user, String selectedTypeQuestions) {
         Question nextQuestion = new Question();
-        remainingQuestions.removeAll(usersQuestions);
-        if (remainingQuestions.isEmpty())
-            if (allQuestions.isEmpty())
-                nextQuestion.setQuestionNumber(0);
-            else nextQuestion.setQuestionNumber(allQuestions.size() + 1);
-        else {
-            nextQuestion = remainingQuestions.getFirst();
-            nextQuestion.setQuestionNumber(allQuestions.size() - remainingQuestions.size() + 1);
+
+        switch (selectedTypeQuestions) {
+            case "correctAnswers":
+                user.setSelectedTypeQuestions("correctAnswers");
+                break;
+            case "incorrectAnswers":
+                user.setSelectedTypeQuestions("incorrectAnswers");
+                break;
+            case "skippedQuestions":
+                user.setSelectedTypeQuestions("skippedQuestions");
+                break;
+            case "likedQuestions":
+                user.setSelectedTypeQuestions("likedQuestions");
+                List<UserLikedQuestion> userLikedQuestions = userLikedQuestionRepository.findAllBySchoolUserAndTestId(user, testId);
+                if (!userLikedQuestions.isEmpty())
+                    nextQuestion = questionRepository.findById(userLikedQuestions.getFirst().getQuestionId()).get();
+                else
+                    nextQuestion.setQuestionNumber(0);
+                break;
+            default:
+                List<Question> allQuestions = questionRepository.findAllByTestId(testId);
+                List<Question> usersQuestions = studentAnswersTestRepository.findQuestionsByUserIdAndTestId(user.getId(), testId);
+                List<Question> remainingQuestions = new ArrayList<>(allQuestions);
+                remainingQuestions.removeAll(usersQuestions);
+                if (remainingQuestions.isEmpty())
+                    if (allQuestions.isEmpty())
+                        nextQuestion.setQuestionNumber(0);
+                    else nextQuestion.setQuestionNumber(allQuestions.size() + 1);
+                else {
+                    nextQuestion = remainingQuestions.getFirst();
+                    nextQuestion.setQuestionNumber(allQuestions.size() - remainingQuestions.size() + 1);
+                }
+
+                user.setSelectedTypeQuestions("remainingQuestions");
+                break;
         }
+
         return nextQuestion;
     }
 
-    public List<Question> getAllNoSpecialisticQuestionByCategory(String category){
-        List<Question> allQuestion = findAll().stream().filter(q -> q.getDrivingCategory().contains(category)  && Boolean.FALSE.equals(q.getQuestionType())).toList();
+    public List<Question> getAllNoSpecialisticQuestionByCategory(String category) {
+        List<Question> allQuestion = findAll().stream().filter(q -> q.getDrivingCategory().contains(category) && Boolean.FALSE.equals(q.getQuestionType())).toList();
         return allQuestion;
     }
 
-    public List<Question> getAllSpecialisticQuestionByCategory(String category){
-        List<Question> allQuestion = findAll().stream().filter(q -> q.getDrivingCategory().contains(category)  && Boolean.TRUE.equals(q.getQuestionType())).toList();
+    public List<Question> getAllSpecialisticQuestionByCategory(String category) {
+        List<Question> allQuestion = findAll().stream().filter(q -> q.getDrivingCategory().contains(category) && Boolean.TRUE.equals(q.getQuestionType())).toList();
         return allQuestion;
     }
 
@@ -81,16 +107,14 @@ public class QuestionService {
         return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
     }
 
-    public List<Question> setPointsToNonSpecialisticQuestions(List<Question> questionList){
-        int i=1;
-        for(Question question : questionList){
-            if(i<=10){
+    public List<Question> setPointsToNonSpecialisticQuestions(List<Question> questionList) {
+        int i = 1;
+        for (Question question : questionList) {
+            if (i <= 10) {
                 question.setPoints(Long.valueOf("3"));
-            }
-            else if(i>10 && i<=16){
+            } else if (i > 10 && i <= 16) {
                 question.setPoints(Long.valueOf("2"));
-            }
-            else if(i>16){
+            } else if (i > 16) {
                 question.setPoints(Long.valueOf("1"));
             }
             i++;

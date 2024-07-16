@@ -1,7 +1,6 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,9 +10,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -70,6 +67,8 @@ public class SchoolUser {
 
     @OneToOne(mappedBy = "schoolUser")
     private UserStatistic userStatistic;
+
+    private String selectedTypeQuestions = "remainingQuestions";
 
     @CreatedDate
     @Column(name = "CREATEDAT")

@@ -1,19 +1,15 @@
 package com.driving.school.service;
 
 
-import com.driving.school.model.Question;
-import com.driving.school.model.SchoolUser;
-import com.driving.school.model.StudentAnswersTest;
-import com.driving.school.model.Test;
-import com.driving.school.repository.QuestionRepository;
-import com.driving.school.repository.SchoolUserRepository;
-import com.driving.school.repository.StudentAnswersTestRepository;
-import com.driving.school.repository.TestRepository;
+import com.driving.school.model.*;
+import com.driving.school.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class StudentAnswersTestService {
@@ -21,13 +17,15 @@ public class StudentAnswersTestService {
     private final TestRepository testRepository;
     private final QuestionRepository questionRepository;
     private final SchoolUserRepository schoolUserRepository;
+    private final UserLikedQuestionRepository userLikedQuestionRepository;
 
     @Autowired
-    public StudentAnswersTestService(StudentAnswersTestRepository studentAnswersTestRepository, TestRepository testRepository, QuestionRepository questionRepository, SchoolUserRepository schoolUserRepository) {
+    public StudentAnswersTestService(StudentAnswersTestRepository studentAnswersTestRepository, TestRepository testRepository, QuestionRepository questionRepository, SchoolUserRepository schoolUserRepository, UserLikedQuestionRepository userLikedQuestionRepository) {
         this.studentAnswersTestRepository = studentAnswersTestRepository;
         this.testRepository = testRepository;
         this.questionRepository = questionRepository;
         this.schoolUserRepository = schoolUserRepository;
+        this.userLikedQuestionRepository = userLikedQuestionRepository;
     }
 
     public StudentAnswersTest saveTest(StudentAnswersTest test) {
@@ -46,20 +44,53 @@ public class StudentAnswersTestService {
         studentAnswersTestRepository.deleteById(id);
     }
 
-    public StudentAnswersTest save(SchoolUser loggedInUser, Long testId, Long questionId, String answer) {
-        StudentAnswersTest studentAnswersTest = new StudentAnswersTest();
-        studentAnswersTest.setSchoolUser(loggedInUser);
-        studentAnswersTest.setTest(testRepository.findById(testId).orElse(null));
+    public StudentAnswersTest save(SchoolUser loggedUser, Long testId, Long questionId, String answer, Boolean isLiked) {
         Question q = questionRepository.findById(questionId).orElse(null);
+        Test t = testRepository.findById(testId).orElse(null);
+        StudentAnswersTest studentAnswersTest = new StudentAnswersTest();
+        studentAnswersTest.setSchoolUser(loggedUser);
+        studentAnswersTest.setTest(t);
         studentAnswersTest.setQuestion(q);
-        if (q != null && !answer.equals("SKIP")) {
-            studentAnswersTest.setCorrectness(q.getCorrectAnswer().equals(answer));
-            studentAnswersTest.setSkipped(false);
-        } else {
-            studentAnswersTest.setCorrectness(false);
-            studentAnswersTest.setSkipped(true);
+
+        switch (loggedUser.getSelectedTypeQuestions()) {
+            case "correctAnswers":
+                break;
+            case "incorrectAnswers":
+                break;
+            case "skippedQuestions":
+                break;
+            case "likedQuestions":
+                studentAnswersTest = studentAnswersTestRepository.findBySchoolUserAndAndTestAndAndQuestion(loggedUser, t, q);
+                UserLikedQuestion userLikedQuestion = userLikedQuestionRepository.findBySchoolUserAndQuestionIdAndTestId(loggedUser, questionId, testId);
+                if (userLikedQuestion != null)
+                    userLikedQuestionRepository.delete(userLikedQuestion);
+
+                if (userLikedQuestion != null && isLiked)
+                    userLikedQuestionRepository.save(userLikedQuestion);
+
+                if (q != null && !answer.equals("SKIP")) {
+                    studentAnswersTest.setCorrectness(q.getCorrectAnswer().equals(answer));
+                    studentAnswersTest.setSkipped(false);
+                } else {
+                    studentAnswersTest.setCorrectness(false);
+                    studentAnswersTest.setSkipped(true);
+                }
+
+                studentAnswersTestRepository.save(studentAnswersTest);
+                break;
+            case "remainingQuestions":
+                if (q != null && !answer.equals("SKIP")) {
+                    studentAnswersTest.setCorrectness(q.getCorrectAnswer().equals(answer));
+                    studentAnswersTest.setSkipped(false);
+                } else {
+                    studentAnswersTest.setCorrectness(false);
+                    studentAnswersTest.setSkipped(true);
+                }
+                studentAnswersTestRepository.save(studentAnswersTest);
+                break;
         }
-        return studentAnswersTestRepository.save(studentAnswersTest);
+
+        return studentAnswersTest;
     }
 
     public void setStatisticForTest(List<Test> tests, Long userId) {
