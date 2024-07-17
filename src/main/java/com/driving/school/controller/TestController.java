@@ -1,5 +1,6 @@
 package com.driving.school.controller;
 
+import com.driving.school.model.Question;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.model.Test;
 import com.driving.school.repository.UserLikedQuestionRepository;
@@ -24,7 +25,6 @@ public class TestController {
     private final QuestionService questionService;
     private final StudentAnswersTestService studentAnswersTestService;
     private final SchoolUserService schoolUserService;
-    private final UserLikedQuestionRepository likedQuestionRepository;
     private final UserLikedQuestionRepository userLikedQuestionRepository;
 
     @Autowired
@@ -33,7 +33,6 @@ public class TestController {
         this.questionService = questionService;
         this.studentAnswersTestService = studentAnswersTestService;
         this.schoolUserService = schoolUserService;
-        this.likedQuestionRepository = likedQuestionRepository;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
     }
 
@@ -69,8 +68,11 @@ public class TestController {
     @PostMapping(value = {"/tests/solveTest"})
     public ModelAndView getTestToSolve(@RequestParam("testId") Long testId, @RequestParam("selectedTypeQuestions") String selectedTypeQuestions, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("solveTest");
-        modelAndView.addObject("question", questionService.getNextQuestion(testId, (SchoolUser) session.getAttribute("loggedInUser"), selectedTypeQuestions));
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Question question = questionService.getNextQuestion(testId, user, selectedTypeQuestions);
+        modelAndView.addObject("question", question);
         modelAndView.addObject("test", testService.getTestById(testId));
+        modelAndView.addObject("selectedTypeQuestions", selectedTypeQuestions);
         return modelAndView;
     }
 
@@ -85,11 +87,9 @@ public class TestController {
             case "C":
             case "TAK":
             case "NIE":
-                modelAndView = new ModelAndView("answerResultTest");
-                modelAndView.addObject("question", questionService.getNextQuestion(testId, (SchoolUser) session.getAttribute("loggedInUser"), user.getSelectedTypeQuestions()));
+                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
+                modelAndView.setViewName("answerResultTest");
                 modelAndView.addObject("answer", studentAnswersTestService.save(user, testId, questionId, action, isLiked));
-                modelAndView.addObject("test", testService.getTestById(testId));
-                modelAndView.addObject("isLiked", isLiked);
                 break;
 
             case "SKIP":

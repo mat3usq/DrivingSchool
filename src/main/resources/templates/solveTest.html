@@ -41,10 +41,11 @@
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
                                 <p th:text="${test.name}">Znaki ostrzegawcze</p>
                             </div>
-                            <p><span th:text="${question.questionNumber}">3</span> /
+                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span th:text="${question.questionNumber}">3</span> /
                                 <th:block th:text="${test.numberQuestions}"></th:block>
                                 pytań
                             </p>
+                            <p hidden="hidden" id="isLiked" th:data-is-liked="${isLiked}"></p>
                             <div class="star-box">
                                 <i class="fas fa-star star" id="star"></i>
                                 <div class="circle c-1">
@@ -134,7 +135,7 @@
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
                                 <p th:text="${test.name}">Znaki ostrzegawcze</p>
                             </div>
-                            <p><span>0</span> pytań</p>
+                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span>0</span> pytań</p>
                         </div>
 
                         <div class="container-test">
@@ -145,7 +146,11 @@
                             </div>
                             <div class="normal-question">
                                 <div class="info-container">
-                                    <p>Brak dostępnych pytań w danym teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'correctAnswers')}">Brak poprawnych odpowiedzi do pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'incorrectAnswers')}">Brak niepoprawnych odpowiedzi do pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'skippedQuestions')}">Brak pominietych pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'likedQuestions')}">Brak polubionych pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}">Brak dostępnych pytań w teście!</p>
                                 </div>
                                 <div class="button-box">
                                     <a th:href="@{/tests}" class="back">Powrót</a>
@@ -160,7 +165,7 @@
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
                                 <p th:text="${test.name}">Znaki ostrzegawcze</p>
                             </div>
-                            <p><span th:text="${test.numberQuestions}">3</span> /
+                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span th:text="${test.numberQuestions}">3</span> /
                                 <th:block th:text="${test.numberQuestions}"></th:block>
                                 pytań
                             </p>

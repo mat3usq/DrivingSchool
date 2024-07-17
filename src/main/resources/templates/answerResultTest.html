@@ -39,7 +39,7 @@
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
                                 <p th:text="${test.name}">Znaki ostrzegawcze</p>
                             </div>
-                            <p><span th:text="${question.questionNumber}">3</span> /
+                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span th:text="${question.questionNumber}">3</span> /
                                 <th:block th:text="${test.numberQuestions}"></th:block>
                                 pytań
                             </p>

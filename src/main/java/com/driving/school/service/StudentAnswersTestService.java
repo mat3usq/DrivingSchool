@@ -48,19 +48,24 @@ public class StudentAnswersTestService {
         Question q = questionRepository.findById(questionId).orElse(null);
         Test t = testRepository.findById(testId).orElse(null);
         StudentAnswersTest studentAnswersTest = new StudentAnswersTest();
-        studentAnswersTest.setSchoolUser(loggedUser);
-        studentAnswersTest.setTest(t);
-        studentAnswersTest.setQuestion(q);
 
         switch (loggedUser.getSelectedTypeQuestions()) {
             case "correctAnswers":
-                break;
             case "incorrectAnswers":
-                break;
             case "skippedQuestions":
+                studentAnswersTest = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(loggedUser, t, q);
+                if (q != null && !answer.equals("SKIP")) {
+                    studentAnswersTest.setCorrectness(q.getCorrectAnswer().equals(answer));
+                    studentAnswersTest.setSkipped(false);
+                } else {
+                    studentAnswersTest.setCorrectness(false);
+                    studentAnswersTest.setSkipped(true);
+                }
+                studentAnswersTestRepository.delete(studentAnswersTest);
+                studentAnswersTestRepository.save(studentAnswersTest);
                 break;
             case "likedQuestions":
-                studentAnswersTest = studentAnswersTestRepository.findBySchoolUserAndAndTestAndAndQuestion(loggedUser, t, q);
+                studentAnswersTest = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(loggedUser, t, q);
                 UserLikedQuestion userLikedQuestion = userLikedQuestionRepository.findBySchoolUserAndQuestionIdAndTestId(loggedUser, questionId, testId);
                 if (userLikedQuestion != null)
                     userLikedQuestionRepository.delete(userLikedQuestion);
@@ -79,6 +84,10 @@ public class StudentAnswersTestService {
                 studentAnswersTestRepository.save(studentAnswersTest);
                 break;
             case "remainingQuestions":
+                studentAnswersTest.setSchoolUser(loggedUser);
+                studentAnswersTest.setTest(t);
+                studentAnswersTest.setQuestion(q);
+
                 if (q != null && !answer.equals("SKIP")) {
                     studentAnswersTest.setCorrectness(q.getCorrectAnswer().equals(answer));
                     studentAnswersTest.setSkipped(false);
@@ -117,5 +126,9 @@ public class StudentAnswersTestService {
     public List<StudentAnswersTest> getSkippedStudentAnswersTestByUserIdandTestId(Long userId, Long testId) {
         List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserRepository.findById(userId).orElse(null), testRepository.findById(testId).orElse(null));
         return list.stream().filter(l -> l.getSkipped() && l.getTest().getDrivingCategory().contains("B")).toList();
+    }
+
+    public List<Question> findQuestionsByUserIdAndTestId(Long userId, Long testId) {
+        return studentAnswersTestRepository.findQuestionsByUserIdAndTestId(userId, testId);
     }
 }

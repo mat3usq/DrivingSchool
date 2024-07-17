@@ -3,6 +3,7 @@ package com.driving.school.service;
 
 import com.driving.school.model.Question;
 import com.driving.school.model.SchoolUser;
+import com.driving.school.model.StudentAnswersTest;
 import com.driving.school.model.UserLikedQuestion;
 import com.driving.school.repository.QuestionRepository;
 import com.driving.school.repository.StudentAnswersTestRepository;
@@ -20,13 +21,13 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionService {
     private final QuestionRepository questionRepository;
-    private final StudentAnswersTestRepository studentAnswersTestRepository;
+    private final StudentAnswersTestService studentAnswersTestService;
     private final UserLikedQuestionRepository userLikedQuestionRepository;
 
     @Autowired
-    public QuestionService(QuestionRepository questionRepository, StudentAnswersTestRepository studentAnswersTestRepository, UserLikedQuestionRepository userLikedQuestionRepository) {
+    public QuestionService(QuestionRepository questionRepository, StudentAnswersTestService studentAnswersTestService, UserLikedQuestionRepository userLikedQuestionRepository) {
         this.questionRepository = questionRepository;
-        this.studentAnswersTestRepository = studentAnswersTestRepository;
+        this.studentAnswersTestService = studentAnswersTestService;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
     }
 
@@ -48,12 +49,27 @@ public class QuestionService {
         switch (selectedTypeQuestions) {
             case "correctAnswers":
                 user.setSelectedTypeQuestions("correctAnswers");
+                List<StudentAnswersTest> studentCorrectAnswers = studentAnswersTestService.getCorrectStudentAnswersTestByUserIdandTestId(user.getId(), testId);
+                if (!studentCorrectAnswers.isEmpty())
+                    nextQuestion = studentCorrectAnswers.getFirst().getQuestion();
+                else
+                    nextQuestion.setQuestionNumber(0);
                 break;
             case "incorrectAnswers":
                 user.setSelectedTypeQuestions("incorrectAnswers");
+                List<StudentAnswersTest> studentIncorrectAnswers = studentAnswersTestService.getInCorrectStudentAnswersTestByUserIdandTestId(user.getId(), testId);
+                if (!studentIncorrectAnswers.isEmpty())
+                    nextQuestion = studentIncorrectAnswers.getFirst().getQuestion();
+                else
+                    nextQuestion.setQuestionNumber(0);
                 break;
             case "skippedQuestions":
                 user.setSelectedTypeQuestions("skippedQuestions");
+                List<StudentAnswersTest> studentSkippedQuestions = studentAnswersTestService.getSkippedStudentAnswersTestByUserIdandTestId(user.getId(), testId);
+                if (!studentSkippedQuestions.isEmpty())
+                    nextQuestion = studentSkippedQuestions.getFirst().getQuestion();
+                else
+                    nextQuestion.setQuestionNumber(0);
                 break;
             case "likedQuestions":
                 user.setSelectedTypeQuestions("likedQuestions");
@@ -64,8 +80,9 @@ public class QuestionService {
                     nextQuestion.setQuestionNumber(0);
                 break;
             default:
+                user.setSelectedTypeQuestions("remainingQuestions");
                 List<Question> allQuestions = questionRepository.findAllByTestId(testId);
-                List<Question> usersQuestions = studentAnswersTestRepository.findQuestionsByUserIdAndTestId(user.getId(), testId);
+                List<Question> usersQuestions = studentAnswersTestService.findQuestionsByUserIdAndTestId(user.getId(), testId);
                 List<Question> remainingQuestions = new ArrayList<>(allQuestions);
                 remainingQuestions.removeAll(usersQuestions);
                 if (remainingQuestions.isEmpty())
@@ -77,7 +94,6 @@ public class QuestionService {
                     nextQuestion.setQuestionNumber(allQuestions.size() - remainingQuestions.size() + 1);
                 }
 
-                user.setSelectedTypeQuestions("remainingQuestions");
                 break;
         }
 
@@ -124,5 +140,9 @@ public class QuestionService {
 
     public Question getQuestion(Long questionId) {
         return questionRepository.findById(questionId).orElse(null);
+    }
+
+    public boolean questionIsLiked(SchoolUser user, Question question, Long testId) {
+        return false;
     }
 }

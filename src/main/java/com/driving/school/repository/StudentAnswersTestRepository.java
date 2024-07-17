@@ -19,5 +19,5 @@ public interface StudentAnswersTestRepository extends JpaRepository<StudentAnswe
 
     List<StudentAnswersTest> findAllBySchoolUserAndTest(SchoolUser schoolUser, Test test);
 
-    StudentAnswersTest findBySchoolUserAndAndTestAndAndQuestion(SchoolUser schoolUser, Test test, Question question);
+    StudentAnswersTest findBySchoolUserAndTestAndQuestion(SchoolUser schoolUser, Test test, Question question);
 }
