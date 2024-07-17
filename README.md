@@ -51,10 +51,8 @@
 - Poprawienie responsywnosci w wykladzie
 - Testy: 
   - Dodanie i ostylowanie wyjasnien w testach
-  - Powtarzanie pytan w testach:
-    - z oznaczonymi odp, 
-    - z niepoprawnymi odp, 
-    - z poprawnymi odp
+  - Gdy sie rozwiazuje test powinno byc widac ze pytanie jest oznaczone 
+  - Dodanie zresetowania odpowiedzi gdy zrobi sie wszystkie pytania
 - Zamiana footera i ostatniej sekcji na th:fragment
 - Dodanie do pytan wyjasnien bedzie lux wygladalo to wtedy 
 - Dodanie zdjec do instrukcji z rozwiązywania pytan specjalistycznych oraz podstawowych
