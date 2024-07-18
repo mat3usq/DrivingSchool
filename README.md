@@ -51,7 +51,6 @@
 - Poprawienie responsywnosci w wykladzie
 - Testy: 
   - Dodanie i ostylowanie wyjasnien w testach
-  - Dodanie zresetowania odpowiedzi gdy zrobi sie wszystkie pytania
 - Zamiana footera i ostatniej sekcji na th:fragment
 - Dodanie do pytan wyjasnien bedzie lux wygladalo to wtedy 
 - Dodanie zdjec do instrukcji z rozwiązywania pytan specjalistycznych oraz podstawowych
@@ -64,6 +63,7 @@
 - Obecność na wykładach
 - Nie trzeba przewijać egzaminu
 - Poprawne włączanie filmu
+- Reset wszystkich polubionych pytan w tescie
 
 # Harmonogram Projektu
 
