@@ -73,6 +73,7 @@ public class TestController {
         modelAndView.addObject("question", question);
         modelAndView.addObject("test", testService.getTestById(testId));
         modelAndView.addObject("selectedTypeQuestions", selectedTypeQuestions);
+        modelAndView.addObject("isLiked", question.getId() != null && userLikedQuestionRepository.findBySchoolUserAndQuestionIdAndTestId(user, question.getId(), testId) != null);
         return modelAndView;
     }
 
@@ -90,6 +91,7 @@ public class TestController {
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
                 modelAndView.setViewName("answerResultTest");
                 modelAndView.addObject("answer", studentAnswersTestService.save(user, testId, questionId, action, isLiked));
+                modelAndView.addObject("isLiked", isLiked);
                 break;
 
             case "SKIP":

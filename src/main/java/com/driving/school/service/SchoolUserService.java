@@ -68,8 +68,10 @@ public class SchoolUserService {
 
     @Transactional
     public void deleteLikedQuestionFromUser(Long questionId, Long testId, SchoolUser user) {
-        if (user != null)
+        if (user != null){
             userLikedQuestionRepository.deleteBySchoolUserAndQuestionIdAndTestId(user, questionId, testId);
+            schoolUserRepository.save(user);
+        }
     }
 
     public List<UserLikedQuestion> findAllLikedQuestionsByUserIdAndTestId(Long userId, Long testId) {

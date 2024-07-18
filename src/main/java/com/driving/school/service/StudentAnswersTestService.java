@@ -16,15 +16,15 @@ public class StudentAnswersTestService {
     private final StudentAnswersTestRepository studentAnswersTestRepository;
     private final TestRepository testRepository;
     private final QuestionRepository questionRepository;
-    private final SchoolUserRepository schoolUserRepository;
+    private final SchoolUserService schoolUserService;
     private final UserLikedQuestionRepository userLikedQuestionRepository;
 
     @Autowired
-    public StudentAnswersTestService(StudentAnswersTestRepository studentAnswersTestRepository, TestRepository testRepository, QuestionRepository questionRepository, SchoolUserRepository schoolUserRepository, UserLikedQuestionRepository userLikedQuestionRepository) {
+    public StudentAnswersTestService(StudentAnswersTestRepository studentAnswersTestRepository, TestRepository testRepository, QuestionRepository questionRepository, SchoolUserService schoolUserService, UserLikedQuestionRepository userLikedQuestionRepository) {
         this.studentAnswersTestRepository = studentAnswersTestRepository;
         this.testRepository = testRepository;
         this.questionRepository = questionRepository;
-        this.schoolUserRepository = schoolUserRepository;
+        this.schoolUserService = schoolUserService;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
     }
 
@@ -114,17 +114,17 @@ public class StudentAnswersTestService {
     }
 
     public List<StudentAnswersTest> getCorrectStudentAnswersTestByUserIdandTestId(Long userId, Long testId) {
-        List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserRepository.findById(userId).orElse(null), testRepository.findById(testId).orElse(null));
+        List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserService.findUserById(userId), testRepository.findById(testId).orElse(null));
         return list.stream().filter(l -> l.getCorrectness() && !l.getSkipped() && l.getTest().getDrivingCategory().contains("B")).toList();
     }
 
     public List<StudentAnswersTest> getInCorrectStudentAnswersTestByUserIdandTestId(Long userId, Long testId) {
-        List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserRepository.findById(userId).orElse(null), testRepository.findById(testId).orElse(null));
+        List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserService.findUserById(userId), testRepository.findById(testId).orElse(null));
         return list.stream().filter(l -> !l.getCorrectness() && !l.getSkipped() && l.getTest().getDrivingCategory().contains("B")).toList();
     }
 
     public List<StudentAnswersTest> getSkippedStudentAnswersTestByUserIdandTestId(Long userId, Long testId) {
-        List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserRepository.findById(userId).orElse(null), testRepository.findById(testId).orElse(null));
+        List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserService.findUserById(userId), testRepository.findById(testId).orElse(null));
         return list.stream().filter(l -> l.getSkipped() && l.getTest().getDrivingCategory().contains("B")).toList();
     }
 
