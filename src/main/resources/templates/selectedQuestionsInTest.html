@@ -54,7 +54,7 @@
 										<p th:text="${numberCorrectAnswers} + ' odpowiedzi'"></p>
 									</div>
 									<div class="container-stats">
-										<span class="progres-span"> <th:block th:text="${#numbers.formatInteger((numberCorrectAnswers * 100 / test.numberQuestions), 0)}">0</th:block>%</span>
+										<span class="progres-span"> <th:block th:text="${percentagesCorrectAnswers}">0</th:block>%</span>
 										<div class="progres-box">
 											<div class="progres-bar"></div>
 										</div>
@@ -70,7 +70,7 @@
 										<p th:text="${numberIncorrectAnswers} + ' odpowiedzi'"></p>
 									</div>
 									<div class="container-stats">
-										<span class="progres-span"> <th:block th:text="${#numbers.formatInteger((numberIncorrectAnswers * 100 / test.numberQuestions), 0)}">0</th:block>%</span>
+										<span class="progres-span"> <th:block th:text="${percentagesIncorrectAnswers}">0</th:block>%</span>
 										<div class="progres-box">
 											<div class="progres-bar"></div>
 										</div>
@@ -86,7 +86,7 @@
 										<p th:text="${numberSkippedAnswers} + ' pytań'"></p>
 									</div>
 									<div class="container-stats">
-										<span class="progres-span"> <th:block th:text="${#numbers.formatInteger((numberSkippedAnswers * 100 / test.numberQuestions), 0)}">0</th:block>%</span>
+										<span class="progres-span"> <th:block th:text="${percentagesSkippedAnswers}">0</th:block>%</span>
 										<div class="progres-box">
 											<div class="progres-bar"></div>
 										</div>
@@ -102,7 +102,7 @@
 										<p th:text="${numberLikedQuestions} + ' pytań'"></p>
 									</div>
 									<div class="container-stats">
-										<span class="progres-span"> <th:block th:text="${#numbers.formatInteger((numberLikedQuestions * 100 / test.numberQuestions), 0)}">0</th:block>%</span>
+										<span class="progres-span"> <th:block th:text="${percentagesLikedQuestions}">0</th:block>%</span>
 										<div class="progres-box">
 											<div class="progres-bar"></div>
 										</div>
@@ -118,11 +118,17 @@
 										<p th:text="${numberRemainingAnswers} + ' pytań'"></p>
 									</div>
 									<div class="container-stats">
-										<span class="progres-span"> <th:block th:text="${#numbers.formatInteger((numberRemainingAnswers * 100 / test.numberQuestions), 0)}">0</th:block>%</span>
+										<span class="progres-span"> <th:block th:text="${percentagesRemainingAnswers}">0</th:block>%</span>
 										<div class="progres-box">
 											<div class="progres-bar"></div>
 										</div>
 									</div>
+								</form>
+
+								<form class="reset-test" th:action="@{/tests/resetTest}" th:if="${allDone}">
+									<input type="hidden" name="testId" th:value="${test.id}" />
+									<button>Spróbuj ponownie 🥸</button>
+									<p>Uwaga! Klikając w przycisk usuniesz wszystkie odpowiedzi do pytań w teście.</p>
 								</form>
 							</div>
 						</div>

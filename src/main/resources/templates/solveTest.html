@@ -41,7 +41,8 @@
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
                                 <p th:text="${test.name}">Znaki ostrzegawcze</p>
                             </div>
-                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span th:text="${question.questionNumber}">3</span> /
+                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span
+                                    th:text="${question.questionNumber}">3</span> /
                                 <th:block th:text="${test.numberQuestions}"></th:block>
                                 pytań
                             </p>
@@ -79,13 +80,6 @@
                                 </th:block>
 
                             </div>
-
-                            <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
-                                <input type="hidden" name="testId" th:value="${test.id}"/>
-                                <input type="hidden" name="questionId" th:value="${question.id}"/>
-                                <input type="hidden" name="isLiked"/>
-                                <input type="hidden" name="action"/>
-                            </form>
 
                             <div th:if="${question.availableAnswers == 2}" class="normal-question">
                                 <div class="info-container">
@@ -135,7 +129,8 @@
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
                                 <p th:text="${test.name}">Znaki ostrzegawcze</p>
                             </div>
-                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span>0</span> pytań</p>
+                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span>0</span>
+                                pytań</p>
                         </div>
 
                         <div class="container-test">
@@ -146,14 +141,19 @@
                             </div>
                             <div class="normal-question">
                                 <div class="info-container">
-                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'correctAnswers')}">Brak poprawnych odpowiedzi do pytań w teście!</p>
-                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'incorrectAnswers')}">Brak niepoprawnych odpowiedzi do pytań w teście!</p>
-                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'skippedQuestions')}">Brak pominietych pytań w teście!</p>
-                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'likedQuestions')}">Brak polubionych pytań w teście!</p>
-                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}">Brak dostępnych pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'correctAnswers')}">Brak
+                                        poprawnych odpowiedzi do pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'incorrectAnswers')}">Brak
+                                        niepoprawnych odpowiedzi do pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'skippedQuestions')}">Brak
+                                        pominietych pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'likedQuestions')}">Brak
+                                        polubionych pytań w teście!</p>
+                                    <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}">Brak
+                                        dostępnych pytań w teście!</p>
                                 </div>
                                 <div class="button-box">
-                                    <a th:href="@{/tests}" class="back">Powrót</a>
+                                    <button id="back" class="back">Powrót</button>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +165,8 @@
                                 <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
                                 <p th:text="${test.name}">Znaki ostrzegawcze</p>
                             </div>
-                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span th:text="${test.numberQuestions}">3</span> /
+                            <p th:if="${#strings.equals(selectedTypeQuestions, 'remainingQuestions')}"><span
+                                    th:text="${test.numberQuestions}">3</span> /
                                 <th:block th:text="${test.numberQuestions}"></th:block>
                                 pytań
                             </p>
@@ -180,11 +181,18 @@
                                     <p>Gratulacje ukończyłeś ten dział!</p>
                                 </div>
                                 <div class="button-box">
-                                    <a th:href="@{/tests}" class="back">Powrót</a>
+                                    <button id="back" class="back">Powrót</button>
                                 </div>
                             </div>
                         </div>
                     </th:block>
+
+                    <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
+                        <input type="hidden" name="testId" th:value="${test.id}"/>
+                        <input type="hidden" name="questionId" th:value="${question.id ?: 0}"/>
+                        <input type="hidden" name="isLiked"/>
+                        <input type="hidden" name="action"/>
+                    </form>
                 </div>
             </div>
         </div>

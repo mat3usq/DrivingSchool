@@ -144,9 +144,9 @@ h2 {
 }
 .tests .hero-img .box-tests {
   position: absolute;
-  top: 12vh;
+  top: 11vh;
   left: 150px;
-  height: 94vh;
+  height: 99vh;
   width: 100%;
   overflow: scroll;
 }
@@ -280,6 +280,35 @@ h2 {
 .tests .hero-img .box-tests .box-container .container-tests .tests-details:hover {
   cursor: pointer;
   transform: scale(1.05);
+}
+.tests .hero-img .box-tests .box-container .container-tests .reset-test {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.tests .hero-img .box-tests .box-container .container-tests .reset-test button {
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 49px;
+  color: aliceblue;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: 0.5s;
+  margin: 10px;
+  padding: 10px 20px;
+  background: transparent;
+  background-color: #4d84e2;
+}
+.tests .hero-img .box-tests .box-container .container-tests .reset-test button:hover {
+  scale: 1.1;
+}
+.tests .hero-img .box-tests .box-container .container-tests .reset-test p {
+  font-size: 13px;
+  font-style: italic;
+  text-align: center;
 }
 
 .contact {

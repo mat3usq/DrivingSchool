@@ -64,48 +64,50 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('form').submit();
         });
 });
+if (document.querySelector(".star"))
+    document.querySelector(".star").addEventListener("click", function () {
+        const starElement = this;
+        const orangeCircle = document.querySelector(".c-orange");
+        const innerCircle = document.querySelector(".inner-circle");
+        const circles = [".c-1", ".c-2", ".c-3", ".c-4"];
+        const isLiked = "-is-running";
 
-document.querySelector(".star").addEventListener("click", function () {
-    const starElement = this;
-    const orangeCircle = document.querySelector(".c-orange");
-    const innerCircle = document.querySelector(".inner-circle");
-    const circles = [".c-1", ".c-2", ".c-3", ".c-4"];
-    const isLiked = "-is-running";
+        if (starElement.classList.contains(isLiked)) {
+            document.querySelector('input[name="isLiked"]').value = 'false';
+            const allEl = document.querySelectorAll(`.${isLiked}`);
+            allEl.forEach(item => {
+                item.classList.remove(isLiked);
+            });
 
-    if (starElement.classList.contains(isLiked)) {
-        document.querySelector('input[name="isLiked"]').value = 'false';
-        const allEl = document.querySelectorAll(`.${isLiked}`);
-        allEl.forEach(item => {
-            item.classList.remove(isLiked);
-        });
+            const starBox = starElement.parentElement;
+            starBox.removeChild(starElement);
 
-        const starBox = starElement.parentElement;
-        starBox.removeChild(starElement);
+            const newStar = document.createElement("i");
+            newStar.className = "fas fa-star star";
+            newStar.id = "star";
 
-        const newStar = document.createElement("i");
-        newStar.className = "fas fa-star star";
-        newStar.id = "star";
+            starBox.appendChild(newStar);
 
-        starBox.appendChild(newStar);
-
-        newStar.addEventListener("click", arguments.callee);
-    } else {
-        document.querySelector('input[name="isLiked"]').value = 'true';
-        starElement.classList.add(isLiked);
-        orangeCircle.classList.add(isLiked);
-        innerCircle.classList.add(isLiked);
-        circles.forEach(circle => {
-            const element = document.querySelector(circle);
-            element.classList.add(isLiked);
-            element.style.animation = 'none';
-            element.offsetHeight;
-            element.style.animation = '';
-        });
-    }
-});
+            newStar.addEventListener("click", arguments.callee);
+        } else {
+            document.querySelector('input[name="isLiked"]').value = 'true';
+            starElement.classList.add(isLiked);
+            orangeCircle.classList.add(isLiked);
+            innerCircle.classList.add(isLiked);
+            circles.forEach(circle => {
+                const element = document.querySelector(circle);
+                element.classList.add(isLiked);
+                element.style.animation = 'none';
+                element.offsetHeight;
+                element.style.animation = '';
+            });
+        }
+    });
 
 document.addEventListener("DOMContentLoaded", function () {
-    let isLiked = document.getElementById("isLiked").getAttribute("data-is-liked");
-    if (isLiked === "true")
-        document.getElementById("star").click();
+    if (document.getElementById("isLiked")) {
+        let isLiked = document.getElementById("isLiked").getAttribute("data-is-liked");
+        if (isLiked === "true")
+            document.getElementById("star").click();
+    }
 });

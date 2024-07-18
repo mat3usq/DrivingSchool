@@ -55,13 +55,39 @@ public class TestController {
         Integer numberCorrectAnswers = studentAnswersTestService.getCorrectStudentAnswersTestByUserIdandTestId(userId, testId).size();
         Integer numberIncorrectAnswers = studentAnswersTestService.getInCorrectStudentAnswersTestByUserIdandTestId(userId, testId).size();
         Integer numberSkippedAnswers = studentAnswersTestService.getSkippedStudentAnswersTestByUserIdandTestId(userId, testId).size();
-        Integer numberLikedQuestions = schoolUserService.findAllLikedQuestionsByUserIdAndTestId(userId, testId).size();
-        Integer numberRemainingAnswers = tests.getFirst().getNumberQuestions() - numberCorrectAnswers - numberIncorrectAnswers - numberSkippedAnswers;
+        int numberLikedQuestions = schoolUserService.findAllLikedQuestionsByUserIdAndTestId(userId, testId).size();
+        int numberRemainingAnswers = tests.getFirst().getNumberQuestions() - numberCorrectAnswers - numberIncorrectAnswers - numberSkippedAnswers;
+        int percentagesCorrectAnswers = 0;
+        int percentagesIncorrectAnswers = 0;
+        int percentagesSkippedAnswers = 0;
+        int percentagesLikedQuestions = 0;
+        int percentagesRemainingAnswers = 0;
+
+        if (tests.getFirst().getNumberQuestions() != 0) {
+            percentagesCorrectAnswers = numberCorrectAnswers * 100 / tests.getFirst().getNumberQuestions();
+            percentagesIncorrectAnswers = numberIncorrectAnswers * 100 / tests.getFirst().getNumberQuestions();
+            percentagesSkippedAnswers = numberSkippedAnswers * 100 / tests.getFirst().getNumberQuestions();
+            percentagesLikedQuestions = numberLikedQuestions * 100 / tests.getFirst().getNumberQuestions();
+            percentagesRemainingAnswers = numberRemainingAnswers * 100 / tests.getFirst().getNumberQuestions();
+        }
+
         modelAndView.addObject("numberCorrectAnswers", numberCorrectAnswers);
+        modelAndView.addObject("percentagesCorrectAnswers", percentagesCorrectAnswers);
+
         modelAndView.addObject("numberIncorrectAnswers", numberIncorrectAnswers);
+        modelAndView.addObject("percentagesIncorrectAnswers", percentagesIncorrectAnswers);
+
         modelAndView.addObject("numberSkippedAnswers", numberSkippedAnswers);
+        modelAndView.addObject("percentagesSkippedAnswers", percentagesSkippedAnswers);
+
         modelAndView.addObject("numberLikedQuestions", numberLikedQuestions);
+        modelAndView.addObject("percentagesLikedQuestions", percentagesLikedQuestions);
+
         modelAndView.addObject("numberRemainingAnswers", numberRemainingAnswers);
+        modelAndView.addObject("percentagesRemainingAnswers", percentagesRemainingAnswers);
+
+        modelAndView.addObject("allDone", tests.getFirst().getNumberQuestions() != 0 && numberCorrectAnswers + numberIncorrectAnswers + numberSkippedAnswers == tests.getFirst().getNumberQuestions());
+        modelAndView.addObject("allDone", true);
         return modelAndView;
     }
 
@@ -78,7 +104,7 @@ public class TestController {
     }
 
     @PostMapping(value = {"/tests/action"})
-    public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam("questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session) {
+    public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam(value = "questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session) {
         ModelAndView modelAndView;
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
@@ -99,8 +125,10 @@ public class TestController {
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
                 break;
 
+                // TODO: jak sie skonczy robic test i sie wroci to niech wroci do selekcji
+
             case "BACK":
-                modelAndView = displayTestsPage(session);
+                modelAndView = selectQuestions(testId, session);
                 break;
 
             default:
@@ -115,4 +143,9 @@ public class TestController {
 
         return modelAndView;
     }
+
+//    @PostMapping(value = {"/tests/resetTest"})
+//    public ModelAndView resetTest(@RequestParam("testId") Long testId, @RequestParam("questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session) {
+//
+//    }
 }

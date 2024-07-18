@@ -69,9 +69,9 @@ h2 {
 
 		.box-tests {
 			position: absolute;
-			top: 12vh;
+			top: 11vh;
 			left: 150px;
-			height: 94vh;
+			height: 99vh;
 			width: 100%;
 			overflow: scroll;
 
@@ -223,6 +223,39 @@ h2 {
 					.tests-details:hover {
 						cursor: pointer;
 						transform: scale(1.05);
+					}
+
+					.reset-test {
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						margin: 10px;
+
+						button {
+							border: none;
+							outline: none;
+							height: 49px;
+							border-radius: 49px;
+							color: $text-color;
+							text-transform: uppercase;
+							font-weight: 600;
+							transition: 0.5s;
+							margin: 10px;
+							padding: 10px 20px;
+							background: transparent;
+							background-color: $btn-bg-color;
+						}
+
+						button:hover {
+							scale: 1.1;
+						}
+
+						p {
+							font-size: 13px;
+							font-style: italic;
+							text-align: center;
+						}
 					}
 				}
 			}
