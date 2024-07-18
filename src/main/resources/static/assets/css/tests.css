@@ -306,6 +306,7 @@ h2 {
   scale: 1.1;
 }
 .tests .hero-img .box-tests .box-container .container-tests .reset-test p {
+  margin-bottom: 4px;
   font-size: 13px;
   font-style: italic;
   text-align: center;

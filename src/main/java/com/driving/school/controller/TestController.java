@@ -2,7 +2,9 @@ package com.driving.school.controller;
 
 import com.driving.school.model.Question;
 import com.driving.school.model.SchoolUser;
+import com.driving.school.model.StudentAnswersTest;
 import com.driving.school.model.Test;
+import com.driving.school.repository.StudentAnswersTestRepository;
 import com.driving.school.repository.UserLikedQuestionRepository;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.SchoolUserService;
@@ -28,7 +30,7 @@ public class TestController {
     private final UserLikedQuestionRepository userLikedQuestionRepository;
 
     @Autowired
-    public TestController(TestService testService, QuestionService questionService, StudentAnswersTestService studentAnswersTestService, SchoolUserService schoolUserService, UserLikedQuestionRepository likedQuestionRepository, UserLikedQuestionRepository userLikedQuestionRepository) {
+    public TestController(TestService testService, QuestionService questionService, StudentAnswersTestService studentAnswersTestService, SchoolUserService schoolUserService, UserLikedQuestionRepository userLikedQuestionRepository, StudentAnswersTestRepository studentAnswersTestRepository) {
         this.testService = testService;
         this.questionService = questionService;
         this.studentAnswersTestService = studentAnswersTestService;
@@ -87,7 +89,6 @@ public class TestController {
         modelAndView.addObject("percentagesRemainingAnswers", percentagesRemainingAnswers);
 
         modelAndView.addObject("allDone", tests.getFirst().getNumberQuestions() != 0 && numberCorrectAnswers + numberIncorrectAnswers + numberSkippedAnswers == tests.getFirst().getNumberQuestions());
-        modelAndView.addObject("allDone", true);
         return modelAndView;
     }
 
@@ -125,12 +126,6 @@ public class TestController {
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
                 break;
 
-                // TODO: jak sie skonczy robic test i sie wroci to niech wroci do selekcji
-
-            case "BACK":
-                modelAndView = selectQuestions(testId, session);
-                break;
-
             default:
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
                 break;
@@ -141,11 +136,19 @@ public class TestController {
         else
             schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
 
+        if (action.equals("BACK"))
+            modelAndView = selectQuestions(testId, session);
+
         return modelAndView;
     }
 
-//    @PostMapping(value = {"/tests/resetTest"})
-//    public ModelAndView resetTest(@RequestParam("testId") Long testId, @RequestParam("questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session) {
-//
-//    }
+    @PostMapping(value = {"/tests/resetTest"})
+    public ModelAndView resetTest(@RequestParam("testId") Long testId, HttpSession session) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Test test = testService.getTestById(testId);
+        List<StudentAnswersTest> answers = studentAnswersTestService.findAllBySchoolUserAndTest(user, test);
+        if (answers.size() == test.getNumberQuestions())
+            studentAnswersTestService.deleteAllStudentAnswersTest(answers);
+        return selectQuestions(testId, session);
+    }
 }

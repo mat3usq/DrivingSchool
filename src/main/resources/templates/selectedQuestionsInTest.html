@@ -125,10 +125,11 @@
 									</div>
 								</form>
 
-								<form class="reset-test" th:action="@{/tests/resetTest}" th:if="${allDone}">
+								<form class="reset-test" th:action="@{/tests/resetTest}" th:if="${allDone}" method="post">
 									<input type="hidden" name="testId" th:value="${test.id}" />
-									<button>Spróbuj ponownie 🥸</button>
+									<button>Resetuj Odpowiedzi🥸</button>
 									<p>Uwaga! Klikając w przycisk usuniesz wszystkie odpowiedzi do pytań w teście.</p>
+									<p>Ulubione pytania nie zostana usuniete.</p>
 								</form>
 							</div>
 						</div>

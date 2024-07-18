@@ -40,8 +40,8 @@ public class StudentAnswersTestService {
         return studentAnswersTestRepository.findAll();
     }
 
-    public void deleteTestById(Long id) {
-        studentAnswersTestRepository.deleteById(id);
+    public void deleteAllStudentAnswersTest(List<StudentAnswersTest> studentAnswersTestList) {
+        studentAnswersTestRepository.deleteAll(studentAnswersTestList);
     }
 
     public StudentAnswersTest save(SchoolUser loggedUser, Long testId, Long questionId, String answer, Boolean isLiked) {
@@ -72,6 +72,13 @@ public class StudentAnswersTestService {
 
                 if (userLikedQuestion != null && isLiked)
                     userLikedQuestionRepository.save(userLikedQuestion);
+
+                if(studentAnswersTest == null) {
+                    studentAnswersTest = new StudentAnswersTest();
+                    studentAnswersTest.setSchoolUser(loggedUser);
+                    studentAnswersTest.setTest(t);
+                    studentAnswersTest.setQuestion(q);
+                }
 
                 if (q != null && !answer.equals("SKIP")) {
                     studentAnswersTest.setCorrectness(q.getCorrectAnswer().equals(answer));
@@ -130,5 +137,9 @@ public class StudentAnswersTestService {
 
     public List<Question> findQuestionsByUserIdAndTestId(Long userId, Long testId) {
         return studentAnswersTestRepository.findQuestionsByUserIdAndTestId(userId, testId);
+    }
+
+    public List<StudentAnswersTest> findAllBySchoolUserAndTest(SchoolUser user, Test test) {
+        return studentAnswersTestRepository.findAllBySchoolUserAndTest(user, test);
     }
 }
