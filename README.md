@@ -37,6 +37,10 @@
 - Testowanie i weryfikacja poprawności działania aplikacji
 
 ## TODO must have
+- Dashboard:
+  - Wybieranie kategori
+  - Jakies podstawowe statysstyki do ucznia (wykresy w js)
+  - Aktualnosci (blog)
 - Dodanie strony error...
 - Rozwiązywanie testów i podział testów na kategorie
 - Statystyki rozwiązanych testów
