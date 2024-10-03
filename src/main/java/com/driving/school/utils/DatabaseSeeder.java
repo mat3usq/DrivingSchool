@@ -4,7 +4,9 @@ import com.driving.school.model.*;
 import com.driving.school.repository.*;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.TestService;
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,26 +130,48 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void mapQuestionsToDb() {
         List<Test> tests = testService.getAllTestsByCategory("B");
-        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/questions/questions.csv"))) {
+        try (CSVReader reader = new CSVReaderBuilder(new FileReader("src/main/resources/data/questions/questions.csv"))
+                .withCSVParser(new CSVParserBuilder()
+                        .withSeparator(';')
+                        .build())
+                .build()) {
             List<String[]> records = reader.readAll();
-            Integer iteration = 0;
+            int iteration = 0;
             long startTime = System.nanoTime();
             for (String[] record : records) {
                 Question question = new Question();
+
                 question.setQuestion(record[0]);
-                question.setAnswerA(record[1]);
-                question.setAnswerB(record[2]);
-                question.setAnswerC(record[3]);
-                if (record[3].equals("BRAK"))
+
+                question.setMediaName(record[1]);
+
+                question.setDrivingCategory(record[2]);
+
+                question.setQuestionType(record[3].equals("TAK"));
+
+                question.setSubjectArea(record[4]);
+
+                question.setExplanation(record[5]);
+
+                question.setAnswerA(record[6]);
+                question.setAnswerB(record[7]);
+                question.setAnswerC(record[8]);
+
+                question.setCorrectAnswer(record[9].toUpperCase());
+
+                question.setPoints(Long.valueOf(record[10]));
+
+                question.setSource(record[11]);
+
+                question.setConnectionWithSecurity(record[12]);
+
+                if (record[6].isEmpty())
                     question.setAvailableAnswers(2L);
                 else
                     question.setAvailableAnswers(3L);
-                question.setCorrectAnswer(record[4].toUpperCase());
-                question.setDrivingCategory(record[5]);
-                question.setMediaName(record[6]);
-                question.setQuestionType(record[7].equals("tak"));
+
                 tests.forEach(t -> {
-                    if (t.getName().equals(record[8]) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
+                    if (t.getName().equals(record[4]) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
                         List<Test> questionTests = question.getTests();
                         questionTests.add(t);
                         question.setTests(questionTests);
@@ -157,7 +181,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                     }
                 });
 
-                if (++iteration == 500)
+                if (++iteration == 200)
                     break;
             }
 
