@@ -240,6 +240,9 @@ h2 {
 							cursor: pointer;
 						}
 
+						.next {
+							background-color: $btn-bg-color;
+						}
 
 						#yes,
 						#no {
@@ -251,6 +254,13 @@ h2 {
 						button:hover,
 						a:hover {
 							scale: 1.1;
+						}
+
+						#yes.active-button, #no.active-button {
+							scale: 1.1;
+							border: 3px solid $secondary-color;
+							background-color: $secondary-color; 
+							color: $bg-calendar-color; 
 						}
 					}
 
@@ -289,6 +299,12 @@ h2 {
 							cursor: pointer;
 						}
 
+						.next {
+							font-weight: bold;
+							font-weight: 600;
+							padding: 10px 20px;
+						}
+
 						.answer:nth-child(1)::before {
 							content: 'A';
 							background-color: $bg-category-color;
@@ -324,9 +340,22 @@ h2 {
 							top: 50%;
 							transform: translateY(-50%);
 						}
+						
 						button:hover {
-							scale: 1.05;
+							scale: 1.1;
 						}
+
+						#answerA.active-button, #answerB.active-button, #answerC.active-button {
+							scale: 1.1;
+							transition: 0.3s; 
+						}
+
+						#answerA.active-button::before, #answerB.active-button::before, #answerC.active-button::before {
+							scale: 1.1;
+							background-color: $secondary-color; 
+							color: $bg-calendar-color; 
+							transition: 0.3s; 
+						}						
 					}
 				}
 			}
@@ -423,7 +452,8 @@ h2 {
 				.box-container {
 					width: 95%;
 					.container-exam,
-					.header-exam, .header-exam-info {
+					.header-exam,
+					.header-exam-info {
 						width: 100%;
 						span {
 							font-size: 20px;
@@ -467,7 +497,8 @@ h2 {
 						}
 					}
 
-					.header-exam, .header-exam-info {
+					.header-exam,
+					.header-exam-info {
 						flex-direction: column;
 					}
 				}

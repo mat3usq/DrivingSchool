@@ -69,7 +69,6 @@ public class ExamController {
 
         int maxQuestions = 32;
         int remainingQuestions = maxQuestions - questionSet.size();
-
         int noSpecCounter;
         int specCounter = 0;
 

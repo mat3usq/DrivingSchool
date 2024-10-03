@@ -309,6 +309,10 @@ h2 {
 .exam .hero-img .box-exam .box-container .container-exam .specific-question a:not(:disabled) {
   cursor: pointer;
 }
+.exam .hero-img .box-exam .box-container .container-exam .normal-question .next,
+.exam .hero-img .box-exam .box-container .container-exam .specific-question .next {
+  background-color: #4d84e2;
+}
 .exam .hero-img .box-exam .box-container .container-exam .normal-question #yes,
 .exam .hero-img .box-exam .box-container .container-exam .normal-question #no,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question #yes,
@@ -322,6 +326,14 @@ h2 {
 .exam .hero-img .box-exam .box-container .container-exam .specific-question button:hover,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question a:hover {
   scale: 1.1;
+}
+.exam .hero-img .box-exam .box-container .container-exam .normal-question #yes.active-button, .exam .hero-img .box-exam .box-container .container-exam .normal-question #no.active-button,
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #yes.active-button,
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #no.active-button {
+  scale: 1.1;
+  border: 3px solid #ffd166;
+  background-color: #ffd166;
+  color: rgba(39, 43, 57, 0.95);
 }
 .exam .hero-img .box-exam .box-container .container-exam .specific-question .button-box,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question .button-action {
@@ -352,6 +364,11 @@ h2 {
 }
 .exam .hero-img .box-exam .box-container .container-exam .specific-question button:not(:disabled) {
   cursor: pointer;
+}
+.exam .hero-img .box-exam .box-container .container-exam .specific-question .next {
+  font-weight: bold;
+  font-weight: 600;
+  padding: 10px 20px;
 }
 .exam .hero-img .box-exam .box-container .container-exam .specific-question .answer:nth-child(1)::before {
   content: "A";
@@ -387,7 +404,17 @@ h2 {
   transform: translateY(-50%);
 }
 .exam .hero-img .box-exam .box-container .container-exam .specific-question button:hover {
-  scale: 1.05;
+  scale: 1.1;
+}
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerA.active-button, .exam .hero-img .box-exam .box-container .container-exam .specific-question #answerB.active-button, .exam .hero-img .box-exam .box-container .container-exam .specific-question #answerC.active-button {
+  scale: 1.1;
+  transition: 0.3s;
+}
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerA.active-button::before, .exam .hero-img .box-exam .box-container .container-exam .specific-question #answerB.active-button::before, .exam .hero-img .box-exam .box-container .container-exam .specific-question #answerC.active-button::before {
+  scale: 1.1;
+  background-color: #ffd166;
+  color: rgba(39, 43, 57, 0.95);
+  transition: 0.3s;
 }
 
 .contact {
@@ -463,11 +490,13 @@ h2 {
     width: 95%;
   }
   .exam .hero-img .box-exam .box-container .container-exam,
-  .exam .hero-img .box-exam .box-container .header-exam, .exam .hero-img .box-exam .box-container .header-exam-info {
+  .exam .hero-img .box-exam .box-container .header-exam,
+  .exam .hero-img .box-exam .box-container .header-exam-info {
     width: 100%;
   }
   .exam .hero-img .box-exam .box-container .container-exam span,
-  .exam .hero-img .box-exam .box-container .header-exam span, .exam .hero-img .box-exam .box-container .header-exam-info span {
+  .exam .hero-img .box-exam .box-container .header-exam span,
+  .exam .hero-img .box-exam .box-container .header-exam-info span {
     font-size: 20px;
   }
   .exam .hero-img .box-exam .box-container .container-exam .normal-question .info-container,
@@ -489,7 +518,8 @@ h2 {
   .exam .hero-img .box-exam .box-container .container-exam .exam-info svg {
     width: 300px;
   }
-  .exam .hero-img .box-exam .box-container .header-exam, .exam .hero-img .box-exam .box-container .header-exam-info {
+  .exam .hero-img .box-exam .box-container .header-exam,
+  .exam .hero-img .box-exam .box-container .header-exam-info {
     flex-direction: column;
   }
 }
