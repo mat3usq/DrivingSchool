@@ -34,24 +34,20 @@ public class ExamController {
 
     @PostMapping("/exam/generate")
     public ModelAndView generateExam(HttpSession session) {
+        String category = "B";
         ModelAndView modelAndView = new ModelAndView();
 
-        if (session.getAttribute("currentQuestionExam") == null) {
-            List<Question> questionSet = studentExamService.generateQuestionSet();
-            SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-            StudentExam studentExam = new StudentExam();
+        List<Question> questionSet = studentExamService.generateQuestionSet(category);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-            studentExam.setSchoolUser(user);
-            studentExam.setCategory("B");
-            studentExam.setPoints(Long.valueOf("0"));
-            studentExam = studentExamService.createStudentExam(studentExam);
+        StudentExam studentExam = new StudentExam();
+        studentExam.setSchoolUser(user);
+        studentExam.setCategory(category);
+        studentExam.setPoints(Long.valueOf("0"));
+        studentExam = studentExamService.createStudentExam(studentExam);
 
-            session.setAttribute("questionSet", questionSet);
-            session.setAttribute("currentQuestionExam", 1);
-            session.setAttribute("exam", studentExam);
-
-            System.out.println(studentExam);
-        }
+        session.setAttribute("questionSet", questionSet);
+        session.setAttribute("exam", studentExam);
 
         modelAndView.setViewName("redirect:/exam/solve");
         return modelAndView;
@@ -59,24 +55,41 @@ public class ExamController {
 
     @GetMapping("/exam/solve")
     public ModelAndView examSolve(HttpSession session) {
-        if (session.getAttribute("currentQuestionExam") == null)
-            return generateExam(session);
+        if (session.getAttribute("questionSet") == null)
+            return examInfo();
 
         ModelAndView modelAndView = new ModelAndView("solveExam");
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
-        Integer currentQuestionExam = (Integer) session.getAttribute("currentQuestionExam");
-        Question question = questionSet.get(currentQuestionExam - 1);
-        currentQuestionExam++;
-        session.setAttribute("currentQuestionExam", currentQuestionExam);
-        modelAndView.addObject("question", question);
+
+        if (!questionSet.isEmpty()) {
+            Question question = questionSet.getFirst();
+            questionSet.remove(question);
+            modelAndView.addObject("question", question);
+        }
+
+        int maxQuestions = 32;
+        int remainingQuestions = maxQuestions - questionSet.size();
+
+        int noSpecCounter;
+        int specCounter = 0;
+
+        if (remainingQuestions <= 20)
+            noSpecCounter = remainingQuestions;
+        else {
+            noSpecCounter = 20;
+            specCounter = remainingQuestions - 20;
+        }
+
+        modelAndView.addObject("noSpecCounter", noSpecCounter);
+        modelAndView.addObject("specCounter", specCounter);
 
         return modelAndView;
     }
 
+
     @PostMapping(value = {"/exam/action"})
     public ModelAndView getActionFromExam(@RequestParam("questionId") Long questionId, @RequestParam("action") String action, HttpSession session) {
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
-        Integer currentQuestionExam = (Integer) session.getAttribute("currentQuestionExam");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
 
         studentExam = studentExamService.getStudentExamById(studentExam.getId());
@@ -97,10 +110,9 @@ public class ExamController {
         studentExamAnswerService.save(studentExamAnswer);
 
         ModelAndView modelAndView;
-        if (questionSet.size() == currentQuestionExam) {
-            session.setAttribute("currentQuestionExam", -1);
+        if (questionSet.isEmpty())
             modelAndView = summary(session);
-        } else
+        else
             modelAndView = examSolve(session);
 
         return modelAndView;
@@ -108,7 +120,7 @@ public class ExamController {
 
     @GetMapping("/exam/result")
     public ModelAndView summary(HttpSession session) {
-        if ((Integer) session.getAttribute("currentQuestionExam") == -1) {
+        if (session.getAttribute("questionSet") != null && ((List<Question>) session.getAttribute("questionSet")).isEmpty()) {
             ModelAndView modelAndView = new ModelAndView("examResult");
             StudentExam studentExam = (StudentExam) session.getAttribute("exam");
 
@@ -116,10 +128,9 @@ public class ExamController {
             Long points = studentExam.getPoints();
             modelAndView.addObject("points", points);
 
-            session.setAttribute("currentQuestionExam", null);
             session.setAttribute("questionSet", null);
             session.setAttribute("exam", null);
             return modelAndView;
-        } else return new ModelAndView("redirect:/exam/solve");
+        } else return examSolve(session);
     }
 }

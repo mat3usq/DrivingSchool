@@ -60,7 +60,7 @@
                         </div>
                         <div class="container-test">
                             <div class="test-info">
-                                <th:block th:if="${!question.mediaName.equals('BRAK')}">
+                                <th:block th:if="${!question.mediaName.isEmpty()}">
                                     <th:block th:if="${#strings.endsWith(question.mediaName, '.jpg')}">
                                         <img th:src="'/assets/Visualization_Of_Questions/' + ${question.mediaName}"
                                              th:alt="${question.mediaName}">
@@ -75,7 +75,7 @@
                                     </th:block>
                                 </th:block>
 
-                                <th:block th:if="${question.mediaName.equals('BRAK')}">
+                                <th:block th:if="${question.mediaName.isEmpty()}">
                                     <th:block th:replace="~{carAnimation :: driving-school-car}"></th:block>
                                 </th:block>
 

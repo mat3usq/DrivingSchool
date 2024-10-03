@@ -42,10 +42,10 @@
                     </div>
                     <div class="header-exam-info">
                         <div th:if="${!question.questionType}">
-                            <p class="info">Czesc Podstawowa <span class="counter"><span>X</span> /20</span></p>
+                            <p class="info">Czesc Podstawowa <span class="counter"><span th:text="${noSpecCounter}"></span> / 20</span></p>
                         </div>
                         <div th:if="${question.questionType}">
-                            <p class="info">Czesc Specjalistyczna <span class="counter"><span>X</span> /12</span></p>
+                            <p class="info">Czesc Specjalistyczna <span class="counter"><span th:text="${specCounter}"></span> / 12</span></p>
                         </div>
                         <div>
                             <p class="info">Czas na odpowiedz <span>XX s</span></p>
@@ -54,7 +54,7 @@
 
                     <div class="container-exam">
                         <div class="exam-info">
-                            <th:block th:if="${!question.mediaName.equals('BRAK')}">
+                            <th:block th:if="${!question.mediaName.isEmpty()}">
                                 <th:block th:if="${#strings.endsWith(question.mediaName, '.jpg')}">
                                     <img th:src="'/assets/Visualization_Of_Questions/' + ${question.mediaName}"
                                          th:alt="${question.mediaName}">
@@ -69,7 +69,7 @@
                                 </th:block>
                             </th:block>
 
-                            <th:block th:if="${question.mediaName.equals('BRAK')}">
+                            <th:block th:if="${question.mediaName.isEmpty()}">
                                 <th:block th:replace="~{carAnimation :: driving-school-car}"></th:block>
                             </th:block>
 

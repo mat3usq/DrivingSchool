@@ -65,10 +65,9 @@ public class StudentExamService {
         return studentExamRepository.findBySchoolUser(schoolUser);
     }
 
-    public List<Question> generateQuestionSet() {
-        String category = "B";
+    public List<Question> generateQuestionSet(String category) {
         int numberOfNoSpecialistQuestions = 20;
-        int numberOfSpecialistQuestions = 1;
+        int numberOfSpecialistQuestions = 12;
         List<Question> noSpecialistQuestions = questionService.getRandomNoSpecialistcQuestionsByCategory(category, numberOfNoSpecialistQuestions);
         List<Question> specialistQuestions = questionService.getRandomSpecialistcQuestionsByCategory(category, numberOfSpecialistQuestions);
 
