@@ -3,27 +3,45 @@
 ## Opis
 1. Interaktywny Harmonogram Lekcji Jazdy
 - Umożliwia zarówno instruktorom, jak i uczniom rezerwację i śledzenie lekcji jazdy. Zawiera kalendarz z możliwością filtrowania dostępnych terminów oraz opcję anulowania i zmiany rezerwacji.
+  - chyba wszystko dziala -> przeprowadzic testy
 
 2. Materiały Edukacyjne i Testy
 - Sekcja z zasobami do nauki teorii, w tym quizami i testami. Zawiera materiały szkoleniowe, takie jak przepisy drogowe, znaki drogowe, procedury awaryjne, i inne.
+  - dodac, aby dane byly wysietlane zgodnie z kategoria w testach-pytania i wyklady-materialy
+  - testy dodac zbieranie statystk i wysiwetlanie w dashobardzie 
+  - przetestowac to wszystko 
 
 3. Śledzenie Postępu Ucznia
 - Funkcja, która pozwala zarówno uczniom, jak i instruktorom na śledzenie postępów w nauce. Obejmuje liczbę ukończonych godzin jazdy, oceny z testów teoretycznych i praktycznych, oraz indywidualne uwagi od instruktorów.
+  - student powinien widziec w dashobardzie swoje kategorie oraz postepy statystki typu ile % ma pozytywnych egz jakies srednie i do testow ile zrobil ogolu testow czy cos oraz inne sprawy od instruktorow
+  - instruktor powinien widziec wszystkich swoich studentow i mogl rozwijac ich staystki w sensie widziec zrobic taki efekt na froncie 
+  - instruktor moze dodawac komenatrze do ucznia oraz jakies godziny jazdy oraz ocenki z testow jakichs swoich, uwagi 
+  - jesli to wszystko sie zrobic to trzeba wszystko potem potestowac itp
 
 4. Komunikacja i Powiadomienia
 - System wiadomości do komunikacji między uczniami a instruktorami oraz automatyczne przypomnienia o zbliżających się lekcjach czy testach.
+  - zrobic poprostu poczte zeby mozna wysylac maila itp
+  - powiadomienia typu zrobic w dashboardzie sekcje powiadomienia i neich sie tam wyswietla dodanie jakichs info od instruktoea typu dodal materialy lub zrobil spotkanie lub komenatz jakis dla ucznia itp / albo poprostu wysylac powiadomienia na maila albo cos xd
+  - potem testowanko
 
 5. Panel Administracyjny dla Szkoły Jazdy
 - Umożliwia zarządzanie harmonogramem instruktorów, monitorowanie postępów uczniów, generowanie raportów oraz zarządzanie płatnościami.
+  - admin widzi te wszystkie spotkania itp ale idk czy jakos tego nie rozbudowac/ wszystkie inne rzeczy co sie robi to musza byc jakos dostosowane zeby admin mogl to tez tworzyc edytowac itp
+  - monitorwoanie to raczej to co widzi instruktor tylko wszystkich uczniow ooglnie(mozna zrobic dla admina wyszukiwarke poprostu i bedzie mial ogolnie cale info o gosciu) 
+  - raporty ?? (ogarnie sie )
+  - platnosci (raczej admin to powinien ogarniac w sensie dodawac itp a student to niech widzi ze jest opalcone, admin bedzie mogl dawac permisje itp)
+  - jak sie ogarnie wszystko to testowanko
 
 6. Interfejs Użytkownika Przyjazny dla Użytkownika
 - Aplikacja będzie intuicyjna i łatwa w obsłudze dla wszystkich osób poprzez prostotę programu.
+  - raczej spelnione xd
 
 7. Bezpieczeństwo i Prywatność Danych
 - Zapewnienie wysokiego poziomu bezpieczeństwa danych osobowych, zgodnego z obowiązującymi przepisami o ochronie danych.
 
 8. Mobilna dostępność
 - Aplikacja przystosowana do wyświetlania na systemach mobilnych, co ułatwia zarządzanie szkołą jazdy oraz poprawia doświadczenie nauki dla uczniów.
+  - trzeba wszystkie widoki potestowac co tam sie dzieje czy nic sie nie rozwala na roznych rozdzielczosciach
 
 9. Słowa kluczowe
 - szkoła, prawo jazdy, test, egzamin, harmonogram, edukacja, testy, teoria, kursy
