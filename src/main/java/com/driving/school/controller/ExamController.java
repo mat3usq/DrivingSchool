@@ -1,8 +1,6 @@
 package com.driving.school.controller;
 
-
 import com.driving.school.model.*;
-import com.driving.school.service.ExamService;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.StudentExamAnswerService;
 import com.driving.school.service.StudentExamService;
@@ -19,15 +17,12 @@ import java.util.List;
 @Controller
 public class ExamController {
     private final QuestionService questionService;
-    private final ExamService examService;
     private final StudentExamService studentExamService;
     private final StudentExamAnswerService studentExamAnswerService;
 
     @Autowired
-    public ExamController(QuestionService questionService, ExamService examService, StudentExamService studentExamService,
-    StudentExamAnswerService studentExamAnswerService) {
+    public ExamController(QuestionService questionService, StudentExamService studentExamService, StudentExamAnswerService studentExamAnswerService) {
         this.questionService = questionService;
-        this.examService = examService;
         this.studentExamService = studentExamService;
         this.studentExamAnswerService = studentExamAnswerService;
     }
@@ -38,96 +33,93 @@ public class ExamController {
     }
 
     @PostMapping("/exam/generate")
-    public String generateExam(HttpSession session) {
-        List<Question> questionSet = generateQuestionSet();
-        session.setAttribute("questionSet", questionSet);
-        session.setAttribute("currentQuestion", 0);
-        StudentExam studentExam = new StudentExam();
-        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-        studentExam.setSchoolUser(user);
-        Exam exam = new Exam();
-        exam.setPoints(Long.valueOf("74"));
-        exam.setName("B");
-        exam = examService.createExam(exam);
-        studentExam.setExam(exam);
-        studentExam.setPoints(Long.valueOf("0"));
-        studentExam.setCategory("B");
-        studentExam = studentExamService.createStudentExam(studentExam);
-        session.setAttribute("exam", studentExam);
-        System.out.println(studentExam);
-        return "redirect:/exam/solve";
+    public ModelAndView generateExam(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        if (session.getAttribute("currentQuestionExam") == null) {
+            List<Question> questionSet = studentExamService.generateQuestionSet();
+            SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+            StudentExam studentExam = new StudentExam();
+
+            studentExam.setSchoolUser(user);
+            studentExam.setCategory("B");
+            studentExam.setPoints(Long.valueOf("0"));
+            studentExam = studentExamService.createStudentExam(studentExam);
+
+            session.setAttribute("questionSet", questionSet);
+            session.setAttribute("currentQuestionExam", 1);
+            session.setAttribute("exam", studentExam);
+
+            System.out.println(studentExam);
+        }
+
+        modelAndView.setViewName("redirect:/exam/solve");
+        return modelAndView;
     }
 
     @GetMapping("/exam/solve")
     public ModelAndView examSolve(HttpSession session) {
+        if (session.getAttribute("currentQuestionExam") == null)
+            return generateExam(session);
+
         ModelAndView modelAndView = new ModelAndView("solveExam");
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
-        Integer currentQuestion = (Integer) session.getAttribute("currentQuestion");
-        Question question = questionSet.get(currentQuestion);
-        currentQuestion++;
-        session.setAttribute("currentQuestion", currentQuestion);
+        Integer currentQuestionExam = (Integer) session.getAttribute("currentQuestionExam");
+        Question question = questionSet.get(currentQuestionExam - 1);
+        currentQuestionExam++;
+        session.setAttribute("currentQuestionExam", currentQuestionExam);
         modelAndView.addObject("question", question);
-        return modelAndView;
-    }
 
-    @GetMapping("/exam/result")
-    public ModelAndView summary(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("examResult");
-        StudentExam studentExam = (StudentExam) session.getAttribute("exam");
-
-        studentExam = studentExamService.getStudentExamById(studentExam.getId());
-        Long points = studentExam.getPoints();
-        modelAndView.addObject("points", points);
         return modelAndView;
     }
 
     @PostMapping(value = {"/exam/action"})
     public ModelAndView getActionFromExam(@RequestParam("questionId") Long questionId, @RequestParam("action") String action, HttpSession session) {
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
-        Integer currentQuestion = (Integer) session.getAttribute("currentQuestion");
+        Integer currentQuestionExam = (Integer) session.getAttribute("currentQuestionExam");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
-        System.out.println(studentExam);
+
         studentExam = studentExamService.getStudentExamById(studentExam.getId());
         Question question = questionService.findById(questionId).orElse(null);
-        if(studentExam==null){
-        System.out.println(studentExam);}
-        else{
-            System.out.println("jest nulem");
-        }
+
         StudentExamAnswer studentExamAnswer = new StudentExamAnswer();
         studentExamAnswer.setStudentExam(studentExam);
         studentExamAnswer.setQuestion(question);
         studentExamAnswer.setAnswer(action);
         studentExamAnswer.setCorrectness(false);
-        studentExamAnswer.setOrder(currentQuestion);
 
-
-
-        if (action.equals(question.getCorrectAnswer())) {
+        if (question != null && action.equals(question.getCorrectAnswer())) {
             studentExam.setPoints(studentExam.getPoints() + question.getPoints());
-            studentExamService.updateStudentExam(studentExam.getId(), studentExam);
             studentExamAnswer.setCorrectness(true);
+            studentExamService.updateStudentExam(studentExam.getId(), studentExam);
         }
 
         studentExamAnswerService.save(studentExamAnswer);
 
         ModelAndView modelAndView;
-        if (questionSet.size() == currentQuestion)
+        if (questionSet.size() == currentQuestionExam) {
+            session.setAttribute("currentQuestionExam", -1);
             modelAndView = summary(session);
-        else
+        } else
             modelAndView = examSolve(session);
 
         return modelAndView;
     }
 
-    private List<Question> generateQuestionSet() {
-        String category = "B";
-        int numberOfNoSpecialistQuestions = 4;
-//        int numberOfSpecialistQuestions = 12;
-        List<Question> noSpecialistQuestions = questionService.getRandomNoSpecialistcQuestionsByCategory(category, numberOfNoSpecialistQuestions);
-//        List<Question> specialistQuestions = questionService.getRandomSpecialistcQuestionsByCategory(category, numberOfSpecialistQuestions);
+    @GetMapping("/exam/result")
+    public ModelAndView summary(HttpSession session) {
+        if ((Integer) session.getAttribute("currentQuestionExam") == -1) {
+            ModelAndView modelAndView = new ModelAndView("examResult");
+            StudentExam studentExam = (StudentExam) session.getAttribute("exam");
 
-//        noSpecialistQuestions.addAll(specialistQuestions);
-        return noSpecialistQuestions;
+            studentExam = studentExamService.getStudentExamById(studentExam.getId());
+            Long points = studentExam.getPoints();
+            modelAndView.addObject("points", points);
+
+            session.setAttribute("currentQuestionExam", null);
+            session.setAttribute("questionSet", null);
+            session.setAttribute("exam", null);
+            return modelAndView;
+        } else return new ModelAndView("redirect:/exam/solve");
     }
 }

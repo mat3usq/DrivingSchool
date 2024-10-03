@@ -12,18 +12,16 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "STUDENTEXAMANSWER")
 public class StudentExamAnswer {
-    @EmbeddedId
-    private StudentExamAnswerId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ANSWER_ID")
+    private Long id;
 
-    @MapsId("studentExamId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "STUDENTEXAMID", nullable = false)
     private StudentExam studentExam;
 
-    @MapsId("questionId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "QUESTIONID", nullable = false)
     private Question question;
 
@@ -36,9 +34,6 @@ public class StudentExamAnswer {
     @Column(name = "ANSWER")
     private String answer;
 
-    @Column(name = "ORDER")
-    private Integer order;
-
     @Override
     public String toString() {
         return "StudentExamAnswer{" +
@@ -48,7 +43,6 @@ public class StudentExamAnswer {
                 ", answerType=" + answerType +
                 ", correctness=" + correctness +
                 ", answer='" + answer + '\'' +
-                ", order=" + order +
                 '}';
     }
 }

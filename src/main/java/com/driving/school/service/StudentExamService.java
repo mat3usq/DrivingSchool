@@ -1,6 +1,7 @@
 package com.driving.school.service;
 
 
+import com.driving.school.model.Question;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.model.StudentExam;
 import com.driving.school.repository.StudentExamRepository;
@@ -12,9 +13,14 @@ import java.util.Optional;
 
 @Service
 public class StudentExamService {
+    private final StudentExamRepository studentExamRepository;
+    private final QuestionService questionService;
 
     @Autowired
-    private StudentExamRepository studentExamRepository;
+    public StudentExamService(StudentExamRepository studentExamRepository, QuestionService questionService) {
+        this.studentExamRepository = studentExamRepository;
+        this.questionService = questionService;
+    }
 
 
     public StudentExam createStudentExam(StudentExam studentExam) {
@@ -38,7 +44,6 @@ public class StudentExamService {
             StudentExam studentExam = optionalStudentExam.get();
             studentExam.setCategory(studentExamDetails.getCategory());
             studentExam.setPoints(studentExamDetails.getPoints());
-            studentExam.setExam(studentExamDetails.getExam());
             studentExam.setSchoolUser(studentExamDetails.getSchoolUser());
             studentExam.setStudentExamAnswers(studentExamDetails.getStudentExamAnswers());
             return studentExamRepository.save(studentExam);
@@ -55,7 +60,19 @@ public class StudentExamService {
             throw new RuntimeException("StudentExam not found with id " + id);
         }
     }
+
     public List<StudentExam> getStudentExamsBySchoolUser(SchoolUser schoolUser) {
         return studentExamRepository.findBySchoolUser(schoolUser);
+    }
+
+    public List<Question> generateQuestionSet() {
+        String category = "B";
+        int numberOfNoSpecialistQuestions = 20;
+        int numberOfSpecialistQuestions = 1;
+        List<Question> noSpecialistQuestions = questionService.getRandomNoSpecialistcQuestionsByCategory(category, numberOfNoSpecialistQuestions);
+        List<Question> specialistQuestions = questionService.getRandomSpecialistcQuestionsByCategory(category, numberOfSpecialistQuestions);
+
+        noSpecialistQuestions.addAll(specialistQuestions);
+        return noSpecialistQuestions;
     }
 }

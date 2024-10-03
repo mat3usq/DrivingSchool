@@ -54,6 +54,15 @@ public class Question {
     @Column(name = "CATEGORY", length = 128)
     private String drivingCategory;
 
+    @Column(name = "SUBJECTAREA", length = 1024)
+    private String subjectArea;
+
+    @Column(name = "SOURCE", length = 1024)
+    private String source;
+
+    @Column(name = "CONNECTIONWITHSECURITY", length = 1024)
+    private String connectionWithSecurity;
+
     @Transient
     private Integer questionNumber;
 
@@ -65,9 +74,6 @@ public class Question {
             inverseJoinColumns = @JoinColumn(name = "TESTID")
     )
     private List<Test> tests = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "questions")
-    private Set<Exam> exams = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "question")
     private Set<StudentAnswersTest> studentAnswersTests = new LinkedHashSet<>();
@@ -91,7 +97,6 @@ public class Question {
                 ", questionType='" + questionType + '\'' +
                 ", category='" + drivingCategory + '\'' +
                 ", test=" + tests +
-                ", exams=" + exams +
                 ", studentAnswersTests=" + studentAnswersTests +
                 ", studentExamAnswers=" + studentExamAnswers +
                 '}';

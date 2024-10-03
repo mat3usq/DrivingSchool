@@ -27,11 +27,6 @@ public class StudentExam {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "EXAMID", nullable = false)
-    private Exam exam;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
     private SchoolUser schoolUser;
 

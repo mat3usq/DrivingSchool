@@ -101,19 +101,18 @@ public class QuestionService {
     }
 
     public List<Question> getAllNoSpecialisticQuestionByCategory(String category) {
-        List<Question> allQuestion = findAll().stream().filter(q -> q.getDrivingCategory().contains(category) && Boolean.FALSE.equals(q.getQuestionType())).toList();
-        return allQuestion;
+        return findAll().stream().filter(q -> q.getDrivingCategory().contains(category) && Boolean.FALSE.equals(q.getQuestionType())).toList();
     }
 
     public List<Question> getAllSpecialisticQuestionByCategory(String category) {
-        List<Question> allQuestion = findAll().stream().filter(q -> q.getDrivingCategory().contains(category) && Boolean.TRUE.equals(q.getQuestionType())).toList();
-        return allQuestion;
+        return findAll().stream()
+                .filter(q -> q.getDrivingCategory().contains(category) && Boolean.TRUE.equals(q.getQuestionType()))
+                .collect(Collectors.toList());
     }
 
     public List<Question> getRandomNoSpecialistcQuestionsByCategory(String category, int numberOfQuestions) {
         List<Question> filteredQuestions = new ArrayList<>(getAllNoSpecialisticQuestionByCategory(category));
         Collections.shuffle(filteredQuestions);
-        filteredQuestions = setPointsToNonSpecialisticQuestions(filteredQuestions);
         return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
     }
 
@@ -121,21 +120,6 @@ public class QuestionService {
         List<Question> filteredQuestions = getAllSpecialisticQuestionByCategory(category);
         Collections.shuffle(filteredQuestions);
         return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
-    }
-
-    public List<Question> setPointsToNonSpecialisticQuestions(List<Question> questionList) {
-        int i = 1;
-        for (Question question : questionList) {
-            if (i <= 10) {
-                question.setPoints(Long.valueOf("3"));
-            } else if (i > 10 && i <= 16) {
-                question.setPoints(Long.valueOf("2"));
-            } else if (i > 16) {
-                question.setPoints(Long.valueOf("1"));
-            }
-            i++;
-        }
-        return questionList;
     }
 
     public Question getQuestion(Long questionId) {
