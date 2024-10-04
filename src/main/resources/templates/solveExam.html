@@ -38,17 +38,26 @@
                     <div class="header-exam">
                         <p>Egzamin <span>Kategoria B</span></p>
                         <p>Zadanie za <span><th:block th:text="${question.points}"></th:block> Punkty</span></p>
-                        <p>Czas do konca <span>HH:MM</span></p>
+                        <p>Czas do konca <span id="timeToEnd" th:text="${timeToEnd}">25m 0s</span></p>
                     </div>
                     <div class="header-exam-info">
                         <div th:if="${!question.questionType}">
-                            <p class="info">Czesc Podstawowa <span class="counter"><span th:text="${noSpecCounter}"></span> / 20</span></p>
+                            <p class="info">Czesc Podstawowa <span class="counter"><span
+                                    th:text="${noSpecCounter}"></span> / 20</span></p>
                         </div>
                         <div th:if="${question.questionType}">
-                            <p class="info">Czesc Specjalistyczna <span class="counter"><span th:text="${specCounter}"></span> / 12</span></p>
+                            <p class="info">Czesc Specjalistyczna <span class="counter"><span
+                                    th:text="${specCounter}"></span> / 12</span></p>
                         </div>
                         <div>
-                            <p class="info">Czas na odpowiedz <span>XX s</span></p>
+                            <th:block th:if="${question.getQuestionType()}">
+                                <p class="info">Czas na odpowiedz <span id="specificTimer" th:text="${question.getAllTimeForQuestion()} + 's'">XX s</span></p>
+                            </th:block>
+
+                            <th:block th:if="${!question.getQuestionType()}">
+                                <p class="info">Czas na przygotowanie <span id="noSpecificTimerToPrepare" th:text="${question.getTimeForPrepare()} + 's'">XX s</span></p>
+                                <p hidden="hidden" class="info">Czas na odpowiedz <span id="noSpecificTimerToThink" th:text="${question.getTimeForThink()} + 's'">XX s</span></p>
+                            </th:block>
                         </div>
                     </div>
 

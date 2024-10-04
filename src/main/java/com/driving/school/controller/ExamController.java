@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -28,44 +29,61 @@ public class ExamController {
     }
 
     @GetMapping("/exam")
-    public ModelAndView examInfo() {
-        return new ModelAndView("instructionExam");
+    public ModelAndView examInfo(HttpSession session) {
+        if (session.getAttribute("exam") == null)
+            return new ModelAndView("instructionExam");
+        return examSolve(session, false);
     }
 
     @PostMapping("/exam/generate")
     public ModelAndView generateExam(HttpSession session) {
-        String category = "B";
-        ModelAndView modelAndView = new ModelAndView();
+        if (session.getAttribute("exam") == null) {
+            String category = "B";
 
-        List<Question> questionSet = studentExamService.generateQuestionSet(category);
-        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+            List<Question> questionSet = studentExamService.generateQuestionSet(category);
+            SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        StudentExam studentExam = new StudentExam();
-        studentExam.setSchoolUser(user);
-        studentExam.setCategory(category);
-        studentExam.setPoints(Long.valueOf("0"));
-        studentExam = studentExamService.createStudentExam(studentExam);
+            StudentExam studentExam = new StudentExam();
+            studentExam.setSchoolUser(user);
+            studentExam.setCategory(category);
+            studentExam.setPoints(Long.valueOf("0"));
+            studentExam.setStartTime(LocalDateTime.now());
+            studentExam = studentExamService.createStudentExam(studentExam);
 
-        session.setAttribute("questionSet", questionSet);
-        session.setAttribute("exam", studentExam);
+            session.setAttribute("questionSet", questionSet);
+            session.setAttribute("exam", studentExam);
 
-        modelAndView.setViewName("redirect:/exam/solve");
-        return modelAndView;
+            return examSolve(session, true);
+        }
+        return examSolve(session, false);
     }
 
     @GetMapping("/exam/solve")
-    public ModelAndView examSolve(HttpSession session) {
+    public ModelAndView examSolve(HttpSession session, @RequestParam(defaultValue = "true") boolean getNext) {
         if (session.getAttribute("questionSet") == null)
-            return examInfo();
+            return examInfo(session);
+
+        // TODO: dodac jak przekroczy czas 25 minut to przekierowac na result
+        //
+        // TODO: Podział pytań podstawowych w egzaminie:
+        // TODO: 10 pytań o wysokim znaczeniu dla bezpieczeństwa - 3 pkt za pytanie.
+        // TODO: 6 pytań o średnim znaczeniu dla bezpieczeństwa - 2 pkt za pytanie.
+        // TODO: 4 pytań o niskim znaczeniu dla bezpieczeństwa - 1 pkt za pytanie.
+        //
+        // TODO: Podział pytań specjalistycznych w egzaminie:
+        // TODO: 6 pytań o wysokim znaczeniu dla bezpieczeństwa - 3 pkt za pytanie.
+        // TODO: 4 pytań o średnim znaczeniu dla bezpieczeństwa - 2 pkt za pytanie.
+        // TODO: 2 pytań o niskim znaczeniu dla bezpieczeństwa - 1 pkt za pytanie.
 
         ModelAndView modelAndView = new ModelAndView("solveExam");
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
 
-        if (!questionSet.isEmpty()) {
+        if (!questionSet.isEmpty() && getNext) {
             Question question = questionSet.getFirst();
             questionSet.remove(question);
             modelAndView.addObject("question", question);
-        }
+            session.setAttribute("latestQuestion", question);
+        } else modelAndView.addObject("question", session.getAttribute("latestQuestion"));
 
         int maxQuestions = 32;
         int remainingQuestions = maxQuestions - questionSet.size();
@@ -79,15 +97,18 @@ public class ExamController {
             specCounter = remainingQuestions - 20;
         }
 
+        int timeToEnd = 25 * 60 - 150 - noSpecCounter * 35 - specCounter * 50;
+
+        modelAndView.addObject("timeToEnd", String.format("%dm %ds", timeToEnd / 60, timeToEnd % 60));
         modelAndView.addObject("noSpecCounter", noSpecCounter);
         modelAndView.addObject("specCounter", specCounter);
 
         return modelAndView;
     }
 
-
     @PostMapping(value = {"/exam/action"})
-    public ModelAndView getActionFromExam(@RequestParam("questionId") Long questionId, @RequestParam("action") String action, HttpSession session) {
+    public ModelAndView getActionFromExam(@RequestParam("questionId") Long
+                                                  questionId, @RequestParam("action") String action, HttpSession session) {
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
 
@@ -112,7 +133,7 @@ public class ExamController {
         if (questionSet.isEmpty())
             modelAndView = summary(session);
         else
-            modelAndView = examSolve(session);
+            modelAndView = examSolve(session, true);
 
         return modelAndView;
     }
@@ -129,7 +150,8 @@ public class ExamController {
 
             session.setAttribute("questionSet", null);
             session.setAttribute("exam", null);
+            session.setAttribute("latestQuestion", null);
             return modelAndView;
-        } else return examSolve(session);
+        } else return examInfo(session);
     }
 }

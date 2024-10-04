@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const answerA = document.getElementById('answerA');
     const answerB = document.getElementById('answerB');
     const answerC = document.getElementById('answerC');
+    const timeToEnd = document.getElementById('timeToEnd');
+    const specificTimer = document.getElementById('specificTimer');
+
     const buttons = [];
 
     if (noBtn) {
@@ -15,8 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if (yesBtn)
-    {
+    if (yesBtn) {
         buttons.push(yesBtn);
         yesBtn.addEventListener('click', function (event) {
             event.preventDefault();
@@ -60,4 +62,52 @@ document.addEventListener('DOMContentLoaded', function () {
             button.classList.add("active-button");
         });
     });
+
+    function startCountdown() {
+        let timeText = timeToEnd.innerText.trim();
+        let minutes = parseInt(timeText.split('m')[0].trim());
+        let seconds = parseInt(timeText.split('m')[1].replace('s', '').trim());
+
+        if (isNaN(minutes) || isNaN(seconds)) {
+            minutes = 0;
+            seconds = 0;
+        }
+
+        const interval = setInterval(function () {
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(interval);
+                    return;
+                } else {
+                    minutes--;
+                    seconds = 59;
+                }
+            } else {
+                seconds--;
+            }
+
+            timeToEnd.innerText = `${minutes}m ${seconds}s`;
+        }, 1000);
+    }
+    startCountdown();
+
+    function startSpecificTimerCountdown() {
+        let seconds = parseInt(specificTimer.innerText.replace('s', '').trim());
+        if (isNaN(seconds)) {
+            seconds = 50;
+        }
+
+        const interval = setInterval(function () {
+            if (seconds === 0) {
+                clearInterval(interval);
+                document.getElementById('form').submit();
+                return;
+            } else {
+                seconds--;
+            }
+
+            specificTimer.innerText = `${seconds}s`;
+        }, 1000);
+    }
+    startSpecificTimerCountdown();
 });
