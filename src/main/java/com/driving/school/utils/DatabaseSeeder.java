@@ -136,7 +136,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                         .build())
                 .build()) {
             List<String[]> records = reader.readAll();
-            int iteration = 0;
+            int iteration = 1;
             long startTime = System.nanoTime();
             for (String[] record : records) {
                 Question question = new Question();
@@ -181,8 +181,9 @@ public class DatabaseSeeder implements CommandLineRunner {
                     }
                 });
 
-                if (++iteration == 200)
-                    break;
+                ++iteration;
+//                if (iteration == 2000)
+//                    break;
             }
 
             long durationNano = System.nanoTime() - startTime;
@@ -191,7 +192,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             long minutes = durationSeconds / 60;
             long seconds = durationSeconds % 60;
 
-            logger.info("Zmapowano Pytania w czasie: " + minutes + "minut " + seconds + "sekund");
+            logger.info("Zmapowano {} Pytan w czasie: {}minut {}sekund", iteration, minutes, seconds);
 
         } catch (IOException | CsvException e) {
             e.printStackTrace();
