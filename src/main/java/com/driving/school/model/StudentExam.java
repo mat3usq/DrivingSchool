@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -32,6 +33,15 @@ public class StudentExam {
 
     @OneToMany(mappedBy = "studentExam")
     private Set<StudentExamAnswer> studentExamAnswers = new LinkedHashSet<>();
+
+    @Column(name = "START_TIME")
+    private LocalDateTime startTime;
+
+    @Column(name = "END_TIME")
+    private LocalDateTime endTime;
+
+    @Column(name = "AVERAGETIMEPERQUESTION")
+    private Double averageTimePerQuestion;
 
     @Override
     public String toString() {

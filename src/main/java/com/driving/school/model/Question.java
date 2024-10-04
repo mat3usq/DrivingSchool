@@ -63,6 +63,15 @@ public class Question {
     @Column(name = "CONNECTIONWITHSECURITY", length = 1024)
     private String connectionWithSecurity;
 
+    @Column(name = "TIMEFORPREPARE")
+    private int timeForPrepare;
+
+    @Column(name = "TIMEFORTHINK")
+    private int timeForThink;
+
+    @Column(name = "ALLTIMEFORQUESTION")
+    private int allTimeForQuestion;
+
     @Transient
     private Integer questionNumber;
 
