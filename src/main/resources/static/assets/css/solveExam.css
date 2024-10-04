@@ -183,7 +183,7 @@ h2 {
 .exam .hero-img .box-exam .box-container .header-exam-info {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: nowrap;
   align-content: space-around;
   align-items: stretch;
@@ -196,6 +196,7 @@ h2 {
   letter-spacing: 1px;
   margin: 10px;
   width: 80%;
+  gap: 25px;
 }
 .exam .hero-img .box-exam .box-container .header-exam-info .info {
   font-style: italic;
@@ -213,6 +214,9 @@ h2 {
 }
 .exam .hero-img .box-exam .box-container .header-exam-info p {
   font-size: 18px;
+}
+.exam .hero-img .box-exam .box-container .header-exam-info .noSpecificTimerToThink {
+  display: none;
 }
 .exam .hero-img .box-exam .box-container .container-exam {
   display: flex;
@@ -233,7 +237,7 @@ h2 {
 }
 .exam .hero-img .box-exam .box-container .container-exam .exam-info img,
 .exam .hero-img .box-exam .box-container .container-exam .exam-info video {
-  width: 90%;
+  width: 93%;
   border-radius: 20px;
   margin: 10px;
 }
@@ -241,6 +245,35 @@ h2 {
   width: 450px;
   border-radius: 20px;
   margin: 10px;
+}
+.exam .hero-img .box-exam .box-container .container-exam .exam-info #prepareMedia {
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  cursor: pointer;
+}
+.exam .hero-img .box-exam .box-container .container-exam .exam-info #prepareMedia .question-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #444;
+}
+.exam .hero-img .box-exam .box-container .container-exam .exam-info #prepareMedia .question-content .video-icon,
+.exam .hero-img .box-exam .box-container .container-exam .exam-info #prepareMedia .question-content .image-icon {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  color: #888;
+}
+.exam .hero-img .box-exam .box-container .container-exam .exam-info #media {
+  display: none;
+  justify-content: center;
 }
 .exam .hero-img .box-exam .box-container .container-exam .normal-question,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question {
@@ -327,7 +360,8 @@ h2 {
 .exam .hero-img .box-exam .box-container .container-exam .specific-question a:hover {
   scale: 1.1;
 }
-.exam .hero-img .box-exam .box-container .container-exam .normal-question #yes.active-button, .exam .hero-img .box-exam .box-container .container-exam .normal-question #no.active-button,
+.exam .hero-img .box-exam .box-container .container-exam .normal-question #yes.active-button,
+.exam .hero-img .box-exam .box-container .container-exam .normal-question #no.active-button,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question #yes.active-button,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question #no.active-button {
   scale: 1.1;
@@ -406,11 +440,15 @@ h2 {
 .exam .hero-img .box-exam .box-container .container-exam .specific-question button:hover {
   scale: 1.1;
 }
-.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerA.active-button, .exam .hero-img .box-exam .box-container .container-exam .specific-question #answerB.active-button, .exam .hero-img .box-exam .box-container .container-exam .specific-question #answerC.active-button {
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerA.active-button,
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerB.active-button,
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerC.active-button {
   scale: 1.1;
   transition: 0.3s;
 }
-.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerA.active-button::before, .exam .hero-img .box-exam .box-container .container-exam .specific-question #answerB.active-button::before, .exam .hero-img .box-exam .box-container .container-exam .specific-question #answerC.active-button::before {
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerA.active-button::before,
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerB.active-button::before,
+.exam .hero-img .box-exam .box-container .container-exam .specific-question #answerC.active-button::before {
   scale: 1.1;
   background-color: #ffd166;
   color: rgba(39, 43, 57, 0.95);

@@ -110,7 +110,7 @@ h2 {
 				.header-exam-info {
 					display: flex;
 					flex-direction: row;
-					justify-content: space-evenly;
+					justify-content: center;
 					flex-wrap: nowrap;
 					align-content: space-around;
 					align-items: stretch;
@@ -123,6 +123,7 @@ h2 {
 					letter-spacing: 1px;
 					margin: 10px;
 					width: 80%;
+					gap: 25px;
 
 					.info {
 						font-style: italic;
@@ -143,6 +144,10 @@ h2 {
 
 					p {
 						font-size: 18px;
+					}
+
+					.noSpecificTimerToThink {
+						display: none;
 					}
 				}
 
@@ -165,7 +170,7 @@ h2 {
 
 						img,
 						video {
-							width: 90%;
+							width: 93%;
 							border-radius: 20px;
 							margin: 10px;
 						}
@@ -174,6 +179,39 @@ h2 {
 							width: 450px;
 							border-radius: 20px;
 							margin: 10px;
+						}
+
+						#prepareMedia {
+							text-align: center;
+							padding: 20px;
+							background-color: #f9f9f9;
+							border-radius: 8px;
+							box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+							margin: 20px;
+							cursor: pointer;
+
+							.question-content {
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								color: #444;
+
+								.video-icon,
+								.image-icon {
+									margin-bottom: 10px;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									width: 100px;
+									height: 100px;
+									color: #888;
+								}
+							}
+						}
+
+						#media {
+							display: none;
+							justify-content: center;
 						}
 					}
 
@@ -256,11 +294,12 @@ h2 {
 							scale: 1.1;
 						}
 
-						#yes.active-button, #no.active-button {
+						#yes.active-button,
+						#no.active-button {
 							scale: 1.1;
 							border: 3px solid $secondary-color;
-							background-color: $secondary-color; 
-							color: $bg-calendar-color; 
+							background-color: $secondary-color;
+							color: $bg-calendar-color;
 						}
 					}
 
@@ -340,22 +379,26 @@ h2 {
 							top: 50%;
 							transform: translateY(-50%);
 						}
-						
+
 						button:hover {
 							scale: 1.1;
 						}
 
-						#answerA.active-button, #answerB.active-button, #answerC.active-button {
+						#answerA.active-button,
+						#answerB.active-button,
+						#answerC.active-button {
 							scale: 1.1;
-							transition: 0.3s; 
+							transition: 0.3s;
 						}
 
-						#answerA.active-button::before, #answerB.active-button::before, #answerC.active-button::before {
+						#answerA.active-button::before,
+						#answerB.active-button::before,
+						#answerC.active-button::before {
 							scale: 1.1;
-							background-color: $secondary-color; 
-							color: $bg-calendar-color; 
-							transition: 0.3s; 
-						}						
+							background-color: $secondary-color;
+							color: $bg-calendar-color;
+							transition: 0.3s;
+						}
 					}
 				}
 			}

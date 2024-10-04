@@ -7,7 +7,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const answerC = document.getElementById('answerC');
     const timeToEnd = document.getElementById('timeToEnd');
     const specificTimer = document.getElementById('specificTimer');
+    const noSpecificTimerToPrepare = document.getElementById('noSpecificTimerToPrepare');
+    const noSpecificTimerToThink = document.getElementById('noSpecificTimerToThink');
+    const prepareMedia = document.getElementById('prepareMedia');
+    const media = document.getElementById('media');
+    const noSpecificTimerToPrepareParagraf = document.querySelector('.noSpecificTimerToPrepare');
+    const noSpecificTimerToThinkParagraf = document.querySelector('.noSpecificTimerToThink');
+    const videoElement = document.querySelector('video');
 
+    let noSpecificPrepareInterval;
     const buttons = [];
 
     if (noBtn) {
@@ -68,11 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
         let minutes = parseInt(timeText.split('m')[0].trim());
         let seconds = parseInt(timeText.split('m')[1].replace('s', '').trim());
 
-        if (isNaN(minutes) || isNaN(seconds)) {
-            minutes = 0;
-            seconds = 0;
-        }
-
         const interval = setInterval(function () {
             if (seconds === 0) {
                 if (minutes === 0) {
@@ -89,13 +92,12 @@ document.addEventListener('DOMContentLoaded', function () {
             timeToEnd.innerText = `${minutes}m ${seconds}s`;
         }, 1000);
     }
-    startCountdown();
+
+    if(timeToEnd)
+        startCountdown();
 
     function startSpecificTimerCountdown() {
         let seconds = parseInt(specificTimer.innerText.replace('s', '').trim());
-        if (isNaN(seconds)) {
-            seconds = 50;
-        }
 
         const interval = setInterval(function () {
             if (seconds === 0) {
@@ -109,5 +111,68 @@ document.addEventListener('DOMContentLoaded', function () {
             specificTimer.innerText = `${seconds}s`;
         }, 1000);
     }
-    startSpecificTimerCountdown();
+
+    if (specificTimer)
+        startSpecificTimerCountdown();
+
+    function startNoSpecificTimerToPrepareCountdown() {
+        let seconds = parseInt(noSpecificTimerToPrepare.innerText.replace('s', '').trim());
+
+        noSpecificPrepareInterval = setInterval(function () {
+            if (seconds === 0) {
+                clearInterval(noSpecificPrepareInterval);
+                triggerPrepareMediaActions();
+                return;
+            } else {
+                seconds--;
+            }
+
+            noSpecificTimerToPrepare.innerText = `${seconds}s`;
+        }, 1000);
+    }
+
+    if (noSpecificTimerToPrepare)
+        startNoSpecificTimerToPrepareCountdown();
+
+    function startNoSpecificTimerToThinkCountdown() {
+        let seconds = parseInt(noSpecificTimerToThink.innerText.replace('s', '').trim());
+
+        const interval = setInterval(function () {
+            if (seconds === 0) {
+                clearInterval(interval);
+                document.getElementById('form').submit();
+                return;
+            } else {
+                seconds--;
+            }
+
+            noSpecificTimerToThink.innerText = `${seconds}s`;
+        }, 1000);
+    }
+
+    function triggerPrepareMediaActions() {
+        if (noSpecificPrepareInterval) {
+            clearInterval(noSpecificPrepareInterval);
+        }
+        if (prepareMedia) prepareMedia.style.display = 'none';
+        if (media) media.style.display = 'flex';
+        if (noSpecificTimerToPrepareParagraf) noSpecificTimerToPrepareParagraf.style.display = "none";
+        if (videoElement) {
+            videoElement.addEventListener('ended', function () {
+                if (noSpecificTimerToThinkParagraf) {
+                    noSpecificTimerToThinkParagraf.style.display = 'block';
+                    startNoSpecificTimerToThinkCountdown();
+                }
+            });
+        } else if (noSpecificTimerToThinkParagraf) {
+            noSpecificTimerToThinkParagraf.style.display = 'block';
+            startNoSpecificTimerToThinkCountdown();
+        }
+    }
+
+    if (prepareMedia) {
+        prepareMedia.addEventListener('click', function () {
+            triggerPrepareMediaActions();
+        });
+    } else if (media) media.style.display = 'flex';
 });
