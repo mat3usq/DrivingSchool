@@ -52,7 +52,7 @@
                             <span class="info" th:text="${durationExam}"></span>
                         </div>
 
-                        <div  class="header-info">
+                        <div class="header-info">
                             <p>Koncowa Liczba Punktow</p>
                             <p th:if="${exam.passed}"><span class="green" th:text="${exam.points}"></span> / 74pkt</p>
                             <p th:if="${!exam.passed}"><span class="red" th:text="${exam.points}"></span> / 74pkt</p>
@@ -72,80 +72,61 @@
                                 <div class="info-container">
                                     <div>
                                         <p class="info-title">Czesc Podstawowa</p>
-                                        <p class="counter"><span th:text="${exam.getAmountCorrectNoSpecAnswers()}">9</span> / 20</p>
+                                        <p class="counter"><span
+                                                th:text="${exam.getAmountCorrectNoSpecAnswers()}">9</span> / 20</p>
                                     </div>
                                     <div>
                                         <p class="info-title">Czesc Specjalistyczna</p>
-                                        <p class="counter"><span th:text="${exam.getAmountCorrectSpecAnswers()}">3</span> / 12</p>
+                                        <p class="counter"><span
+                                                th:text="${exam.getAmountCorrectSpecAnswers()}">3</span> / 12</p>
                                     </div>
                                 </div>
                                 <div class="bottom-container">
                                     <p class="info-title">Pominiete Pytania</p>
-                                    <p class="counter"><span class="orange" th:text="${exam.getAmountSkippedQuestions()}">8</span></p>
+                                    <p class="counter"><span class="orange"
+                                                             th:text="${exam.getAmountSkippedQuestions()}">8</span></p>
                                 </div>
                                 <div class="bottom-container">
                                     <p class="info-title">Sredni Czas Odpowiedzi</p>
-                                    <p class="counter"><span class="info" th:text="${#numbers.formatDecimal(exam.getAverageTimePerQuestion(), 1, 2)} + 's'">>8</span></p>
+                                    <p class="counter"><span class="info"
+                                                             th:text="${#numbers.formatDecimal(exam.getAverageTimePerQuestion(), 1, 2)} + 's'">>8</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="questions">
+                            <h5 class="content">Czesc Podstawowa</h5>
                             <div class="answer-box">
-                                <h4 class="content">Czesc Podstawowa</h4>
                                 <div class="answer-container">
-                                    <div class="container">
-                                        <span class="answer correct">1</span>
-                                        <span class="answer none">2</span>
-                                        <span class="answer correct">3</span>
-                                        <span class="answer wrong">4</span>
-                                        <span class="answer none">5</span>
-                                    </div>
-                                    <div class="container">
-                                        <span class="answer correct">6</span>
-                                        <span class="answer correct">7</span>
-                                        <span class="answer wrong">8</span>
-                                        <span class="answer wrong">9</span>
-                                        <span class="answer correct">10</span>
-                                    </div>
-                                    <div class="container">
-                                        <span class="answer correct">11</span>
-                                        <span class="answer none">12</span>
-                                        <span class="answer wrong">13</span>
-                                        <span class="answer none">14</span>
-                                        <span class="answer correct">15</span>
-                                    </div>
-                                    <div class="container">
-                                        <span class="answer wrong">16</span>
-                                        <span class="answer correct">17</span>
-                                        <span class="answer none">18</span>
-                                        <span class="answer correct">19</span>
-                                        <span class="answer wrong">20</span>
-                                    </div>
+                                    <th:block th:each="answer, iterStat : ${exam.getStudentExamAnswers()}">
+                                        <th:block th:if="${iterStat.index < 20}">
+                                            <form th:action="@{/exam/showAnswer}" method="post">
+                                                <input type="hidden" name="answerId" th:value="${answer.id}"/>
+                                                <button type="submit" class="answer"
+                                                        th:classappend="${#strings.isEmpty(answer.getAnswer()) ? 'none' : (answer.getCorrectness() ? 'correct' : 'wrong')}"
+                                                        th:text="${iterStat.index + 1}"></button>
+                                            </form>
+                                        </th:block>
+                                    </th:block>
                                 </div>
                             </div>
+
+                            <h5 class="content">Czesc Specjalistyczna</h5>
                             <div class="answer-box">
-                                <h4 class="content">Czesc Specjalistyczna</h4>
                                 <div class="answer-container">
-                                    <div class="container">
-                                        <span class="answer wrong">1</span>
-                                        <span class="answer correct">2</span>
-                                        <span class="answer wrong">3</span>
-                                        <span class="answer correct">4</span>
-                                        <span class="answer none">5</span>
-                                    </div>
-                                    <div class="container">
-                                        <span class="answer wrong">6</span>
-                                        <span class="answer wrong">7</span>
-                                        <span class="answer none">8</span>
-                                        <span class="answer wrong">9</span>
-                                        <span class="answer correct">10</span>
-                                    </div>
-                                    <div class="container">
-                                        <span class="answer none">11</span>
-                                        <span class="answer wrong">12</span>
-                                    </div>
+                                    <th:block th:each="answer, iterStat : ${exam.getStudentExamAnswers()}">
+                                        <th:block th:if="${iterStat.index >= 20}">
+                                            <form th:action="@{/exam/showAnswer}" method="post">
+                                                <input type="hidden" name="answerId" th:value="${answer.id}"/>
+                                                <button type="submit" class="answer"
+                                                      th:classappend="${#strings.isEmpty(answer.getAnswer()) ? 'none' : (answer.getCorrectness() ? 'correct' : 'wrong')}"
+                                                    th:text="${iterStat.index + 1}"></button>
+                                            </form>
+                                        </th:block>
+                                    </th:block>
                                 </div>
                             </div>
+
                             <div class="button-box">
                                 <button class="back"><a href="/exam">Powrot</a></button>
                                 <form th:action="@{/exam/generate}" method="post">

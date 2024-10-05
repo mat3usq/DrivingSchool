@@ -272,6 +272,7 @@ h2 {
   color: #888;
 }
 .exam .hero-img .box-exam .box-container .container-exam .exam-info #media {
+  width: 80%;
   display: none;
   justify-content: center;
 }
