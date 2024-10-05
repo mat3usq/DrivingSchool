@@ -78,6 +78,8 @@ public class ExamController {
         // 3. todo: naprawic buga, gdy sie robi jakies pytanka w egz i jest sie na tym pytaniu to
         // 3. todo: gdy sie da ctrl+r czy odswiezy sie strone to przeskakuje na nowe pytanie i
         // 3. todo: zapisuje w bazie jakies poprzednie pytanie i ja idk czy cos z tym robimy???
+        //
+        // 4. todo: dodac guzik zakoncz egzamin czy cus
 
         ModelAndView modelAndView = new ModelAndView("solveExam");
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");

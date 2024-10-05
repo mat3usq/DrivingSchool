@@ -83,10 +83,8 @@
 
                             <div th:if="${question.availableAnswers == 2}" class="normal-question">
                                 <div class="info-container">
-                                    <p th:text="${question.question}" class="content">
-                                        Czy w tej sytuacji bezposrednio za pojazdem uprzywilejowanym dozwolone jest
-                                        poruszanie sie
-                                        dowolonych pojazdow?
+                                    <p class="content">
+                                        <th:block th:text="${question.question}"></th:block> (<th:block th:text="${question.points} + 'pkt'"></th:block>)
                                     </p>
                                 </div>
 
@@ -99,10 +97,8 @@
 
                             <div th:if="${question.availableAnswers == 3}" class="specific-question">
                                 <div class="info-container">
-                                    <p th:text="${question.question}" class="content">
-                                        Czy w tej sytuacji bezposrednio za pojazdem uprzywilejowanym dozwolone jest
-                                        poruszanie sie
-                                        dowolonych pojazdow?
+                                    <p class="content">
+                                        <th:block th:text="${question.question}"></th:block> (<th:block th:text="${question.points} + 'pkt'"></th:block>)
                                     </p>
                                 </div>
                                 <div class="button-box">
