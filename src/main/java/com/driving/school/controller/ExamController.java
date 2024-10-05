@@ -64,17 +64,20 @@ public class ExamController {
         if (session.getAttribute("questionSet") == null)
             return examInfo(session);
 
-        // TODO: dodac jak przekroczy czas 25 minut to przekierowac na result
+        // 1. TODO: dodac jak przekroczy czas 25 minut to przekierowac na result
         //
-        // TODO: Podział pytań podstawowych w egzaminie:
-        // TODO: 10 pytań o wysokim znaczeniu dla bezpieczeństwa - 3 pkt za pytanie.
-        // TODO: 6 pytań o średnim znaczeniu dla bezpieczeństwa - 2 pkt za pytanie.
-        // TODO: 4 pytań o niskim znaczeniu dla bezpieczeństwa - 1 pkt za pytanie.
+        // 2. TODO: Podział pytań podstawowych w egzaminie:
+        // 2. TODO: 10 pytań o wysokim znaczeniu dla bezpieczeństwa - 3 pkt za pytanie.
+        // 2. TODO: 6 pytań o średnim znaczeniu dla bezpieczeństwa - 2 pkt za pytanie.
+        // 2. TODO: 4 pytań o niskim znaczeniu dla bezpieczeństwa - 1 pkt za pytanie.
+        // 2. todo: zrobic losowanie normalne bo troche zamula czasem...
+        // 2. TODO: Podział pytań specjalistycznych w egzaminie:
+        // 2. TODO: 6 pytań o wysokim znaczeniu dla bezpieczeństwa - 3 pkt za pytanie.
+        // 2. TODO: 4 pytań o średnim znaczeniu dla bezpieczeństwa - 2 pkt za pytanie.
         //
-        // TODO: Podział pytań specjalistycznych w egzaminie:
-        // TODO: 6 pytań o wysokim znaczeniu dla bezpieczeństwa - 3 pkt za pytanie.
-        // TODO: 4 pytań o średnim znaczeniu dla bezpieczeństwa - 2 pkt za pytanie.
-        // TODO: 2 pytań o niskim znaczeniu dla bezpieczeństwa - 1 pkt za pytanie.
+        // 3. todo: naprawic buga, gdy sie robi jakies pytanka w egz i jest sie na tym pytaniu to
+        // 3. todo: gdy sie da ctrl+r czy odswiezy sie strone to przeskakuje na nowe pytanie i
+        // 3. todo: zapisuje w bazie jakies poprzednie pytanie i ja idk czy cos z tym robimy???
 
         ModelAndView modelAndView = new ModelAndView("solveExam");
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
