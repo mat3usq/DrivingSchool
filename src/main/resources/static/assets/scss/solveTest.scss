@@ -373,6 +373,7 @@ h2 {
 							flex-direction: row;
 							flex-wrap: wrap;
 							justify-content: center;
+							gap: 10px;
 
 							.correct {
 								border: 2px solid $icon-color;
@@ -392,6 +393,7 @@ h2 {
 							.questionTitle {
 								display: flex;
 								align-items: center;
+								gap: 2px;
 
 								.icon-container {
 									position: relative;

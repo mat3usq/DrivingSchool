@@ -409,6 +409,7 @@ h2 {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 10px;
 }
 .test .hero-img .box-test .box-container .container-test .normal-question .button-box .correct,
 .test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct {
@@ -429,6 +430,7 @@ h2 {
 .test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle {
   display: flex;
   align-items: center;
+  gap: 2px;
 }
 .test .hero-img .box-test .box-container .container-test .normal-question .info-container .questionTitle .icon-container,
 .test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle .icon-container {
