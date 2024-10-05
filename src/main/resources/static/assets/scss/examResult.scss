@@ -100,6 +100,13 @@ h2 {
 					}
 				}
 
+				span.info {
+					color: $info-color;
+					font-size: 26px;
+					font-style: normal;
+					font-weight: bold;
+				}
+
 				span.red {
 					color: $primary-color;
 					font-size: 26px;
@@ -107,8 +114,15 @@ h2 {
 					font-weight: bold;
 				}
 
-                span.green {
+				span.green {
 					color: $icon-color;
+					font-size: 26px;
+					font-style: normal;
+					font-weight: bold;
+				}
+
+				span.orange {
+					color: $secondary-color;
 					font-size: 26px;
 					font-style: normal;
 					font-weight: bold;
@@ -160,16 +174,11 @@ h2 {
 								}
 							}
 
-							.info {
+							.info-title {
 								font-size: 20px;
 								font-style: italic;
 								letter-spacing: 1px;
 								text-align: center;
-
-								.counter {
-									font-size: 22px;
-									font-style: normal;
-								}
 							}
 
 							.bottom-container {
@@ -179,10 +188,11 @@ h2 {
 							}
 						}
 
-						img {
-							width: 40%;
+						.img {
+							display: none;
+							width: 110%;
 							border-radius: 20px;
-							margin: 20px 10px;
+							margin: auto;
 						}
 
 						p {
@@ -337,6 +347,24 @@ h2 {
 			p {
 				font-size: 18px;
 				color: antiquewhite;
+			}
+		}
+	}
+}
+
+@media (min-width: 1100px) {
+	.examResult {
+		.hero-img {
+			.box-examResult {
+				.box-container {
+					.container-examResult {
+						.examResult-info {
+							.img {
+								display: block;
+							}
+						}
+					}
+				}
 			}
 		}
 	}

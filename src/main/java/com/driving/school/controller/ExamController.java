@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -145,8 +146,25 @@ public class ExamController {
             StudentExam studentExam = (StudentExam) session.getAttribute("exam");
 
             studentExam = studentExamService.getStudentExamById(studentExam.getId());
-            Long points = studentExam.getPoints();
-            modelAndView.addObject("points", points);
+            studentExam.setEndTime(LocalDateTime.now());
+            studentExam.setExamDuration(Duration.between(studentExam.getStartTime(), studentExam.getEndTime()));
+            studentExam.setAverageTimePerQuestion((studentExam.getExamDuration().toSeconds() / 32.0));
+            studentExam.setAmountCorrectNoSpecAnswers(studentExam.getStudentExamAnswers().stream()
+                    .filter(a -> !a.getQuestion().getQuestionType() && a.getCorrectness())
+                    .count());
+            studentExam.setAmountCorrectSpecAnswers(studentExam.getStudentExamAnswers().stream()
+                    .filter(a -> a.getQuestion().getQuestionType() && a.getCorrectness())
+                    .count());
+            studentExam.setAmountSkippedQuestions(studentExam.getStudentExamAnswers().stream()
+                    .filter(a -> a.getAnswer().isEmpty() && !a.getCorrectness())
+                    .count());
+            studentExam.setPassed(studentExam.getPoints() >= 68);
+
+            studentExamService.updateStudentExam(studentExam.getId(), studentExam);
+            long minutes = studentExam.getExamDuration().toMinutes();
+            long seconds = studentExam.getExamDuration().minusMinutes(minutes).getSeconds();
+            modelAndView.addObject("exam", studentExam);
+            modelAndView.addObject("durationExam", String.format("%dm %ds", minutes, seconds));
 
             session.setAttribute("questionSet", null);
             session.setAttribute("exam", null);

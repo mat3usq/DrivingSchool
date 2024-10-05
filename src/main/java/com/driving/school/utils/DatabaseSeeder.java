@@ -170,6 +170,14 @@ public class DatabaseSeeder implements CommandLineRunner {
                 else
                     question.setAvailableAnswers(3L);
 
+                if (question.getQuestionType())
+                    question.setAllTimeForQuestion(50);
+                else {
+                    question.setTimeForPrepare(20);
+                    question.setTimeForThink(15);
+                    question.setAllTimeForQuestion(35);
+                }
+
                 tests.forEach(t -> {
                     if (t.getName().equals(record[4]) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
                         List<Test> questionTests = question.getTests();

@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -26,6 +27,9 @@ public class StudentExam {
     @Column(name = "POINTS")
     private Long points;
 
+    @Column(name = "PASSED")
+    private boolean passed;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
@@ -40,8 +44,20 @@ public class StudentExam {
     @Column(name = "END_TIME")
     private LocalDateTime endTime;
 
+    @Column(name = "EXAMDURATION")
+    private Duration examDuration;
+
     @Column(name = "AVERAGETIMEPERQUESTION")
     private Double averageTimePerQuestion;
+
+    @Column(name = "AMOUNTCORRECTNOSPECANSWERS")
+    private long amountCorrectNoSpecAnswers;
+
+    @Column(name = "AMOUNTCORRECTSPECANSWERS")
+    private long amountCorrectSpecAnswers;
+
+    @Column(name = "AMOUNTSKIPPEDQUESTIONS")
+    private long amountSkippedQuestions;
 
     @Override
     public String toString() {

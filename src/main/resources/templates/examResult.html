@@ -37,42 +37,55 @@
                 <div class="box-container">
                     <div class="header-examResult">
                         <div class="header-info">
-                            <p>Niestety! Wynik egzaminu</p>
-                            <span class="red">Negatywny</span>
-                        </div>
-                        <div class="header-info">
-                            <p>Koncowa liczba punktow</p>
-                            <p><span class="red" th:text="${points}"></span> /74pkt</p>
+                            <th:block th:if="${exam.passed}">
+                                <p>Gratulacje! Wynik egzaminu</p>
+                                <span class="green">Pozytywny</span>
+                            </th:block>
+                            <th:block th:if="${!exam.passed}">
+                                <p>Niestety! Wynik egzaminu</p>
+                                <span class="red">Negatywny</span>
+                            </th:block>
                         </div>
 
-<!--                        <div class="header-info">-->
-<!--                            <p>Gratulacje! Wynik egzaminu</p>-->
-<!--                            <span class="green">Pozytywny</span>-->
-<!--                        </div>-->
-<!--                        <div class="header-info">-->
-<!--                            <p>Koncowa liczba punktow</p>-->
-<!--                            <p><span class="green" th:text="${points}"></span> /74pkt</p>-->
-<!--                        </div>-->
+                        <div class="header-info">
+                            <p>Czas trwania</p>
+                            <span class="info" th:text="${durationExam}"></span>
+                        </div>
+
+                        <div  class="header-info">
+                            <p>Koncowa Liczba Punktow</p>
+                            <p th:if="${exam.passed}"><span class="green" th:text="${exam.points}"></span> / 74pkt</p>
+                            <p th:if="${!exam.passed}"><span class="red" th:text="${exam.points}"></span> / 74pkt</p>
+                        </div>
                     </div>
 
                     <div class="container-examResult">
                         <div class="examResult-info">
-                            <img src="/assets/img/exam-negative.svg" alt="Negatywny wynik egzaminu"/>
+                            <div class="img" th:if="${!exam.passed}">
+                                <th:block th:replace="~{carAnimation :: positive-exam}"></th:block>
+                            </div>
+                            <div class="img" th:if="${exam.passed}">
+                                <th:block th:replace="~{carAnimation :: negative-exam}"></th:block>
+                            </div>
                             <div class="box-info">
                                 <h4>Poprawne odpowiedzi</h4>
                                 <div class="info-container">
                                     <div>
-                                        <p class="info">Czesc Podstawowa</p>
-                                        <p class="counter"><span>9</span> /20</p>
+                                        <p class="info-title">Czesc Podstawowa</p>
+                                        <p class="counter"><span th:text="${exam.getAmountCorrectNoSpecAnswers()}">9</span> / 20</p>
                                     </div>
                                     <div>
-                                        <p class="info">Czesc Specjalistyczna</p>
-                                        <p class="counter"><span>3</span> /12</p>
+                                        <p class="info-title">Czesc Specjalistyczna</p>
+                                        <p class="counter"><span th:text="${exam.getAmountCorrectSpecAnswers()}">3</span> / 12</p>
                                     </div>
                                 </div>
                                 <div class="bottom-container">
-                                    <p class="info">Pominiete Pytania</p>
-                                    <p class="counter"><span class="red">8</span></p>
+                                    <p class="info-title">Pominiete Pytania</p>
+                                    <p class="counter"><span class="orange" th:text="${exam.getAmountSkippedQuestions()}">8</span></p>
+                                </div>
+                                <div class="bottom-container">
+                                    <p class="info-title">Sredni Czas Odpowiedzi</p>
+                                    <p class="counter"><span class="info" th:text="${#numbers.formatDecimal(exam.getAverageTimePerQuestion(), 1, 2)} + 's'">>8</span></p>
                                 </div>
                             </div>
                         </div>
