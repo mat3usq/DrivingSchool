@@ -192,10 +192,12 @@ public class ExamController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<StudentExamAnswer> answer = studentExamAnswerService.findById(answerId);
 
-        if (answer.isPresent() && Objects.equals(answer.get().getStudentExam().getSchoolUser().getId(), user.getId()) && answer.get().getStudentExam().getPassed() != null) {
-            ModelAndView modelAndView = new ModelAndView("examResult");
-            modelAndView.addObject("answer", answer);
-            return modelAndView;
-        } else return examInfo(session);
+        if (answer.isPresent()) {
+            StudentExamAnswer studentAnswer = answer.get();
+            if (Objects.equals(studentAnswer.getStudentExam().getSchoolUser().getId(), user.getId()) && studentAnswer.getStudentExam().getPassed() != null)
+                return new ModelAndView("answerResultExam").addObject("answer", studentAnswer);
+        }
+
+        return examInfo(session);
     }
 }

@@ -383,14 +383,18 @@ h2 {
   font-size: 21px;
   color: #ef476f;
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 .test .hero-img .box-test .box-container .container-test #correct {
+  margin-top: 10px;
   display: block;
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 21px;
   color: springgreen;
   text-align: center;
+  margin-bottom: 0px;
 }
 .test .hero-img .box-test .box-container .container-test .normal-question,
 .test .hero-img .box-test .box-container .container-test .specific-question {
@@ -430,7 +434,7 @@ h2 {
 .test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 10px;
 }
 .test .hero-img .box-test .box-container .container-test .normal-question .info-container .questionTitle .icon-container,
 .test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle .icon-container {
