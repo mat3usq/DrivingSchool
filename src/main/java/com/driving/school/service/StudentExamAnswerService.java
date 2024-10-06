@@ -2,7 +2,6 @@ package com.driving.school.service;
 
 
 import com.driving.school.model.StudentExamAnswer;
-import com.driving.school.model.StudentExamAnswerId;
 import com.driving.school.repository.StudentExamAnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class StudentExamAnswerService {
     }
 
 
-    public Optional<StudentExamAnswer> findById(StudentExamAnswerId id) {
+    public Optional<StudentExamAnswer> findById(long id) {
         return studentExamAnswerRepository.findById(id);
     }
 
@@ -32,7 +31,7 @@ public class StudentExamAnswerService {
     }
 
 
-    public void deleteById(StudentExamAnswerId id) {
+    public void deleteById(long id) {
         studentExamAnswerRepository.deleteById(id);
     }
 

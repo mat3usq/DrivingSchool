@@ -31,7 +31,7 @@ public class StudentExam {
     private Long points;
 
     @Column(name = "PASSED")
-    private boolean passed;
+    private Boolean passed;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -50,6 +50,9 @@ public class StudentExam {
     @Column(name = "EXAMDURATION")
     private Duration examDuration;
 
+    @Column(name = "EXAMDURATIONSTRING")
+    private String examDurationString;
+
     @Column(name = "AVERAGETIMEPERQUESTION")
     private Double averageTimePerQuestion;
 
@@ -62,10 +65,10 @@ public class StudentExam {
     @Column(name = "AMOUNTSKIPPEDQUESTIONS")
     private long amountSkippedQuestions;
 
-    public List<StudentExamAnswer> getSortedStudentExamAnswers() {
+    public Set<StudentExamAnswer> getSortedStudentExamAnswers() {
         return studentExamAnswers.stream()
                 .sorted(Comparator.comparing(StudentExamAnswer::getId))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     @Override

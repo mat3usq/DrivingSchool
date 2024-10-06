@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class ExamController {
@@ -144,36 +146,55 @@ public class ExamController {
         return modelAndView;
     }
 
-    @GetMapping("/exam/result")
     public ModelAndView summary(HttpSession session) {
-        if (session.getAttribute("questionSet") != null && ((List<Question>) session.getAttribute("questionSet")).isEmpty()) {
+        ModelAndView modelAndView = new ModelAndView("examResult");
+        StudentExam studentExam = (StudentExam) session.getAttribute("exam");
+
+        studentExam = studentExamService.getStudentExamById(studentExam.getId());
+        studentExam.setEndTime(LocalDateTime.now());
+        studentExam.setExamDuration(Duration.between(studentExam.getStartTime(), studentExam.getEndTime()));
+        studentExam.setAverageTimePerQuestion((studentExam.getExamDuration().toSeconds() / 32.0));
+        studentExam.setAmountCorrectNoSpecAnswers(studentExam.getStudentExamAnswers().stream()
+                .filter(a -> !a.getQuestion().getQuestionType() && a.getCorrectness())
+                .count());
+        studentExam.setAmountCorrectSpecAnswers(studentExam.getStudentExamAnswers().stream()
+                .filter(a -> a.getQuestion().getQuestionType() && a.getCorrectness())
+                .count());
+        studentExam.setAmountSkippedQuestions(studentExam.getStudentExamAnswers().stream()
+                .filter(a -> a.getAnswer().isEmpty() && !a.getCorrectness())
+                .count());
+        studentExam.setPassed(studentExam.getPoints() >= 68);
+        studentExam.setExamDurationString(String.format("%dm %ds", studentExam.getExamDuration().toMinutes(), studentExam.getExamDuration().minusMinutes(studentExam.getExamDuration().toMinutes()).getSeconds()));
+
+        studentExamService.updateStudentExam(studentExam.getId(), studentExam);
+        modelAndView.addObject("exam", studentExam);
+
+        session.setAttribute("questionSet", null);
+        session.setAttribute("exam", null);
+        session.setAttribute("latestQuestion", null);
+        return modelAndView;
+    }
+
+    @PostMapping("/exam/result")
+    public ModelAndView showResultExam(HttpSession session, @RequestParam("examId") Long examId) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        StudentExam exam = studentExamService.getStudentExamById(examId);
+
+        if (Objects.equals(exam.getSchoolUser().getId(), user.getId()) && exam.getPassed() != null) {
             ModelAndView modelAndView = new ModelAndView("examResult");
-            StudentExam studentExam = (StudentExam) session.getAttribute("exam");
+            modelAndView.addObject("exam", exam);
+            return modelAndView;
+        } else return examInfo(session);
+    }
 
-            studentExam = studentExamService.getStudentExamById(studentExam.getId());
-            studentExam.setEndTime(LocalDateTime.now());
-            studentExam.setExamDuration(Duration.between(studentExam.getStartTime(), studentExam.getEndTime()));
-            studentExam.setAverageTimePerQuestion((studentExam.getExamDuration().toSeconds() / 32.0));
-            studentExam.setAmountCorrectNoSpecAnswers(studentExam.getStudentExamAnswers().stream()
-                    .filter(a -> !a.getQuestion().getQuestionType() && a.getCorrectness())
-                    .count());
-            studentExam.setAmountCorrectSpecAnswers(studentExam.getStudentExamAnswers().stream()
-                    .filter(a -> a.getQuestion().getQuestionType() && a.getCorrectness())
-                    .count());
-            studentExam.setAmountSkippedQuestions(studentExam.getStudentExamAnswers().stream()
-                    .filter(a -> a.getAnswer().isEmpty() && !a.getCorrectness())
-                    .count());
-            studentExam.setPassed(studentExam.getPoints() >= 68);
+    @PostMapping("/exam/showAnswer")
+    public ModelAndView showAnswerResult(HttpSession session, @RequestParam("answerId") long answerId) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<StudentExamAnswer> answer = studentExamAnswerService.findById(answerId);
 
-            studentExamService.updateStudentExam(studentExam.getId(), studentExam);
-            long minutes = studentExam.getExamDuration().toMinutes();
-            long seconds = studentExam.getExamDuration().minusMinutes(minutes).getSeconds();
-            modelAndView.addObject("exam", studentExam);
-            modelAndView.addObject("durationExam", String.format("%dm %ds", minutes, seconds));
-
-            session.setAttribute("questionSet", null);
-            session.setAttribute("exam", null);
-            session.setAttribute("latestQuestion", null);
+        if (answer.isPresent() && Objects.equals(answer.get().getStudentExam().getSchoolUser().getId(), user.getId()) && answer.get().getStudentExam().getPassed() != null) {
+            ModelAndView modelAndView = new ModelAndView("examResult");
+            modelAndView.addObject("answer", answer);
             return modelAndView;
         } else return examInfo(session);
     }
