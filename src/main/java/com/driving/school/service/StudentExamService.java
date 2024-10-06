@@ -8,6 +8,8 @@ import com.driving.school.repository.StudentExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,10 +69,20 @@ public class StudentExamService {
 
     public List<Question> generateQuestionSet(String category) {
         int numberOfNoSpecialistQuestions = 20;
+        int numberOfNoSpecialistQuestionsWithOnePoint = 4;
+        int numberOfNoSpecialistQuestionsWithTwoPoints = 6;
+        int numberOfNoSpecialistQuestionsWithThreePoints = 10;
         int numberOfSpecialistQuestions = 12;
-        List<Question> noSpecialistQuestions = questionService.getRandomNoSpecialistcQuestionsByCategory(category, numberOfNoSpecialistQuestions);
-        List<Question> specialistQuestions = questionService.getRandomSpecialistcQuestionsByCategory(category, numberOfSpecialistQuestions);
 
+
+        List<Question> noSpecialistQuestions = new ArrayList<>();
+        noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 1,numberOfNoSpecialistQuestionsWithOnePoint));
+        noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 2,numberOfNoSpecialistQuestionsWithTwoPoints));
+        noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 3,numberOfNoSpecialistQuestionsWithThreePoints));
+        Collections.shuffle(noSpecialistQuestions);
+        List<Question> specialistQuestions = new ArrayList<>();
+        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category,2 ,numberOfSpecialistQuestions));
+        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category,3 ,numberOfSpecialistQuestions));
         noSpecialistQuestions.addAll(specialistQuestions);
         return noSpecialistQuestions;
     }

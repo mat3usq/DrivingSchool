@@ -100,8 +100,22 @@ public class QuestionService {
         return nextQuestion;
     }
 
-    public List<Question> getAllNoSpecialisticQuestionByCategory(String category) {
-        return findAll().stream().filter(q -> q.getDrivingCategory().contains(category) && Boolean.FALSE.equals(q.getQuestionType())).toList();
+
+
+    public List<Question> getAllNoSpecialisticQuestionByCategoryAndExactPoints(String category, Long exactPoints) {
+        return findAll().stream()
+                .filter(q -> q.getDrivingCategory().contains(category)
+                        && Boolean.FALSE.equals(q.getQuestionType())
+                        && q.getPoints().equals(exactPoints))
+                .toList();
+    }
+
+    public List<Question> getAllSpecialisticQuestionByCategoryAndExactPoints(String category, Long exactPoints) {
+        return findAll().stream()
+                .filter(q -> q.getDrivingCategory().contains(category)
+                        && Boolean.TRUE.equals(q.getQuestionType())
+                        && q.getPoints().equals(exactPoints))
+                .toList();
     }
 
     public List<Question> getAllSpecialisticQuestionByCategory(String category) {
@@ -110,14 +124,14 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    public List<Question> getRandomNoSpecialistcQuestionsByCategory(String category, int numberOfQuestions) {
-        List<Question> filteredQuestions = new ArrayList<>(getAllNoSpecialisticQuestionByCategory(category));
+    public List<Question> getRandomNoSpecialistcQuestionsByCategory(String category, int exactPoints, int numberOfQuestions) {
+        List<Question> filteredQuestions = new ArrayList<>(getAllNoSpecialisticQuestionByCategoryAndExactPoints(category,(long) exactPoints));
         Collections.shuffle(filteredQuestions);
         return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
     }
 
-    public List<Question> getRandomSpecialistcQuestionsByCategory(String category, int numberOfQuestions) {
-        List<Question> filteredQuestions = getAllSpecialisticQuestionByCategory(category);
+    public List<Question> getRandomSpecialistcQuestionsByCategory(String category,int exactPoints, int numberOfQuestions) {
+        List<Question> filteredQuestions = getAllSpecialisticQuestionByCategoryAndExactPoints(category,(long) exactPoints);
         Collections.shuffle(filteredQuestions);
         return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
     }
@@ -130,3 +144,5 @@ public class QuestionService {
         return false;
     }
 }
+
+
