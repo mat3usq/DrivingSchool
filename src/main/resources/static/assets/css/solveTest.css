@@ -122,12 +122,12 @@ h2 {
 }
 
 .navbar-left {
-  height: 158vh;
+  height: 179.1vh;
 }
 
 .test .hero-img {
   position: relative;
-  height: 170vh;
+  height: 190vh;
   background-image: url("../img/backgroundTest.png");
   background-position: center;
   background-size: cover;
