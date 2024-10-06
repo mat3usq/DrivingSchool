@@ -8,8 +8,11 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -58,6 +61,12 @@ public class StudentExam {
 
     @Column(name = "AMOUNTSKIPPEDQUESTIONS")
     private long amountSkippedQuestions;
+
+    public List<StudentExamAnswer> getSortedStudentExamAnswers() {
+        return studentExamAnswers.stream()
+                .sorted(Comparator.comparing(StudentExamAnswer::getId))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public String toString() {

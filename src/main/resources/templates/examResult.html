@@ -98,7 +98,7 @@
                             <h5 class="content">Czesc Podstawowa</h5>
                             <div class="answer-box">
                                 <div class="answer-container">
-                                    <th:block th:each="answer, iterStat : ${exam.getStudentExamAnswers()}">
+                                    <th:block th:each="answer, iterStat : ${exam.getSortedStudentExamAnswers()}">
                                         <th:block th:if="${iterStat.index < 20}">
                                             <form th:action="@{/exam/showAnswer}" method="post">
                                                 <input type="hidden" name="answerId" th:value="${answer.id}"/>
@@ -114,7 +114,7 @@
                             <h5 class="content">Czesc Specjalistyczna</h5>
                             <div class="answer-box">
                                 <div class="answer-container">
-                                    <th:block th:each="answer, iterStat : ${exam.getStudentExamAnswers()}">
+                                    <th:block th:each="answer, iterStat : ${exam.getSortedStudentExamAnswers()}">
                                         <th:block th:if="${iterStat.index >= 20}">
                                             <form th:action="@{/exam/showAnswer}" method="post">
                                                 <input type="hidden" name="answerId" th:value="${answer.id}"/>
