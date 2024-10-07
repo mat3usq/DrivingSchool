@@ -24,9 +24,9 @@ public class DashboardController {
         SchoolUser user = schoolUserRepository.findByEmail(authentication.getName());
         if (user != null) {
             session.setAttribute("loggedInUser", user);
-            session.setAttribute("username", user.getName());
-            session.setAttribute("role", authentication.getAuthorities().toString().charAt(0) +
-                    authentication.getAuthorities().toString().substring(6));
+            if (user.getCurrentCategory() != null)
+                session.setAttribute("category", "Kategoria " + user.getCurrentCategory());
+            else session.setAttribute("category", "Brak Kategorii");
         }
         return modelAndView;
     }

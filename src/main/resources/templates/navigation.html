@@ -5,8 +5,8 @@
     >
     <div data-aos="fade-right" data-aos-delay="150" class="box-account">
         <div class="user-box">
-            <span th:text="'Witaj ' + ${session.username}"></span>
-            <span class="user_role" th:text="${session.role}"></span>
+            <span th:text="'Witaj ' + ${session.loggedInUser.name}"></span>
+            <span class="user_role" th:text="'['+${session.loggedInUser.roleName}+']'"></span>
         </div>
         <form id="logoutForm" th:action="@{/logout}" method="post">
             <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
@@ -22,7 +22,7 @@
 
 <nav th:fragment="navigation-left" data-aos="fade-right" data-aos-delay="20" class="navbar-left shadow-bg">
     <div class="navbar-nav">
-        <p class="title">Kategoria B</p>
+        <p class="title" th:text="${session.category}">Kategoria B</p>
         <div class="underline"></div>
 
         <a data-aos="fade-right" data-aos-delay="100" class="nav-link active" th:href="@{/dashboard}"

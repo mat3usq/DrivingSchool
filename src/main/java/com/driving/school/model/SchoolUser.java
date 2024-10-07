@@ -68,6 +68,12 @@ public class SchoolUser {
     @OneToOne(mappedBy = "schoolUser")
     private UserStatistic userStatistic;
 
+    @Column(name = "AVAILABLECATEGORIES")
+    private String availableCategories;
+
+    @Column(name = "CURRENTCATEGORY")
+    private String currentCategory;
+
     private String selectedTypeQuestions = "remainingQuestions";
 
     @CreatedDate
