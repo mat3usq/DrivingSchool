@@ -33,48 +33,23 @@
         <div class="hero-img">
             <div class="box-category">
                 <div class="box-container">
-                    <p class="title" data-aos="fade-down" data-aos-delay="100">Twoje dostepne kategorie</p>
+                    <p class="title" data-aos="fade-down" data-aos-delay="100">Dostepne Kategorie</p>
                     <div class="container-category">
-                            <div class="category" data-aos="zoom-in" data-aos-delay="120">
-                                <i class="fa-solid fa-motorcycle"></i>
-                                <p>Kategoria <span>A</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="160">
-                                <i class="fa-solid fa-car"></i>
-                                <p>Kategoria <span>B</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="140">
-                                <i class="fa-solid fa-truck"></i>
-                                <p>Kategoria <span>C</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="130">
-                                <i class="fa-solid fa-bus"></i>
-                                <p>Kategoria <span>D</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="150">
-                                <i class="fa-solid fa-tractor"></i>
-                                <p>Kategoria <span>T</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="120">
-                                <i class="fa-solid fa-motorcycle"></i>
-                                <p>Kategoria <span>A</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="160">
-                                <i class="fa-solid fa-car"></i>
-                                <p>Kategoria <span>B</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="140">
-                                <i class="fa-solid fa-truck"></i>
-                                <p>Kategoria <span>C</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="130">
-                                <i class="fa-solid fa-bus"></i>
-                                <p>Kategoria <span>D</span></p>
-                            </div>
-                            <div class="category" data-aos="zoom-in" data-aos-delay="150">
-                                <i class="fa-solid fa-tractor"></i>
-                                <p>Kategoria <span>T</span></p>
-                            </div>
+                        <div th:if="${!session.loggedInUser.getAvailableCategories().isEmpty()}"
+                             th:each="category, iterStat : ${session.loggedInUser.getAvailableCategories()}"
+                             class="category"
+                             th:data-aos-delay="${iterStat.index % 2 == 0 ? 120 + 20 : 120 - 20}"
+                             data-aos="zoom-in">
+                            <img th:src="'/assets/img/category/svg/' + ${category.nameCategory} + '.svg'"
+                                 th:alt="${category.nameCategory}">
+                            <p>Kategoria <span th:text="${category.nameCategory}">A</span></p>
+                        </div>
+
+                        <div th:if="${session.loggedInUser.getAvailableCategories().isEmpty()}"
+                             class="category" data-aos="zoom-in" data-aos-delay="120">
+                            <img src="/assets/img/category/svg/gasStation.svg" alt="Stacja Paliw">
+                            <p>Brak <span>Kategorii</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
