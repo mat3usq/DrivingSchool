@@ -68,21 +68,25 @@ public class StudentExamService {
     }
 
     public List<Question> generateQuestionSet(String category) {
-        int numberOfNoSpecialistQuestions = 20;
         int numberOfNoSpecialistQuestionsWithOnePoint = 4;
         int numberOfNoSpecialistQuestionsWithTwoPoints = 6;
         int numberOfNoSpecialistQuestionsWithThreePoints = 10;
-        int numberOfSpecialistQuestions = 12;
-
+        int numberOfSpecialistQuestionsWithOnePoint = 2;
+        int numberOfSpecialistQuestionsWithTwoPoints = 4;
+        int numberOfSpecialistQuestionsWithThreePoints = 6;
 
         List<Question> noSpecialistQuestions = new ArrayList<>();
         noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 1,numberOfNoSpecialistQuestionsWithOnePoint));
         noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 2,numberOfNoSpecialistQuestionsWithTwoPoints));
         noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 3,numberOfNoSpecialistQuestionsWithThreePoints));
         Collections.shuffle(noSpecialistQuestions);
+
         List<Question> specialistQuestions = new ArrayList<>();
-        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category,2 ,numberOfSpecialistQuestions));
-        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category,3 ,numberOfSpecialistQuestions));
+        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category,1 ,numberOfSpecialistQuestionsWithOnePoint));
+        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category,2 ,numberOfSpecialistQuestionsWithTwoPoints));
+        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category,3 ,numberOfSpecialistQuestionsWithThreePoints));
+        Collections.shuffle(specialistQuestions);
+
         noSpecialistQuestions.addAll(specialistQuestions);
         return noSpecialistQuestions;
     }
