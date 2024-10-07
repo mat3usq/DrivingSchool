@@ -146,7 +146,7 @@ h2 {
 .categories .hero-img .box-category .box-container .title {
   margin-top: 100px;
   padding: 20px 10px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 20px;
   font-size: 20px;
   font-style: italic;
@@ -166,13 +166,13 @@ h2 {
   align-items: center;
   margin: 20px;
   padding: 15px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 20px;
   text-align: center;
 }
-.categories .hero-img .box-category .box-container .container-category .category i {
-  color: #4cc9f0;
-  font-size: 36px;
+.categories .hero-img .box-category .box-container .container-category .category img {
+  width: 120px;
+  height: 120px;
   padding: 20px;
 }
 .categories .hero-img .box-category .box-container .container-category .category span {

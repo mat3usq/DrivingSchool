@@ -69,7 +69,7 @@ h2 {
 				.title {
 					margin-top: 100px;
 					padding: 20px 10px;
-					background-color: rgba(0, 0, 0, 0.6);
+					background-color: rgba(0, 0, 0, 0.8);
 					border-radius: 20px;
 					font-size: 20px;
 					font-style: italic;
@@ -91,13 +91,13 @@ h2 {
 						align-items: center;
 						margin: 20px;
 						padding: 15px;
-						background-color: rgba(0, 0, 0, 0.6);
+						background-color: rgba(0, 0, 0, 0.8);
 						border-radius: 20px;
 						text-align: center;
 
-						i {
-							color: $category-icon;
-							font-size: 36px;
+						img {
+							width: 120px;
+							height: 120px;
 							padding: 20px;
 						}
 
