@@ -22,12 +22,8 @@ public class DashboardController {
     public ModelAndView displayDashboard(Authentication authentication, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
         SchoolUser user = schoolUserRepository.findByEmail(authentication.getName());
-        if (user != null) {
+        if (user != null)
             session.setAttribute("loggedInUser", user);
-            if (user.getCurrentCategory() != null)
-                session.setAttribute("category", "Kategoria " + user.getCurrentCategory());
-            else session.setAttribute("category", "Brak Kategorii");
-        }
         return modelAndView;
     }
 }

@@ -36,12 +36,13 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final TestService testService;
     private final InstructionEventRepository eventRepository;
     private final StudentInstructorRepository studentInstructorRepository;
+    private final CategoryRepository categoryRepository;
     private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
             schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
-                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository, StudentInstructorRepository studentInstructorRepository) {
+                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository, StudentInstructorRepository studentInstructorRepository, CategoryRepository categoryRepository) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
@@ -50,32 +51,59 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.testService = testService;
         this.eventRepository = eventRepository;
         this.studentInstructorRepository = studentInstructorRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public void run(String... args) {
-        createUsers();
+        createUsersAndCategories();
         createLectures();
         addTeststoDb();
         mapQuestionsToDb();
         createEvents();
     }
 
-    private void createUsers() {
+    private void createUsersAndCategories() {
         // haslo: admin
-        SchoolUser admin = new SchoolUser("admin", "admin", "$100801$cfJJlxSl83FjJ2mh+6yUcdxxksVm3XlOzhBr4gLHFEOhdeWmaf2H6Lki/fe99YUMduDoX/LGHUcodWe9SkhVnw==$Q1yyulzoYXseBJ/OmM/xgcYD9fFPaw2bRzBHRW7RgG4=", "admin", Constants.ADMIN_ROLE);
-        schoolUserRepository.save(admin);
+        // "A,B,C,D,T,AM,A1,A2,B1,C1,D1,PT"
+        SchoolUser admin = new SchoolUser("admin", "admin", "$100801$cfJJlxSl83FjJ2mh+6yUcdxxksVm3XlOzhBr4gLHFEOhdeWmaf2H6Lki/fe99YUMduDoX/LGHUcodWe9SkhVnw==$Q1yyulzoYXseBJ/OmM/xgcYD9fFPaw2bRzBHRW7RgG4=", "admin", Constants.ADMIN_ROLE, "Brak Kategorii");
 
         // haslo: student
-        SchoolUser student = new SchoolUser("student", "student", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student", Constants.STUDENT_ROLE);
-        SchoolUser student2 = new SchoolUser("student2", "student2", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student2", Constants.STUDENT_ROLE);
-        schoolUserRepository.save(student);
-        schoolUserRepository.save(student2);
+        // " "
+        SchoolUser student = new SchoolUser("student", "student", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student", Constants.STUDENT_ROLE, "Brak Kategorii");
+        SchoolUser student2 = new SchoolUser("student2", "student2", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student2", Constants.STUDENT_ROLE, "Brak Kategorii");
 
         // haslo: instructor
-        SchoolUser instructor = new SchoolUser("instructor", "instructor", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor", Constants.INSTRUCTOR_ROLE);
-        SchoolUser instructor2 = new SchoolUser("instructor2", "instructor2", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor2", Constants.INSTRUCTOR_ROLE);
-        SchoolUser instructor3 = new SchoolUser("instructor3", "instructor3", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor3", Constants.INSTRUCTOR_ROLE);
+        // "A,B,C,D,T,AM,A1,A2,B1,C1,D1,PT"
+        SchoolUser instructor = new SchoolUser("instructor", "instructor", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor", Constants.INSTRUCTOR_ROLE, "Brak Kategorii");
+        SchoolUser instructor2 = new SchoolUser("instructor2", "instructor2", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor2", Constants.INSTRUCTOR_ROLE, "Brak Kategorii");
+        SchoolUser instructor3 = new SchoolUser("instructor3", "instructor3", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor3", Constants.INSTRUCTOR_ROLE, "Brak Kategorii");
+
+        // "A,B,C,D,T,AM,A1,A2,B1,C1,D1,PT"
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category("A", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("B", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("C", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("D", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("T", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("AM", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("A1", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("A2", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("B1", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("C1", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("D1", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("PT", Arrays.asList(admin, instructor, instructor2, instructor3)));
+
+        categoryRepository.saveAll(categories);
+
+        admin.setAvailableCategories(categories);
+        instructor.setAvailableCategories(categories);
+        instructor2.setAvailableCategories(categories);
+        instructor3.setAvailableCategories(categories);
+
+        schoolUserRepository.save(admin);
+        schoolUserRepository.save(student);
+        schoolUserRepository.save(student2);
         schoolUserRepository.save(instructor);
         schoolUserRepository.save(instructor2);
         schoolUserRepository.save(instructor3);

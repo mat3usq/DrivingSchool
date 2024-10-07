@@ -68,8 +68,13 @@ public class SchoolUser {
     @OneToOne(mappedBy = "schoolUser")
     private UserStatistic userStatistic;
 
-    @Column(name = "AVAILABLECATEGORIES")
-    private String availableCategories;
+    @ManyToMany
+    @JoinTable(
+            name = "SCHOOLUSER_CATEGORY",
+            joinColumns = @JoinColumn(name = "SCHOOLUSERID"),
+            inverseJoinColumns = @JoinColumn(name = "CATEGORYID")
+    )
+    private List<Category> availableCategories;
 
     @Column(name = "CURRENTCATEGORY")
     private String currentCategory;
@@ -92,12 +97,13 @@ public class SchoolUser {
     @Column(name = "LASTUPDATEDBY", length = 64)
     private String lastUpdatedBy;
 
-    public SchoolUser(String name, String surname, String password, String email, String roleName) {
+    public SchoolUser(String name, String surname, String password, String email, String roleName, String currentCategory) {
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
         this.roleName = roleName;
+        this.currentCategory = currentCategory;
     }
 
     @Override

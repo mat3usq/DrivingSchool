@@ -34,6 +34,7 @@ public class SchoolUserService {
         if (!schoolUserRepository.existsByEmail(user.getEmail())) {
             user.setRoleName(Constants.STUDENT_ROLE);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setCurrentCategory("Brak Kategorii");
             user = schoolUserRepository.save(user);
             if (user.getId() > 0)
                 isSaved = true;

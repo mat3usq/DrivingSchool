@@ -22,7 +22,7 @@
 
 <nav th:fragment="navigation-left" data-aos="fade-right" data-aos-delay="20" class="navbar-left shadow-bg">
     <div class="navbar-nav">
-        <p class="title" th:text="${session.category}">Kategoria B</p>
+        <p class="title" th:text="${session.loggedInUser.currentCategory}">Kategoria B</p>
         <div class="underline"></div>
 
         <a data-aos="fade-right" data-aos-delay="100" class="nav-link active" th:href="@{/dashboard}"
@@ -43,12 +43,13 @@
         <a data-aos="fade-right" data-aos-delay="350" class="nav-link" href="account.html"
         ><i class="fa-regular fa-user"></i>Moje Konto</a
         >
-        <a data-aos="fade-right" data-aos-delay="400" class="nav-link logout" href="javascript:document.getElementById('logoutForm').submit()"
+        <a data-aos="fade-right" data-aos-delay="400" class="nav-link logout"
+           href="javascript:document.getElementById('logoutForm').submit()"
         ><i class="fa-solid fa-arrow-right-to-bracket"></i>Wyloguj Sie</a
         >
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const navLinks = document.querySelectorAll('.nav-link');
             const currentPath = window.location.pathname;
 
@@ -60,6 +61,7 @@
                     }
                 });
             }
+
             updateActiveNavLink();
         });
 
