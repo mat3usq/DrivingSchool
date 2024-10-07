@@ -132,14 +132,19 @@ public class DatabaseSeeder implements CommandLineRunner {
         List<Test> tests = testService.getAllTestsByCategory("B");
         try (CSVReader reader = new CSVReaderBuilder(new FileReader("src/main/resources/data/questions/questions.csv"))
                 .withCSVParser(new CSVParserBuilder()
-                        .withSeparator(';')
+                        .withSeparator(',')
                         .build())
                 .build()) {
             List<String[]> records = reader.readAll();
             int iteration = 1;
             long startTime = System.nanoTime();
             for (String[] record : records) {
+                if(iteration == 1){
+                    iteration++;
+                    continue;
+                }
                 Question question = new Question();
+
 
                 question.setQuestion(record[0]);
 
@@ -147,23 +152,26 @@ public class DatabaseSeeder implements CommandLineRunner {
 
                 question.setDrivingCategory(record[2]);
 
-                question.setQuestionType(record[3].equals("TAK"));
+                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
+                if(record[12].equals("SPECJALISTYCZNY")){
+                    logger.info(question.toString());
+                }
 
-                question.setSubjectArea(record[4]);
+                question.setSubjectArea(record[3]);
 
-                question.setExplanation(record[5]);
+                question.setExplanation(record[4]);
 
-                question.setAnswerA(record[6]);
-                question.setAnswerB(record[7]);
-                question.setAnswerC(record[8]);
+                question.setAnswerA(record[5]);
+                question.setAnswerB(record[6]);
+                question.setAnswerC(record[7]);
 
-                question.setCorrectAnswer(record[9].toUpperCase());
+                question.setCorrectAnswer(record[8].toUpperCase());
 
-                question.setPoints(Long.valueOf(record[10]));
+                question.setPoints(Long.valueOf(record[9]));
 
-                question.setSource(record[11]);
+                question.setSource(record[10]);
 
-                question.setConnectionWithSecurity(record[12]);
+                question.setConnectionWithSecurity(record[11]);
 
                 if (record[6].isEmpty())
                     question.setAvailableAnswers(2L);
@@ -178,8 +186,9 @@ public class DatabaseSeeder implements CommandLineRunner {
                     question.setAllTimeForQuestion(35);
                 }
 
+
                 tests.forEach(t -> {
-                    if (t.getName().equals(record[4]) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
+                    if (t.getName().equals(record[3]) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
                         List<Test> questionTests = question.getTests();
                         questionTests.add(t);
                         question.setTests(questionTests);
@@ -190,8 +199,9 @@ public class DatabaseSeeder implements CommandLineRunner {
                 });
 
                 ++iteration;
-//                if (iteration == 2000)
-//                    break;
+                if (iteration%100 == 0)
+                    logger.info("tak wygląda pytanie {}",question);
+
             }
 
             long durationNano = System.nanoTime() - startTime;
@@ -199,7 +209,6 @@ public class DatabaseSeeder implements CommandLineRunner {
             long durationSeconds = durationMillis / 1000;
             long minutes = durationSeconds / 60;
             long seconds = durationSeconds % 60;
-
             logger.info("Zmapowano {} Pytan w czasie: {}minut {}sekund", iteration, minutes, seconds);
 
         } catch (IOException | CsvException e) {
