@@ -42,6 +42,15 @@
             <div class="hero-shadow"></div>
             <div class="box-subject">
                 <div class="box-container">
+                    <div class="container" th:if="${lectureList.isEmpty()}">
+                        <div class="container-lecture">
+                            <div class="lecture-details">
+                                <p class="title">Brak Dostępnych Wykładów 🚔</p>
+                                <p class="content">Zajrzyj Tutaj Potem 🚘</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="container" th:each="lecture, iterLecture : ${lectureList}">
                         <div class="container-lecture">
                             <div class="lecture-details" th:id="'lecture-details-' + ${lecture.id}">

@@ -1,6 +1,7 @@
 package com.driving.school.controller;
 
 import com.driving.school.model.Lecture;
+import com.driving.school.model.SchoolUser;
 import com.driving.school.model.Subject;
 import com.driving.school.model.Sublecture;
 import com.driving.school.service.LectureService;
@@ -28,17 +29,17 @@ public class LectureController {
     }
 
     @GetMapping(value = "/lecture")
-    public ModelAndView displayLecturePage() {
+    public ModelAndView displayLecturePage(HttpSession session) {
         ModelAndView m = new ModelAndView("lecture");
         m.addObject("newLecture", new Lecture());
         m.addObject("newSublecture", new Sublecture());
         m.addObject("newSubject", new Subject());
-        m.addObject("lectureList", lectureService.findAll());
+        m.addObject("lectureList", lectureService.findAllByCategory(((SchoolUser) session.getAttribute("loggedInUser")).getCurrentCategory()));
         return m;
     }
 
     @PostMapping(value = "/lecture/addLecture")
-    public String addLecture(@ModelAttribute("newLecture") Lecture lecture) {
+    public String addLecture(@ModelAttribute("newLecture") Lecture lecture, HttpSession session) {
         lecture.getSublectures().forEach(sublecture -> {
             sublecture.getSubjects().forEach(subject -> {
                 if (subject != null && subject.getFile() != null && !subject.getFile().isEmpty()) {
@@ -50,7 +51,7 @@ public class LectureController {
                 }
             });
         });
-        lectureService.save(lecture);
+        lectureService.save(lecture, ((SchoolUser) session.getAttribute("loggedInUser")).getCurrentCategory());
         return "redirect:/lecture";
     }
 
@@ -59,7 +60,7 @@ public class LectureController {
         ModelAndView m = new ModelAndView("editLecture");
         Lecture editedLecture = lectureService.findById(id);
         m.addObject("newLecture", editedLecture);
-        m.addObject("lectureList", lectureService.findAll());
+        m.addObject("lectureList", lectureService.findAllByCategory(((SchoolUser) session.getAttribute("loggedInUser")).getCurrentCategory()));
         session.setAttribute("editedLecture", editedLecture);
         return m;
     }
@@ -101,7 +102,7 @@ public class LectureController {
         ModelAndView m = new ModelAndView("editSublecture");
         Sublecture editedSublecture = sublectureService.findById(id);
         m.addObject("newSublecture", editedSublecture);
-        m.addObject("lectureList", lectureService.findAll());
+        m.addObject("lectureList", lectureService.findAllByCategory(((SchoolUser) session.getAttribute("loggedInUser")).getCurrentCategory()));
         session.setAttribute("editedSublecture", editedSublecture);
         return m;
     }
@@ -143,7 +144,7 @@ public class LectureController {
         ModelAndView m = new ModelAndView("editSubject");
         Subject editedSubject = subjectService.findById(id);
         m.addObject("newSubject", editedSubject);
-        m.addObject("lectureList", lectureService.findAll());
+        m.addObject("lectureList", lectureService.findAllByCategory(((SchoolUser) session.getAttribute("loggedInUser")).getCurrentCategory()));
         session.setAttribute("editedSubject", editedSubject);
         return m;
     }

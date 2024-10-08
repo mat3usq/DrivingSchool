@@ -31,9 +31,13 @@ public class Lecture {
     @OneToMany(mappedBy = "lecture")
     private List<Sublecture> sublectures = new ArrayList<>();
 
-    public Lecture(String name, String content, Integer orderIndex) {
+    @Column(name = "CATEGORY")
+    private String category;
+
+    public Lecture(String name, String content, Integer orderIndex, String category) {
         this.name = name;
         this.content = content;
         this.orderIndex = orderIndex;
+        this.category = category;
     }
 }

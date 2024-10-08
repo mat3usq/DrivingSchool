@@ -69,8 +69,9 @@ public class DatabaseSeeder implements CommandLineRunner {
         SchoolUser admin = new SchoolUser("admin", "admin", "$100801$cfJJlxSl83FjJ2mh+6yUcdxxksVm3XlOzhBr4gLHFEOhdeWmaf2H6Lki/fe99YUMduDoX/LGHUcodWe9SkhVnw==$Q1yyulzoYXseBJ/OmM/xgcYD9fFPaw2bRzBHRW7RgG4=", "admin", Constants.ADMIN_ROLE, "B");
 
         // haslo: student
-        // " "
+        // "A,B,D"
         SchoolUser student = new SchoolUser("student", "student", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student", Constants.STUDENT_ROLE, "");
+        // ""
         SchoolUser student2 = new SchoolUser("student2", "student2", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student2", Constants.STUDENT_ROLE, "");
 
         // haslo: instructor
@@ -97,6 +98,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         categoryRepository.saveAll(categories);
 
         admin.setAvailableCategories(categories);
+        student.setAvailableCategories(Arrays.asList(categories.get(0), categories.get(1), categories.get(3)));
         instructor.setAvailableCategories(categories);
         instructor2.setAvailableCategories(categories);
         instructor3.setAvailableCategories(categories);
@@ -116,8 +118,8 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void createLectures() {
         try {
-            Lecture l = new Lecture("RUCH POJAZDOW", null, 1);
-            Lecture l2 = new Lecture("RUCH POJAZDOW2", null, 2);
+            Lecture l = new Lecture("RUCH POJAZDOW Kategoria B", null, 1, "B");
+            Lecture l2 = new Lecture("RUCH POJAZDOW Kategoria D", null, 2, "D");
             Sublecture sl1 = new Sublecture("Ogólne zasady ruchu pojazdów.", "Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej, jest obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej do dojazdu do nieruchomości położonej przy drodze”.", 1, l);
             Sublecture sl2 = new Sublecture("Włączanie się do ruchu.", "Włączanie się do ruchu wymaga zachowania szczególnej ostrożności, a także konieczności ustąpienia pierwszeństwa wszystkim pozostałym uczestnikom ruchu. Przede wszystkim, zanim rozpoczniesz ruch, dokonaj uważnej obserwacji sytuacji jaka występuje na drodze, a także podejmij trafną decyzję, czy manewr włączania się do ruchu przeprowadzisz w bezpieczny sposób. Jeżeli masz jakiekolwiek wątpliwości zaczekaj na poprawę sytuacji.", 2, l);
             List<Subject> subjects = new ArrayList<>(Arrays.asList(

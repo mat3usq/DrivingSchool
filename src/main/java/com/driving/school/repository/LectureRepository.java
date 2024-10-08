@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
-    List<Lecture> findAllByOrderByOrderIndex();
+    List<Lecture> findAllByCategoryOrderByOrderIndex(String category);
 }

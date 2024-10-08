@@ -25,8 +25,8 @@ public class LectureService {
         this.subjectRepository = subjectRepository;
     }
 
-    public List<Lecture> findAll() {
-        List<Lecture> lectures = lectureRepository.findAllByOrderByOrderIndex();
+    public List<Lecture> findAllByCategory(String category) {
+        List<Lecture> lectures = lectureRepository.findAllByCategoryOrderByOrderIndex(category);
         for (Lecture lecture : lectures) {
             lecture.getSublectures().sort(Comparator.comparingInt(Sublecture::getOrderIndex));
             for (Sublecture sublecture : lecture.getSublectures())
@@ -35,7 +35,8 @@ public class LectureService {
         return lectures;
     }
 
-    public void save(Lecture lecture) {
+    public void save(Lecture lecture, String category) {
+        lecture.setCategory(category);
         renumberLecture(lecture);
         lecture.getSublectures().forEach(sl -> {
             sl.setLecture(lecture);
@@ -52,7 +53,7 @@ public class LectureService {
 
     public void update(Lecture lecture) {
         renumberLecture(lecture);
-        renumberAllLectures();
+        renumberAllLectures(lecture);
     }
 
     public Lecture findById(Long id) {
@@ -61,11 +62,11 @@ public class LectureService {
 
     public void delete(Lecture lecture) {
         lectureRepository.delete(lecture);
-        renumberAllLectures();
+        renumberAllLectures(lecture);
     }
 
     private void renumberLecture(Lecture lecture) {
-        List<Lecture> lectures = lectureRepository.findAllByOrderByOrderIndex();
+        List<Lecture> lectures = lectureRepository.findAllByCategoryOrderByOrderIndex(lecture.getCategory());
 
         if (lecture.getOrderIndex() == -1)
             lecture.setOrderIndex(lectures.size() + 1);
@@ -78,8 +79,8 @@ public class LectureService {
         lectureRepository.save(lecture);
     }
 
-    public void renumberAllLectures() {
-        List<Lecture> lectures = lectureRepository.findAllByOrderByOrderIndex();
+    public void renumberAllLectures(Lecture l) {
+        List<Lecture> lectures = lectureRepository.findAllByCategoryOrderByOrderIndex(l.getCategory());
         for (int i = 0; i < lectures.size(); i++) {
             Lecture lecture = lectures.get(i);
             lecture.setOrderIndex(i + 1);
