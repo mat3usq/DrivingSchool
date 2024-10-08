@@ -167,13 +167,23 @@ public class DatabaseSeeder implements CommandLineRunner {
             int iteration = 1;
             long startTime = System.nanoTime();
             for (String[] record : records) {
+                if(iteration == 1){
+                    iteration++;
+                    continue;
+                }
                 Question question = new Question();
+
 
                 question.setQuestion(record[0]);
 
                 question.setMediaName(record[1]);
 
                 question.setDrivingCategory(record[2]);
+
+                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
+                if(record[12].equals("SPECJALISTYCZNY")){
+                    logger.info(question.toString());
+                }
 
                 question.setSubjectArea(record[3]);
 
@@ -191,8 +201,6 @@ public class DatabaseSeeder implements CommandLineRunner {
 
                 question.setConnectionWithSecurity(record[11]);
 
-                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
-
                 if (record[6].isEmpty())
                     question.setAvailableAnswers(2L);
                 else
@@ -206,6 +214,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                     question.setAllTimeForQuestion(35);
                 }
 
+
                 tests.forEach(t -> {
                     if (t.getName().equals(record[3]) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
                         List<Test> questionTests = question.getTests();
@@ -218,6 +227,9 @@ public class DatabaseSeeder implements CommandLineRunner {
                 });
 
                 ++iteration;
+                if (iteration%100 == 0)
+                    logger.info("tak wygląda pytanie {}",question);
+
             }
 
             long durationNano = System.nanoTime() - startTime;
