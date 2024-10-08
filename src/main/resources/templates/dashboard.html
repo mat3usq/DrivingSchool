@@ -35,13 +35,16 @@
                 <div class="box-container">
                     <p class="title" data-aos="zoom-in" data-aos-delay="100">Dostepne Kategorie</p>
                     <div class="container-category">
-                        <div th:if="${!session.loggedInUser.getAvailableCategories().isEmpty()}"
-                             th:each="category : ${session.loggedInUser.getAvailableCategories()}"
-                             class="category" th:classappend="${session.loggedInUser.currentCategory.equals(category.getNameCategory())} ? 'currentCategory' : ''">
+                        <form th:if="${!session.loggedInUser.getAvailableCategories().isEmpty()}"
+                              th:each="category : ${session.loggedInUser.getAvailableCategories()}"
+                              class="category" th:classappend="${session.loggedInUser.currentCategory.equals(category.getNameCategory())} ? 'currentCategory' : ''"
+                              th:action="@{/dashboard/changeCurrentCategory}" method="post"
+                              onclick="this.submit()">
+                            <input type="hidden" name="categoryId" th:value="${category.id}"/>
                             <img th:src="'/assets/img/category/svg/' + ${category.nameCategory} + '.svg'"
                                  th:alt="${category.nameCategory}">
                             <p>Kategoria <span th:text="${category.nameCategory}">A</span></p>
-                        </div>
+                        </form>
 
                         <div th:if="${session.loggedInUser.getAvailableCategories().isEmpty()}"
                              class="category" data-aos="zoom-in" data-aos-delay="120">

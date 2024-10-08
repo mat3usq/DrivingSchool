@@ -1,9 +1,7 @@
 package com.driving.school.service;
 
-import com.driving.school.model.Constants;
-import com.driving.school.model.SchoolUser;
-import com.driving.school.model.StudentAnswersTest;
-import com.driving.school.model.UserLikedQuestion;
+import com.driving.school.model.*;
+import com.driving.school.repository.CategoryRepository;
 import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.repository.UserLikedQuestionRepository;
 import jakarta.transaction.Transactional;
@@ -18,12 +16,14 @@ import java.util.Set;
 @Service
 public class SchoolUserService {
     private final SchoolUserRepository schoolUserRepository;
+    private final CategoryRepository categoryRepository;
     private final UserLikedQuestionRepository userLikedQuestionRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SchoolUserService(SchoolUserRepository schoolUserRepository, UserLikedQuestionRepository userLikedQuestionRepository, PasswordEncoder passwordEncoder) {
+    public SchoolUserService(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, UserLikedQuestionRepository userLikedQuestionRepository, PasswordEncoder passwordEncoder) {
         this.schoolUserRepository = schoolUserRepository;
+        this.categoryRepository = categoryRepository;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -69,7 +69,7 @@ public class SchoolUserService {
 
     @Transactional
     public void deleteLikedQuestionFromUser(Long questionId, Long testId, SchoolUser user) {
-        if (user != null){
+        if (user != null) {
             userLikedQuestionRepository.deleteBySchoolUserAndQuestionIdAndTestId(user, questionId, testId);
             schoolUserRepository.save(user);
         }
@@ -77,5 +77,18 @@ public class SchoolUserService {
 
     public List<UserLikedQuestion> findAllLikedQuestionsByUserIdAndTestId(Long userId, Long testId) {
         return userLikedQuestionRepository.findAllBySchoolUserAndTestId(schoolUserRepository.findById(userId).orElse(null), testId);
+    }
+
+    public SchoolUser findUserByEmail(String email) {
+        return schoolUserRepository.findByEmail(email);
+    }
+
+    public void changeCategory(SchoolUser user, Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElse(null);
+
+        if (category != null && user.getAvailableCategories().contains(category)) {
+            user.setCurrentCategory(category.getNameCategory());
+            schoolUserRepository.save(user);
+        }
     }
 }
