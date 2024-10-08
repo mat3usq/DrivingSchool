@@ -22,7 +22,8 @@
 
 <nav th:fragment="navigation-left" data-aos="fade-right" data-aos-delay="20" class="navbar-left shadow-bg">
     <div class="navbar-nav">
-        <p class="title" th:text="${session.loggedInUser.currentCategory}">Kategoria B</p>
+        <p class="title" th:if="${!session.loggedInUser.currentCategory.isEmpty()}" th:text="${session.loggedInUser.currentCategory}">Kategoria B</p>
+        <p class="title" th:if="${session.loggedInUser.currentCategory.isEmpty()}">Brak Kategorii</p>
         <div class="underline"></div>
 
         <a data-aos="fade-right" data-aos-delay="100" class="nav-link active" th:href="@{/dashboard}"

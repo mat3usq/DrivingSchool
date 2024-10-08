@@ -33,13 +33,11 @@
         <div class="hero-img">
             <div class="box-category">
                 <div class="box-container">
-                    <p class="title" data-aos="fade-down" data-aos-delay="100">Dostepne Kategorie</p>
+                    <p class="title" data-aos="zoom-in" data-aos-delay="100">Dostepne Kategorie</p>
                     <div class="container-category">
                         <div th:if="${!session.loggedInUser.getAvailableCategories().isEmpty()}"
-                             th:each="category, iterStat : ${session.loggedInUser.getAvailableCategories()}"
-                             class="category"
-                             th:data-aos-delay="${iterStat.index % 2 == 0 ? 120 + 20 : 120 - 20}"
-                             data-aos="zoom-in">
+                             th:each="category : ${session.loggedInUser.getAvailableCategories()}"
+                             class="category" th:classappend="${session.loggedInUser.currentCategory.equals(category.getNameCategory())} ? 'currentCategory' : ''">
                             <img th:src="'/assets/img/category/svg/' + ${category.nameCategory} + '.svg'"
                                  th:alt="${category.nameCategory}">
                             <p>Kategoria <span th:text="${category.nameCategory}">A</span></p>
