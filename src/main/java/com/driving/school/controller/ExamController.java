@@ -41,10 +41,9 @@ public class ExamController {
     @PostMapping("/exam/generate")
     public ModelAndView generateExam(HttpSession session) {
         if (session.getAttribute("exam") == null) {
-            String category = "B";
-
-            List<Question> questionSet = studentExamService.generateQuestionSet(category);
             SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+            String category = user.getCurrentCategory();
+            List<Question> questionSet = studentExamService.generateQuestionSet(category);
 
             StudentExam studentExam = new StudentExam();
             studentExam.setSchoolUser(user);
@@ -85,6 +84,8 @@ public class ExamController {
             session.setAttribute("latestQuestion", question);
         } else modelAndView.addObject("question", session.getAttribute("latestQuestion"));
 
+        modelAndView.addObject("category", ((StudentExam) session.getAttribute("exam")).getCategory());
+
         int maxQuestions = 32;
         int remainingQuestions = maxQuestions - questionSet.size();
         int noSpecCounter;
@@ -114,6 +115,8 @@ public class ExamController {
 
         studentExam = studentExamService.getStudentExamById(studentExam.getId());
         Question question = questionService.findById(questionId).orElse(null);
+        if (question == null)
+            return examSolve(session, false);
 
         StudentExamAnswer studentExamAnswer = new StudentExamAnswer();
         studentExamAnswer.setStudentExam(studentExam);
@@ -121,7 +124,7 @@ public class ExamController {
         studentExamAnswer.setAnswer(action);
         studentExamAnswer.setCorrectness(false);
 
-        if (question != null && action.equals(question.getCorrectAnswer())) {
+        if (action.equals(question.getCorrectAnswer())) {
             studentExam.setPoints(studentExam.getPoints() + question.getPoints());
             studentExamAnswer.setCorrectness(true);
             studentExamService.updateStudentExam(studentExam.getId(), studentExam);
