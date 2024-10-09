@@ -28,18 +28,6 @@ public class StudentAnswersTestService {
         this.userLikedQuestionRepository = userLikedQuestionRepository;
     }
 
-    public StudentAnswersTest saveTest(StudentAnswersTest test) {
-        return studentAnswersTestRepository.save(test);
-    }
-
-    public StudentAnswersTest getTestById(Long id) {
-        return studentAnswersTestRepository.findById(id).orElse(null);
-    }
-
-    public List<StudentAnswersTest> getAllTests() {
-        return studentAnswersTestRepository.findAll();
-    }
-
     public void deleteAllStudentAnswersTest(List<StudentAnswersTest> studentAnswersTestList) {
         studentAnswersTestRepository.deleteAll(studentAnswersTestList);
     }
@@ -62,7 +50,7 @@ public class StudentAnswersTestService {
                     studentAnswersTest.setSkipped(true);
                 }
                 studentAnswersTestRepository.delete(studentAnswersTest);
-                studentAnswersTestRepository.save(studentAnswersTest);
+                saveToDb(studentAnswersTest);
                 break;
             case "likedQuestions":
                 studentAnswersTest = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(loggedUser, t, q);
@@ -73,7 +61,7 @@ public class StudentAnswersTestService {
                 if (userLikedQuestion != null && isLiked)
                     userLikedQuestionRepository.save(userLikedQuestion);
 
-                if(studentAnswersTest == null) {
+                if (studentAnswersTest == null) {
                     studentAnswersTest = new StudentAnswersTest();
                     studentAnswersTest.setSchoolUser(loggedUser);
                     studentAnswersTest.setTest(t);
@@ -88,7 +76,7 @@ public class StudentAnswersTestService {
                     studentAnswersTest.setSkipped(true);
                 }
 
-                studentAnswersTestRepository.save(studentAnswersTest);
+                saveToDb(studentAnswersTest);
                 break;
             case "remainingQuestions":
                 studentAnswersTest.setSchoolUser(loggedUser);
@@ -102,12 +90,24 @@ public class StudentAnswersTestService {
                     studentAnswersTest.setCorrectness(false);
                     studentAnswersTest.setSkipped(true);
                 }
-                studentAnswersTestRepository.save(studentAnswersTest);
+                saveToDb(studentAnswersTest);
                 break;
         }
 
         return studentAnswersTest;
     }
+
+    public void saveToDb(StudentAnswersTest studentAnswersTest) {
+        StudentAnswersTest existingAnswer = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(
+                studentAnswersTest.getSchoolUser(),
+                studentAnswersTest.getTest(),
+                studentAnswersTest.getQuestion()
+        );
+
+        if (existingAnswer == null)
+            studentAnswersTestRepository.save(studentAnswersTest);
+    }
+
 
     public void setStatisticForTest(List<Test> tests, Long userId) {
         tests.forEach(test -> {
