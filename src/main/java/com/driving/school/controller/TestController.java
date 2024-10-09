@@ -41,7 +41,7 @@ public class TestController {
     @GetMapping(value = {"/tests"})
     public ModelAndView displayTestsPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("tests");
-        List<Test> tests = testService.getAllTestsByCategory("B");
+        List<Test> tests = testService.getAllTestsByCategory(((SchoolUser) session.getAttribute("loggedInUser")).getCurrentCategory());
         studentAnswersTestService.setStatisticForTest(tests, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
         modelAndView.addObject("tests", tests);
         return modelAndView;
@@ -50,8 +50,13 @@ public class TestController {
     @PostMapping(value = {"/tests/selectQuestions"})
     public ModelAndView selectQuestions(@RequestParam("testId") Long testId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("selectedQuestionsInTest");
-        Long userId = ((SchoolUser) session.getAttribute("loggedInUser")).getId();
+        SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
+        Long userId = schoolUser.getId();
         List<Test> tests = Collections.singletonList(testService.getTestById(testId));
+
+        if (tests.getFirst() == null || !tests.getFirst().getDrivingCategory().equals(schoolUser.getCurrentCategory()))
+            return displayTestsPage(session);
+
         studentAnswersTestService.setStatisticForTest(tests, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
         modelAndView.addObject("test", tests.getFirst());
         Integer numberCorrectAnswers = studentAnswersTestService.getCorrectStudentAnswersTestByUserIdandTestId(userId, testId).size();
@@ -97,8 +102,13 @@ public class TestController {
         ModelAndView modelAndView = new ModelAndView("solveTest");
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Question question = questionService.getNextQuestion(testId, user, selectedTypeQuestions);
+        Test test = testService.getTestById(testId);
+
+        if (test == null || !test.getDrivingCategory().equals(user.getCurrentCategory()))
+            return displayTestsPage(session);
+
         modelAndView.addObject("question", question);
-        modelAndView.addObject("test", testService.getTestById(testId));
+        modelAndView.addObject("test", test);
         modelAndView.addObject("selectedTypeQuestions", selectedTypeQuestions);
         modelAndView.addObject("isLiked", question.getId() != null && userLikedQuestionRepository.findBySchoolUserAndQuestionIdAndTestId(user, question.getId(), testId) != null);
         return modelAndView;
@@ -108,6 +118,10 @@ public class TestController {
     public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam(value = "questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session) {
         ModelAndView modelAndView;
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Test test = testService.getTestById(testId);
+
+        if (test == null || !test.getDrivingCategory().equals(user.getCurrentCategory()))
+            return displayTestsPage(session);
 
         switch (action) {
             case "A":
@@ -146,6 +160,8 @@ public class TestController {
     public ModelAndView resetTest(@RequestParam("testId") Long testId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Test test = testService.getTestById(testId);
+        if (test == null || !test.getDrivingCategory().equals(user.getCurrentCategory()))
+            return displayTestsPage(session);
         List<StudentAnswersTest> answers = studentAnswersTestService.findAllBySchoolUserAndTest(user, test);
         if (answers.size() == test.getNumberQuestions())
             studentAnswersTestService.deleteAllStudentAnswersTest(answers);

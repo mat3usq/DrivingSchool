@@ -79,6 +79,13 @@ public class DatabaseSeeder implements CommandLineRunner {
         SchoolUser instructor2 = new SchoolUser("instructor2", "instructor2", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor2", Constants.INSTRUCTOR_ROLE, "");
         SchoolUser instructor3 = new SchoolUser("instructor3", "instructor3", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor3", Constants.INSTRUCTOR_ROLE, "");
 
+        schoolUserRepository.save(admin);
+        schoolUserRepository.save(student);
+        schoolUserRepository.save(student2);
+        schoolUserRepository.save(instructor);
+        schoolUserRepository.save(instructor2);
+        schoolUserRepository.save(instructor3);
+
         // "A,B,C,D,T,AM,A1,A2,B1,C1,D1,PT"
         List<Category> categories = new ArrayList<>();
         categories.add(new Category("A", Arrays.asList(admin, instructor, instructor2, instructor3)));
@@ -104,7 +111,6 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         schoolUserRepository.save(admin);
         schoolUserRepository.save(student);
-        schoolUserRepository.save(student2);
         schoolUserRepository.save(instructor);
         schoolUserRepository.save(instructor2);
         schoolUserRepository.save(instructor3);
@@ -204,7 +210,9 @@ public class DatabaseSeeder implements CommandLineRunner {
                 }
 
                 tests.forEach(t -> {
-                    if (t.getName().equals(question.getSubjectArea()) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
+                    if (t.getName().equalsIgnoreCase(question.getSubjectArea())
+                            && t.getTestType() == question.getQuestionType()
+                            && question.getDrivingCategory().contains(t.getDrivingCategory())) {
                         List<Test> questionTests = question.getTests();
                         questionTests.add(t);
                         question.setTests(questionTests);

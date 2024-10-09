@@ -122,17 +122,17 @@ public class StudentAnswersTestService {
 
     public List<StudentAnswersTest> getCorrectStudentAnswersTestByUserIdandTestId(Long userId, Long testId) {
         List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserService.findUserById(userId), testRepository.findById(testId).orElse(null));
-        return list.stream().filter(l -> l.getCorrectness() && !l.getSkipped() && l.getTest().getDrivingCategory().contains("B")).toList();
+        return list.stream().filter(l -> l.getCorrectness() && !l.getSkipped()).toList();
     }
 
     public List<StudentAnswersTest> getInCorrectStudentAnswersTestByUserIdandTestId(Long userId, Long testId) {
         List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserService.findUserById(userId), testRepository.findById(testId).orElse(null));
-        return list.stream().filter(l -> !l.getCorrectness() && !l.getSkipped() && l.getTest().getDrivingCategory().contains("B")).toList();
+        return list.stream().filter(l -> !l.getCorrectness() && !l.getSkipped()).toList();
     }
 
     public List<StudentAnswersTest> getSkippedStudentAnswersTestByUserIdandTestId(Long userId, Long testId) {
         List<StudentAnswersTest> list = studentAnswersTestRepository.findAllBySchoolUserAndTest(schoolUserService.findUserById(userId), testRepository.findById(testId).orElse(null));
-        return list.stream().filter(l -> l.getSkipped() && l.getTest().getDrivingCategory().contains("B")).toList();
+        return list.stream().filter(StudentAnswersTest::getSkipped).toList();
     }
 
     public List<Question> findQuestionsByUserIdAndTestId(Long userId, Long testId) {
