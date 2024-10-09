@@ -226,6 +226,7 @@ h2 {
   background-color: rgba(0, 0, 0, 0.85);
   border-radius: 20px;
   padding: 30px;
+  margin-bottom: 10px;
 }
 .exam .hero-img .box-exam .box-container .container-exam .exam-info {
   display: flex;
@@ -578,5 +579,9 @@ h2 {
     margin: 0;
     margin-top: 10px;
     font-size: 13px;
+  }
+
+  .container-exam{
+    margin-bottom: 10px;
   }
 }/*# sourceMappingURL=solveExam.css.map */

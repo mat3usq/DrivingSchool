@@ -107,6 +107,7 @@ public class ExamController {
         return modelAndView;
     }
 
+
     @PostMapping(value = {"/exam/action"})
     public ModelAndView getActionFromExam(@RequestParam("questionId") Long
                                                   questionId, @RequestParam("action") String action, HttpSession session) {
@@ -194,5 +195,10 @@ public class ExamController {
         }
 
         return examInfo(session);
+    }
+
+    @GetMapping("/exam/end")
+    public ModelAndView endExam(@RequestParam("questionId") Long questionId, @RequestParam("action") String action, HttpSession session){
+            return examSolve(session, false);
     }
 }
