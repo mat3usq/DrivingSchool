@@ -27,6 +27,16 @@ public class TestNames {
         names.add("Obowiązki kierującego, dokumenty");
         names.add("Awaria pojazdu, pierwsza pomoc");
         names.add("Inne");
+        specialTestNames.add("Znaki Ostrzegawcze");
+        specialTestNames.add("Znaki nakazu i zakazu");
+        specialTestNames.add("Znaki informacyjne, kierunku");
+        specialTestNames.add("Znaki poziome");
+        specialTestNames.add("Sygnalizacja świetlna");
+        specialTestNames.add("Pierwszeństwo przejazdu");
+        specialTestNames.add("Zatrzymanie, postój, włączenie się do ruchu");
+        specialTestNames.add("Zmiana kierunku jazdy, przejazdy kolejowe");
+        specialTestNames.add("Wyprzedzanie, omijanie, wymijanie cofanie");
+        specialTestNames.add("Szczególna ostrożność");
         specialTestNames.add("Warunki drogowe");
         specialTestNames.add("Prędkość, hamowanie, odstępy");
         specialTestNames.add("Technika jazdy");

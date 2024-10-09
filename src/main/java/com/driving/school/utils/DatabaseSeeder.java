@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
@@ -174,11 +173,11 @@ public class DatabaseSeeder implements CommandLineRunner {
                         .build())
                 .build()) {
             List<String[]> records = reader.readAll();
-            AtomicInteger iteration = new AtomicInteger(1);
+            int iteration = 1;
             long startTime = System.nanoTime();
             for (String[] record : records) {
-                if (iteration.get() == 1) {
-                    iteration.getAndIncrement();
+                if (iteration == 1) {
+                    iteration++;
                     continue;
                 }
                 Question question = new Question();
@@ -220,9 +219,11 @@ public class DatabaseSeeder implements CommandLineRunner {
                         questionService.save(question);
                         t.setNumberQuestions(t.getNumberQuestions() + 1);
                         testService.saveTest(t);
-                        iteration.incrementAndGet();
                     }
                 });
+
+                ++iteration;
+//                System.out.println("iteration: " + iteration + " /3550" );
             }
 
             long durationNano = System.nanoTime() - startTime;
