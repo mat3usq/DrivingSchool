@@ -56,10 +56,18 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        if (schoolUserRepository.findByEmail("admin") != null) {
+            logger.info("Użytkownicy i kategorie już istnieją, pomijam.");
+            return;
+        }
         createUsersAndCategoriesAndTests();
         createLectures();
         mapQuestionsToDb();
         createEvents();
+    }
+
+    private boolean isDatabaseSeeded() {
+        return schoolUserRepository.findByEmail("admin") != null;
     }
 
     private void createUsersAndCategoriesAndTests() {
