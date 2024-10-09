@@ -56,14 +56,13 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        createUsersAndCategories();
+        createUsersAndCategoriesAndTests();
         createLectures();
-        addTeststoDb();
         mapQuestionsToDb();
         createEvents();
     }
 
-    private void createUsersAndCategories() {
+    private void createUsersAndCategoriesAndTests() {
         // haslo: admin
         // "A,B,C,D,T,AM,A1,A2,B1,C1,D1,PT"
         SchoolUser admin = new SchoolUser("admin", "admin", "$100801$cfJJlxSl83FjJ2mh+6yUcdxxksVm3XlOzhBr4gLHFEOhdeWmaf2H6Lki/fe99YUMduDoX/LGHUcodWe9SkhVnw==$Q1yyulzoYXseBJ/OmM/xgcYD9fFPaw2bRzBHRW7RgG4=", "admin", Constants.ADMIN_ROLE, "B");
@@ -114,6 +113,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         studentInstructorRepository.save(new StudentInstructor(student, instructor2, Constants.ACTIVE));
         studentInstructorRepository.save(new StudentInstructor(student2, instructor, Constants.ACTIVE));
         studentInstructorRepository.save(new StudentInstructor(student2, instructor2, Constants.PENDING));
+
+        categories.forEach(this::addTeststoDb);
     }
 
     private void createLectures() {
@@ -159,7 +160,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     private void mapQuestionsToDb() {
-        List<Test> tests = testService.getAllTestsByCategory("B");
+        List<Test> tests = testService.getAllTests();
         try (CSVReader reader = new CSVReaderBuilder(new FileReader("src/main/resources/data/questions/questions.csv"))
                 .withCSVParser(new CSVParserBuilder()
                         .withSeparator(';')
@@ -169,39 +170,25 @@ public class DatabaseSeeder implements CommandLineRunner {
             int iteration = 1;
             long startTime = System.nanoTime();
             for (String[] record : records) {
-                if(iteration == 1){
+                if (iteration == 1) {
                     iteration++;
                     continue;
                 }
                 Question question = new Question();
 
-
                 question.setQuestion(record[0]);
-
                 question.setMediaName(record[1]);
-
                 question.setDrivingCategory(record[2]);
-
-                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
-                if(record[12].equals("SPECJALISTYCZNY")){
-                    logger.info(question.toString());
-                }
-
                 question.setSubjectArea(record[3]);
-
                 question.setExplanation(record[4]);
-
                 question.setAnswerA(record[5]);
                 question.setAnswerB(record[6]);
                 question.setAnswerC(record[7]);
-
                 question.setCorrectAnswer(record[8].toUpperCase());
-
                 question.setPoints(Long.valueOf(record[9]));
-
                 question.setSource(record[10]);
-
                 question.setConnectionWithSecurity(record[11]);
+                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
 
                 if (record[6].isEmpty())
                     question.setAvailableAnswers(2L);
@@ -216,9 +203,8 @@ public class DatabaseSeeder implements CommandLineRunner {
                     question.setAllTimeForQuestion(35);
                 }
 
-
                 tests.forEach(t -> {
-                    if (t.getName().equals(record[3]) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
+                    if (t.getName().equals(question.getSubjectArea()) && t.getTestType() == question.getQuestionType() && question.getDrivingCategory().contains(t.getDrivingCategory())) {
                         List<Test> questionTests = question.getTests();
                         questionTests.add(t);
                         question.setTests(questionTests);
@@ -229,9 +215,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 });
 
                 ++iteration;
-                if (iteration%100 == 0)
-                    logger.info("tak wygląda pytanie {}",question);
-
+//                System.out.println("iteration: " + iteration + " /3550" );
             }
 
             long durationNano = System.nanoTime() - startTime;
@@ -246,18 +230,18 @@ public class DatabaseSeeder implements CommandLineRunner {
         }
     }
 
-    public void addTeststoDb() {
+    public void addTeststoDb(Category category) {
         for (String name : TestNames.getNames())
-            addTestToDb(name, false);
+            addTestToDb(name, false, category.getNameCategory());
 
         for (String name : TestNames.getSpecialTestNames())
-            addTestToDb(name, true);
+            addTestToDb(name, true, category.getNameCategory());
     }
 
-    public void addTestToDb(String name, Boolean isSpecialistic) {
+    public void addTestToDb(String name, Boolean isSpecialistic, String category) {
         Test test = new Test();
         test.setName(name);
-        test.setDrivingCategory("B");
+        test.setDrivingCategory(category);
         test.setTestType(isSpecialistic);
         try {
             test.setImage(convertSvg("/data/testImageSvgs/" + name + ".svg"));

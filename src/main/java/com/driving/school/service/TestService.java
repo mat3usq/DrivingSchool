@@ -30,7 +30,7 @@ public class TestService {
     }
 
     public List<Test> getAllTestsByCategory(String category) {
-        return testRepository.findAll().stream().filter(t -> t.getDrivingCategory().contains(category)).toList();
+        return testRepository.findAll().stream().filter(t -> t.getDrivingCategory().equals(category)).toList();
     }
 
     public void deleteTestById(Long id) {
