@@ -48,7 +48,7 @@ public class DashboardController {
     public ModelAndView changeCategory(HttpSession session, @RequestParam("categoryId") Long categoryId) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         schoolUserService.changeCategory(user, categoryId);
-        return new ModelAndView("dashboard");
+        return new ModelAndView("redirect:/dashboard");
     }
 
     @PostMapping("/dashboard/assignInstructor")
