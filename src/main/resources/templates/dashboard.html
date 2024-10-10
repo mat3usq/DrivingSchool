@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -31,13 +32,14 @@
 <main>
     <section class="categories">
         <div class="hero-img">
-            <div class="box-category">
-                <div class="box-container">
+            <div class="box-container">
+                <div class="box-category">
                     <p class="title" data-aos="zoom-in" data-aos-delay="100">Dostepne Kategorie</p>
                     <div class="container-category">
                         <form th:if="${!session.loggedInUser.getAvailableCategories().isEmpty()}"
                               th:each="category : ${session.loggedInUser.getAvailableCategories()}"
-                              class="category" th:classappend="${session.loggedInUser.currentCategory.equals(category.getNameCategory())} ? 'currentCategory' : ''"
+                              class="category"
+                              th:classappend="${session.loggedInUser.currentCategory.equals(category.getNameCategory())} ? 'currentCategory' : ''"
                               th:action="@{/dashboard/changeCurrentCategory}" method="post"
                               onclick="this.submit()">
                             <input type="hidden" name="categoryId" th:value="${category.id}"/>
@@ -52,6 +54,144 @@
                             <p>Brak <span>Kategorii</span></p>
                         </div>
                     </div>
+                </div>
+                <div class="box-users">
+                    <th:block sec:authorize="hasRole('ROLE_STUDENT')">
+                        <div class="account-student">
+                            <th:block th:if="${instructorStudents.size() != 0}">
+                                <p class="title">Twoi Instruktorzy</p>
+                                <div class="instructors-list">
+                                    <table class="instructors-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Imię</th>
+                                            <th>Nazwisko</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                            <th>Początek</th>
+                                            <th>Koniec</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="element : ${instructorStudents}" class="table-instructor-row">
+                                            <td class="operation-student">
+                                                <form th:action="@{/dashboard/cancelInstructor}" method="post">
+                                                    <input type="hidden" name="studentId"
+                                                           th:value="${element.student.id}"/>
+                                                    <input type="hidden" name="instructorId"
+                                                           th:value="${element.instructor.id}"/>
+                                                    <button type="submit" class="cancel-btn">Anuluj</button>
+                                                </form>
+                                            </td>
+                                            <td th:text="${element.instructor.name}"></td>
+                                            <td th:text="${element.instructor.surname}"></td>
+                                            <td th:text="${element.instructor.email}"></td>
+                                            <td th:text="${element.status}"></td>
+                                            <td
+                                                    th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td
+                                                    th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </th:block>
+
+                            <p class="title" th:if="${instructorStudents.size() == 0}">
+                                Brak instruktorów. Zaaplikuj do któregoś z poniższych!
+                            </p>
+                            <form class="select-instructor" th:action="@{/dashboard/assignInstructor}" method="post">
+                                <select name="selectedInstructor">
+                                    <option value="" disabled selected>Wybierz Instruktora</option>
+                                    <option
+                                            th:each="instructor : ${instructors}"
+                                            th:value="${instructor.id}"
+                                            th:text="${instructor.email}"></option>
+                                </select>
+                                <button class="info-btn">Aplikuje</button>
+                            </form>
+                        </div>
+                    </th:block>
+                    <th:block sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                        <div class="account-instructor">
+                            <th:block th:if="${instructorStudents.size() != 0}">
+                                <p class="title">Twoi Studenci</p>
+                                <div class="students-list">
+                                    <table class="students-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Imię</th>
+                                            <th>Nazwisko</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                            <th>Początek</th>
+                                            <th>Koniec</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <th:block
+                                                th:each="element : ${instructorStudents}"
+                                                th:with="Constants=${T(com.driving.school.model.Constants)}">
+                                            <tr th:if="${element.status.equals(Constants.PENDING)}"
+                                                class="table-student-row-pending">
+                                                <td th:text="${element.student.name}"></td>
+                                                <td th:text="${element.student.surname}"></td>
+                                                <td th:text="${element.student.email}"></td>
+                                                <td th:text="${element.status}"></td>
+                                                <td
+                                                        th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td
+                                                        th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td class="operation-student">
+                                                    <form th:action="@{/dashboard/cancelStudent}" method="post">
+                                                        <input type="hidden" name="studentId"
+                                                               th:value="${element.student.id}"/>
+                                                        <input type="hidden" name="instructorId"
+                                                               th:value="${element.instructor.id}"/>
+                                                        <button type="submit" class="cancel-btn">Odrzuc</button>
+                                                    </form>
+                                                    <form th:action="@{/dashboard/acceptStudent}" method="post">
+                                                        <input type="hidden" name="studentId"
+                                                               th:value="${element.student.id}"/>
+                                                        <input type="hidden" name="instructorId"
+                                                               th:value="${element.instructor.id}"/>
+                                                        <button type="submit" class="correct-btn">Akceptuj</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr th:if="${element.status.equals(Constants.ACTIVE)}"
+                                                class="table-instructor-row">
+                                                <td class="operation-student">
+                                                    <form th:action="@{/dashboard/cancelStudent}" method="post">
+                                                        <input type="hidden" name="studentId"
+                                                               th:value="${element.student.id}"/>
+                                                        <input type="hidden" name="instructorId"
+                                                               th:value="${element.instructor.id}"/>
+                                                        <button type="submit" class="cancel-btn">Anuluj</button>
+                                                    </form>
+                                                </td>
+                                                <td th:text="${element.student.name}"></td>
+                                                <td th:text="${element.student.surname}"></td>
+                                                <td th:text="${element.student.email}"></td>
+                                                <td th:text="${element.status}"></td>
+                                                <td
+                                                        th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td
+                                                        th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            </tr>
+                                        </th:block>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </th:block>
+
+                            <p class="title" th:if="${instructorStudents.size() == 0}">
+                                Brak Studentów. Zajrzyj tutaj za jakiś czas!
+                            </p>
+                        </div>
+                    </th:block>
                 </div>
             </div>
         </div>

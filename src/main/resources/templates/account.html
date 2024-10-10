@@ -1,237 +1,128 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Moje Konto</title>
+<html
+	lang="pl"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Moje Konto</title>
 
-    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+		<link rel="icon" href="/assets/img/logo.png" type="image/png" />
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet" />
 
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-            crossorigin="anonymous"/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+			crossorigin="anonymous" />
 
-    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+		<script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="/assets/css/navigation.css"/>
-    <link rel="stylesheet" href="/assets/css/account.css"/>
-</head>
-<body>
-<div th:replace="~{loadingCar :: loadingCar}"></div>
-<div th:replace="~{navigation :: navigation-top}"></div>
-<div th:replace="~{navigation :: navigation-left}"></div>
+		<link rel="stylesheet" href="/assets/css/navigation.css" />
+		<link rel="stylesheet" href="/assets/css/account.css" />
+	</head>
+	<body>
+		<div th:replace="~{loadingCar :: loadingCar}"></div>
+		<div th:replace="~{navigation :: navigation-top}"></div>
+		<div th:replace="~{navigation :: navigation-left}"></div>
 
-<main>
-    <section class="account">
-        <div class="hero-img">
-            <div class="hero-shadow"></div>
-            <div class="box-account">
-                <div class="box-container">
-                    <p class="title" data-aos="fade-down" data-aos-delay="100">Moje Konto</p>
-                    <div data-aos="zoom-in" data-aos-delay="150" class="container-account">
-                        <div class="account-details">
-                            <p class="title-header">Imie oraz Nazwisko</p>
-                            <p class="content">
-                                <th:block th:text="${session.loggedInUser.name}"></th:block>
-                                <span th:text="${session.loggedInUser.surname}"></span></p>
-                        </div>
-                        <hr/>
-                        <div class="account-details">
-                            <p class="title-header">Adres E-mail</p>
-                            <p class="content" th:text="${session.loggedInUser.email}"></p>
-                        </div>
-                        <hr/>
-                        <div class="account-details">
-                            <p class="title-header">Haslo</p>
-                            <p class="content"
-                               th:text="${#strings.substring(session.loggedInUser.password, 10, 30)}"></p>
-                        </div>
-                        <hr/>
-                        <div class="account-details">
-                            <p class="title-header">Dostępne Kategorie</p>
-                            <p class="content">--------------------</p>
-                        </div>
-                        <th:block sec:authorize="hasRole('ROLE_STUDENT')">
-                            <hr/>
-                            <div class="account-student">
-                                <th:block th:if="${instructorStudents.size() != 0}">
-                                    <p class="title-header">Twoi Instruktorzy</p>
-                                    <div class="instructors-list">
-                                        <table class="instructors-table">
-                                            <thead>
-                                            <tr>
-                                                <th>Imię</th>
-                                                <th>Nazwisko</th>
-                                                <th>Email</th>
-                                                <th>Status</th>
-                                                <th>Początek</th>
-                                                <th>Koniec</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="element : ${instructorStudents}" class="table-instructor-row">
-                                                <td class="operation-student">
-                                                    <form th:action="@{/account/cancelInstructor}" method="post">
-                                                        <input type="hidden" name="studentId"
-                                                               th:value="${element.student.id}"/>
-                                                        <input type="hidden" name="instructorId"
-                                                               th:value="${element.instructor.id}"/>
-                                                        <button type="submit" class="cancel-btn">Anuluj</button>
-                                                    </form>
-                                                </td>
-                                                <td th:text="${element.instructor.name}"></td>
-                                                <td th:text="${element.instructor.surname}"></td>
-                                                <td th:text="${element.instructor.email}"></td>
-                                                <td th:text="${element.status}"></td>
-                                                <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </th:block>
+		<main>
+			<section class="account">
+				<div class="hero-img">
+					<div class="hero-shadow"></div>
+					<div class="box-account">
+						<div class="box-container">
+							<p class="title" data-aos="fade-down" data-aos-delay="100">Moje Konto</p>
+							<div data-aos="zoom-in" data-aos-delay="150" class="container-account">
+								<div class="account-details">
+									<p class="title-header">Imie oraz Nazwisko</p>
+									<p class="content">
+										<th:block th:text="${session.loggedInUser.name}"></th:block>
+										<span th:text="${session.loggedInUser.surname}"></span>
+									</p>
+								</div>
+								<hr />
+								<div class="account-details">
+									<p class="title-header">Adres E-mail</p>
+									<p class="content" th:text="${session.loggedInUser.email}"></p>
+								</div>
+								<hr />
+								<div class="account-details">
+									<p class="title-header">Haslo</p>
+									<p class="content" th:text="${#strings.substring(session.loggedInUser.password, 10, 30)}"></p>
+								</div>
+								<hr />
+								<div class="account-details">
+									<p class="title-header">Dostępne Kategorie</p>
+									<p class="content"><th:block th:each="category : ${session.loggedInUser.availableCategories}">
+										<th:block th:text="${category.nameCategory} + ' '"></th:block>
+									</th:block></p>
+								</div>
+								<hr />
+								<div class="account-details">
+									<p class="title-header">Data Założenia Konta</p>
+									<p class="content" th:text="${#temporals.format(session.loggedInUser.createdAt, 'yyyy-MM-dd HH:mm')}">1 marzec</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-                                <p class="title-header" th:if="${instructorStudents.size() == 0}">Brak instruktorów.
-                                    Zaaplikuj do któregoś z poniższych!</p>
-                                <form class="select-instructor" th:action="@{/account/assignInstructor}" method="post">
-                                    <select name="selectedInstructor">
-                                        <option value="" disabled selected>Wybierz Instruktora</option>
-                                        <option th:each="instructor : ${instructors}" th:value="${instructor.id}"
-                                                th:text="${instructor.email}"></option>
-                                    </select>
-                                    <button class="info-btn">Aplikuje</button>
-                                </form>
-                            </div>
+			<br />
+			<br />
 
-                        </th:block>
-                        <th:block sec:authorize="hasRole('ROLE_INSTRUCTOR')">
-                            <hr/>
-                            <div class="account-instructor">
-                                <th:block th:if="${instructorStudents.size() != 0}">
-                                    <p class="title-header">Twoi Studenci</p>
-                                    <div class="students-list">
-                                        <table class="students-table">
-                                            <thead>
-                                            <tr>
-                                                <th>Imię</th>
-                                                <th>Nazwisko</th>
-                                                <th>Email</th>
-                                                <th>Status</th>
-                                                <th>Początek</th>
-                                                <th>Koniec</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <th:block th:each="element : ${instructorStudents}" th:with="Constants=${T(com.driving.school.model.Constants)}">
-                                                <tr th:if="${element.status.equals(Constants.PENDING)}" class="table-student-row-pending">
-                                                    <td th:text="${element.student.name}"></td>
-                                                    <td th:text="${element.student.surname}"></td>
-                                                    <td th:text="${element.student.email}"></td>
-                                                    <td th:text="${element.status}"></td>
-                                                    <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                    <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                    <td class="operation-student">
-                                                        <form th:action="@{/account/cancelStudent}" method="post">
-                                                            <input type="hidden" name="studentId" th:value="${element.student.id}"/>
-                                                            <input type="hidden" name="instructorId" th:value="${element.instructor.id}"/>
-                                                            <button type="submit" class="cancel-btn">Odrzuc</button>
-                                                        </form>
-                                                        <form th:action="@{/account/acceptStudent}" method="post">
-                                                            <input type="hidden" name="studentId" th:value="${element.student.id}"/>
-                                                            <input type="hidden" name="instructorId" th:value="${element.instructor.id}"/>
-                                                            <button type="submit" class="correct-btn">Akceptuj</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                <tr th:if="${element.status.equals(Constants.ACTIVE)}" class="table-instructor-row">
-                                                    <td class="operation-student">
-                                                        <form th:action="@{/account/cancelStudent}" method="post">
-                                                            <input type="hidden" name="studentId" th:value="${element.student.id}"/>
-                                                            <input type="hidden" name="instructorId" th:value="${element.instructor.id}"/>
-                                                            <button type="submit" class="cancel-btn">Anuluj</button>
-                                                        </form>
-                                                    </td>
-                                                    <td th:text="${element.student.name}"></td>
-                                                    <td th:text="${element.student.surname}"></td>
-                                                    <td th:text="${element.student.email}"></td>
-                                                    <td th:text="${element.status}"></td>
-                                                    <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                    <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                </tr>
-                                            </th:block>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </th:block>
+			<h2>Kontakt</h2>
+			<div class="underline"></div>
 
-                                <p class="title-header" th:if="${instructorStudents.size() == 0}">Brak Studentów. Zajrzyj tutaj za jakiś czas!</p>
-                            </div>
+			<section id="contact" class="contact">
+				<div class="container">
+					<div class="row text-center contact-us">
+						<div class="order-1 col-sm-6 col-lg-4 contact-item">
+							<h3>Główna Siedziba</h3>
+							<p>ul. Złota 44</p>
+							<p>12-432 Warszawa</p>
+							<p>+48 492 345 234</p>
+							<p>DrivingSchool@gmail.com</p>
+						</div>
 
-                        </th:block>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+						<div class="order-0 order-lg-1 col-lg-4 contact-item">
+							<h3>Social Media</h3>
+							<div class="social-media">
+								<a href="#"><i class="fab fa-facebook"></i></a>
+								<a href="#"><i class="fab fa-twitter"></i></a>
+								<a href="#"><i class="fab fa-linkedin-in"></i></a>
+							</div>
+						</div>
 
-    <br/>
-    <br/>
+						<div class="order-1 col-sm-6 col-lg-4 contact-item">
+							<h3>Siedziba Poboczna</h3>
+							<p>ul. Wiejska 45A</p>
+							<p>32-643 Białystok</p>
+							<p>+48 537 943 743</p>
+							<p>DrivingSchool@apple.pl</p>
+						</div>
+					</div>
+				</div>
 
-    <h2>Kontakt</h2>
-    <div class="underline"></div>
+				<div class="contact-shadow"></div>
+			</section>
+		</main>
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="row text-center contact-us">
-                <div class="order-1 col-sm-6 col-lg-4 contact-item">
-                    <h3>Główna Siedziba</h3>
-                    <p>ul. Złota 44</p>
-                    <p>12-432 Warszawa</p>
-                    <p>+48 492 345 234</p>
-                    <p>DrivingSchool@gmail.com</p>
-                </div>
+		<footer class="py-4 text-center">
+			<p class="mb-0">
+				&copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+				<span class="orange-text">Driving</span> <span class="gold-text">School</span>
+			</p>
+		</footer>
 
-                <div class="order-0 order-lg-1 col-lg-4 contact-item">
-                    <h3>Social Media</h3>
-                    <div class="social-media">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-
-                <div class="order-1 col-sm-6 col-lg-4 contact-item">
-                    <h3>Siedziba Poboczna</h3>
-                    <p>ul. Wiejska 45A</p>
-                    <p>32-643 Białystok</p>
-                    <p>+48 537 943 743</p>
-                    <p>DrivingSchool@apple.pl</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-shadow"></div>
-    </section>
-</main>
-
-<footer class="py-4 text-center">
-    <p class="mb-0">
-        &copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
-        <span class="orange-text">Driving</span> <span class="gold-text">School</span>
-    </p>
-</footer>
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="/assets/js/aosSettings.js"></script>
-<script src="/assets/js/navigation.js"></script>
-<script src="/assets/js/account.js"></script>
-</body>
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+		<script src="/assets/js/aosSettings.js"></script>
+		<script src="/assets/js/navigation.js"></script>
+		<script src="/assets/js/account.js"></script>
+	</body>
 </html>
