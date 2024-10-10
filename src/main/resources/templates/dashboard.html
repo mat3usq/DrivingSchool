@@ -220,8 +220,13 @@
                             </th:block>
 
                             <p class="title" th:if="${instructorStudents.size() == 0}">
-                                Brak Studentów. Zajrzyj tutaj za jakiś czas!
+                                Brak Studentów. Dodaj któregoś z poniższej listy!
                             </p>
+                            <p class="info-text" th:if="${assignStudentInfo}" th:text="${assignStudentInfo}"></p>
+                            <form class="select-instructor" th:action="@{/dashboard/assignStudent}" method="post">
+                                <input type="text" name="studentEmail" placeholder="Wpisz email studenta" />
+                                <button type="submit" class="info-btn">Dodaj</button>
+                            </form>
                         </div>
                     </th:block>
                 </div>

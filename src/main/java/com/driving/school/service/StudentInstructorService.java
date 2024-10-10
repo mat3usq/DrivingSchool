@@ -66,12 +66,12 @@ public class StudentInstructorService {
         studentInstructorRepository.deleteById(id);
     }
 
-    public void createStudentInstructor(SchoolUser student, SchoolUser instructor) {
+    public void createStudentInstructorWithStatus(SchoolUser student, SchoolUser instructor, String status) {
         if (!studentInstructorRepository.existsByStudentAndInstructor(student, instructor)) {
             StudentInstructor studentInstructor = new StudentInstructor();
             studentInstructor.setStudent(student);
             studentInstructor.setInstructor(instructor);
-            studentInstructor.setStatus(Constants.PENDING);
+            studentInstructor.setStatus(status);
             studentInstructorRepository.save(studentInstructor);
         }
     }

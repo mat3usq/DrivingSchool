@@ -123,6 +123,8 @@ h2 {
 			}
 
 			.box-users {
+				margin-bottom: 60px;
+
 				.account-student,
 				.account-instructor {
 					max-width: 740px;
@@ -133,6 +135,33 @@ h2 {
 					flex-direction: column;
 					align-items: center;
 					gap: 10px;
+
+					.info-text::before {
+						content: '\f05a';
+					}
+
+					.info-text {
+						color: $text-color;
+						border-left: 4px solid $text-color;
+						border-right: 4px solid $text-color;
+						font-weight: bold;
+						background-color: rgba(0, 0, 0, 0.85);
+						border-radius: 10px;
+						padding: 10px;
+						padding-left: 35px;
+						text-align: right;
+						position: relative;
+					}
+
+					.info-text::before {
+						font-family: 'Font Awesome 5 Free';
+						font-weight: 900;
+						color: inherit;
+						position: absolute;
+						left: 10px;
+						top: 50%;
+						transform: translateY(-50%);
+					}
 
 					.title {
 						width: fit-content;

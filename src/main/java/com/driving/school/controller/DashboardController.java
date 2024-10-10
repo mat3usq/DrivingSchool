@@ -14,16 +14,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class DashboardController {
     private final SchoolUserService schoolUserService;
     private final StudentInstructorService studentInstructorService;
+    private final SchoolUserService studentService;
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService) {
+    public DashboardController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService, SchoolUserService studentService) {
         this.schoolUserService = schoolUserService;
         this.studentInstructorService = studentInstructorService;
+        this.studentService = studentService;
     }
 
     @GetMapping("/dashboard")
@@ -51,7 +54,7 @@ public class DashboardController {
     @PostMapping("/dashboard/assignInstructor")
     public ModelAndView assignInstructor(@RequestParam("selectedInstructor") Long instructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
-        studentInstructorService.createStudentInstructor((SchoolUser) session.getAttribute("loggedInUser"), schoolUserService.findUserById(instructorId));
+        studentInstructorService.createStudentInstructorWithStatus((SchoolUser) session.getAttribute("loggedInUser"), schoolUserService.findUserById(instructorId), Constants.PENDING);
         return modelAndView;
     }
 
@@ -63,6 +66,23 @@ public class DashboardController {
             studentInstructorService.deleteStudentInstructor(studentId, instructorId);
         return modelAndView;
     }
+
+    @PostMapping("/dashboard/assignStudent")
+    public ModelAndView assignStudent(@RequestParam("studentEmail") String studentEmail, HttpSession session, RedirectAttributes redirectAttributes) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+        SchoolUser studentUser = schoolUserService.findUserByEmail(studentEmail);
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (studentUser != null && studentUser.getRoleName().equals(Constants.STUDENT_ROLE) && loggedInUser.getRoleName().equals(Constants.INSTRUCTOR_ROLE)) {
+            studentInstructorService.createStudentInstructorWithStatus(studentUser, loggedInUser, Constants.ACTIVE);
+            redirectAttributes.addFlashAttribute("assignStudentInfo", "Pomyślnie dodano studenta!");
+        } else {
+            redirectAttributes.addFlashAttribute("assignStudentInfo", "Nieprawidłowy email.");
+        }
+
+        return modelAndView;
+    }
+
 
     @PostMapping("/dashboard/acceptStudent")
     public ModelAndView acceptStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
