@@ -190,6 +190,9 @@ h2 {
   border: 5px dotted #ffd166;
   box-shadow: 0px 0px 15px 5px #ffd166;
 }
+.categories .hero-img .box-container .box-users {
+  margin-bottom: 60px;
+}
 .categories .hero-img .box-container .box-users .account-student,
 .categories .hero-img .box-container .box-users .account-instructor {
   max-width: 740px;
@@ -200,6 +203,33 @@ h2 {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+}
+.categories .hero-img .box-container .box-users .account-student .info-text::before,
+.categories .hero-img .box-container .box-users .account-instructor .info-text::before {
+  content: "\f05a";
+}
+.categories .hero-img .box-container .box-users .account-student .info-text,
+.categories .hero-img .box-container .box-users .account-instructor .info-text {
+  color: aliceblue;
+  border-left: 4px solid aliceblue;
+  border-right: 4px solid aliceblue;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 35px;
+  text-align: right;
+  position: relative;
+}
+.categories .hero-img .box-container .box-users .account-student .info-text::before,
+.categories .hero-img .box-container .box-users .account-instructor .info-text::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: inherit;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .categories .hero-img .box-container .box-users .account-student .title,
 .categories .hero-img .box-container .box-users .account-instructor .title {
