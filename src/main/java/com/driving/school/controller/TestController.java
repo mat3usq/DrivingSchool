@@ -41,8 +41,13 @@ public class TestController {
     @GetMapping(value = {"/tests"})
     public ModelAndView displayTestsPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("tests");
-        List<Test> tests = testService.getAllTestsByCategory(((SchoolUser) session.getAttribute("loggedInUser")).getCurrentCategory());
-        studentAnswersTestService.setStatisticForTest(tests, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (user.getCurrentCategory().isEmpty())
+            return new ModelAndView("redirect:/dashboard");
+
+        List<Test> tests = testService.getAllTestsByCategory(user.getCurrentCategory());
+        studentAnswersTestService.setStatisticForTest(tests, user.getId());
         modelAndView.addObject("tests", tests);
         return modelAndView;
     }

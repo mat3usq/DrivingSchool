@@ -42,6 +42,8 @@ public class ExamController {
     public ModelAndView generateExam(HttpSession session) {
         if (session.getAttribute("exam") == null) {
             SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+            if (user.getCurrentCategory().isEmpty())
+                return new ModelAndView("redirect:/dashboard");
             String category = user.getCurrentCategory();
             List<Question> questionSet = studentExamService.generateQuestionSet(category);
 
