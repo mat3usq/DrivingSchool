@@ -25,6 +25,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         // dashboard
                         .requestMatchers("/dashboard/**").authenticated()
+                        .requestMatchers("/dashboard/cancelInstructor", "/dashboard/assignInstructor").hasRole("STUDENT")
+                        .requestMatchers("/dashboard/cancelStudent", "/dashboard/acceptStudent").hasRole("INSTRUCTOR")
                         // lecture
                         .requestMatchers("/lecture").authenticated()
                         .requestMatchers("/lecture/**").hasAnyRole("INSTRUCTOR", "ADMIN")
@@ -34,8 +36,6 @@ public class SecurityConfig {
                         .requestMatchers("/calendar/student/**").hasRole("STUDENT")
                         // account
                         .requestMatchers("/account").authenticated()
-                        .requestMatchers("/account/cancelInstructor", "/account/assignInstructor").hasRole("STUDENT")
-                        .requestMatchers("/account/cancelStudent", "/account/acceptStudent").hasRole("INSTRUCTOR")
                         // tests
                         .requestMatchers("/tests/**").authenticated()
                         // exam
