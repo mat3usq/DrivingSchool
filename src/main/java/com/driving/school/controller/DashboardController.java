@@ -81,4 +81,13 @@ public class DashboardController {
             studentInstructorService.deleteStudentInstructor(studentId, instructorId);
         return modelAndView;
     }
+
+    @PostMapping("/dashboard/finishStudent")
+    public ModelAndView finishStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        if (loggedInUser.getId().equals(instructorId))
+            studentInstructorService.finishStudentInstructor(studentId, instructorId);
+        return modelAndView;
+    }
 }

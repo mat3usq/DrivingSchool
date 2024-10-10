@@ -276,15 +276,15 @@ h2 {
   min-width: 120px;
   max-width: 120px;
 }
-.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table td,
-.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table td,
-.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table td,
-.categories .hero-img .box-container .box-users .account-student .students-list .students-table td,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table td,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table td,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table td,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table td {
-  background-color: rgba(0, 0, 0, 0.75);
+.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-normal-row,
+.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-normal-row,
+.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-normal-row,
+.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-normal-row,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-normal-row,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-normal-row,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-normal-row,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-normal-row {
+  position: relative;
 }
 .categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-instructor-row,
 .categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-instructor-row,
@@ -321,7 +321,6 @@ h2 {
 .categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-instructor-row:hover,
 .categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-instructor-row:hover {
   cursor: pointer;
-  background-color: black;
   padding-left: 100px;
   transform: translateX(120px);
 }
@@ -335,74 +334,74 @@ h2 {
 .categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-instructor-row.clicked {
   transform: translateX(120px);
 }
-.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row-pending,
-.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row-pending,
-.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row-pending,
-.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row-pending,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row-pending,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row-pending,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row-pending,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row-pending {
+.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row,
+.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row,
+.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row,
+.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row {
   position: relative;
   transition: transform 0.3s ease;
 }
-.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row-pending .operation-student,
-.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row-pending .operation-student,
-.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row-pending .operation-student,
-.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row-pending .operation-student,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row-pending .operation-student,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row-pending .operation-student,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row-pending .operation-student,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row-pending .operation-student {
+.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row .operation-student,
+.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row .operation-student,
+.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row .operation-student,
+.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row .operation-student,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row .operation-student,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row .operation-student,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row .operation-student,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row .operation-student {
   background: transparent;
   position: absolute;
   top: 6px;
   left: -240px;
-  padding-right: 20px;
   transition: transform 0.3s ease;
   display: flex;
+  overflow: visible;
+  gap: 6px;
 }
-.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row-pending .operation-student .correct-btn,
-.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row-pending .operation-student .correct-btn,
-.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row-pending .operation-student .correct-btn,
-.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row-pending .operation-student .correct-btn,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row-pending .operation-student .correct-btn,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row-pending .operation-student .correct-btn,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row-pending .operation-student .correct-btn,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row-pending .operation-student .correct-btn {
+.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row .operation-student .correct-btn,
+.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row .operation-student .correct-btn,
+.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row .operation-student .correct-btn,
+.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row .operation-student .correct-btn,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row .operation-student .correct-btn,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row .operation-student .correct-btn,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row .operation-student .correct-btn,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row .operation-student .correct-btn {
   margin-left: 5px;
 }
-.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row-pending .operation-student .cancel-btn,
-.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row-pending .operation-student .cancel-btn,
-.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row-pending .operation-student .cancel-btn,
-.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row-pending .operation-student .cancel-btn,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row-pending .operation-student .cancel-btn,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row-pending .operation-student .cancel-btn,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row-pending .operation-student .cancel-btn,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row-pending .operation-student .cancel-btn {
+.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row .operation-student .cancel-btn,
+.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row .operation-student .cancel-btn,
+.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row .operation-student .cancel-btn,
+.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row .operation-student .cancel-btn,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row .operation-student .cancel-btn,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row .operation-student .cancel-btn,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row .operation-student .cancel-btn,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row .operation-student .cancel-btn {
   margin-right: 5px;
 }
-.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row-pending:hover,
-.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row-pending:hover,
-.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row-pending:hover,
-.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row-pending:hover,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row-pending:hover,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row-pending:hover,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row-pending:hover,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row-pending:hover {
+.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row:hover,
+.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row:hover,
+.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row:hover,
+.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row:hover,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row:hover,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row:hover,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row:hover,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row:hover {
   cursor: pointer;
-  background-color: black;
   padding-left: 200px;
   transform: translateX(240px);
 }
-.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row-pending.clicked,
-.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row-pending.clicked,
-.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row-pending.clicked,
-.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row-pending.clicked,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row-pending.clicked,
-.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row-pending.clicked,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row-pending.clicked,
-.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row-pending.clicked {
+.categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row.clicked,
+.categories .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row.clicked,
+.categories .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row.clicked,
+.categories .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row.clicked,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row.clicked,
+.categories .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row.clicked,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row.clicked,
+.categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row.clicked {
   transform: translateX(240px);
 }
 .categories .hero-img .box-container .box-users .account-student .select-instructor,
