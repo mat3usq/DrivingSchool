@@ -55,7 +55,7 @@ public interface Constants {
     }
 
     // Relacja Student - Instruktor
-    String ACTIVE = "Akytwny";
+    String ACTIVE = "W Trakcie";
     String COMPLETED = "Zakonczony";
     String PENDING = "Oczekiwanie";
     String CANCELLED = "Anulowany";
