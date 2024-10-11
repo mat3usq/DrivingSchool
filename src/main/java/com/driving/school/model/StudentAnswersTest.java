@@ -22,6 +22,9 @@ public class StudentAnswersTest {
     @Column(name = "SKIPPED")
     private Boolean skipped;
 
+    @Column(name = "DURATIONOFANSWER", nullable = false)
+    private Integer durationOfAnswer;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
