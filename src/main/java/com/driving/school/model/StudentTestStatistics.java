@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "STUDENTANSWERTESTSTATISTICS")
-public class StudentAnswerTestStatistics {
+@Table(name = "STUDENTTESTSTATISTICS")
+public class StudentTestStatistics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
