@@ -546,6 +546,58 @@ h2 {
 .dashboard .hero-img .box-container .box-users .account-instructor button.cancel-btn:hover {
   background-color: #ffb200;
 }
+.dashboard .hero-img .box-container .box-users .account-student .pagination,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.dashboard .hero-img .box-container .box-users .account-student .pagination .current,
+.dashboard .hero-img .box-container .box-users .account-student .pagination .icon,
+.dashboard .hero-img .box-container .box-users .account-student .pagination .number,
+.dashboard .hero-img .box-container .box-users .account-student .pagination .disabled,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .current,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .icon,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .number,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .disabled {
+  font-weight: bold;
+  margin-top: 0px;
+  padding: 10px 14px;
+  background-color: rgba(0, 0, 0, 0.8);
+  font-size: 15px;
+  border-radius: 20px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.3s ease;
+  border: 2px dotted rgba(0, 0, 0, 0.8);
+}
+.dashboard .hero-img .box-container .box-users .account-student .pagination .icon,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .icon {
+  font-style: normal;
+  color: #ef476f;
+}
+.dashboard .hero-img .box-container .box-users .account-student .pagination .icon:hover,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .icon:hover {
+  border: 2px dotted #ffd166;
+}
+.dashboard .hero-img .box-container .box-users .account-student .pagination .number,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .number {
+  font-style: normal;
+  color: #6acff1;
+}
+.dashboard .hero-img .box-container .box-users .account-student .pagination .number:hover,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .number:hover {
+  border: 2px dotted #ffd166;
+}
+.dashboard .hero-img .box-container .box-users .account-student .pagination .disabled,
+.dashboard .hero-img .box-container .box-users .account-instructor .pagination .disabled {
+  font-style: normal;
+  color: #4d84e2;
+  pointer-events: none;
+  cursor: not-allowed;
+}
 
 .contact {
   padding: 20px;

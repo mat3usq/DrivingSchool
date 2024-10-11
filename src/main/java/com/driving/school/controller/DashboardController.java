@@ -7,6 +7,9 @@ import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.StudentInstructorService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +31,9 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard")
-    public ModelAndView displayDashboard(Authentication authentication, HttpSession session) {
+    public ModelAndView displayDashboard(@RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size,
+                                         Authentication authentication, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
         SchoolUser user = schoolUserService.findUserByEmail(authentication.getName());
         session.setAttribute("loggedInUser", user);
@@ -38,7 +43,15 @@ public class DashboardController {
                     modelAndView.addObject("instructorStudents", studentInstructorService.findByStudentId(user.getId()));
             case Constants.INSTRUCTOR_ROLE ->
                     modelAndView.addObject("instructorStudents", studentInstructorService.findByInstructorId(user.getId()));
-            case Constants.ADMIN_ROLE -> modelAndView.addObject("schoolUsers", schoolUserService.findAllUsers());
+            case Constants.ADMIN_ROLE -> {
+                Page<SchoolUser> userPage = schoolUserService.findAllUsers(PageRequest.of(0, size)); // Temporarily fetch to check total pages
+                int totalPages = userPage.getTotalPages();
+                page = (page < 0) ? 0 : (page >= totalPages && totalPages > 0) ? totalPages - 1 : page;
+                userPage = schoolUserService.findAllUsers(PageRequest.of(page, size));
+                modelAndView.addObject("schoolUsers", userPage.getContent());
+                modelAndView.addObject("currentPage", page);
+                modelAndView.addObject("totalPages", totalPages);
+            }
         }
 
         modelAndView.addObject("instructors", schoolUserService.findAllInstructors());

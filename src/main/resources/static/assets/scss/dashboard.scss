@@ -360,6 +360,55 @@ h2 {
 							background-color: darken($secondary-color, 20%);
 						}
 					}
+
+					.pagination {
+						display: flex;
+						gap: 10px;
+						align-items: center;
+
+						.current,
+						.icon,
+						.number,
+						.disabled {
+							font-weight: bold;
+							margin-top: 0px;
+							padding: 10px 14px;
+							background-color: rgba(0, 0, 0, 0.8);
+							font-size: 15px;
+							border-radius: 20px;
+							font-style: italic;
+							letter-spacing: 1px;
+							text-align: center;
+							text-decoration: none;
+							transition: 0.3s ease;
+							border: 2px dotted rgba(0, 0, 0, 0.8);
+						}
+
+						.icon {
+							font-style: normal;
+							color: $primary-color;
+
+							&:hover {
+								border: 2px dotted $secondary-color;
+							}
+						}
+
+						.number {
+							font-style: normal;
+							color: $info-color;
+
+							&:hover {
+								border: 2px dotted $secondary-color;
+							}
+						}
+
+						.disabled {
+							font-style: normal;
+							color: $btn-bg-color;
+							pointer-events: none;
+							cursor: not-allowed;
+						}
+					}
 				}
 			}
 		}

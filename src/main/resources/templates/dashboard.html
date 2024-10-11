@@ -291,6 +291,28 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            <div class="pagination">
+                                <a class="number" th:classappend="${currentPage == 0} ? 'disabled'"
+                                   th:href="@{/dashboard(page=0)}"
+                                   >1</a>
+
+                                <a class="icon" th:classappend="${currentPage == 0} ? 'disabled'"
+                                   th:href="@{/dashboard(page=${currentPage - 1})}"
+                                   th:if="${currentPage > 0}">&lt;</a>
+                                <a class="icon disabled" th:if="${currentPage == 0}">&lt;</a>
+
+                                <span class="current" th:text="'Strona ' + (${currentPage + 1}) + ' z ' + ${totalPages}"></span>
+
+                                <a class="icon" th:classappend="${currentPage == totalPages - 1} ? 'disabled'"
+                                   th:href="@{/dashboard(page=${currentPage + 1})}"
+                                   th:if="${currentPage < totalPages - 1}">&gt;</a>
+                                <a class="icon disabled" th:if="${currentPage == totalPages - 1}">&gt;</a>
+
+                                <a class="number" th:classappend="${currentPage == totalPages - 1} ? 'disabled'"
+                                   th:href="@{/dashboard(page=${totalPages - 1})}"
+                                   th:text="${totalPages}"></a>
+                            </div>
                         </div>
                     </th:block>
                 </div>

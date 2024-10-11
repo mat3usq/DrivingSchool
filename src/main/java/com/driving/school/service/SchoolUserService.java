@@ -6,12 +6,12 @@ import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.repository.UserLikedQuestionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class SchoolUserService {
@@ -51,8 +51,8 @@ public class SchoolUserService {
         return schoolUserRepository.findAll().stream().filter(u -> u.getRoleName().equals(Constants.INSTRUCTOR_ROLE)).toList();
     }
 
-    public List<SchoolUser> findAllUsers() {
-        return schoolUserRepository.findAll();
+    public Page<SchoolUser> findAllUsers(Pageable pageable) {
+        return schoolUserRepository.findAll(pageable);
     }
 
     @Transactional
