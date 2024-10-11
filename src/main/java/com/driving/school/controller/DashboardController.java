@@ -33,10 +33,13 @@ public class DashboardController {
         SchoolUser user = schoolUserService.findUserByEmail(authentication.getName());
         session.setAttribute("loggedInUser", user);
 
-        if (user.getRoleName().equals(Constants.STUDENT_ROLE))
-            modelAndView.addObject("instructorStudents", studentInstructorService.findByStudentId(user.getId()));
-        else if (user.getRoleName().equals(Constants.INSTRUCTOR_ROLE))
-            modelAndView.addObject("instructorStudents", studentInstructorService.findByInstructorId(user.getId()));
+        switch (user.getRoleName()) {
+            case Constants.STUDENT_ROLE ->
+                    modelAndView.addObject("instructorStudents", studentInstructorService.findByStudentId(user.getId()));
+            case Constants.INSTRUCTOR_ROLE ->
+                    modelAndView.addObject("instructorStudents", studentInstructorService.findByInstructorId(user.getId()));
+            case Constants.ADMIN_ROLE -> modelAndView.addObject("schoolUsers", schoolUserService.findAllUsers());
+        }
 
         modelAndView.addObject("instructors", schoolUserService.findAllInstructors());
         return modelAndView;

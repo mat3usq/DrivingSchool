@@ -230,6 +230,55 @@
                         </div>
                     </th:block>
 
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <div class="account-instructor">
+                                <p class="title">Użytkownicy Szkoły Jazdy</p>
+                                <div class="students-list">
+                                    <table class="instructors-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Imię</th>
+                                            <th>Nazwisko</th>
+                                            <th>Email</th>
+                                            <th>Rola</th>
+                                            <th>Start-Up</th>
+                                            <th>Kategorie</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <th:block
+                                                th:each="user : ${schoolUsers}">
+                                            <tr class="table-instructor-row">
+                                                <td class="operation-student">
+                                                    <form th:action="@{/dashboard/admin/moreInfo}" method="post">
+                                                        <input type="hidden" name="studentId"
+                                                               th:value="${user.id}"/>
+                                                        <button type="submit" class="info-btn">Zobacz</button>
+                                                    </form>
+                                                </td>
+                                                <td th:text="${user.name}"></td>
+                                                <td th:text="${user.surname}"></td>
+                                                <td th:text="${user.email}"></td>
+                                                <td th:text="${user.roleName}"></td>
+                                                <td th:text="${user.createdAt == null} ? '---' : ${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td th:if="${!user.availableCategories.isEmpty()}"><th:block th:each="category : ${user.availableCategories}">
+                                                    <th:block th:text="${category.nameCategory} + ' '"></th:block>
+                                                </th:block></td>
+                                                <td th:if="${user.availableCategories.isEmpty()}">---</td>
+                                            </tr>
+                                        </th:block>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            <form class="select-instructor" th:action="@{/dashboard/admin/searchUser}" method="post">
+                                <input type="text" name="userEmail" placeholder="Wpisz email uzytkownika" />
+                                <button type="submit" class="info-btn">Szukaj</button>
+                            </form>
+                        </div>
+                    </th:block>
+
                 </div>
             </div>
         </div>

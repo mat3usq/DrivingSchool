@@ -51,6 +51,10 @@ public class SchoolUserService {
         return schoolUserRepository.findAll().stream().filter(u -> u.getRoleName().equals(Constants.INSTRUCTOR_ROLE)).toList();
     }
 
+    public List<SchoolUser> findAllUsers() {
+        return schoolUserRepository.findAll();
+    }
+
     @Transactional
     public void addLikedQuestionToUser(Long questionId, Long testId, SchoolUser usr) {
         SchoolUser user = findUserById(usr.getId());

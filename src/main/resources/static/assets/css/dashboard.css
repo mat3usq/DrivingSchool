@@ -255,7 +255,7 @@ h2 {
 .categories .hero-img .box-container .box-users .account-instructor .students-list .students-table {
   margin: 0 auto;
   border-collapse: collapse;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.95);
   overflow: hidden;
 }
 .categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table th,
@@ -337,9 +337,6 @@ h2 {
 .categories .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-instructor-row .operation-student,
 .categories .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-instructor-row .operation-student {
   background: transparent;
-  position: absolute;
-  top: 6px;
-  padding-right: 20px;
   transition: transform 0.3s ease;
 }
 .categories .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-instructor-row:hover,
@@ -450,6 +447,7 @@ h2 {
 .categories .hero-img .box-container .box-users .account-instructor .select-instructor input,
 .categories .hero-img .box-container .box-users .account-instructor .select-instructor select {
   height: 35px;
+  width: 300px;
   outline: none;
   border: none;
   border: 2px solid #f5f5f5;
