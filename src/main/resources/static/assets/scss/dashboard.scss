@@ -43,11 +43,11 @@ h2 {
 	margin: 0 auto 30px;
 }
 
-.categories {
+.dashboard {
 	.hero-img {
 		position: relative;
 		height: 110vh;
-		background-image: url('../img/backgroundPanelCategories.png');
+		background-image: url('../img/backgroundPaneldashboard.png');
 		background-position: center;
 		background-size: cover;
 		overflow: scroll;
@@ -163,7 +163,17 @@ h2 {
 						transform: translateY(-50%);
 					}
 
-					.title {
+					.mini-title {
+						margin-top: 0px;
+						padding: 20px 10px;
+						background-color: rgba(0, 0, 0, 0.8);
+						border-radius: 20px;
+						font-size: 17px;
+						font-style: italic;
+						letter-spacing: 1px;
+						text-align: center;
+						border: 5px dotted #ffd166;
+						box-shadow: 0px 0px 15px 3px rgba(7, 59, 76, 0.4352941176);
 						width: fit-content;
 					}
 
@@ -415,7 +425,7 @@ h2 {
 }
 
 @media (max-width: 720px) {
-	.categories {
+	.dashboard {
 		.hero-img {
 			.box-container {
 				left: 0px;
