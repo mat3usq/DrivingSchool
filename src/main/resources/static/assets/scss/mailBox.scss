@@ -40,7 +40,7 @@ h2 {
 }
 
 .shadow-bg {
-	background-color: rgba(0, 0, 0, 0.85);
+	background-color: rgba(0, 0, 0, 0.9);
 }
 
 .mailBox {
@@ -50,15 +50,17 @@ h2 {
 		background-image: url('../img/backgroundMailBox.png');
 		background-position: center;
 		background-size: cover;
-		overflow: scroll;
+		overflow: hidden;
 
 		.mail-container {
 			position: absolute;
-			top: 16vh;
-			left: 320px;
-			width: calc(100vw - 340px);
+			top: 12vh;
+			left: 300px;
+			height: 98vh;
+			padding: 20px 0;
+			overflow: scroll;
 
-			.wrapper {
+			.box-container {
 				background-color: rgba(0, 0, 0, 0.89);
 				padding: 20px;
 				margin-top: 50px;
@@ -93,10 +95,6 @@ h2 {
 						&.unread {
 							font-weight: bold;
 							border: 3px solid $placeHolder-color;
-						}
-
-						&:last-child {
-							border-bottom: none;
 						}
 
 						.icon {
@@ -230,7 +228,12 @@ h2 {
 			.mail-container {
 				left: 0px;
 				width: 100%;
+
+				.box-container{
+					width: 95%;
+				}
 			}
 		}
 	}
+
 }
