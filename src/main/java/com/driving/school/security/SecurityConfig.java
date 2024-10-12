@@ -35,6 +35,8 @@ public class SecurityConfig {
                         .requestMatchers("/calendar").authenticated()
                         .requestMatchers("/calendar/operation/**").hasAnyRole("INSTRUCTOR", "ADMIN")
                         .requestMatchers("/calendar/student/**").hasRole("STUDENT")
+                        // mailBox
+                        .requestMatchers("/mailBox/**").authenticated()
                         // account
                         .requestMatchers("/account").authenticated()
                         // tests
@@ -84,9 +86,11 @@ public class SecurityConfig {
                     response.sendRedirect("/lecture");
                 else if (request.getRequestURI().startsWith("/calendar"))
                     response.sendRedirect("/calendar");
+                else if (request.getRequestURI().startsWith("/mailBox"))
+                    response.sendRedirect("/mailBox");
                 else if (request.getRequestURI().startsWith("/account"))
                     response.sendRedirect("/account");
-                else if(request.getRequestURI().startsWith("/exam"))
+                else if (request.getRequestURI().startsWith("/exam"))
                     response.sendRedirect("/exam");
                 else if (request.getRequestURI().startsWith("/tests"))
                     response.sendRedirect("/tests");
