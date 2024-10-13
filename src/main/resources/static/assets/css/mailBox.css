@@ -146,6 +146,7 @@ h2 {
   margin: 0 auto;
   border-radius: 15px;
   width: 80%;
+  min-height: 100%;
 }
 .mailBox .hero-img .mail-container .box-container .title {
   margin-top: 10px;
@@ -224,6 +225,15 @@ h2 {
   line-height: 1.8;
   color: aliceblue;
 }
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .noMessages {
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 16px;
+  text-align: center;
+  color: #6acff1;
+  font-style: italic;
+  margin-bottom: 0;
+}
 .mailBox .hero-img .mail-container .box-container .write-mail {
   position: absolute;
   top: 20px;
@@ -292,7 +302,6 @@ h2 {
 }
 .mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 13px;

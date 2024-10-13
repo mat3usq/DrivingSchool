@@ -37,7 +37,7 @@
                 <div class="box-container">
                     <p class="title">Wiadomości</p>
                     <div class="mailbox-container">
-                        <div class="mailBox-content" th:each="mail : ${mails}"
+                        <div th:if="${!mails.isEmpty()}" class="mailBox-content" th:each="mail : ${mails}"
                              th:classappend="${mail.statusRecipient != null and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'unread' : 'read'">
                             <div class="sender-details">
                                 <span th:class="${mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'icon unread' : 'icon'">
@@ -64,6 +64,9 @@
                                         <th:block th:text="${mail.body}">Treść wiadomości</th:block>
                                 </span>
                             </div>
+                        </div>
+                        <div th:if="${mails.isEmpty()}" class="mailBox-content">
+                            <p class="noMessages">Brak Wiadomości</p>
                         </div>
                     </div>
                     <button class="write-mail">
