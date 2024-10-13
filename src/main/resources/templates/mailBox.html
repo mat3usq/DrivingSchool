@@ -35,7 +35,7 @@
         <div class="hero-img">
             <div class="mail-container">
                 <div class="box-container">
-                    <p class="title">Twoje Wiadomości</p>
+                    <p class="title">Wiadomości</p>
                     <div class="mailbox-container">
                         <div class="mailBox-content" th:each="mail : ${mails}"
                              th:classappend="${mail.statusRecipient != null and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'unread' : 'read'">
@@ -59,9 +59,38 @@
                                         <th:block th:text="${#temporals.format(mail.createdAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
                                     </span>
                                 </div>
-                                <p class="mail" th:text="${mail.body}">Treść wiadomości</p>
+                                <span class="mail">
+                                        <i class="fa-solid fa-font"></i>
+                                        <th:block th:text="${mail.body}">Treść wiadomości</th:block>
+                                </span>
                             </div>
                         </div>
+                    </div>
+                    <button class="write-mail">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <div class="write-mail-wrapper">
+                        <div class="write-mail-header">
+                            <div class="title-mail">Nowa Wiadomość</div>
+                            <i class="fas fa-times close"></i>
+                        </div>
+                        <form class="write-mail-body" th:action="@{/mailBox/sendMail}" method="post">
+                            <div class="write-mail-input">
+                                <i class="fa-regular fa-address-book"></i>
+                                <input type="text" placeholder="Odbiorca"/>
+                            </div>
+                            <div class="write-mail-input">
+                                <i class="fa-solid fa-heading"></i>
+                                <input type="text" placeholder="Temat"/>
+                            </div>
+                            <div class="write-mail-input">
+                                <i class="fa-solid fa-font"></i>
+                                <textarea id="messageInput" type="text" placeholder="Treść Wiadomości"></textarea>
+                            </div>
+                            <div class="write-mail-footer">
+                                <button class="write-mail-btn">Wyślij Wiadomość</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -118,5 +147,6 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="/assets/js/aosSettings.js"></script>
 <script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/mailBox.js"></script>
 </body>
 </html>
