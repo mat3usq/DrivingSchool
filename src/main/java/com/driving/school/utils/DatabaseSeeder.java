@@ -2,6 +2,7 @@ package com.driving.school.utils;
 
 import com.driving.school.model.*;
 import com.driving.school.repository.*;
+import com.driving.school.service.MailService;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.TestService;
 import com.opencsv.CSVParserBuilder;
@@ -37,12 +38,13 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final InstructionEventRepository eventRepository;
     private final StudentInstructorRepository studentInstructorRepository;
     private final CategoryRepository categoryRepository;
+    private final MailService mailService;
     private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
             schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
-                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository, StudentInstructorRepository studentInstructorRepository, CategoryRepository categoryRepository) {
+                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository, StudentInstructorRepository studentInstructorRepository, CategoryRepository categoryRepository, MailService mailService) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
@@ -52,6 +54,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.eventRepository = eventRepository;
         this.studentInstructorRepository = studentInstructorRepository;
         this.categoryRepository = categoryRepository;
+        this.mailService = mailService;
     }
 
     @Override
@@ -64,10 +67,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         createLectures();
         mapQuestionsToDb();
         createEvents();
-    }
-
-    private boolean isDatabaseSeeded() {
-        return schoolUserRepository.findByEmail("admin") != null;
+        createMails();
     }
 
     private void createUsersAndCategoriesAndTests() {
@@ -323,5 +323,142 @@ public class DatabaseSeeder implements CommandLineRunner {
                 bos.write(buffer, 0, bytesRead);
             return bos.toByteArray();
         }
+    }
+
+    private void createMails() {
+        logger.info("Tworzenie przykładowych wiadomości e-mail...");
+
+        SchoolUser admin = schoolUserRepository.findByEmail("admin");
+        SchoolUser student = schoolUserRepository.findByEmail("student");
+        SchoolUser student2 = schoolUserRepository.findByEmail("student2");
+        SchoolUser instructor = schoolUserRepository.findByEmail("instructor");
+        SchoolUser instructor2 = schoolUserRepository.findByEmail("instructor2");
+        SchoolUser instructor3 = schoolUserRepository.findByEmail("instructor3");
+
+        if (admin == null || student == null || student2 == null || instructor == null
+                || instructor2 == null || instructor3 == null) {
+            logger.error("Brak wymaganych użytkowników w bazie danych. Upewnij się, że użytkownicy zostali poprawnie utworzeni.");
+            return;
+        }
+
+        // Tworzenie wiadomości głównych i odpowiedzi
+        // Przykład 1: Admin wysyła wiadomość do Studenta, Student odpowiada Adminowi
+        Mail adminToStudent = mailService.sendMail(
+                admin,
+                student,
+                "Witamy w naszej szkole jazdy!",
+                "Drogi Studentcie,\n\nWitamy w naszej szkole jazdy. Cieszymy się, że dołączyłeś do naszego programu.\n\nPozdrawiam,\nZespół Administracyjny",
+                null
+        );
+
+        Mail studentToAdmin = mailService.sendMail(
+                student,
+                admin,
+                "Re: Witamy w naszej szkole jazdy!",
+                "Drogi Adminie,\n\nDziękuję za serdeczne powitanie. Cieszę się na nadchodzące lekcje.\n\nPozdrawiam,\nStudent",
+                adminToStudent
+        );
+
+        Mail adminToStudent2 = mailService.sendMail(
+                admin,
+                student2,
+                "Powitanie dla nowego studenta",
+                "Drogi Student2,\n\nWitamy w naszej szkole jazdy. Jesteśmy podekscytowani, że dołączyłeś do naszego zespołu.\n\nPozdrawiam,\nZespół Administracyjny",
+                null
+        );
+
+        Mail student2ToAdmin = mailService.sendMail(
+                student2,
+                admin,
+                "Re: Powitanie dla nowego studenta",
+                "Drogi Adminie,\n\nDziękuję za powitanie. Jestem gotowy rozpocząć naukę.\n\nPozdrawiam,\nStudent2",
+                adminToStudent2
+        );
+
+        // Przykład 2: Instruktor wysyła wiadomość do Studenta, Student odpowiada Instruktorowi
+        Mail instructorToStudent = mailService.sendMail(
+                instructor,
+                student,
+                "Plan lekcji na ten tydzień",
+                "Drogi Student,\n\nPrzesyłam plan lekcji na ten tydzień. Proszę zapoznaj się z harmonogramem.\n\nPozdrawiam,\nInstruktor",
+                null
+        );
+
+        Mail studentToInstructor = mailService.sendMail(
+                student,
+                instructor,
+                "Re: Plan lekcji na ten tydzień",
+                "Drogi Instruktorze,\n\nDziękuję za przesłanie planu. Wszystko jest dla mnie jasne.\n\nPozdrawiam,\nStudent",
+                instructorToStudent
+        );
+
+        // Przykład 3: Admin wysyła wiadomość do Instruktora, Instruktor odpowiada Adminowi, Admin odpowiada Instruktorowi ponownie
+        Mail adminToInstructor = mailService.sendMail(
+                admin,
+                instructor,
+                "Nowe materiały szkoleniowe",
+                "Drogi Instruktorze,\n\nPrzesyłam nowe materiały szkoleniowe do wykorzystania podczas lekcji.\n\nPozdrawiam,\nZespół Administracyjny",
+                null
+        );
+
+        Mail instructorToAdmin = mailService.sendMail(
+                instructor,
+                admin,
+                "Re: Nowe materiały szkoleniowe",
+                "Drogi Adminie,\n\nDziękuję za przesłanie materiałów. Będę je wykorzystać podczas nadchodzących lekcji.\n\nPozdrawiam,\nInstruktor",
+                adminToInstructor
+        );
+
+        Mail adminToInstructorReply = mailService.sendMail(
+                admin,
+                instructor,
+                "Re: Re: Nowe materiały szkoleniowe",
+                "Drogi Instruktorze,\n\nCieszę się, że materiały są przydatne. Jeśli masz jakiekolwiek pytania, nie wahaj się pytać.\n\nPozdrawiam,\nZespół Administracyjny",
+                instructorToAdmin
+        );
+
+        // Przykład 4: Instruktor2 wysyła wiadomość do Student2, Student2 odpowiada Instruktor2
+        Mail instructor2ToStudent2 = mailService.sendMail(
+                instructor2,
+                student2,
+                "Harmonogram egzaminów praktycznych",
+                "Drogi Student2,\n\nPrzesyłam harmonogram egzaminów praktycznych. Proszę zapoznaj się z terminami.\n\nPozdrawiam,\nInstruktor2",
+                null
+        );
+
+        Mail student2ToInstructor2 = mailService.sendMail(
+                student2,
+                instructor2,
+                "Re: Harmonogram egzaminów praktycznych",
+                "Drogi Instruktorze2,\n\nDziękuję za przesłanie harmonogramu. Będę się przygotowywać zgodnie z planem.\n\nPozdrawiam,\nStudent2",
+                instructor2ToStudent2
+        );
+
+        // Przykład 5: Instruktor3 wysyła wiadomość do Studenta, Student odpowiada Instruktorowi, Instruktor odpowiada Studentowi
+        Mail instructor3ToStudent = mailService.sendMail(
+                instructor3,
+                student,
+                "Informacje o nowym kursie",
+                "Drogi Student,\n\nInformuję Cię o nowym kursie dotyczącym zaawansowanych technik jazdy. Kurs rozpoczyna się w przyszłym miesiącu.\n\nPozdrawiam,\nInstruktor3",
+                null
+        );
+
+        Mail studentToInstructor3 = mailService.sendMail(
+                student,
+                instructor3,
+                "Re: Informacje o nowym kursie",
+                "Drogi Instruktorze3,\n\nDziękuję za informację. Jestem zainteresowany udziałem w kursie.\n\nPozdrawiam,\nStudent",
+                instructor3ToStudent
+        );
+
+        Mail instructor3ToStudentReply = mailService.sendMail(
+                instructor3,
+                student,
+                "Re: Re: Informacje o nowym kursie",
+                "Drogi Student,\n\nCieszę się, że jesteś zainteresowany. Szczegóły dotyczące zapisów i harmonogramu prześlę wkrótce.\n\nPozdrawiam,\nInstruktor3",
+                studentToInstructor3
+        );
+
+        logger.info("Przykładowe wiadomości e-mail zostały utworzone.");
     }
 }
