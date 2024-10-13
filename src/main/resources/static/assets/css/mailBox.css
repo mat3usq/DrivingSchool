@@ -133,6 +133,7 @@ h2 {
   position: absolute;
   top: 12vh;
   left: 300px;
+  width: calc(100vw - 300px);
   height: 98vh;
   padding: 20px 0;
   overflow: scroll;
@@ -175,7 +176,7 @@ h2 {
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .icon {
   padding: 0px 5px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .icon.unread-icon {
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .icon.unread {
   color: #6acff1;
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details {

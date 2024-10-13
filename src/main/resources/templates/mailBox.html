@@ -37,71 +37,29 @@
                 <div class="box-container">
                     <p class="title">Twoje Wiadomości</p>
                     <div class="mailbox-container">
-                        <div class="mailBox-content unread">
+                        <div class="mailBox-content" th:each="mail : ${mails}"
+                             th:classappend="${mail.statusRecipient != null and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'unread' : 'read'">
                             <div class="sender-details">
-                                <span class="icon unread-icon"><i class="fas fa-envelope"></i></span>
-                                <span class="name">Mateusz</span>
-                                <span class="surname">Mogielnicki</span>
-                                <span class="e-mail">&lt;mmogielnicki123@gmail.com&gt;</span>
+                                <span th:class="${mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'icon unread' : 'icon'">
+                                    <i th:class="${mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'fas fa-envelope' : 'fas fa-envelope-open-text'"></i>
+                                </span>
+                                <span class="name" th:text="${mail.sender.name}">Imię</span>
+                                <span class="surname" th:text="${mail.sender.surname}">Nazwisko</span>
+                                <span class="e-mail"
+                                      th:text="'&lt;' + ${mail.sender.email} + '&gt;'">email@example.com</span>
                             </div>
                             <div class="content-mail">
                                 <div class="email-header">
-                                <span class="subject"><i
-                                        class="fa-solid fa-heading"></i> Nowa propozycja projektu</span>
-                                    <span class="time"><i class="fas fa-clock"></i> 12:32 2024/10/12</span>
+                                    <span class="subject">
+                                        <i class="fa-solid fa-heading"></i>
+                                        <th:block th:text="${mail.subject}">Temat</th:block>
+                                    </span>
+                                    <span class="time">
+                                        <i class="fas fa-clock"></i>
+                                        <th:block th:text="${#temporals.format(mail.createdAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
+                                    </span>
                                 </div>
-                                <p class="mail"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore aliquam id dolores, culpa, non vero doloribus unde quaerat esse animi perspiciatis quod hic delectus quas? Ullam aspernatur incidunt obcaecati perspiciatis? </p>
-                            </div>
-                        </div>
-
-                        <div class="mailBox-content">
-                            <div class="sender-details">
-                                <span class="icon"><i class="fas fa-envelope-open-text"></i></span>
-                                <span class="name">Anna</span>
-                                <span class="surname">Kowalska</span>
-                                <span class="e-mail">&lt;anna.kowalska@example.com&gt;</span>
-                            </div>
-                            <div class="content-mail">
-                                <div class="email-header">
-                                    <span class="subject"><i class="fa-solid fa-heading"></i> Spotkanie zespołu</span>
-                                    <span class="time"><i class="fas fa-clock"></i> 09:15 2024/10/11</span>
-                                </div>
-                                <p class="mail">
-											Przypominam o spotkaniu zespołu w piątek o 10:00. Proszę o potwierdzenie...
-										</p>
-                            </div>
-                        </div>
-
-                        <div class="mailBox-content unread">
-                            <div class="sender-details">
-                                <span class="icon unread-icon"><i class="fas fa-envelope"></i></span>
-                                <span class="name">Piotr</span>
-                                <span class="surname">Nowak</span>
-                                <span class="e-mail">&lt;piotr.nowak@example.com&gt;</span>
-                            </div>
-                            <div class="content-mail">
-                                <div class="email-header">
-                                    <span class="subject"><i class="fa-solid fa-heading"></i> Aktualizacja statusu projektu</span>
-                                    <span class="time"><i class="fas fa-clock"></i> 14:45 2024/10/10</span>
-                                </div>
-                                <p class="mail"> Projekt X osiągnął kolejne kamienie milowe. Proszę o zapoznanie się z... </p>
-                            </div>
-                        </div>
-
-                        <div class="mailBox-content">
-                            <div class="sender-details">
-                                <span class="icon"><i class="fas fa-envelope-open-text"></i></span>
-                                <span class="name">Ewa</span>
-                                <span class="surname">Wiśniewska</span>
-                                <span class="e-mail">&lt;ewa.wisniewska@example.com&gt;</span>
-                            </div>
-                            <div class="content-mail">
-                                <div class="email-header">
-                                <span class="subject"><i
-                                        class="fa-solid fa-heading"></i> Zaproszenie na konferencję</span>
-                                    <span class="time"><i class="fas fa-clock"></i> 08:00 2024/10/09</span>
-                                </div>
-                                <p class="mail"> Serdecznie zapraszamy na konferencję dotyczącą najnowszych trendów w... </p>
+                                <p class="mail" th:text="${mail.body}">Treść wiadomości</p>
                             </div>
                         </div>
                     </div>

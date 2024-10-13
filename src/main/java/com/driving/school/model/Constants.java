@@ -62,4 +62,11 @@ public interface Constants {
     String SUSPENDED = "Zawieszony";
     String TERMINATED = "Zakonczony Przed";
     String EXPIRED = "Wygasly";
+
+
+    // Mail Status
+    String MAIL_SENT = "SENT";
+    String MAIL_UNREAD ="UNREAD";
+    String MAIL_READ ="READ";
+    String MAIL_DELETED ="DELETED";
 }
