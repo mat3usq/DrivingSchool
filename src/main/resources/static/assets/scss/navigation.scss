@@ -99,6 +99,72 @@ nav {
 				color: $icon-color;
 			}
 		}
+
+		.mail-nav {
+			display: none;
+			position: relative;
+			padding-left: 45px;
+
+			.nav-link {
+				position: relative;
+				display: flex;
+				align-items: center;
+				font-size: 14px;
+
+				&.active {
+					border-left: none;
+					background-color: #ffd16682;
+					font-weight: bold;
+
+					&::before,
+					&::after {
+						background-color: $nav-color;
+					}
+
+					&::before {
+						width: 5px;
+					}
+
+					&::after {
+						height: 5px;
+					}
+				}
+
+				i {
+					font-size: 16px;
+					margin-right: 8px;
+				}
+
+				&::before {
+					content: '';
+					position: absolute;
+					left: -5px;
+					top: 0;
+					bottom: 0;
+					width: 2px;
+					background-color: $text-color;
+				}
+
+				&::after {
+					content: '';
+					position: absolute;
+					left: -5px;
+					top: 50%;
+					transform: translateY(-50%);
+					width: 20px;
+					height: 2px;
+					background-color: $text-color;
+				}
+
+				&:last-child {
+					margin-bottom: 0;
+
+					&::before {
+						bottom: 50%;
+					}
+				}
+			}
+		}
 	}
 
 	i {

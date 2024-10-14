@@ -162,6 +162,60 @@ nav .fa-bars:hover {
 .navbar-left .navbar-nav .logout .fa-arrow-right-to-bracket {
   color: springgreen;
 }
+.navbar-left .navbar-nav .mail-nav {
+  display: none;
+  position: relative;
+  padding-left: 45px;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link.active {
+  border-left: none;
+  background-color: rgba(255, 209, 102, 0.5098039216);
+  font-weight: bold;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link.active::before, .navbar-left .navbar-nav .mail-nav .nav-link.active::after {
+  background-color: #e0ff72;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link.active::before {
+  width: 5px;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link.active::after {
+  height: 5px;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link i {
+  font-size: 16px;
+  margin-right: 8px;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: aliceblue;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 2px;
+  background-color: aliceblue;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link:last-child {
+  margin-bottom: 0;
+}
+.navbar-left .navbar-nav .mail-nav .nav-link:last-child::before {
+  bottom: 50%;
+}
 .navbar-left i {
   font-size: 20px;
   margin-right: 10px;

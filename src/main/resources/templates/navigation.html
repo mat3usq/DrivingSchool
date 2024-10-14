@@ -22,7 +22,8 @@
 
 <nav th:fragment="navigation-left" data-aos="fade-right" data-aos-delay="20" class="navbar-left shadow-bg">
     <div class="navbar-nav">
-        <p class="title" th:if="${!session.loggedInUser.currentCategory.isEmpty()}" th:text="'Kategoria ' + ${session.loggedInUser.currentCategory}">Kategoria B</p>
+        <p class="title" th:if="${!session.loggedInUser.currentCategory.isEmpty()}"
+           th:text="'Kategoria ' + ${session.loggedInUser.currentCategory}">Kategoria B</p>
         <p class="title" th:if="${session.loggedInUser.currentCategory.isEmpty()}">Brak Kategorii</p>
         <div class="underline"></div>
 
@@ -36,18 +37,32 @@
         ><i class="fa-solid fa-calendar-days"></i>Kalendarz</a
         >
         <a data-aos="fade-right" data-aos-delay="250" class="nav-link" th:href="@{/mailBox}"
-        ><i class="fa-solid fa-envelope"></i>Poczta</a
+        ><i class="fa-solid fa-envelopes-bulk"></i>Poczta</a
         >
-        <a data-aos="fade-right" data-aos-delay="300" class="nav-link" th:href="@{/tests}"
+        <div class="mail-nav">
+            <a data-aos="fade-right" data-aos-delay="300" class="nav-link" th:href="@{/mailBox/received}">
+                <i class="fas fa-envelope-open-text"></i>Odebrane
+            </a>
+            <a data-aos="fade-right" data-aos-delay="350" class="nav-link" th:href="@{/mailBox/unread}">
+                <i class="fa-solid fa-envelope"></i>Nieprzeczytane
+            </a>
+            <a data-aos="fade-right" data-aos-delay="300" class="nav-link" th:href="@{/mailBox/sent}">
+                <i class="fa-solid fa-paper-plane"></i>Wysłane
+            </a>
+            <a data-aos="fade-right" data-aos-delay="350" class="nav-link" th:href="@{/mailBox/trash}">
+                <i class="fa-solid fa-trash"></i>Kosz
+            </a>
+        </div>
+        <a data-aos="fade-right" data-aos-delay="400" class="nav-link" th:href="@{/tests}"
         ><i class="fa-solid fa-person-chalkboard"></i>Nauka Testów</a
         >
-        <a data-aos="fade-right" data-aos-delay="350" class="nav-link" th:href="@{/exam}"
+        <a data-aos="fade-right" data-aos-delay="450" class="nav-link" th:href="@{/exam}"
         ><i class="fa-solid fa-file-pen"></i>Egzamin</a
         >
-        <a data-aos="fade-right" data-aos-delay="400" class="nav-link" th:href="@{/account}"
+        <a data-aos="fade-right" data-aos-delay="500" class="nav-link" th:href="@{/account}"
         ><i class="fa-solid fa-user"></i>Moje Konto</a
         >
-        <a data-aos="fade-right" data-aos-delay="400" class="nav-link logout"
+        <a data-aos="fade-right" data-aos-delay="550" class="nav-link logout"
            href="javascript:document.getElementById('logoutForm').submit()"
         ><i class="fa-solid fa-arrow-right-to-bracket"></i>Wyloguj Sie</a
         >
@@ -64,10 +79,18 @@
                         link.classList.add('active');
                     }
                 });
+
+                const mailNav = document.querySelector('.mail-nav');
+                if (currentPath.startsWith('/mailBox')) {
+                    mailNav.style.display = 'block';
+                } else {
+                    if (mailNav) {
+                        mailNav.remove();
+                    }
+                }
             }
 
             updateActiveNavLink();
         });
-
     </script>
 </nav>
