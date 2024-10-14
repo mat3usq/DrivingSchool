@@ -111,18 +111,20 @@ h2 {
 							border: 3px solid $placeHolder-color;
 						}
 
-						&:hover {
-							transform: translateX(50px);
-						}
+						@media (hover: hover) and (pointer: fine) {
+							&:hover {
+								transform: translateX(50px);
+							}
 
-						&:hover .operation-box {
-							transform: translateY(-50%) translateX(15px);
-							opacity: 1;
+							&:hover .operation-box {
+								transform: translateY(-50%) translateX(15px);
+								opacity: 1;
+							}
 						}
 
 						&.clicked {
 							transform: translateX(50px);
-							
+
 							.operation-box {
 								transform: translateY(-50%) translateX(15px);
 								opacity: 1;

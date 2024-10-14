@@ -399,9 +399,11 @@ h2 {
 								background: transparent;
 							}
 
-							&:hover {
-								background: linear-gradient(90deg, $calendar-color, transparent);
-								transform: translateX(30px);
+							@media (hover: hover) and (pointer: fine) {
+								&:hover {
+									background: linear-gradient(90deg, $calendar-color, transparent);
+									transform: translateX(30px);
+								}
 							}
 
 							&:hover .delete-icon,

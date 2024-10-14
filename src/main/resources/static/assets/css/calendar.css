@@ -441,9 +441,11 @@ h2 {
 .calendar-section .hero-img .box-calendar .container .right .events .event:nth-child(even) {
   background: transparent;
 }
-.calendar-section .hero-img .box-calendar .container .right .events .event:hover {
-  background: linear-gradient(90deg, #b51b75, transparent);
-  transform: translateX(30px);
+@media (hover: hover) and (pointer: fine) {
+  .calendar-section .hero-img .box-calendar .container .right .events .event:hover {
+    background: linear-gradient(90deg, #b51b75, transparent);
+    transform: translateX(30px);
+  }
 }
 .calendar-section .hero-img .box-calendar .container .right .events .event:hover .delete-icon, .calendar-section .hero-img .box-calendar .container .right .events .event:hover .assign-icon, .calendar-section .hero-img .box-calendar .container .right .events .event:hover .leave-icon, .calendar-section .hero-img .box-calendar .container .right .events .event:hover .edit-icon {
   opacity: 1;

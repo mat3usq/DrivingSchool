@@ -185,12 +185,14 @@ h2 {
   font-weight: bold;
   border: 3px solid rgb(192, 192, 219);
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content:hover {
-  transform: translateX(50px);
-}
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content:hover .operation-box {
-  transform: translateY(-50%) translateX(15px);
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content:hover {
+    transform: translateX(50px);
+  }
+  .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content:hover .operation-box {
+    transform: translateY(-50%) translateX(15px);
+    opacity: 1;
+  }
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content.clicked {
   transform: translateX(50px);
