@@ -147,8 +147,10 @@ h2 {
   border-radius: 15px;
   width: 80%;
   min-height: 100%;
+  overflow: hidden;
 }
-.mailBox .hero-img .mail-container .box-container .title {
+.mailBox .hero-img .mail-container .box-container .title,
+.mailBox .hero-img .mail-container .box-container .mini-title {
   margin-top: 10px;
   margin-bottom: 15px;
   font-size: 22px;
@@ -158,6 +160,10 @@ h2 {
   padding-bottom: 10px;
   border-bottom: 2px solid rgb(192, 192, 219);
   letter-spacing: 1px;
+}
+.mailBox .hero-img .mail-container .box-container .mini-title {
+  font-size: 16px;
+  color: #6acff1;
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container {
   width: 100%;
@@ -171,10 +177,71 @@ h2 {
   background-color: rgba(65, 59, 59, 0.8);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  transition: transform 0.3s ease;
+  position: relative;
+  cursor: pointer;
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content.unread {
   font-weight: bold;
   border: 3px solid rgb(192, 192, 219);
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content:hover {
+  transform: translateX(50px);
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content:hover .operation-box {
+  transform: translateY(-50%) translateX(15px);
+  opacity: 1;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content.clicked {
+  transform: translateX(50px);
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content.clicked .operation-box {
+  transform: translateY(-50%) translateX(15px);
+  opacity: 1;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box {
+  position: absolute;
+  left: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  transition: transform 0.3s ease;
+  opacity: 0;
+  gap: 10px;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box button {
+  border: none;
+  background: none;
+  padding: 5px;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box button i {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+  padding-right: 12px;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .infoMail-form i {
+  color: #4d84e2;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .infoMail-form i:hover {
+  color: #6acff1;
+  transform: scale(1.1);
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .responseMail-form i {
+  color: #7aba78;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .responseMail-form i:hover {
+  color: springgreen;
+  transform: scale(1.1);
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .moveToTrashMail-form i {
+  color: #b51b75;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .moveToTrashMail-form i:hover {
+  color: #ef476f;
+  transform: scale(1.1);
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .icon {
   padding: 0px 5px;

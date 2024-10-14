@@ -70,8 +70,10 @@ h2 {
 				border-radius: 15px;
 				width: 80%;
 				min-height: 100%;
+				overflow: hidden;
 
-				.title {
+				.title,
+				.mini-title {
 					margin-top: 10px;
 					margin-bottom: 15px;
 					font-size: 22px;
@@ -81,6 +83,11 @@ h2 {
 					padding-bottom: 10px;
 					border-bottom: 2px solid $placeHolder-color;
 					letter-spacing: 1px;
+				}
+
+				.mini-title {
+					font-size: 16px;
+					color: $info-color;
 				}
 
 				.mailbox-container {
@@ -95,10 +102,84 @@ h2 {
 						background-color: rgba(65, 59, 59, 0.8);
 						border-top-left-radius: 10px;
 						border-top-right-radius: 10px;
+						transition: transform 0.3s ease;
+						position: relative;
+						cursor: pointer;
 
 						&.unread {
 							font-weight: bold;
 							border: 3px solid $placeHolder-color;
+						}
+
+						&:hover {
+							transform: translateX(50px);
+						}
+
+						&:hover .operation-box {
+							transform: translateY(-50%) translateX(15px);
+							opacity: 1;
+						}
+
+						&.clicked {
+							transform: translateX(50px);
+							
+							.operation-box {
+								transform: translateY(-50%) translateX(15px);
+								opacity: 1;
+							}
+						}
+
+						.operation-box {
+							position: absolute;
+							left: -60px;
+							top: 50%;
+							transform: translateY(-50%);
+							display: flex;
+							flex-direction: column;
+							justify-content: space-evenly;
+							align-items: center;
+							transition: transform 0.3s ease;
+							opacity: 0;
+							gap: 10px;
+
+							button {
+								border: none;
+								background: none;
+								padding: 5px;
+
+								i {
+									font-size: 20px;
+									transition: transform 0.3s ease;
+									padding-right: 12px;
+								}
+							}
+
+							.infoMail-form i {
+								color: $btn-bg-color;
+
+								&:hover {
+									color: $info-color;
+									transform: scale(1.1);
+								}
+							}
+
+							.responseMail-form i {
+								color: $calendar-color-hover;
+
+								&:hover {
+									color: $icon-color;
+									transform: scale(1.1);
+								}
+							}
+
+							.moveToTrashMail-form i {
+								color: $calendar-color;
+
+								&:hover {
+									color: $primary-color;
+									transform: scale(1.1);
+								}
+							}
 						}
 
 						.icon {
@@ -158,8 +239,8 @@ h2 {
 								font-size: 13px;
 								line-height: 1.8;
 								color: $text-color;
-								display: inline-block; 
-								max-width: 100%; 
+								display: inline-block;
+								max-width: 100%;
 								white-space: nowrap;
 								overflow: hidden;
 								text-overflow: ellipsis;

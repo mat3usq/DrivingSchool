@@ -14,10 +14,14 @@ if (writeMailBtn && writeMailCloseBtn && writeMailWrapper) {
 	})
 }
 
-const textarea = document.getElementById('messageInput');
-    function autoResize() {
-        this.style.height = 'auto'; 
-        this.style.height = this.scrollHeight + 'px'; 
-    }
+const textarea = document.getElementById('messageInput')
+function autoResize() {
+	this.style.height = 'auto'
+	this.style.height = this.scrollHeight + 'px'
+}
 
-    textarea.addEventListener('input', autoResize);
+textarea.addEventListener('input', autoResize)
+
+function toggleEvent(element) {
+	element.classList.toggle('clicked')
+}

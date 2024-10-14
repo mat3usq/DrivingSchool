@@ -36,7 +36,11 @@ public class MailBoxController {
 
     @PostMapping("/mailBox/sendMail")
     public ModelAndView sendMail(@ModelAttribute Mail mail, HttpSession session) {
-        mailService.sendMail((SchoolUser) session.getAttribute("loggedInUser"), mail, null);
-        return displayMails(session);
+        ModelAndView modelAndView = displayMails(session);
+        if (mailService.sendMail((SchoolUser) session.getAttribute("loggedInUser"), mail, null))
+            modelAndView.addObject("isSend", true);
+        else
+            modelAndView.addObject("isSend", false);
+        return modelAndView;
     }
 }
