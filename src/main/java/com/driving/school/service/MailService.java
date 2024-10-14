@@ -15,10 +15,12 @@ import java.util.Optional;
 @Service
 public class MailService {
     private final MailRepository mailRepository;
+    private final SchoolUserService schoolUserService;
 
     @Autowired
-    public MailService(MailRepository mailRepository) {
+    public MailService(MailRepository mailRepository, SchoolUserService schoolUserService) {
         this.mailRepository = mailRepository;
+        this.schoolUserService = schoolUserService;
     }
 
     @Transactional
@@ -36,6 +38,25 @@ public class MailService {
             parentMail.getReplies().add(mail);
 
         return mailRepository.save(mail);
+    }
+
+    @Transactional
+    public boolean sendMail(SchoolUser sender, Mail sendMail, Mail parentMail) {
+        SchoolUser recipient = schoolUserService.findUserByEmail(sendMail.getRecipient().getEmail());
+        if ( recipient != null) {
+            sendMail.setSender(sender);
+            sendMail.setRecipient(recipient);
+            sendMail.setParentMail(parentMail);
+            sendMail.setStatusSender(Constants.MAIL_SENT);
+            sendMail.setStatusRecipient(Constants.MAIL_UNREAD);
+
+            if (parentMail != null)
+                parentMail.getReplies().add(sendMail);
+
+            mailRepository.save(sendMail);
+
+            return true;
+        } else return false;
     }
 
     public List<Mail> getUnreadMailsForRecipient(SchoolUser recipient) {
@@ -114,6 +135,6 @@ public class MailService {
 
     public List<Mail> getReadAndUnreadMailsForRecipient(SchoolUser recipient) {
         List<String> statuses = Arrays.asList(Constants.MAIL_UNREAD, Constants.MAIL_READ);
-        return mailRepository.findByRecipientAndStatusRecipientInOrderByCreatedAtAsc(recipient, statuses);
+        return mailRepository.findByRecipientAndStatusRecipientInOrderByCreatedAtDesc(recipient, statuses);
     }
 }

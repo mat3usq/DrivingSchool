@@ -12,5 +12,5 @@ public interface MailRepository extends JpaRepository<Mail, Long> {
     List<Mail> findByRecipientAndStatusRecipient(SchoolUser recipient, String status);
     List<Mail> findBySenderAndStatusSender(SchoolUser sender, String status);
     List<Mail> findBySender(SchoolUser sender);
-    List<Mail> findByRecipientAndStatusRecipientInOrderByCreatedAtAsc(SchoolUser recipient, List<String> statuses);
+    List<Mail> findByRecipientAndStatusRecipientInOrderByCreatedAtDesc(SchoolUser recipient, List<String> statuses);
 }

@@ -77,18 +77,18 @@
                             <div class="title-mail">Nowa Wiadomość</div>
                             <i class="fas fa-times close"></i>
                         </div>
-                        <form class="write-mail-body" th:action="@{/mailBox/sendMail}" method="post">
+                        <form class="write-mail-body" th:action="@{/mailBox/sendMail}" method="post" th:object="${mail}">
                             <div class="write-mail-input">
                                 <i class="fa-regular fa-address-book"></i>
-                                <input type="text" placeholder="Odbiorca"/>
+                                <input th:field="*{recipient.email}" type="text" placeholder="E-mail Odbiorcy"/>
                             </div>
                             <div class="write-mail-input">
                                 <i class="fa-solid fa-heading"></i>
-                                <input type="text" placeholder="Temat"/>
+                                <input th:field="*{subject}" type="text" placeholder="Temat Wiadomości"/>
                             </div>
                             <div class="write-mail-input">
                                 <i class="fa-solid fa-font"></i>
-                                <textarea id="messageInput" type="text" placeholder="Treść Wiadomości"></textarea>
+                                <textarea th:field="*{body}" id="messageInput" placeholder="Treść Wiadomości"></textarea>
                             </div>
                             <div class="write-mail-footer">
                                 <button class="write-mail-btn">Wyślij Wiadomość</button>
