@@ -25,3 +25,22 @@ textarea.addEventListener('input', autoResize)
 function toggleEvent(element) {
 	element.classList.toggle('clicked')
 }
+
+const titleElement = document.querySelector('.mail-title')
+switch (window.location.pathname) {
+	case '/mailBox/read':
+		titleElement.textContent = 'Odebrane Wiadomości'
+		break
+	case '/mailBox/unread':
+		titleElement.textContent = 'Nieprzeczytane Wiadomości'
+		break
+	case '/mailBox/sent':
+		titleElement.textContent = 'Wysłane Wiadomości'
+		break
+	case '/mailBox/trash':
+		titleElement.textContent = 'Wiadomości w Koszu'
+		break
+	default:
+		titleElement.textContent = 'Skrzynka Pocztowa'
+		break
+}
