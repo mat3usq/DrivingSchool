@@ -27,7 +27,7 @@
         <p class="title" th:if="${session.loggedInUser.currentCategory.isEmpty()}">Brak Kategorii</p>
         <div class="underline"></div>
 
-        <a data-aos="fade-right" data-aos-delay="100" class="nav-link active" th:href="@{/dashboard}"
+        <a data-aos="fade-right" data-aos-delay="100" class="nav-link" th:href="@{/dashboard}"
         ><i class="fa-solid fa-car-side"></i>Akutalnosci</a
         >
         <a data-aos="fade-right" data-aos-delay="150" class="nav-link" th:href="@{/lecture}"
@@ -74,7 +74,6 @@
 
             function updateActiveNavLink() {
                 navLinks.forEach(link => {
-                    link.classList.remove('active');
                     if (currentPath === link.getAttribute('href')) {
                         link.classList.add('active');
                     }

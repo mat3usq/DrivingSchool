@@ -71,10 +71,21 @@
                                 <span th:class="${mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'icon unread' : 'icon'">
                                     <i th:class="${mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'fas fa-envelope' : 'fas fa-envelope-open-text'"></i>
                                 </span>
-                                <span class="name" th:text="${mail.sender.name}">Imię</span>
-                                <span class="surname" th:text="${mail.sender.surname}">Nazwisko</span>
-                                <span class="e-mail"
-                                      th:text="'&lt;' + ${mail.sender.email} + '&gt;'">email@example.com</span>
+
+                                <th:block th:if="${mail.sender.id != session.loggedInUser.id}">
+                                    <span class="name" th:text="${mail.sender.name}">Imię</span>
+                                    <span class="surname" th:text="${mail.sender.surname}">Nazwisko</span>
+                                    <span class="e-mail"
+                                          th:text="'&lt;' + ${mail.sender.email} + '&gt;'">email@example.com</span>
+                                </th:block>
+
+                                <th:block th:if="${mail.sender.id == session.loggedInUser.id}">
+                                    <span class="name" th:text="${mail.recipient.name}">Imię</span>
+                                    <span class="surname" th:text="${mail.recipient.surname}">Nazwisko</span>
+                                    <span class="e-mail"
+                                          th:text="'&lt;' + ${mail.recipient.email} + '&gt;'">email@example.com</span>
+                                </th:block>
+
                             </div>
                             <div class="content-mail">
                                 <div class="email-header">

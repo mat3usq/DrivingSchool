@@ -97,17 +97,15 @@ public class MailService {
     }
 
     @Transactional
-    public Optional<Mail> deleteMailForRecipient(Long mailId, SchoolUser recipient) {
+    public void moveToTrashRecipientMail(Long mailId, SchoolUser recipient) {
         Optional<Mail> optionalMail = mailRepository.findById(mailId);
         if (optionalMail.isPresent()) {
             Mail mail = optionalMail.get();
             if (mail.getRecipient().equals(recipient)) {
-                mail.setStatusRecipient(Constants.MAIL_DELETED);
+                mail.setStatusRecipient(Constants.MAIL_TRASHED);
                 mailRepository.save(mail);
             }
-            return Optional.of(mail);
         }
-        return Optional.empty();
     }
 
     public List<Mail> getMailsForRecipientByStatus(SchoolUser recipient, String status) {

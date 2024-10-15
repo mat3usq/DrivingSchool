@@ -9,9 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MailBoxController {
@@ -59,13 +62,26 @@ public class MailBoxController {
         return modelAndView;
     }
 
-    @PostMapping("/mailBox/sendMail")
-    public ModelAndView sendMail(@ModelAttribute Mail mail, HttpSession session) {
-        ModelAndView modelAndView = displayMails(session);
-        if (mailService.sendMail((SchoolUser) session.getAttribute("loggedInUser"), mail, null))
-            modelAndView.addObject("isSend", true);
-        else
-            modelAndView.addObject("isSend", false);
+    @GetMapping("/mailBox/trash")
+    public ModelAndView displayMailsInTrash(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("mailBox");
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        List<Mail> mails = mailService.getTrashedMailsForRecipient(loggedInUser);
+        modelAndView.addObject("mails", mails);
+        modelAndView.addObject("mail", new Mail());
         return modelAndView;
+    }
+
+    @PostMapping("/mailBox/sendMail")
+    public String sendMail(@ModelAttribute Mail mail, HttpSession session, RedirectAttributes redirectAttributes) {
+        boolean isSent = mailService.sendMail((SchoolUser) session.getAttribute("loggedInUser"), mail, null);
+        redirectAttributes.addFlashAttribute("isSend", isSent);
+        return "redirect:/mailBox/sent";
+    }
+
+    @PostMapping("/mailBox/moveToTrashMail")
+    public String moveToTrashMail(@RequestParam("mailId") long mailId, HttpSession session) {
+        mailService.moveToTrashRecipientMail(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
+        return "redirect:/mailBox/trash";
     }
 }
