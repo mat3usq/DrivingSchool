@@ -108,6 +108,30 @@ public class MailService {
         }
     }
 
+    @Transactional
+    public void moveRecipientMailFromTrash(Long mailId, SchoolUser recipient) {
+        Optional<Mail> optionalMail = mailRepository.findById(mailId);
+        if (optionalMail.isPresent()) {
+            Mail mail = optionalMail.get();
+            if (mail.getRecipient().equals(recipient)) {
+                mail.setStatusRecipient(Constants.MAIL_READ);
+                mailRepository.save(mail);
+            }
+        }
+    }
+
+    @Transactional
+    public void deleteRecipientMail(Long mailId, SchoolUser recipient) {
+        Optional<Mail> optionalMail = mailRepository.findById(mailId);
+        if (optionalMail.isPresent()) {
+            Mail mail = optionalMail.get();
+            if (mail.getRecipient().equals(recipient)) {
+                mail.setStatusRecipient(Constants.MAIL_DELETED);
+                mailRepository.save(mail);
+            }
+        }
+    }
+
     public List<Mail> getMailsForRecipientByStatus(SchoolUser recipient, String status) {
         return mailRepository.findByRecipientAndStatusRecipientOrderByCreatedAtDesc(recipient, status);
     }

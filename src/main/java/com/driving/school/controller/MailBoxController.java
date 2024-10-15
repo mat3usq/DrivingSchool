@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class MailBoxController {
@@ -82,6 +81,18 @@ public class MailBoxController {
     @PostMapping("/mailBox/moveToTrashMail")
     public String moveToTrashMail(@RequestParam("mailId") long mailId, HttpSession session) {
         mailService.moveToTrashRecipientMail(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
+        return "redirect:/mailBox/trash";
+    }
+
+    @PostMapping("/mailBox/moveMailFromTrash")
+    public String moveMailFromTrash(@RequestParam("mailId") long mailId, HttpSession session) {
+        mailService.moveRecipientMailFromTrash(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
+        return "redirect:/mailBox/trash";
+    }
+
+    @PostMapping("/mailBox/deleteMail")
+    public String deleteMail(@RequestParam("mailId") long mailId, HttpSession session) {
+        mailService.deleteRecipientMail(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
         return "redirect:/mailBox/trash";
     }
 }

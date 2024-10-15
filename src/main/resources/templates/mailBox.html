@@ -52,15 +52,33 @@
                                         <i class="fa-solid fa-circle-info"></i>
                                     </button>
                                 </form>
-                                <form th:if="${mail.sender.id != session.loggedInUser.id}" class="responseMail-form"
+
+                                <form th:if="${mail.sender.id != session.loggedInUser.id and mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_TRASHED}" class="responseMail-form"
                                       th:action="@{/mailBox/replyOnMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${mail.id}">
                                     <button type="submit">
                                         <i class="fa-solid fa-reply"></i>
                                     </button>
                                 </form>
-                                <form th:if="${mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD}" class="moveToTrashMail-form"
+
+                                <form th:if="${mail.sender.id != session.loggedInUser.id and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_TRASHED}" class="responseMail-form"
+                                      th:action="@{/mailBox/moveMailFromTrash}" method="post">
+                                    <input type="hidden" name="mailId" th:value="${mail.id}">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                    </button>
+                                </form>
+
+                                <form th:if="${mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD and mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_TRASHED}" class="moveToTrashMail-form"
                                       th:action="@{/mailBox/moveToTrashMail}" method="post">
+                                    <input type="hidden" name="mailId" th:value="${mail.id}">
+                                    <button type="submit">
+                                        <i class="fas fa-trash delete-icon"></i>
+                                    </button>
+                                </form>
+
+                                <form th:if="${mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_TRASHED}" class="moveToTrashMail-form"
+                                      th:action="@{/mailBox/deleteMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${mail.id}">
                                     <button type="submit">
                                         <i class="fas fa-trash delete-icon"></i>
