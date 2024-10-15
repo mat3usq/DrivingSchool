@@ -44,9 +44,6 @@ public class Mail {
     @JoinColumn(name = "RECIPIENTID", nullable = false)
     private SchoolUser recipient;
 
-    @Column(name = "STATUS_SENDER", nullable = false)
-    private String statusSender;
-
     @Column(name = "STATUS_RECIPIENT", nullable = false)
     private String statusRecipient;
 

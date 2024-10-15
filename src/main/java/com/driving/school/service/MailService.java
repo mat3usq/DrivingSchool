@@ -32,7 +32,6 @@ public class MailService {
         mail.setSubject(subject);
         mail.setBody(body);
         mail.setParentMail(parentMail);
-        mail.setStatusSender(Constants.MAIL_SENT);
         mail.setStatusRecipient(Constants.MAIL_UNREAD);
 
         if (parentMail != null)
@@ -48,7 +47,6 @@ public class MailService {
             sendMail.setSender(sender);
             sendMail.setRecipient(recipient);
             sendMail.setParentMail(parentMail);
-            sendMail.setStatusSender(Constants.MAIL_SENT);
             sendMail.setStatusRecipient(Constants.MAIL_UNREAD);
 
             if (parentMail != null)
@@ -112,26 +110,8 @@ public class MailService {
         return Optional.empty();
     }
 
-    @Transactional
-    public Optional<Mail> deleteMailForSender(Long mailId, SchoolUser sender) {
-        Optional<Mail> optionalMail = mailRepository.findById(mailId);
-        if (optionalMail.isPresent()) {
-            Mail mail = optionalMail.get();
-            if (mail.getSender().equals(sender)) {
-                mail.setStatusSender(Constants.MAIL_DELETED);
-                mailRepository.save(mail);
-            }
-            return Optional.of(mail);
-        }
-        return Optional.empty();
-    }
-
     public List<Mail> getMailsForRecipientByStatus(SchoolUser recipient, String status) {
         return mailRepository.findByRecipientAndStatusRecipientOrderByCreatedAtDesc(recipient, status);
-    }
-
-    public List<Mail> getMailsForSenderByStatus(SchoolUser sender, String status) {
-        return mailRepository.findBySenderAndStatusSender(sender, status);
     }
 
     public List<Mail> getReadAndUnreadMailsForRecipient(SchoolUser recipient) {

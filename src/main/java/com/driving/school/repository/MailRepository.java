@@ -11,6 +11,5 @@ import java.util.List;
 public interface MailRepository extends JpaRepository<Mail, Long> {
     List<Mail> findByRecipientAndStatusRecipientOrderByCreatedAtDesc(SchoolUser recipient, String status);
     List<Mail> findByRecipientAndStatusRecipientInOrderByCreatedAtDesc(SchoolUser recipient, List<String> statuses);
-    List<Mail> findBySenderAndStatusSender(SchoolUser sender, String status);
     List<Mail> findBySenderOrderByCreatedAtDesc(SchoolUser sender);
 }
