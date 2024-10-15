@@ -40,7 +40,7 @@
         ><i class="fa-solid fa-envelopes-bulk"></i>Poczta</a
         >
         <div class="mail-nav">
-            <a data-aos="fade-right" data-aos-delay="300" class="nav-link" th:href="@{/mailBox/received}">
+            <a data-aos="fade-right" data-aos-delay="300" class="nav-link" th:href="@{/mailBox/read}">
                 <i class="fas fa-envelope-open-text"></i>Odebrane
             </a>
             <a data-aos="fade-right" data-aos-delay="350" class="nav-link" th:href="@{/mailBox/unread}">
@@ -75,7 +75,7 @@
             function updateActiveNavLink() {
                 navLinks.forEach(link => {
                     link.classList.remove('active');
-                    if (currentPath.includes(link.getAttribute('href'))) {
+                    if (currentPath === link.getAttribute('href')) {
                         link.classList.add('active');
                     }
                 });

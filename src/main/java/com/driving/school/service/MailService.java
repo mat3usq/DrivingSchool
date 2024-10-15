@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -43,7 +44,7 @@ public class MailService {
     @Transactional
     public boolean sendMail(SchoolUser sender, Mail sendMail, Mail parentMail) {
         SchoolUser recipient = schoolUserService.findUserByEmail(sendMail.getRecipient().getEmail());
-        if ( recipient != null) {
+        if ( recipient != null && !Objects.equals(sender.getId(), recipient.getId())) {
             sendMail.setSender(sender);
             sendMail.setRecipient(recipient);
             sendMail.setParentMail(parentMail);
@@ -60,23 +61,23 @@ public class MailService {
     }
 
     public List<Mail> getUnreadMailsForRecipient(SchoolUser recipient) {
-        return mailRepository.findByRecipientAndStatusRecipient(recipient, Constants.MAIL_UNREAD);
+        return mailRepository.findByRecipientAndStatusRecipientOrderByCreatedAtDesc(recipient, Constants.MAIL_UNREAD);
     }
 
     public List<Mail> getReadMailsForRecipient(SchoolUser recipient) {
-        return mailRepository.findByRecipientAndStatusRecipient(recipient, Constants.MAIL_READ);
+        return mailRepository.findByRecipientAndStatusRecipientOrderByCreatedAtDesc(recipient, Constants.MAIL_READ);
     }
 
     public List<Mail> getSentMailsForSender(SchoolUser sender) {
-        return mailRepository.findBySender(sender);
+        return mailRepository.findBySenderOrderByCreatedAtDesc(sender);
     }
 
     public List<Mail> getDeletedMailsForRecipient(SchoolUser recipient) {
-        return mailRepository.findByRecipientAndStatusRecipient(recipient, Constants.MAIL_DELETED);
+        return mailRepository.findByRecipientAndStatusRecipientOrderByCreatedAtDesc(recipient, Constants.MAIL_DELETED);
     }
 
-    public List<Mail> getDeletedMailsForSender(SchoolUser sender) {
-        return mailRepository.findBySenderAndStatusSender(sender, Constants.MAIL_DELETED);
+    public List<Mail> getTrashedMailsForRecipient(SchoolUser recipient) {
+        return mailRepository.findByRecipientAndStatusRecipientOrderByCreatedAtDesc(recipient, Constants.MAIL_TRASHED);
     }
 
     public Optional<Mail> getMailById(Long mailId) {
@@ -126,7 +127,7 @@ public class MailService {
     }
 
     public List<Mail> getMailsForRecipientByStatus(SchoolUser recipient, String status) {
-        return mailRepository.findByRecipientAndStatusRecipient(recipient, status);
+        return mailRepository.findByRecipientAndStatusRecipientOrderByCreatedAtDesc(recipient, status);
     }
 
     public List<Mail> getMailsForSenderByStatus(SchoolUser sender, String status) {

@@ -68,5 +68,6 @@ public interface Constants {
     String MAIL_SENT = "SENT";
     String MAIL_UNREAD ="UNREAD";
     String MAIL_READ ="READ";
+    String MAIL_TRASHED ="TRASHED";
     String MAIL_DELETED ="DELETED";
 }

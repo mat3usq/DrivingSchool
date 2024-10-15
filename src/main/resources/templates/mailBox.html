@@ -42,7 +42,7 @@
                     </p>
                     <div class="mailbox-container">
                         <div th:if="${!mails.isEmpty()}" class="mailBox-content" th:each="mail : ${mails}"
-                             th:classappend="${mail.statusRecipient != null and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'unread' : 'read'"
+                             th:classappend="${mail.statusRecipient != null and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD and mail.sender.id != session.loggedInUser.id} ? 'unread' : 'read'"
                              onclick="toggleEvent(this)">
                             <div class="operation-box">
                                 <form class="infoMail-form"
@@ -52,14 +52,14 @@
                                         <i class="fa-solid fa-circle-info"></i>
                                     </button>
                                 </form>
-                                <form class="responseMail-form"
+                                <form th:if="${mail.sender.id != session.loggedInUser.id}" class="responseMail-form"
                                       th:action="@{/mailBox/replyOnMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${mail.id}">
                                     <button type="submit">
                                         <i class="fa-solid fa-reply"></i>
                                     </button>
                                 </form>
-                                <form class="moveToTrashMail-form"
+                                <form th:if="${mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD}" class="moveToTrashMail-form"
                                       th:action="@{/mailBox/moveToTrashMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${mail.id}">
                                     <button type="submit">
