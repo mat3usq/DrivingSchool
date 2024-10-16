@@ -221,7 +221,7 @@ h2 {
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box button i, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box button i {
   font-size: 20px;
   transition: transform 0.3s ease;
-  padding-right: 12px;
+  padding-right: 16px;
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .infoMail-form i, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box .infoMail-form i {
   color: #4d84e2;
@@ -258,14 +258,21 @@ h2 {
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .name,
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .surname,
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .from,
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-surname, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .name,
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-surname,
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-from, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .name,
 .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .surname,
+.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .from,
 .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-surname {
+.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-surname,
+.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-from {
   font-size: 16px;
   color: #ffd166;
   margin-right: 5px;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .surname, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .surname {
+  margin-right: 0;
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .e-mail,
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-e-mail, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .e-mail,
@@ -285,6 +292,12 @@ h2 {
 .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-surname,
 .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-e-mail {
   font-size: 17px;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .fa-arrow, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .fa-arrow {
+  padding: 0 7px;
+}
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-from, .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .from, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-from, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .from {
+  margin: 0;
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail {
   flex: 1;
@@ -316,6 +329,7 @@ h2 {
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header {
   border-top: 1px solid #b51b75;
+  border-bottom: 1px solid #b51b75;
   margin: 0;
   padding: 10px 0;
 }
@@ -343,7 +357,6 @@ h2 {
   max-width: 100%;
   white-space: pre-wrap;
   word-wrap: break-word;
-  border-top: 1px solid #b51b75;
   padding-top: 10px;
 }
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail i, .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail i {

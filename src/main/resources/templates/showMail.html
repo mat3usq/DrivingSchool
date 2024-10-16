@@ -82,11 +82,13 @@
                                 <th:block th:if="${showedMail.sender.id != session.loggedInUser.id}">
                                     <span class="show-name" th:text="${showedMail.sender.name}">Imię</span>
                                     <span class="show-surname" th:text="${showedMail.sender.surname}">Nazwisko</span>
+                                    <span><i class="fa-arrow fa-solid fa-arrow-right-from-bracket"></i><span class="show-from">Mnie</span></span>
                                     <span class="show-e-mail"
                                           th:text="'&lt;' + ${showedMail.sender.email} + '&gt;'">email@example.com</span>
                                 </th:block>
 
                                 <th:block th:if="${showedMail.sender.id == session.loggedInUser.id}">
+                                    <span><span class="show-from">Ja</span><i class="fa-arrow fa-solid fa-arrow-right-to-bracket"></i></span>
                                     <span class="show-name" th:text="${showedMail.recipient.name}">Imię</span>
                                     <span class="show-surname" th:text="${showedMail.recipient.surname}">Nazwisko</span>
                                     <span class="show-e-mail"

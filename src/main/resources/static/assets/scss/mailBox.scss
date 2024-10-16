@@ -151,7 +151,7 @@ h2 {
 								i {
 									font-size: 20px;
 									transition: transform 0.3s ease;
-									padding-right: 12px;
+									padding-right: 16px;
 								}
 							}
 
@@ -199,11 +199,17 @@ h2 {
 
 							.name,
 							.surname,
+							.from,
 							.show-name,
-							.show-surname {
+							.show-surname,
+							.show-from {
 								font-size: 16px;
 								color: $secondary-color;
 								margin-right: 5px;
+							}
+
+							.surname {
+								margin-right: 0;
 							}
 
 							.e-mail,
@@ -223,6 +229,14 @@ h2 {
 							.show-surname,
 							.show-e-mail {
 								font-size: 17px;
+							}
+
+							.fa-arrow{
+								padding: 0 7px;
+							}
+
+							.show-from, .from {
+								margin: 0;
 							}
 						}
 
@@ -253,6 +267,7 @@ h2 {
 
 							.show-email-header {
 								border-top: 1px solid $calendar-color;
+								border-bottom: 1px solid $calendar-color;
 								margin: 0;
 								padding: 10px 0;
 								
@@ -284,7 +299,6 @@ h2 {
 								max-width: 100%;
 								white-space: pre-wrap;
 								word-wrap: break-word;
-								border-top: 1px solid $calendar-color;
 								padding-top: 10px;
 
 								i {
