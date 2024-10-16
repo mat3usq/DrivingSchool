@@ -36,9 +36,10 @@
                 <div class="box-container">
                     <p class="title mail-title">Szczegóły Wiadomości</p>
                     <div class="mailbox-container">
-                        <div class="mailBox-content read">
+                        <div class="show-mailBox-content read" onclick="toggleEvent(this)">
                             <div class="operation-box">
-                                <form th:if="${showedMail.sender.id != session.loggedInUser.id and showedMail.statusRecipient != T(com.driving.school.model.Constants).MAIL_TRASHED}" class="responseMail-form"
+                                <form th:if="${showedMail.sender.id != session.loggedInUser.id and showedMail.statusRecipient != T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="responseMail-form"
                                       th:action="@{/mailBox/replyOnMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${showedMail.id}">
                                     <button type="submit">
@@ -46,7 +47,8 @@
                                     </button>
                                 </form>
 
-                                <form th:if="${showedMail.sender.id != session.loggedInUser.id and showedMail.statusRecipient == T(com.driving.school.model.Constants).MAIL_TRASHED}" class="responseMail-form"
+                                <form th:if="${showedMail.sender.id != session.loggedInUser.id and showedMail.statusRecipient == T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="responseMail-form"
                                       th:action="@{/mailBox/moveMailFromTrash}" method="post">
                                     <input type="hidden" name="mailId" th:value="${showedMail.id}">
                                     <button type="submit">
@@ -54,7 +56,8 @@
                                     </button>
                                 </form>
 
-                                <form th:if="${showedMail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD and showedMail.statusRecipient != T(com.driving.school.model.Constants).MAIL_TRASHED}" class="moveToTrashMail-form"
+                                <form th:if="${showedMail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD and showedMail.statusRecipient != T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="moveToTrashMail-form"
                                       th:action="@{/mailBox/moveToTrashMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${showedMail.id}">
                                     <button type="submit">
@@ -62,7 +65,8 @@
                                     </button>
                                 </form>
 
-                                <form th:if="${showedMail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD and showedMail.statusRecipient == T(com.driving.school.model.Constants).MAIL_TRASHED}" class="moveToTrashMail-form"
+                                <form th:if="${showedMail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD and showedMail.statusRecipient == T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="moveToTrashMail-form"
                                       th:action="@{/mailBox/deleteMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${showedMail.id}">
                                     <button type="submit">
@@ -71,40 +75,39 @@
                                 </form>
                             </div>
                             <div class="sender-details">
-                                <span class="icon">
+                                <span class="show-icon">
                                     <i class="fas fa-envelope-open-text"></i>
                                 </span>
 
                                 <th:block th:if="${showedMail.sender.id != session.loggedInUser.id}">
-                                    <span class="name" th:text="${showedMail.sender.name}">Imię</span>
-                                    <span class="surname" th:text="${showedMail.sender.surname}">Nazwisko</span>
-                                    <span class="e-mail"
+                                    <span class="show-name" th:text="${showedMail.sender.name}">Imię</span>
+                                    <span class="show-surname" th:text="${showedMail.sender.surname}">Nazwisko</span>
+                                    <span class="show-e-mail"
                                           th:text="'&lt;' + ${showedMail.sender.email} + '&gt;'">email@example.com</span>
                                 </th:block>
 
                                 <th:block th:if="${showedMail.sender.id == session.loggedInUser.id}">
-                                    <span class="name" th:text="${showedMail.recipient.name}">Imię</span>
-                                    <span class="surname" th:text="${showedMail.recipient.surname}">Nazwisko</span>
-                                    <span class="e-mail"
+                                    <span class="show-name" th:text="${showedMail.recipient.name}">Imię</span>
+                                    <span class="show-surname" th:text="${showedMail.recipient.surname}">Nazwisko</span>
+                                    <span class="show-e-mail"
                                           th:text="'&lt;' + ${showedMail.recipient.email} + '&gt;'">email@example.com</span>
                                 </th:block>
 
                             </div>
                             <div class="content-mail">
-                                <div class="email-header">
+                                <div class="show-email-header">
                                     <span class="subject">
                                         <i class="fa-solid fa-heading"></i>
                                         <th:block th:text="${showedMail.subject}">Temat</th:block>
                                     </span>
                                     <span class="time">
                                         <i class="fas fa-clock"></i>
-                                        <th:block th:text="${#temporals.format(showedMail.createdAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
+                                        <th:block
+                                                th:text="${#temporals.format(showedMail.createdAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
                                     </span>
                                 </div>
-                                <span class="full-mail">
-                                        <i class="fa-solid fa-font"></i>
-                                        <th:block th:text="${showedMail.body}">Treść wiadomości</th:block>
-                                </span>
+                                <span class="show-full-mail"><i class="fa-solid fa-font"></i><th:block
+                                        th:text="${showedMail.body}">Treść wiadomości</th:block></span>
                             </div>
                         </div>
                     </div>

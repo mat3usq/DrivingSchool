@@ -87,7 +87,7 @@ public class MailService {
         Optional<Mail> optionalMail = mailRepository.findById(mailId);
         if (optionalMail.isPresent()) {
             Mail mail = optionalMail.get();
-            if (mail.getRecipient().equals(recipient) && mail.getStatusRecipient() == Constants.MAIL_UNREAD) {
+            if (mail.getRecipient().equals(recipient) && Objects.equals(mail.getStatusRecipient(), Constants.MAIL_UNREAD)) {
                 mail.setStatusRecipient(Constants.MAIL_READ);
                 mailRepository.save(mail);
             }

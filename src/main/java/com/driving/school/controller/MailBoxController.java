@@ -101,13 +101,16 @@ public class MailBoxController {
     @PostMapping("/mailBox/showMail")
     public ModelAndView showMail(@RequestParam("mailId") long mailId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("showMail");
-        Optional<Mail> optionalMail = mailService.getMailById(mailId);
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<Mail> optionalMail = mailService.markAsRead(mailId, loggedInUser);
         if (optionalMail.isPresent() && (
                 Objects.equals(optionalMail.get().getRecipient().getId(), loggedInUser.getId())
                         || Objects.equals(optionalMail.get().getSender().getId(), loggedInUser.getId())
         ))
+        {
             modelAndView.addObject("showedMail", optionalMail.get());
+            modelAndView.addObject("mail", new Mail());
+        }
         else return displayMails(session);
         return modelAndView;
     }

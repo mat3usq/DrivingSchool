@@ -40,6 +40,9 @@ switch (window.location.pathname) {
 	case '/mailBox/trash':
 		titleElement.textContent = 'Wiadomości w Koszu'
 		break
+	case '/mailBox/showMail':
+		titleElement.textContent = 'Szczegóły Wiadomości'
+		break
 	default:
 		titleElement.textContent = 'Skrzynka Pocztowa'
 		break
