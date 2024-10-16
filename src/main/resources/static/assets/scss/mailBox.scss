@@ -247,6 +247,16 @@ h2 {
 								overflow: hidden;
 								text-overflow: ellipsis;
 							}
+
+							.full-mail {
+								font-size: 13px;
+								line-height: 1.8;
+								color: $text-color;
+								display: block;
+								max-width: 100%;
+								white-space: normal;
+								overflow: visible;
+							}
 						}
 
 						.noMessages {

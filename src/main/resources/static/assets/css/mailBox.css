@@ -299,6 +299,15 @@ h2 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .full-mail {
+  font-size: 13px;
+  line-height: 1.8;
+  color: aliceblue;
+  display: block;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+}
 .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .noMessages {
   font-weight: bold;
   letter-spacing: 1px;

@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class MailBoxController {
@@ -94,5 +96,19 @@ public class MailBoxController {
     public String deleteMail(@RequestParam("mailId") long mailId, HttpSession session) {
         mailService.deleteRecipientMail(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
         return "redirect:/mailBox/trash";
+    }
+
+    @PostMapping("/mailBox/showMail")
+    public ModelAndView showMail(@RequestParam("mailId") long mailId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("showMail");
+        Optional<Mail> optionalMail = mailService.getMailById(mailId);
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        if (optionalMail.isPresent() && (
+                Objects.equals(optionalMail.get().getRecipient().getId(), loggedInUser.getId())
+                        || Objects.equals(optionalMail.get().getSender().getId(), loggedInUser.getId())
+        ))
+            modelAndView.addObject("showedMail", optionalMail.get());
+        else return displayMails(session);
+        return modelAndView;
     }
 }
