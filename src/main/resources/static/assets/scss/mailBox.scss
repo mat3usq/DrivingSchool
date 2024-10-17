@@ -92,7 +92,9 @@ h2 {
 				.mailbox-container {
 					width: 100%;
 
-					.mailBox-content, .show-mailBox-content {
+					.mailBox-content,
+					.show-mailBox-content,
+					.show-replyMailBox-content {
 						display: flex;
 						flex-direction: column;
 						padding: 20px;
@@ -231,11 +233,12 @@ h2 {
 								font-size: 17px;
 							}
 
-							.fa-arrow{
+							.fa-arrow {
 								padding: 0 7px;
 							}
 
-							.show-from, .from {
+							.show-from,
+							.from {
 								margin: 0;
 							}
 						}
@@ -270,7 +273,7 @@ h2 {
 								border-bottom: 1px solid $calendar-color;
 								margin: 0;
 								padding: 10px 0;
-								
+
 								span {
 									font-size: 17px;
 								}
@@ -318,8 +321,19 @@ h2 {
 						}
 					}
 
-					.show-mailBox-content {
+					.show-mailBox-content,
+					.show-replyMailBox-content {
 						border: 1px solid $placeHolder-color;
+					}
+
+					.show-replyMailBox-content {
+						@media (hover: hover) and (pointer: fine) {
+							&:hover {
+								transform: translateX(0px);
+							}
+						}
+
+						cursor: auto;
 					}
 				}
 
@@ -448,6 +462,79 @@ h2 {
 						padding: 20px 15px;
 
 						.write-mail-btn {
+							height: 40px;
+							outline: none;
+							border: none;
+							color: black;
+							background-color: $secondary-color;
+							border-radius: 5px;
+							cursor: pointer;
+							padding: 5px 10px;
+							border: 2px solid $secondary-color;
+							transition: 0.3s ease;
+							letter-spacing: 1px;
+							font-weight: bold;
+
+							&:hover {
+								background-color: transparent;
+								color: $text-color;
+							}
+						}
+					}
+				}
+
+				.reply-mail-body {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					align-items: flex-end;
+					justify-content: center;
+					gap: 13px;
+					padding: 20px 0;
+
+					.reply-mail-area {
+						width: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: flex-end;
+						gap: 15px;
+
+						textarea {
+							width: 80%;
+							min-height: 25vh;
+							outline: none;
+							border: none;
+							border: 2px solid black;
+							padding: 10px;
+							font-size: 16px;
+							font-weight: 500;
+							color: $text-color;
+							background-color: $bg-calendar-color;
+							border-radius: 10px;
+							overflow: hidden;
+
+							&:focus {
+								outline: none;
+								border-color: $calendar-color;
+							}
+
+							&::placeholder {
+								color: $text-color;
+							}
+						}
+
+						i {
+							font-size: 23px;
+						}
+					}
+
+					.reply-mail-footer {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						padding: 10px 15px;
+
+						.reply-mail-btn {
 							height: 40px;
 							outline: none;
 							border: none;

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html
         lang="pl"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+        xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -41,8 +40,11 @@
                         <span th:if="${!isSend}">Niestety, nie udało się wysłać maila.</span>
                     </p>
                     <div class="mailbox-container">
-                        <div th:if="${!mails.isEmpty()}" class="mailBox-content" th:each="mail : ${mails}"
-                             th:classappend="${mail.statusRecipient != null and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD and mail.sender.id != session.loggedInUser.id} ? 'unread' : 'read'"
+                        <div th:if="${!mails.isEmpty()}" th:each="mail : ${mails}"
+                             th:with="isSender=${mail.sender.id == session.loggedInUser.id},
+                                        statusMail=${isSender} ? ${mail.statusSender} : ${mail.statusRecipient}"
+                             th:classappend="${statusMail == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'unread' : 'read'"
+                             class="mailBox-content"
                              onclick="toggleEvent(this)">
                             <div class="operation-box">
                                 <form class="infoMail-form"
@@ -53,23 +55,17 @@
                                     </button>
                                 </form>
 
-                                <form th:if="${mail.sender.id != session.loggedInUser.id and mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_TRASHED}" class="responseMail-form"
-                                      th:action="@{/mailBox/replyOnMail}" method="post">
+                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="responseMail-form"
+                                      th:action="@{/mailBox/getMailToReply}" method="post">
                                     <input type="hidden" name="mailId" th:value="${mail.id}">
                                     <button type="submit">
                                         <i class="fa-solid fa-reply"></i>
                                     </button>
                                 </form>
 
-                                <form th:if="${mail.sender.id != session.loggedInUser.id and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_TRASHED}" class="responseMail-form"
-                                      th:action="@{/mailBox/moveMailFromTrash}" method="post">
-                                    <input type="hidden" name="mailId" th:value="${mail.id}">
-                                    <button type="submit">
-                                        <i class="fa-solid fa-rotate-left"></i>
-                                    </button>
-                                </form>
-
-                                <form th:if="${mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD and mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_TRASHED}" class="moveToTrashMail-form"
+                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_UNREAD and statusMail != T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="moveToTrashMail-form"
                                       th:action="@{/mailBox/moveToTrashMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${mail.id}">
                                     <button type="submit">
@@ -77,7 +73,17 @@
                                     </button>
                                 </form>
 
-                                <form th:if="${mail.statusRecipient != T(com.driving.school.model.Constants).MAIL_UNREAD and mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_TRASHED}" class="moveToTrashMail-form"
+                                <form th:if="${statusMail == T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="responseMail-form"
+                                      th:action="@{/mailBox/moveMailFromTrash}" method="post">
+                                    <input type="hidden" name="mailId" th:value="${mail.id}">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                    </button>
+                                </form>
+
+                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_UNREAD and statusMail == T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="moveToTrashMail-form"
                                       th:action="@{/mailBox/deleteMail}" method="post">
                                     <input type="hidden" name="mailId" th:value="${mail.id}">
                                     <button type="submit">
@@ -86,20 +92,22 @@
                                 </form>
                             </div>
                             <div class="sender-details">
-                                <span th:class="${mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'icon unread' : 'icon'">
-                                    <i th:class="${mail.statusRecipient == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'fas fa-envelope' : 'fas fa-envelope-open-text'"></i>
+                                <span th:class="${statusMail == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'icon unread' : 'icon'">
+                                    <i th:class="${statusMail == T(com.driving.school.model.Constants).MAIL_UNREAD} ? 'fas fa-envelope' : 'fas fa-envelope-open-text'"></i>
                                 </span>
 
-                                <th:block th:if="${mail.sender.id != session.loggedInUser.id}">
+                                <th:block th:unless="${isSender}">
                                     <span class="name" th:text="${mail.sender.name}">Imię</span>
                                     <span class="surname" th:text="${mail.sender.surname}">Nazwisko</span>
-                                    <span><i class="fa-arrow fa-solid fa-arrow-right-from-bracket"></i><span class="from">Mnie</span></span>
+                                    <span><i class="fa-arrow fa-solid fa-arrow-right-from-bracket"></i><span
+                                            class="from">Mnie</span></span>
                                     <span class="e-mail"
                                           th:text="'&lt;' + ${mail.sender.email} + '&gt;'">email@example.com</span>
                                 </th:block>
 
-                                <th:block th:if="${mail.sender.id == session.loggedInUser.id}">
-                                    <span><span class="from">Ja</span><i class="fa-arrow fa-solid fa-arrow-right-to-bracket"></i></span>
+                                <th:block th:if="${isSender}">
+                                    <span><span class="from">Ja</span><i
+                                            class="fa-arrow fa-solid fa-arrow-right-to-bracket"></i></span>
                                     <span class="name" th:text="${mail.recipient.name}">Imię</span>
                                     <span class="surname" th:text="${mail.recipient.surname}">Nazwisko</span>
                                     <span class="e-mail"

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Szczegóły Wiadomości</title>
+    <title>Odpowiedź Na Wiadomość</title>
 
     <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
@@ -34,48 +34,10 @@
         <div class="hero-img">
             <div class="mail-container">
                 <div class="box-container">
-                    <p class="title mail-title">Szczegóły Wiadomości</p>
+                    <p class="title mail-title">Odpowiedź Na Wiadomość</p>
                     <div class="mailbox-container">
-                        <div class="show-mailBox-content read" onclick="toggleEvent(this)"
-                             th:with="isSender=${showedMail.sender.id == session.loggedInUser.id},
-                                        statusMail=${isSender} ? ${showedMail.statusSender} : ${showedMail.statusRecipient}">
-                            <div class="operation-box">
-                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_TRASHED}"
-                                      class="responseMail-form"
-                                      th:action="@{/mailBox/getMailToReply}" method="post">
-                                    <input type="hidden" name="mailId" th:value="${showedMail.id}">
-                                    <button type="submit">
-                                        <i class="fa-solid fa-reply"></i>
-                                    </button>
-                                </form>
-
-                                <form th:if="${statusMail == T(com.driving.school.model.Constants).MAIL_TRASHED}"
-                                      class="responseMail-form"
-                                      th:action="@{/mailBox/moveMailFromTrash}" method="post">
-                                    <input type="hidden" name="mailId" th:value="${showedMail.id}">
-                                    <button type="submit">
-                                        <i class="fa-solid fa-rotate-left"></i>
-                                    </button>
-                                </form>
-
-                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_UNREAD and statusMail != T(com.driving.school.model.Constants).MAIL_TRASHED}"
-                                      class="moveToTrashMail-form"
-                                      th:action="@{/mailBox/moveToTrashMail}" method="post">
-                                    <input type="hidden" name="mailId" th:value="${showedMail.id}">
-                                    <button type="submit">
-                                        <i class="fas fa-trash delete-icon"></i>
-                                    </button>
-                                </form>
-
-                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_UNREAD and statusMail == T(com.driving.school.model.Constants).MAIL_TRASHED}"
-                                      class="moveToTrashMail-form"
-                                      th:action="@{/mailBox/deleteMail}" method="post">
-                                    <input type="hidden" name="mailId" th:value="${showedMail.id}">
-                                    <button type="submit">
-                                        <i class="fas fa-trash delete-icon"></i>
-                                    </button>
-                                </form>
-                            </div>
+                        <div class="show-replyMailBox-content read"
+                             th:with="isSender=${showedMail.sender.id == session.loggedInUser.id}">
                             <div class="sender-details">
                                 <span class="show-icon">
                                     <i class="fas fa-envelope-open-text"></i>
@@ -113,35 +75,19 @@
                                 <span class="show-full-mail"><i class="fa-solid fa-font"></i><th:block
                                         th:text="${showedMail.body}">Treść wiadomości</th:block></span>
                             </div>
+                            <form class="reply-mail-body" th:action="@{/mailBox/replyOnMail}" method="post"
+                                  th:object="${mail}">
+                                <input type="hidden" name="parentMailId" th:value="${showedMail.id}">
+                                <div class="reply-mail-area">
+                                    <i class="fa-solid fa-font"></i>
+                                    <textarea th:field="*{body}" id="messageInput"
+                                              placeholder="Treść Wiadomości"></textarea>
+                                </div>
+                                <div class="reply-mail-footer">
+                                    <button class="reply-mail-btn">Odpowiedz</button>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                    <button class="write-mail">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                    </button>
-                    <div class="write-mail-wrapper">
-                        <div class="write-mail-header">
-                            <div class="title-mail">Nowa Wiadomość</div>
-                            <i class="fas fa-times close"></i>
-                        </div>
-                        <form class="write-mail-body" th:action="@{/mailBox/sendMail}" method="post"
-                              th:object="${mail}">
-                            <div class="write-mail-input">
-                                <i class="fa-regular fa-address-book"></i>
-                                <input th:field="*{recipient.email}" type="text" placeholder="E-mail Odbiorcy"/>
-                            </div>
-                            <div class="write-mail-input">
-                                <i class="fa-solid fa-heading"></i>
-                                <input th:field="*{subject}" type="text" placeholder="Temat Wiadomości"/>
-                            </div>
-                            <div class="write-mail-input">
-                                <i class="fa-solid fa-font"></i>
-                                <textarea th:field="*{body}" id="messageInput"
-                                          placeholder="Treść Wiadomości"></textarea>
-                            </div>
-                            <div class="write-mail-footer">
-                                <button class="write-mail-btn">Wyślij Wiadomość</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -198,6 +144,5 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="/assets/js/aosSettings.js"></script>
 <script src="/assets/js/navigation.js"></script>
-<script src="/assets/js/mailBox.js"></script>
 </body>
 </html>
