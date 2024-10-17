@@ -40,11 +40,14 @@ public class Mail {
     @JoinColumn(name = "SENDERID", nullable = false)
     private SchoolUser sender;
 
+    @Column(name = "STATUS_SENDER")
+    private String statusSender;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "RECIPIENTID", nullable = false)
     private SchoolUser recipient;
 
-    @Column(name = "STATUS_RECIPIENT", nullable = false)
+    @Column(name = "STATUS_RECIPIENT")
     private String statusRecipient;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -52,6 +55,6 @@ public class Mail {
     private Mail parentMail;
 
     @OneToMany(mappedBy = "parentMail", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("createdAt ASC")
+    @OrderBy("createdAt DESC")
     private List<Mail> replies = new ArrayList<>();
 }

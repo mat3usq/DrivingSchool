@@ -30,7 +30,7 @@ public class MailBoxController {
     public ModelAndView displayMails(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("mailBox");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        modelAndView.addObject("mails", mailService.getReadAndUnreadMailsForRecipient(loggedInUser));
+        modelAndView.addObject("mails", mailService.getEmailsForUser(loggedInUser));
         modelAndView.addObject("mail", new Mail());
         return modelAndView;
     }
@@ -39,7 +39,7 @@ public class MailBoxController {
     public ModelAndView displayReadMails(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("mailBox");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        modelAndView.addObject("mails", mailService.getReadMailsForRecipient(loggedInUser));
+        modelAndView.addObject("mails", mailService.getReadMailsForUser(loggedInUser));
         modelAndView.addObject("mail", new Mail());
         return modelAndView;
     }
@@ -48,7 +48,7 @@ public class MailBoxController {
     public ModelAndView displayUnreadMails(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("mailBox");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        modelAndView.addObject("mails", mailService.getUnreadMailsForRecipient(loggedInUser));
+        modelAndView.addObject("mails", mailService.getUnreadMailsForUser(loggedInUser));
         modelAndView.addObject("mail", new Mail());
         return modelAndView;
     }
@@ -57,17 +57,7 @@ public class MailBoxController {
     public ModelAndView displaySentMails(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("mailBox");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        List<Mail> mails = mailService.getSentMailsForSender(loggedInUser);
-        modelAndView.addObject("mails", mails);
-        modelAndView.addObject("mail", new Mail());
-        return modelAndView;
-    }
-
-    @GetMapping("/mailBox/trash")
-    public ModelAndView displayMailsInTrash(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("mailBox");
-        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        List<Mail> mails = mailService.getTrashedMailsForRecipient(loggedInUser);
+        List<Mail> mails = mailService.getSentMailsForUser(loggedInUser);
         modelAndView.addObject("mails", mails);
         modelAndView.addObject("mail", new Mail());
         return modelAndView;
@@ -75,26 +65,36 @@ public class MailBoxController {
 
     @PostMapping("/mailBox/sendMail")
     public String sendMail(@ModelAttribute Mail mail, HttpSession session, RedirectAttributes redirectAttributes) {
-        boolean isSent = mailService.sendMail((SchoolUser) session.getAttribute("loggedInUser"), mail, null);
+        boolean isSent = mailService.sendMail((SchoolUser) session.getAttribute("loggedInUser"), mail);
         redirectAttributes.addFlashAttribute("isSend", isSent);
         return "redirect:/mailBox/sent";
     }
 
+    @GetMapping("/mailBox/trash")
+    public ModelAndView displayMailsInTrash(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("mailBox");
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        List<Mail> mails = mailService.getTrashedMailsForUser(loggedInUser);
+        modelAndView.addObject("mails", mails);
+        modelAndView.addObject("mail", new Mail());
+        return modelAndView;
+    }
+
     @PostMapping("/mailBox/moveToTrashMail")
     public String moveToTrashMail(@RequestParam("mailId") long mailId, HttpSession session) {
-        mailService.moveToTrashRecipientMail(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
+        mailService.moveToTrashMail(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
         return "redirect:/mailBox/trash";
     }
 
     @PostMapping("/mailBox/moveMailFromTrash")
     public String moveMailFromTrash(@RequestParam("mailId") long mailId, HttpSession session) {
-        mailService.moveRecipientMailFromTrash(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
+        mailService.moveMailFromTrash(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
         return "redirect:/mailBox/trash";
     }
 
     @PostMapping("/mailBox/deleteMail")
     public String deleteMail(@RequestParam("mailId") long mailId, HttpSession session) {
-        mailService.deleteRecipientMail(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
+        mailService.deleteMail(mailId, (SchoolUser) session.getAttribute("loggedInUser"));
         return "redirect:/mailBox/trash";
     }
 
@@ -106,12 +106,32 @@ public class MailBoxController {
         if (optionalMail.isPresent() && (
                 Objects.equals(optionalMail.get().getRecipient().getId(), loggedInUser.getId())
                         || Objects.equals(optionalMail.get().getSender().getId(), loggedInUser.getId())
-        ))
-        {
+        )) {
             modelAndView.addObject("showedMail", optionalMail.get());
             modelAndView.addObject("mail", new Mail());
-        }
-        else return displayMails(session);
+        } else return displayMails(session);
         return modelAndView;
+    }
+
+    @PostMapping("/mailBox/getMailToReply")
+    public ModelAndView getMailToReply(@RequestParam("mailId") long mailId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("replyOnMail");
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<Mail> optionalMail = mailService.markAsRead(mailId, loggedInUser);
+        if (optionalMail.isPresent() && (
+                Objects.equals(optionalMail.get().getRecipient().getId(), loggedInUser.getId())
+                        || Objects.equals(optionalMail.get().getSender().getId(), loggedInUser.getId())
+        )) {
+            modelAndView.addObject("showedMail", optionalMail.get());
+            modelAndView.addObject("mail", new Mail());
+        } else return displayMails(session);
+        return modelAndView;
+    }
+
+    @PostMapping("/mailBox/replyOnMail")
+    public ModelAndView replyOnMail(@ModelAttribute Mail replyMail, @RequestParam("parentMailId") long parentMailId, HttpSession session) {
+//        ModelAndView modelAndView = showMail(mailId, session);
+//        modelAndView.setViewName("replyOnMail");
+        return new ModelAndView();
     }
 }
