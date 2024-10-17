@@ -295,17 +295,33 @@ h2 {
 							}
 
 							.show-full-mail {
+								max-width: 80%;
+								width: fit-content;
 								font-size: 16px;
-								line-height: 1.8;
 								color: $text-color;
 								display: block;
-								max-width: 100%;
 								white-space: pre-wrap;
 								word-wrap: break-word;
-								padding-top: 10px;
+								padding: 10px 15px;
+								background-color: $bg-calendar-color;
+								border-radius: 10px;
+								margin: 10px 0;
 
 								i {
 									padding-right: 5px;
+								}
+
+								&.left {
+									text-align: left;
+									margin-left: 0;
+									margin-right: auto;
+								}
+
+								&.right {
+									text-align: right;
+									margin-left: auto;
+									margin-right: 0;
+									background-color: #047aa08f;
 								}
 							}
 						}
@@ -500,8 +516,8 @@ h2 {
 						gap: 15px;
 
 						textarea {
-							width: 80%;
-							min-height: 25vh;
+							width: 70%;
+							// min-height: 25vh;
 							outline: none;
 							border: none;
 							border: 2px solid black;
@@ -509,7 +525,7 @@ h2 {
 							font-size: 16px;
 							font-weight: 500;
 							color: $text-color;
-							background-color: $bg-calendar-color;
+							background-color: #047aa08f;
 							border-radius: 10px;
 							overflow: hidden;
 

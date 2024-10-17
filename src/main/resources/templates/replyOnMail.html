@@ -68,12 +68,15 @@
                                     </span>
                                     <span class="time">
                                         <i class="fas fa-clock"></i>
-                                        <th:block
-                                                th:text="${#temporals.format(showedMail.createdAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
+                                            <th:block th:text="${#temporals.format(showedMail.updatedAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
                                     </span>
                                 </div>
-                                <span class="show-full-mail"><i class="fa-solid fa-font"></i><th:block
+                                <span class="show-full-mail"
+                                      th:classappend="${isSender ? 'right' : 'left'}"><i class="fa-solid fa-font"></i><th:block
                                         th:text="${showedMail.body}">Treść wiadomości</th:block></span>
+                                <span class="show-full-mail" th:each="replyMail : ${showedMail.replies}"
+                                      th:classappend="${replyMail.sender.id == session.loggedInUser.id ? 'left' : 'right'}"><i class="fa-solid fa-font"></i><th:block
+                                        th:text="${replyMail.body}">Treść wiadomości</th:block></span>
                             </div>
                             <form class="reply-mail-body" th:action="@{/mailBox/replyOnMail}" method="post"
                                   th:object="${mail}">
@@ -84,7 +87,7 @@
                                               placeholder="Treść Wiadomości"></textarea>
                                 </div>
                                 <div class="reply-mail-footer">
-                                    <button class="reply-mail-btn">Odpowiedz</button>
+                                    <button class="reply-mail-btn"><i class="fa-regular fa-paper-plane"></i></button>
                                 </div>
                             </form>
                         </div>

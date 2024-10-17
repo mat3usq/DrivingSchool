@@ -106,12 +106,15 @@
                                     </span>
                                     <span class="time">
                                         <i class="fas fa-clock"></i>
-                                        <th:block
-                                                th:text="${#temporals.format(showedMail.createdAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
+                                            <th:block th:text="${#temporals.format(showedMail.updatedAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
                                     </span>
                                 </div>
-                                <span class="show-full-mail"><i class="fa-solid fa-font"></i><th:block
+                                <span class="show-full-mail"
+                                      th:classappend="${isSender ? 'right' : 'left'}"><i class="fa-solid fa-font"></i><th:block
                                         th:text="${showedMail.body}">Treść wiadomości</th:block></span>
+                                <span class="show-full-mail" th:each="replyMail : ${showedMail.replies}"
+                                      th:classappend="${replyMail.sender.id == session.loggedInUser.id ? 'left' : 'right'}"><i class="fa-solid fa-font"></i><th:block
+                                        th:text="${replyMail.body}">Treść wiadomości</th:block></span>
                             </div>
                         </div>
                     </div>
