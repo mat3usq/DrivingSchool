@@ -67,14 +67,14 @@ public class MailService {
                 {
                     parentMail.setStatusRecipient(Constants.MAIL_UNREAD);
                     replyMail.setStatusSender(Constants.MAIL_REPLY);
-                    replyMail.setSender(parentMail.getRecipient());
-                    replyMail.setRecipient(loggedInUser);
+                    replyMail.setSender(loggedInUser);
+                    replyMail.setRecipient(parentMail.getRecipient());
                 }
                 else if (Objects.equals(parentMail.getRecipient(), loggedInUser)) {
                     parentMail.setStatusSender(Constants.MAIL_UNREAD);
                     replyMail.setStatusRecipient(Constants.MAIL_REPLY);
-                    replyMail.setSender(parentMail.getSender());
-                    replyMail.setRecipient(loggedInUser);
+                    replyMail.setSender(loggedInUser);
+                    replyMail.setRecipient(parentMail.getSender());
                 }
 
                 mailRepository.save(replyMail);

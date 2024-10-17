@@ -113,7 +113,7 @@
                                       th:classappend="${isSender ? 'right' : 'left'}"><i class="fa-solid fa-font"></i><th:block
                                         th:text="${showedMail.body}">Treść wiadomości</th:block></span>
                                 <span class="show-full-mail" th:each="replyMail : ${showedMail.replies}"
-                                      th:classappend="${replyMail.sender.id == session.loggedInUser.id ? 'left' : 'right'}"><i class="fa-solid fa-font"></i><th:block
+                                      th:classappend="${replyMail.sender.id == session.loggedInUser.id ? 'right' : 'left'}"><i class="fa-solid fa-font"></i><th:block
                                         th:text="${replyMail.body}">Treść wiadomości</th:block></span>
                             </div>
                         </div>
