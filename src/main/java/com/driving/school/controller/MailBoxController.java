@@ -129,9 +129,10 @@ public class MailBoxController {
     }
 
     @PostMapping("/mailBox/replyOnMail")
-    public ModelAndView replyOnMail(@ModelAttribute Mail replyMail, @RequestParam("parentMailId") long parentMailId, HttpSession session) {
-//        ModelAndView modelAndView = showMail(mailId, session);
-//        modelAndView.setViewName("replyOnMail");
-        return new ModelAndView();
+    public String replyOnMail(@ModelAttribute Mail replyMail, @RequestParam("parentMailId") long parentMailId, HttpSession session, RedirectAttributes redirectAttributes) {
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        boolean isSend = mailService.replyOnMail(replyMail, parentMailId, loggedInUser);
+        redirectAttributes.addFlashAttribute("isSend", isSend);
+        return "redirect:/mailBox";
     }
 }
