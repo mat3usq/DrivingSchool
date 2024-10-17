@@ -65,9 +65,9 @@ public interface Constants {
 
 
     // Mail Status
-    String MAIL_SENT = "SENT";
     String MAIL_UNREAD ="UNREAD";
     String MAIL_READ ="READ";
+    String MAIL_REPLY = "REPLY";
     String MAIL_TRASHED ="TRASHED";
     String MAIL_DELETED ="DELETED";
 }

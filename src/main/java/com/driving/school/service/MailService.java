@@ -41,7 +41,7 @@ public class MailService {
     @Transactional
     public boolean sendMail(SchoolUser sender, Mail sendMail) {
         SchoolUser recipient = schoolUserService.findUserByEmail(sendMail.getRecipient().getEmail());
-        if (recipient != null && !Objects.equals(sender.getId(), recipient.getId())) {
+        if (recipient != null && !Objects.equals(sender, recipient)) {
             sendMail.setSender(sender);
             sendMail.setRecipient(recipient);
             sendMail.setStatusRecipient(Constants.MAIL_UNREAD);
@@ -49,6 +49,41 @@ public class MailService {
             mailRepository.save(sendMail);
             return true;
         } else return false;
+    }
+
+    @Transactional
+    public boolean replyOnMail(Mail replyMail, long parentMailId, SchoolUser loggedInUser) {
+        Optional<Mail> optionalMail = mailRepository.findById(parentMailId);
+        if (optionalMail.isPresent()) {
+            Mail parentMail = optionalMail.get();
+            if (Objects.equals(parentMail.getSender(), loggedInUser) ||
+                    Objects.equals(parentMail.getRecipient(), loggedInUser)) {
+
+                parentMail.getReplies().add(replyMail);
+                replyMail.setParentMail(parentMail);
+                replyMail.setSubject(parentMail.getSubject());
+
+                if (Objects.equals(parentMail.getSender(), loggedInUser))
+                {
+                    parentMail.setStatusRecipient(Constants.MAIL_UNREAD);
+                    replyMail.setStatusSender(Constants.MAIL_REPLY);
+                    replyMail.setSender(parentMail.getRecipient());
+                    replyMail.setRecipient(loggedInUser);
+                }
+                else if (Objects.equals(parentMail.getRecipient(), loggedInUser)) {
+                    parentMail.setStatusSender(Constants.MAIL_UNREAD);
+                    replyMail.setStatusRecipient(Constants.MAIL_REPLY);
+                    replyMail.setSender(parentMail.getSender());
+                    replyMail.setRecipient(loggedInUser);
+                }
+
+                mailRepository.save(replyMail);
+                mailRepository.save(parentMail);
+
+                return true;
+            }
+        }
+        return false;
     }
 
     @Transactional
@@ -114,11 +149,11 @@ public class MailService {
     }
 
     public List<Mail> getMailsForRecipientByStatus(SchoolUser recipient, String status) {
-        return mailRepository.findByRecipientAndStatusRecipientOrderByCreatedAtDesc(recipient, status);
+        return mailRepository.findByRecipientAndStatusRecipientOrderByUpdatedAtDesc(recipient, status);
     }
 
     public List<Mail> getMailsForSenderByStatus(SchoolUser sender, String status) {
-        return mailRepository.findBySenderAndStatusSenderOrderByCreatedAtDesc(sender, status);
+        return mailRepository.findBySenderAndStatusSenderOrderByUpdatedAtDesc(sender, status);
     }
 
     public List<Mail> getEmailsForUser(SchoolUser user) {
@@ -127,7 +162,7 @@ public class MailService {
         mails.addAll(getMailsForRecipientByStatus(user, Constants.MAIL_READ));
         mails.addAll(getMailsForSenderByStatus(user, Constants.MAIL_UNREAD));
         mails.addAll(getMailsForSenderByStatus(user, Constants.MAIL_READ));
-        mails.sort(Comparator.comparing(Mail::getCreatedAt).reversed());
+        mails.sort(Comparator.comparing(Mail::getUpdatedAt).reversed());
         return mails;
     }
 
@@ -135,7 +170,7 @@ public class MailService {
         List<Mail> mails = new ArrayList<>();
         mails.addAll(getMailsForRecipientByStatus(user, Constants.MAIL_READ));
         mails.addAll(getMailsForSenderByStatus(user, Constants.MAIL_READ));
-        mails.sort(Comparator.comparing(Mail::getCreatedAt).reversed());
+        mails.sort(Comparator.comparing(Mail::getUpdatedAt).reversed());
         return mails;
     }
 
@@ -143,19 +178,19 @@ public class MailService {
         List<Mail> mails = new ArrayList<>();
         mails.addAll(getMailsForRecipientByStatus(user, Constants.MAIL_UNREAD));
         mails.addAll(getMailsForSenderByStatus(user, Constants.MAIL_UNREAD));
-        mails.sort(Comparator.comparing(Mail::getCreatedAt).reversed());
+        mails.sort(Comparator.comparing(Mail::getUpdatedAt).reversed());
         return mails;
     }
 
     public List<Mail> getSentMailsForUser(SchoolUser user) {
-        return mailRepository.findBySenderAndStatusSenderNotInOrderByCreatedAtDesc(user, Arrays.asList(Constants.MAIL_TRASHED, Constants.MAIL_DELETED));
+        return mailRepository.findBySenderAndStatusSenderNotInOrderByUpdatedAtDesc(user, Arrays.asList(Constants.MAIL_TRASHED, Constants.MAIL_DELETED));
     }
 
     public List<Mail> getTrashedMailsForUser(SchoolUser user) {
         List<Mail> mails = new ArrayList<>();
         mails.addAll(getMailsForRecipientByStatus(user, Constants.MAIL_TRASHED));
         mails.addAll(getMailsForSenderByStatus(user, Constants.MAIL_TRASHED));
-        mails.sort(Comparator.comparing(Mail::getCreatedAt).reversed());
+        mails.sort(Comparator.comparing(Mail::getUpdatedAt).reversed());
         return mails;
     }
 }

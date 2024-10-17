@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -36,6 +37,10 @@ public class Mail {
     @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
+    @Column(name = "UPDATED_AT")
+    private LocalDateTime updatedAt;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "SENDERID", nullable = false)
     private SchoolUser sender;
@@ -55,6 +60,6 @@ public class Mail {
     private Mail parentMail;
 
     @OneToMany(mappedBy = "parentMail", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("createdAt DESC")
+    @OrderBy("createdAt ASC")
     private List<Mail> replies = new ArrayList<>();
 }
