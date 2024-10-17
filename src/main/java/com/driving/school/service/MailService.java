@@ -183,7 +183,7 @@ public class MailService {
     }
 
     public List<Mail> getSentMailsForUser(SchoolUser user) {
-        return mailRepository.findBySenderAndStatusSenderNotInOrderByUpdatedAtDesc(user, Arrays.asList(Constants.MAIL_TRASHED, Constants.MAIL_DELETED));
+        return mailRepository.findBySenderAndStatusSenderNotInOrderByUpdatedAtDesc(user, Arrays.asList(Constants.MAIL_TRASHED, Constants.MAIL_DELETED, Constants.MAIL_REPLY));
     }
 
     public List<Mail> getTrashedMailsForUser(SchoolUser user) {
