@@ -517,11 +517,11 @@ h2 {
 
 						textarea {
 							width: 70%;
-							// min-height: 25vh;
 							outline: none;
 							border: none;
 							border: 2px solid black;
 							padding: 10px;
+							padding-right: 50px;
 							font-size: 16px;
 							font-weight: 500;
 							color: $text-color;
@@ -544,30 +544,24 @@ h2 {
 						}
 					}
 
-					.reply-mail-footer {
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						padding: 10px 15px;
+					.reply-mail-btn {
+						position: absolute;
+						right: 30px;
+						font-size: 10px;
+						outline: none;
+						border: none;
+						color: black;
+						background-color: $secondary-color;
+						border-radius: 15px;
+						cursor: pointer;
+						padding: 5px;
+						border: 2px solid $secondary-color;
+						transition: 0.3s ease;
+						font-weight: bold;
 
-						.reply-mail-btn {
-							height: 40px;
-							outline: none;
-							border: none;
-							color: black;
-							background-color: $secondary-color;
-							border-radius: 5px;
-							cursor: pointer;
-							padding: 5px 10px;
-							border: 2px solid $secondary-color;
-							transition: 0.3s ease;
-							letter-spacing: 1px;
-							font-weight: bold;
-
-							&:hover {
-								background-color: transparent;
-								color: $text-color;
-							}
+						&:hover {
+							background-color: transparent;
+							color: $text-color;
 						}
 					}
 				}
