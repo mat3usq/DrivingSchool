@@ -60,7 +60,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) {
         if (schoolUserRepository.findByEmail("admin") != null) {
-            logger.info("Użytkownicy i kategorie już istnieją, pomijam.");
+            logger.info("Dane zostały zasadzone, pomijam.");
             return;
         }
         createUsersAndCategoriesAndTests();
@@ -273,33 +273,33 @@ public class DatabaseSeeder implements CommandLineRunner {
         SchoolUser schoolUser2 = schoolUserRepository.findByEmail("instructor2");
         SchoolUser schoolUser3 = schoolUserRepository.findByEmail("instructor3");
         SchoolUser student = schoolUserRepository.findByEmail("student");
-        InstructionEvent ie = new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 1, 10, 0), LocalDateTime.of(2024, 5, 1, 12, 0), schoolUser, 12);
+        InstructionEvent ie = new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 10, 1, 10, 0), LocalDateTime.of(2024, 10, 1, 12, 0), schoolUser, 12);
         ie.setStudents(Arrays.asList(student));
         ie.setAvailableEventSlots(11);
 
         List<InstructionEvent> events = Arrays.asList(
                 ie,
-                new InstructionEvent("Teoria jazdy: Zasady, przepisy i najlepsze praktyki", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 2, 14, 0), LocalDateTime.of(2024, 5, 2, 16, 0), schoolUser, 10),
-                new InstructionEvent("Ćwiczenia praktyczne: Bezpieczne poruszanie się po drogach", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 3, 9, 0), LocalDateTime.of(2024, 5, 3, 11, 0), schoolUser, 3),
-                new InstructionEvent("Spotkanie informacyjne: Wprowadzenie do kursu jazdy", Constants.INFORMATION_SESSIONS, LocalDateTime.of(2024, 5, 4, 15, 0), LocalDateTime.of(2024, 5, 4, 17, 0), schoolUser, 100),
-                new InstructionEvent("Trening manewrów: Parkowanie, cofanie i zawracanie", Constants.BASIC_MANEUVERS, LocalDateTime.of(2024, 5, 5, 8, 0), LocalDateTime.of(2024, 5, 5, 10, 0), schoolUser, 54),
-                new InstructionEvent("Kurs pierwszej pomocy: Reagowanie na wypadki drogowe", Constants.FIRST_AID_CLASSES, LocalDateTime.of(2024, 5, 6, 13, 0), LocalDateTime.of(2024, 5, 6, 15, 0), schoolUser, 65),
-                new InstructionEvent("Jazda miejska: Radzenie sobie z ruchem ulicznym", Constants.CITY_DRIVING, LocalDateTime.of(2024, 5, 7, 11, 0), LocalDateTime.of(2024, 5, 7, 13, 0), schoolUser, 12),
-                new InstructionEvent("Zaawansowane techniki jazdy: Skuteczność i bezpieczeństwo", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 8, 12, 0), LocalDateTime.of(2024, 5, 8, 14, 0), schoolUser, 54),
-                new InstructionEvent("Dogłębna analiza przepisów ruchu drogowego", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 9, 16, 0), LocalDateTime.of(2024, 5, 9, 18, 0), schoolUser, 34),
-                new InstructionEvent("Praktyczna nauka jazdy: Techniki zaawansowane", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 5, 10, 14, 0), LocalDateTime.of(2024, 5, 10, 16, 0), schoolUser, 34),
-                new InstructionEvent("Aktualizacja przepisów drogowych: Co nowego w 2024?", Constants.LECTURES, LocalDateTime.of(2024, 5, 11, 10, 0), LocalDateTime.of(2024, 5, 11, 12, 0), schoolUser, 34),
-                new InstructionEvent("Nocna jazda: Jak bezpiecznie poruszać się po zmroku", Constants.NIGHT_DRIVING, LocalDateTime.of(2024, 5, 12, 14, 0), LocalDateTime.of(2024, 5, 12, 16, 0), schoolUser, 34),
-                new InstructionEvent("Jazda ekonomiczna: Techniki oszczędzania paliwa", Constants.ECO_DRIVING_CLASSES, LocalDateTime.of(2024, 5, 13, 9, 0), LocalDateTime.of(2024, 5, 13, 11, 0), schoolUser, 54),
-                new InstructionEvent("Dodatkowe lekcje: Przygotowanie do egzaminu praktycznego", Constants.ADDITIONAL_DRIVING_LESSONS, LocalDateTime.of(2024, 5, 14, 15, 0), LocalDateTime.of(2024, 5, 14, 17, 0), schoolUser, 12),
-                new InstructionEvent("Intensywny trening na placu manewrowym: Doskonalenie umiejętności", Constants.PRACTICAL_CLASSES_ON_MANEUVERING_GROUND, LocalDateTime.of(2024, 5, 15, 8, 0), LocalDateTime.of(2024, 5, 15, 10, 0), schoolUser, 56),
-                new InstructionEvent("Warsztaty z technik awaryjnych: Jak reagować w sytuacjach kryzysowych", Constants.EMERGENCY_TECHNIQUES_TRAINING, LocalDateTime.of(2024, 5, 16, 13, 0), LocalDateTime.of(2024, 5, 16, 15, 0), schoolUser, 43),
-                new InstructionEvent("Jazda poza miastem: Techniki jazdy na trasach szybkiego ruchu", Constants.OUT_OF_TOWN_DRIVING, LocalDateTime.of(2024, 5, 17, 11, 0), LocalDateTime.of(2024, 5, 17, 13, 0), schoolUser, 54),
-                new InstructionEvent("Podstawy obsługi technicznej pojazdu: Co każdy kierowca powinien wiedzieć", Constants.CAR_MAINTENANCE_TRAINING, LocalDateTime.of(2024, 5, 18, 12, 0), LocalDateTime.of(2024, 5, 18, 14, 0), schoolUser, 23),
-                new InstructionEvent("Spotkanie organizacyjne: Planowanie harmonogramu kursu", Constants.INFORMATION_AND_ORGANIZATIONAL_MEETINGS, LocalDateTime.of(2024, 5, 19, 16, 0), LocalDateTime.of(2024, 5, 19, 18, 0), schoolUser, 67),
-                new InstructionEvent("Konsultacje z egzaminatorem: Przygotowanie do testów", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 5, 20, 14, 0), LocalDateTime.of(2024, 5, 20, 16, 0), schoolUser, 67),
-                new InstructionEvent("Konsultacje z egzaminatorem: Przygotowanie do testów", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 6, 20, 14, 0), LocalDateTime.of(2024, 6, 20, 16, 0), schoolUser2, 54),
-                new InstructionEvent("Driftowanie bokiem", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 5, 20, 14, 0), LocalDateTime.of(2024, 5, 20, 16, 0), schoolUser3, 87)
+                new InstructionEvent("Teoria jazdy: Zasady, przepisy i najlepsze praktyki", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 10, 2, 14, 0), LocalDateTime.of(2024, 10, 2, 16, 0), schoolUser, 10),
+                new InstructionEvent("Ćwiczenia praktyczne: Bezpieczne poruszanie się po drogach", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 10, 3, 9, 0), LocalDateTime.of(2024, 10, 3, 11, 0), schoolUser, 3),
+                new InstructionEvent("Spotkanie informacyjne: Wprowadzenie do kursu jazdy", Constants.INFORMATION_SESSIONS, LocalDateTime.of(2024, 10, 4, 15, 0), LocalDateTime.of(2024, 10, 4, 17, 0), schoolUser, 100),
+                new InstructionEvent("Trening manewrów: Parkowanie, cofanie i zawracanie", Constants.BASIC_MANEUVERS, LocalDateTime.of(2024, 10, 5, 8, 0), LocalDateTime.of(2024, 10, 5, 10, 0), schoolUser, 54),
+                new InstructionEvent("Kurs pierwszej pomocy: Reagowanie na wypadki drogowe", Constants.FIRST_AID_CLASSES, LocalDateTime.of(2024, 10, 6, 13, 0), LocalDateTime.of(2024, 10, 6, 15, 0), schoolUser, 65),
+                new InstructionEvent("Jazda miejska: Radzenie sobie z ruchem ulicznym", Constants.CITY_DRIVING, LocalDateTime.of(2024, 10, 7, 11, 0), LocalDateTime.of(2024, 10, 7, 13, 0), schoolUser, 12),
+                new InstructionEvent("Zaawansowane techniki jazdy: Skuteczność i bezpieczeństwo", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 10, 8, 12, 0), LocalDateTime.of(2024, 10, 8, 14, 0), schoolUser, 54),
+                new InstructionEvent("Dogłębna analiza przepisów ruchu drogowego", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 10, 9, 16, 0), LocalDateTime.of(2024, 10, 9, 18, 0), schoolUser, 34),
+                new InstructionEvent("Praktyczna nauka jazdy: Techniki zaawansowane", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 10, 10, 14, 0), LocalDateTime.of(2024, 10, 10, 16, 0), schoolUser, 34),
+                new InstructionEvent("Aktualizacja przepisów drogowych: Co nowego w 2024?", Constants.LECTURES, LocalDateTime.of(2024, 10, 11, 10, 0), LocalDateTime.of(2024, 10, 11, 12, 0), schoolUser, 34),
+                new InstructionEvent("Nocna jazda: Jak bezpiecznie poruszać się po zmroku", Constants.NIGHT_DRIVING, LocalDateTime.of(2024, 10, 12, 14, 0), LocalDateTime.of(2024, 10, 12, 16, 0), schoolUser, 34),
+                new InstructionEvent("Jazda ekonomiczna: Techniki oszczędzania paliwa", Constants.ECO_DRIVING_CLASSES, LocalDateTime.of(2024, 10, 13, 9, 0), LocalDateTime.of(2024, 10, 13, 11, 0), schoolUser, 54),
+                new InstructionEvent("Dodatkowe lekcje: Przygotowanie do egzaminu praktycznego", Constants.ADDITIONAL_DRIVING_LESSONS, LocalDateTime.of(2024, 10, 14, 15, 0), LocalDateTime.of(2024, 10, 14, 17, 0), schoolUser, 12),
+                new InstructionEvent("Intensywny trening na placu manewrowym: Doskonalenie umiejętności", Constants.PRACTICAL_CLASSES_ON_MANEUVERING_GROUND, LocalDateTime.of(2024, 10, 15, 8, 0), LocalDateTime.of(2024, 10, 15, 10, 0), schoolUser, 56),
+                new InstructionEvent("Warsztaty z technik awaryjnych: Jak reagować w sytuacjach kryzysowych", Constants.EMERGENCY_TECHNIQUES_TRAINING, LocalDateTime.of(2024, 10, 16, 13, 0), LocalDateTime.of(2024, 10, 16, 15, 0), schoolUser, 43),
+                new InstructionEvent("Jazda poza miastem: Techniki jazdy na trasach szybkiego ruchu", Constants.OUT_OF_TOWN_DRIVING, LocalDateTime.of(2024, 10, 17, 11, 0), LocalDateTime.of(2024, 10, 17, 13, 0), schoolUser, 54),
+                new InstructionEvent("Podstawy obsługi technicznej pojazdu: Co każdy kierowca powinien wiedzieć", Constants.CAR_MAINTENANCE_TRAINING, LocalDateTime.of(2024, 10, 18, 12, 0), LocalDateTime.of(2024, 10, 18, 14, 0), schoolUser, 23),
+                new InstructionEvent("Spotkanie organizacyjne: Planowanie harmonogramu kursu", Constants.INFORMATION_AND_ORGANIZATIONAL_MEETINGS, LocalDateTime.of(2024, 10, 19, 16, 0), LocalDateTime.of(2024, 10, 19, 18, 0), schoolUser, 67),
+                new InstructionEvent("Konsultacje z egzaminatorem: Przygotowanie do testów", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 10, 20, 14, 0), LocalDateTime.of(2024, 10, 20, 16, 0), schoolUser, 67),
+                new InstructionEvent("Konsultacje z egzaminatorem: Przygotowanie do testów", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 11, 20, 14, 0), LocalDateTime.of(2024, 11, 20, 16, 0), schoolUser2, 54),
+                new InstructionEvent("Driftowanie bokiem", Constants.MEETINGS_WITH_EXAMINERS, LocalDateTime.of(2024, 10, 20, 14, 0), LocalDateTime.of(2024, 10, 20, 16, 0), schoolUser3, 87)
         );
 
         eventRepository.saveAll(events);
@@ -341,7 +341,6 @@ public class DatabaseSeeder implements CommandLineRunner {
             return;
         }
 
-        // Tworzenie wiadomości głównych i odpowiedzi
         // Przykład 1: Admin wysyła wiadomość do Studenta, Student odpowiada Adminowi
         Mail adminToStudent = mailService.sendMail(
                 admin,
@@ -351,14 +350,17 @@ public class DatabaseSeeder implements CommandLineRunner {
                 null
         );
 
-        Mail studentToAdmin = mailService.sendMail(
-                student,
-                admin,
-                "Re: Witamy w naszej szkole jazdy!",
-                "Drogi Adminie,\n\nDziękuję za serdeczne powitanie. Cieszę się na nadchodzące lekcje.\n\nPozdrawiam,\nStudent",
-                adminToStudent
-        );
+        if (adminToStudent != null) {
+            // Student odpowiada Adminowi
+            Mail studentToAdmin = new Mail();
+            studentToAdmin.setBody("Drogi Adminie,\n\nDziękuję za serdeczne powitanie. Cieszę się na nadchodzące lekcje.\n\nPozdrawiam,\nStudent");
+            boolean replySuccess = mailService.replyOnMail(studentToAdmin, adminToStudent.getId(), student);
+            if (!replySuccess) {
+                logger.error("Nie udało się wysłać odpowiedzi od Studenta do Admina.");
+            }
+        }
 
+        // Przykład 2: Admin wysyła wiadomość do Student2, Student2 odpowiada Adminowi
         Mail adminToStudent2 = mailService.sendMail(
                 admin,
                 student2,
@@ -367,15 +369,17 @@ public class DatabaseSeeder implements CommandLineRunner {
                 null
         );
 
-        Mail student2ToAdmin = mailService.sendMail(
-                student2,
-                admin,
-                "Re: Powitanie dla nowego studenta",
-                "Drogi Adminie,\n\nDziękuję za powitanie. Jestem gotowy rozpocząć naukę.\n\nPozdrawiam,\nStudent2",
-                adminToStudent2
-        );
+        if (adminToStudent2 != null) {
+            // Student2 odpowiada Adminowi
+            Mail student2ToAdmin = new Mail();
+            student2ToAdmin.setBody("Drogi Adminie,\n\nDziękuję za powitanie. Jestem gotowy rozpocząć naukę.\n\nPozdrawiam,\nStudent2");
+            boolean replySuccess = mailService.replyOnMail(student2ToAdmin, adminToStudent2.getId(), student2);
+            if (!replySuccess) {
+                logger.error("Nie udało się wysłać odpowiedzi od Student2 do Admina.");
+            }
+        }
 
-        // Przykład 2: Instruktor wysyła wiadomość do Studenta, Student odpowiada Instruktorowi
+        // Przykład 3: Instruktor wysyła wiadomość do Studenta, Student odpowiada Instruktorowi
         Mail instructorToStudent = mailService.sendMail(
                 instructor,
                 student,
@@ -384,15 +388,17 @@ public class DatabaseSeeder implements CommandLineRunner {
                 null
         );
 
-        Mail studentToInstructor = mailService.sendMail(
-                student,
-                instructor,
-                "Re: Plan lekcji na ten tydzień",
-                "Drogi Instruktorze,\n\nDziękuję za przesłanie planu. Wszystko jest dla mnie jasne.\n\nPozdrawiam,\nStudent",
-                instructorToStudent
-        );
+        if (instructorToStudent != null) {
+            // Student odpowiada Instruktorowi
+            Mail studentToInstructor = new Mail();
+            studentToInstructor.setBody("Drogi Instruktorze,\n\nDziękuję za przesłanie planu. Wszystko jest dla mnie jasne.\n\nPozdrawiam,\nStudent");
+            boolean replySuccess = mailService.replyOnMail(studentToInstructor, instructorToStudent.getId(), student);
+            if (!replySuccess) {
+                logger.error("Nie udało się wysłać odpowiedzi od Studenta do Instruktora.");
+            }
+        }
 
-        // Przykład 3: Admin wysyła wiadomość do Instruktora, Instruktor odpowiada Adminowi, Admin odpowiada Instruktorowi ponownie
+        // Przykład 4: Admin wysyła wiadomość do Instruktora, Instruktor odpowiada Adminowi, Admin odpowiada Instruktorowi ponownie
         Mail adminToInstructor = mailService.sendMail(
                 admin,
                 instructor,
@@ -401,23 +407,25 @@ public class DatabaseSeeder implements CommandLineRunner {
                 null
         );
 
-        Mail instructorToAdmin = mailService.sendMail(
-                instructor,
-                admin,
-                "Re: Nowe materiały szkoleniowe",
-                "Drogi Adminie,\n\nDziękuję za przesłanie materiałów. Będę je wykorzystać podczas nadchodzących lekcji.\n\nPozdrawiam,\nInstruktor",
-                adminToInstructor
-        );
+        if (adminToInstructor != null) {
+            // Instruktor odpowiada Adminowi
+            Mail instructorToAdmin = new Mail();
+            instructorToAdmin.setBody("Drogi Adminie,\n\nDziękuję za przesłanie materiałów. Będę je wykorzystać podczas nadchodzących lekcji.\n\nPozdrawiam,\nInstruktor");
+            boolean replySuccess1 = mailService.replyOnMail(instructorToAdmin, adminToInstructor.getId(), instructor);
+            if (!replySuccess1) {
+                logger.error("Nie udało się wysłać odpowiedzi od Instruktora do Admina.");
+            }
 
-        Mail adminToInstructorReply = mailService.sendMail(
-                admin,
-                instructor,
-                "Re: Re: Nowe materiały szkoleniowe",
-                "Drogi Instruktorze,\n\nCieszę się, że materiały są przydatne. Jeśli masz jakiekolwiek pytania, nie wahaj się pytać.\n\nPozdrawiam,\nZespół Administracyjny",
-                instructorToAdmin
-        );
+            // Admin odpowiada Instruktorowi ponownie
+            Mail adminToInstructorReply = new Mail();
+            adminToInstructorReply.setBody("Drogi Instruktorze,\n\nCieszę się, że materiały są przydatne. Jeśli masz jakiekolwiek pytania, nie wahaj się pytać.\n\nPozdrawiam,\nZespół Administracyjny");
+            boolean replySuccess2 = mailService.replyOnMail(adminToInstructorReply, adminToInstructor.getId(), admin);
+            if (!replySuccess2) {
+                logger.error("Nie udało się wysłać drugiej odpowiedzi od Admina do Instruktora.");
+            }
+        }
 
-        // Przykład 4: Instruktor2 wysyła wiadomość do Student2, Student2 odpowiada Instruktor2
+        // Przykład 5: Instruktor2 wysyła wiadomość do Student2, Student2 odpowiada Instruktor2
         Mail instructor2ToStudent2 = mailService.sendMail(
                 instructor2,
                 student2,
@@ -426,15 +434,17 @@ public class DatabaseSeeder implements CommandLineRunner {
                 null
         );
 
-        Mail student2ToInstructor2 = mailService.sendMail(
-                student2,
-                instructor2,
-                "Re: Harmonogram egzaminów praktycznych",
-                "Drogi Instruktorze2,\n\nDziękuję za przesłanie harmonogramu. Będę się przygotowywać zgodnie z planem.\n\nPozdrawiam,\nStudent2",
-                instructor2ToStudent2
-        );
+        if (instructor2ToStudent2 != null) {
+            // Student2 odpowiada Instruktor2
+            Mail student2ToInstructor2 = new Mail();
+            student2ToInstructor2.setBody("Drogi Instruktorze2,\n\nDziękuję za przesłanie harmonogramu. Będę się przygotowywać zgodnie z planem.\n\nPozdrawiam,\nStudent2");
+            boolean replySuccess = mailService.replyOnMail(student2ToInstructor2, instructor2ToStudent2.getId(), student2);
+            if (!replySuccess) {
+                logger.error("Nie udało się wysłać odpowiedzi od Student2 do Instruktora2.");
+            }
+        }
 
-        // Przykład 5: Instruktor3 wysyła wiadomość do Studenta, Student odpowiada Instruktorowi, Instruktor odpowiada Studentowi
+        // Przykład 6: Instruktor3 wysyła wiadomość do Studenta, Student odpowiada Instruktorowi, Instruktor odpowiada Studentowi
         Mail instructor3ToStudent = mailService.sendMail(
                 instructor3,
                 student,
@@ -443,22 +453,25 @@ public class DatabaseSeeder implements CommandLineRunner {
                 null
         );
 
-        Mail studentToInstructor3 = mailService.sendMail(
-                student,
-                instructor3,
-                "Re: Informacje o nowym kursie",
-                "Drogi Instruktorze3,\n\nDziękuję za informację. Jestem zainteresowany udziałem w kursie.\n\nPozdrawiam,\nStudent",
-                instructor3ToStudent
-        );
+        if (instructor3ToStudent != null) {
+            // Student odpowiada Instruktor3
+            Mail studentToInstructor3 = new Mail();
+            studentToInstructor3.setBody("Drogi Instruktorze3,\n\nDziękuję za informację. Jestem zainteresowany udziałem w kursie.\n\nPozdrawiam,\nStudent");
+            boolean replySuccess1 = mailService.replyOnMail(studentToInstructor3, instructor3ToStudent.getId(), student);
+            if (!replySuccess1) {
+                logger.error("Nie udało się wysłać odpowiedzi od Studenta do Instruktora3.");
+            }
 
-        Mail instructor3ToStudentReply = mailService.sendMail(
-                instructor3,
-                student,
-                "Re: Re: Informacje o nowym kursie",
-                "Drogi Student,\n\nCieszę się, że jesteś zainteresowany. Szczegóły dotyczące zapisów i harmonogramu prześlę wkrótce.\n\nPozdrawiam,\nInstruktor3",
-                studentToInstructor3
-        );
+            // Instruktor3 odpowiada Studentowi ponownie
+            Mail instructor3ToStudentReply = new Mail();
+            instructor3ToStudentReply.setBody("Drogi Student,\n\nCieszę się, że jesteś zainteresowany. Szczegóły dotyczące zapisów i harmonogramu prześlę wkrótce.\n\nPozdrawiam,\nInstruktor3");
+            boolean replySuccess2 = mailService.replyOnMail(instructor3ToStudentReply, instructor3ToStudent.getId(), instructor3);
+            if (!replySuccess2) {
+                logger.error("Nie udało się wysłać drugiej odpowiedzi od Instruktora3 do Studenta.");
+            }
+        }
 
         logger.info("Przykładowe wiadomości e-mail zostały utworzone.");
     }
+
 }
