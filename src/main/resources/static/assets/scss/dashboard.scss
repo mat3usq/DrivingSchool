@@ -1,5 +1,9 @@
 @import '_colors.scss';
 @import '_animation.scss';
+$box-category-start: adjust-color(#c72c50bb, $lightness: -20%, $saturation: 10%);
+$box-category-end: adjust-color(#118ab2b5, $lightness: -20%, $saturation: 10%);
+$box-users-start: adjust-color(#118ab2b5, $lightness: -20%, $saturation: 10%);
+$box-users-end: adjust-color(#daa427bc, $lightness: -20%, $saturation: 10%);
 
 *,
 *::after,
@@ -410,6 +414,25 @@ h2 {
 						}
 					}
 				}
+			}
+
+			.box-category,
+			.box-users {
+				margin: 40px 20px;
+				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+				position: relative;
+				overflow: hidden;
+				border-radius: 20px;
+			}
+
+			.box-category {
+				background: linear-gradient(-135deg, $box-category-start, $box-category-end);
+				backdrop-filter: blur(7px);
+			}
+
+			.box-users {
+				background: linear-gradient(135deg, $box-users-start, $box-users-end);
+				backdrop-filter: blur(7px);
 			}
 		}
 	}

@@ -598,6 +598,24 @@ h2 {
   pointer-events: none;
   cursor: not-allowed;
 }
+.dashboard .hero-img .box-container .box-category,
+.dashboard .hero-img .box-container .box-users {
+  margin: 40px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.dashboard .hero-img .box-container .box-category {
+  background: linear-gradient(-135deg, rgba(123, 18, 43, 0.7333333333), rgba(3, 68, 90, 0.7098039216));
+  -webkit-backdrop-filter: blur(7px);
+          backdrop-filter: blur(7px);
+}
+.dashboard .hero-img .box-container .box-users {
+  background: linear-gradient(135deg, rgba(3, 68, 90, 0.7098039216), rgba(140, 102, 15, 0.737254902));
+  -webkit-backdrop-filter: blur(7px);
+          backdrop-filter: blur(7px);
+}
 
 .contact {
   padding: 20px;
