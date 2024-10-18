@@ -54,16 +54,18 @@ h2 {
 		background-image: url('../img/backgroundPaneldashboard.png');
 		background-position: center;
 		background-size: cover;
-		overflow: scroll;
+		overflow: hidden;
 
 		.box-container {
 			position: absolute;
 			top: 12vh;
 			left: 300px;
 			width: calc(100vw - 300px);
-
+			max-height: 97vh;
+			overflow-y: auto;
+			
 			.title {
-				margin-top: 100px;
+				margin-top: 30px;
 				padding: 20px 10px;
 				background-color: rgba(0, 0, 0, 0.8);
 				border-radius: 20px;
