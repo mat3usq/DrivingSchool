@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -116,6 +117,7 @@ public class TestController {
         modelAndView.addObject("test", test);
         modelAndView.addObject("selectedTypeQuestions", selectedTypeQuestions);
         modelAndView.addObject("isLiked", question.getId() != null && userLikedQuestionRepository.findBySchoolUserAndQuestionIdAndTestId(user, question.getId(), testId) != null);
+        session.setAttribute("timeStartAnswer", LocalDateTime.now());
         return modelAndView;
     }
 
@@ -124,6 +126,7 @@ public class TestController {
         ModelAndView modelAndView;
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Test test = testService.getTestById(testId);
+        LocalDateTime timeStartAnswer = (LocalDateTime) session.getAttribute("timeStartAnswer");
 
         if (test == null || !test.getDrivingCategory().equals(user.getCurrentCategory()))
             return displayTestsPage(session);
@@ -136,12 +139,12 @@ public class TestController {
             case "NIE":
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
                 modelAndView.setViewName("answerResultTest");
-                modelAndView.addObject("answer", studentAnswersTestService.save(user, testId, questionId, action, isLiked));
+                modelAndView.addObject("answer", studentAnswersTestService.save(user, testId, questionId, action, isLiked, timeStartAnswer));
                 modelAndView.addObject("isLiked", isLiked);
                 break;
 
             case "SKIP":
-                studentAnswersTestService.save(user, testId, questionId, action, isLiked);
+                studentAnswersTestService.save(user, testId, questionId, action, isLiked, timeStartAnswer);
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
                 break;
 

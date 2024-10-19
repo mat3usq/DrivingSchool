@@ -75,7 +75,6 @@ public class SchoolUserService {
     public void deleteLikedQuestionFromUser(Long questionId, Long testId, SchoolUser user) {
         if (user != null) {
             userLikedQuestionRepository.deleteBySchoolUserAndQuestionIdAndTestId(user, questionId, testId);
-            schoolUserRepository.save(user);
         }
     }
 

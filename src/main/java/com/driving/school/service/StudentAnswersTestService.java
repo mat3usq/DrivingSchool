@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +34,7 @@ public class StudentAnswersTestService {
         studentAnswersTestRepository.deleteAll(studentAnswersTestList);
     }
 
-    public StudentAnswersTest save(SchoolUser loggedUser, Long testId, Long questionId, String answer, Boolean isLiked) {
+    public StudentAnswersTest save(SchoolUser loggedUser, Long testId, Long questionId, String answer, Boolean isLiked, LocalDateTime timeStartAnswer) {
         Question q = questionRepository.findById(questionId).orElse(null);
         Test t = testRepository.findById(testId).orElse(null);
         StudentAnswersTest studentAnswersTest = new StudentAnswersTest();
@@ -50,7 +52,7 @@ public class StudentAnswersTestService {
                     studentAnswersTest.setSkipped(true);
                 }
                 studentAnswersTestRepository.delete(studentAnswersTest);
-                saveToDb(studentAnswersTest);
+                saveToDb(studentAnswersTest, timeStartAnswer);
                 break;
             case "likedQuestions":
                 studentAnswersTest = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(loggedUser, t, q);
@@ -76,7 +78,7 @@ public class StudentAnswersTestService {
                     studentAnswersTest.setSkipped(true);
                 }
 
-                saveToDb(studentAnswersTest);
+                saveToDb(studentAnswersTest, timeStartAnswer);
                 break;
             case "remainingQuestions":
                 studentAnswersTest.setSchoolUser(loggedUser);
@@ -90,14 +92,14 @@ public class StudentAnswersTestService {
                     studentAnswersTest.setCorrectness(false);
                     studentAnswersTest.setSkipped(true);
                 }
-                saveToDb(studentAnswersTest);
+                saveToDb(studentAnswersTest, timeStartAnswer);
                 break;
         }
 
         return studentAnswersTest;
     }
 
-    public void saveToDb(StudentAnswersTest studentAnswersTest) {
+    public void saveToDb(StudentAnswersTest studentAnswersTest, LocalDateTime timeStartAnswer) {
         StudentAnswersTest existingAnswer = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(
                 studentAnswersTest.getSchoolUser(),
                 studentAnswersTest.getTest(),
@@ -105,7 +107,10 @@ public class StudentAnswersTestService {
         );
 
         if (existingAnswer == null)
+        {
+            studentAnswersTest.setDurationOfAnswer(Duration.between(timeStartAnswer, LocalDateTime.now()).getSeconds());
             studentAnswersTestRepository.save(studentAnswersTest);
+        }
     }
 
 
