@@ -1,12 +1,16 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "STUDENTTESTSTATISTICS")
 public class StudentTestStatistics {
     @Id
@@ -16,30 +20,30 @@ public class StudentTestStatistics {
 
     // ogolna ilosc odpowiedzi studenta do danego testu
     @Column(name = "NUMBEROFQUESTIONSSOLVED", nullable = false)
-    private Integer numberOfQuestionsSolved;
+    private int numberOfQuestionsSolved;
 
     @Column(name = "NUMBEROFQUESTIONSANSWEREDCORRECTLY", nullable = false)
-    private Integer numberOfQuestionsAnsweredCorrectly;
+    private int numberOfQuestionsAnsweredCorrectly;
 
     @Column(name = "NUMBEROFQUESTIONSANSWEREDINCORRECTLY", nullable = false)
-    private Integer numberOfQuestionsAnsweredInCorrectly;
+    private int numberOfQuestionsAnsweredInCorrectly;
 
     @Column(name = "NUMBEROFQUESTIONSSKIPPED", nullable = false)
-    private Integer numberOfQuestionsSkipped;
+    private int numberOfQuestionsSkipped;
 
-    @Column(name = "AVERAEGEDDURATIONOFANSWERS", nullable = false)
-    private Integer averageDurationOfAnswers;
+    @Column(name = "AVERAGEDURATIONOFANSWERS", nullable = false)
+    private Double averageDurationOfAnswers;
 
     // aktualna ilosc odpowiedzi studenta do danego testu
     // (resetowana gdy uzytkownik usunie odpowiedzi do danego testu)
     @Column(name = "CURRENTNUMBEROFQUESTIONSANSWEREDCORRECTLY", nullable = false)
-    private Integer currentNumberOfQuestionsAnsweredCorrectly;
+    private int currentNumberOfQuestionsAnsweredCorrectly;
 
     @Column(name = "CURRENTNUMBEROFQUESTIONSANSWEREDINCORRECTLY", nullable = false)
-    private Integer currentNumberOfQuestionsAnsweredInCorrectly;
+    private int currentNumberOfQuestionsAnsweredInCorrectly;
 
     @Column(name = "CURRENTNUMBEROFQUESTIONSSKIPPED", nullable = false)
-    private Integer currentNumberOfQuestionsSkipped;
+    private int currentNumberOfQuestionsSkipped;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)

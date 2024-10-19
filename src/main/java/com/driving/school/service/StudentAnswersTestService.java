@@ -20,14 +20,16 @@ public class StudentAnswersTestService {
     private final QuestionRepository questionRepository;
     private final SchoolUserService schoolUserService;
     private final UserLikedQuestionRepository userLikedQuestionRepository;
+    private final StudentTestStatisticsRepository studentTestStatisticsRepository;
 
     @Autowired
-    public StudentAnswersTestService(StudentAnswersTestRepository studentAnswersTestRepository, TestRepository testRepository, QuestionRepository questionRepository, SchoolUserService schoolUserService, UserLikedQuestionRepository userLikedQuestionRepository) {
+    public StudentAnswersTestService(StudentAnswersTestRepository studentAnswersTestRepository, TestRepository testRepository, QuestionRepository questionRepository, SchoolUserService schoolUserService, UserLikedQuestionRepository userLikedQuestionRepository, StudentTestStatisticsRepository studentTestStatisticsRepository) {
         this.studentAnswersTestRepository = studentAnswersTestRepository;
         this.testRepository = testRepository;
         this.questionRepository = questionRepository;
         this.schoolUserService = schoolUserService;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
+        this.studentTestStatisticsRepository = studentTestStatisticsRepository;
     }
 
     public void deleteAllStudentAnswersTest(List<StudentAnswersTest> studentAnswersTestList) {
@@ -51,7 +53,6 @@ public class StudentAnswersTestService {
                     studentAnswersTest.setCorrectness(false);
                     studentAnswersTest.setSkipped(true);
                 }
-                studentAnswersTestRepository.delete(studentAnswersTest);
                 saveToDb(studentAnswersTest, timeStartAnswer);
                 break;
             case "likedQuestions":
@@ -100,19 +101,63 @@ public class StudentAnswersTestService {
     }
 
     public void saveToDb(StudentAnswersTest studentAnswersTest, LocalDateTime timeStartAnswer) {
-        StudentAnswersTest existingAnswer = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(
-                studentAnswersTest.getSchoolUser(),
-                studentAnswersTest.getTest(),
-                studentAnswersTest.getQuestion()
-        );
+        studentAnswersTest.setDurationOfAnswer(Duration.between(timeStartAnswer, LocalDateTime.now()).getSeconds());
+        studentAnswersTestRepository.delete(studentAnswersTest);
+        studentAnswersTestRepository.save(studentAnswersTest);
 
-        if (existingAnswer == null)
-        {
-            studentAnswersTest.setDurationOfAnswer(Duration.between(timeStartAnswer, LocalDateTime.now()).getSeconds());
-            studentAnswersTestRepository.save(studentAnswersTest);
+        StudentTestStatistics studentTestStatistics = studentTestStatisticsRepository.findBySchoolUserAndTest(studentAnswersTest.getSchoolUser(), studentAnswersTest.getTest());
+
+        if (studentTestStatistics == null) {
+            studentTestStatistics = new StudentTestStatistics();
+            studentTestStatistics.setSchoolUser(studentAnswersTest.getSchoolUser());
+            studentTestStatistics.setTest(studentAnswersTest.getTest());
+            studentTestStatistics.setAverageDurationOfAnswers((double) studentAnswersTest.getDurationOfAnswer());
+            studentTestStatistics.setNumberOfQuestionsSolved(1);
+
+            if (studentAnswersTest.getSkipped()) {
+                studentTestStatistics.setNumberOfQuestionsSkipped(1);
+                studentTestStatistics.setCurrentNumberOfQuestionsSkipped(1);
+            } else if (studentAnswersTest.getCorrectness()) {
+                studentTestStatistics.setNumberOfQuestionsAnsweredCorrectly(1);
+                studentTestStatistics.setCurrentNumberOfQuestionsAnsweredCorrectly(1);
+            } else {
+                studentTestStatistics.setNumberOfQuestionsAnsweredInCorrectly(1);
+                studentTestStatistics.setCurrentNumberOfQuestionsAnsweredInCorrectly(1);
+            }
+        } else {
+            double currentAverage = studentTestStatistics.getAverageDurationOfAnswers();
+            int currentCount = studentTestStatistics.getNumberOfQuestionsSolved();
+            double newAverage = ((currentAverage * currentCount) + studentAnswersTest.getDurationOfAnswer()) / (currentCount + 1);
+            studentTestStatistics.setAverageDurationOfAnswers(newAverage);
+
+            studentTestStatistics.setNumberOfQuestionsSolved(currentCount + 1);
+
+            if (studentAnswersTest.getSkipped()) {
+                studentTestStatistics.setNumberOfQuestionsSkipped(
+                        studentTestStatistics.getNumberOfQuestionsSkipped() + 1
+                );
+                studentTestStatistics.setCurrentNumberOfQuestionsSkipped(
+                        studentTestStatistics.getCurrentNumberOfQuestionsSkipped() + 1
+                );
+            } else if (studentAnswersTest.getCorrectness()) {
+                studentTestStatistics.setNumberOfQuestionsAnsweredCorrectly(
+                        studentTestStatistics.getNumberOfQuestionsAnsweredCorrectly() + 1
+                );
+                studentTestStatistics.setCurrentNumberOfQuestionsAnsweredCorrectly(
+                        studentTestStatistics.getCurrentNumberOfQuestionsAnsweredCorrectly() + 1
+                );
+            } else {
+                studentTestStatistics.setNumberOfQuestionsAnsweredInCorrectly(
+                        studentTestStatistics.getNumberOfQuestionsAnsweredInCorrectly() + 1
+                );
+                studentTestStatistics.setCurrentNumberOfQuestionsAnsweredInCorrectly(
+                        studentTestStatistics.getCurrentNumberOfQuestionsAnsweredInCorrectly() + 1
+                );
+            }
         }
-    }
 
+        studentTestStatisticsRepository.save(studentTestStatistics);
+    }
 
     public void setStatisticForTest(List<Test> tests, Long userId) {
         tests.forEach(test -> {
