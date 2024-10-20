@@ -147,26 +147,8 @@ public class ExamController {
     public ModelAndView summary(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("examResult");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
-
-        studentExam = studentExamService.getStudentExamById(studentExam.getId());
-        studentExam.setEndTime(LocalDateTime.now());
-        studentExam.setExamDuration(Duration.between(studentExam.getStartTime(), studentExam.getEndTime()));
-        studentExam.setAverageTimePerQuestion((studentExam.getExamDuration().toSeconds() / 32.0));
-        studentExam.setAmountCorrectNoSpecAnswers(studentExam.getStudentExamAnswers().stream()
-                .filter(a -> !a.getQuestion().getQuestionType() && a.getCorrectness())
-                .count());
-        studentExam.setAmountCorrectSpecAnswers(studentExam.getStudentExamAnswers().stream()
-                .filter(a -> a.getQuestion().getQuestionType() && a.getCorrectness())
-                .count());
-        studentExam.setAmountSkippedQuestions(studentExam.getStudentExamAnswers().stream()
-                .filter(a -> a.getAnswer().isEmpty() && !a.getCorrectness())
-                .count());
-        studentExam.setPassed(studentExam.getPoints() >= 68);
-        studentExam.setExamDurationString(String.format("%dm %ds", studentExam.getExamDuration().toMinutes(), studentExam.getExamDuration().minusMinutes(studentExam.getExamDuration().toMinutes()).getSeconds()));
-
-        studentExamService.updateStudentExam(studentExam.getId(), studentExam);
+        studentExam = studentExamService.setSummaryOfExam(studentExamService.getStudentExamById(studentExam.getId()));
         modelAndView.addObject("exam", studentExam);
-
         session.setAttribute("questionSet", null);
         session.setAttribute("exam", null);
         session.setAttribute("latestQuestion", null);

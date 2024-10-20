@@ -57,13 +57,13 @@ public class StudentExam {
     private Double averageTimePerQuestion;
 
     @Column(name = "AMOUNTCORRECTNOSPECANSWERS")
-    private long amountCorrectNoSpecAnswers;
+    private int amountCorrectNoSpecAnswers;
 
     @Column(name = "AMOUNTCORRECTSPECANSWERS")
-    private long amountCorrectSpecAnswers;
+    private int amountCorrectSpecAnswers;
 
     @Column(name = "AMOUNTSKIPPEDQUESTIONS")
-    private long amountSkippedQuestions;
+    private int amountSkippedQuestions;
 
     public Set<StudentExamAnswer> getSortedStudentExamAnswers() {
         return studentExamAnswers.stream()

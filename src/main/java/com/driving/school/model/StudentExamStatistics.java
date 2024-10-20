@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Entity
-@Table(name = "STUDENTEXAMSTATSTICS")
+@Table(name = "STUDENTEXAMSTATISTICS")
 public class StudentExamStatistics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
