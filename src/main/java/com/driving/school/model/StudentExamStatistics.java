@@ -36,7 +36,7 @@ public class StudentExamStatistics {
     private Integer numberOfPassedExams;
 
     @Column(name = "AVERAGEEXAMDURATION")
-    private Duration averageExamsDuration;
+    private Double averageExamsDuration;
 
     @Column(name = "AVERAGETIMEPERQUESTION")
     private Double averageTimePerQuestions;

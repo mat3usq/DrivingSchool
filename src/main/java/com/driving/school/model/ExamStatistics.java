@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "EXAMSTATISTICS")
 public class ExamStatistics {
     @Id
@@ -34,7 +36,7 @@ public class ExamStatistics {
     private Integer numberOfPassedExams;
 
     @Column(name = "AVERAGEEXAMDURATION")
-    private Duration averageExamsDuration;
+    private Double averageExamsDuration;
 
     @Column(name = "AVERAGETIMEPERQUESTION")
     private Double averageTimePerQuestions;
