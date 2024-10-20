@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "TESTSTATISTICS")
 public class TestStatistics {
     @Id
@@ -33,7 +35,7 @@ public class TestStatistics {
     private Integer numberOfQuestionsSkipped;
 
     @Column(name = "AVERAEGEDDURATIONOFANSWERS", nullable = false)
-    private Integer averageDurationOfAnswers;
+    private Double averageDurationOfAnswers;
 
     @CreatedDate
     @Column(name = "CREATEDAT")

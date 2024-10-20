@@ -34,17 +34,6 @@ public class StudentTestStatistics {
     @Column(name = "AVERAGEDURATIONOFANSWERS", nullable = false)
     private Double averageDurationOfAnswers;
 
-    // aktualna ilosc odpowiedzi studenta do danego testu
-    // (resetowana gdy uzytkownik usunie odpowiedzi do danego testu)
-    @Column(name = "CURRENTNUMBEROFQUESTIONSANSWEREDCORRECTLY", nullable = false)
-    private int currentNumberOfQuestionsAnsweredCorrectly;
-
-    @Column(name = "CURRENTNUMBEROFQUESTIONSANSWEREDINCORRECTLY", nullable = false)
-    private int currentNumberOfQuestionsAnsweredInCorrectly;
-
-    @Column(name = "CURRENTNUMBEROFQUESTIONSSKIPPED", nullable = false)
-    private int currentNumberOfQuestionsSkipped;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
     private SchoolUser schoolUser;
