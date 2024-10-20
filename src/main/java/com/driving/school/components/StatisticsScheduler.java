@@ -1,4 +1,4 @@
-package com.driving.school.Components;
+package com.driving.school.components;
 
 import com.driving.school.service.TestStatisticsService;
 import org.slf4j.Logger;
