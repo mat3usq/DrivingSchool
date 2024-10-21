@@ -44,13 +44,13 @@ h2 {
 }
 
 .navbar-left {
-	height: 159.2vh;
+	height: 170vh;
 }
 
 .exam {
 	.hero-img {
 		position: relative;
-		height: 170vh;
+		height: 182vh;
 		background-image: url('../img/backgroundExam.png');
 		background-position: center;
 		background-size: cover;
@@ -229,7 +229,6 @@ h2 {
 							flex-direction: row;
 							flex-wrap: wrap;
 							justify-content: center;
-							gap: 10px;
 
 							.correct {
 								border: 2px solid $icon-color;

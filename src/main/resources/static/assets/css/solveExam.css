@@ -122,12 +122,12 @@ h2 {
 }
 
 .navbar-left {
-  height: 139.2vh;
+  height: 150vh;
 }
 
 .exam .hero-img {
   position: relative;
-  height: 150vh;
+  height: 162vh;
   background-image: url("../img/backgroundExam.png");
   background-position: center;
   background-size: cover;
@@ -249,7 +249,6 @@ h2 {
   flex-direction: row;
   align-content: space-between;
   justify-content: space-evenly;
-  padding: 20px;
   align-items: center;
 }
 .exam .hero-img .box-exam .box-container .container-exam .exam-info img,
@@ -300,7 +299,7 @@ h2 {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   margin: 10px 30px;
 }
 .exam .hero-img .box-exam .box-container .container-exam .normal-question .button-box,
@@ -310,7 +309,6 @@ h2 {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
 }
 .exam .hero-img .box-exam .box-container .container-exam .normal-question .info-container,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question .info-container {
@@ -413,7 +411,7 @@ h2 {
   position: relative;
   font-weight: normal;
   text-transform: none;
-  font-size: 18px;
+  font-size: 16px;
 }
 .exam .hero-img .box-exam .box-container .container-exam .specific-question button:not(:disabled) {
   cursor: pointer;

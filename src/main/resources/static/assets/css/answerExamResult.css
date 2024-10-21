@@ -122,12 +122,12 @@ h2 {
 }
 
 .navbar-left {
-  height: 159.2vh;
+  height: 170vh;
 }
 
 .exam .hero-img {
   position: relative;
-  height: 170vh;
+  height: 182vh;
   background-image: url("../img/backgroundExam.png");
   background-position: center;
   background-size: cover;
@@ -290,7 +290,6 @@ h2 {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
 }
 .exam .hero-img .box-exam .box-container .container-exam .normal-question .button-box .correct,
 .exam .hero-img .box-exam .box-container .container-exam .specific-question .button-box .correct {
