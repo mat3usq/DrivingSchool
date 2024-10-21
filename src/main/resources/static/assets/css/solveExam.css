@@ -181,13 +181,7 @@ h2 {
   margin: 10px;
 }
 .exam .hero-img .box-exam .box-container .header-exam-info {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: nowrap;
-  align-content: space-around;
-  align-items: stretch;
-  text-align: center;
+  position: relative;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.85);
   border-radius: 20px;
@@ -196,27 +190,50 @@ h2 {
   letter-spacing: 1px;
   margin: 10px;
   width: 80%;
-  gap: 25px;
 }
-.exam .hero-img .box-exam .box-container .header-exam-info .info {
+.exam .hero-img .box-exam .box-container .header-exam-info .info-exam {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  align-items: stretch;
+  text-align: center;
+  gap: 25px;
+  padding-right: 40px;
+}
+.exam .hero-img .box-exam .box-container .header-exam-info .info-exam .info {
   font-style: italic;
   letter-spacing: 1px;
   text-align: center;
 }
-.exam .hero-img .box-exam .box-container .header-exam-info .info .counter {
+.exam .hero-img .box-exam .box-container .header-exam-info .info-exam .info .counter {
   font-size: 20px;
   font-style: normal;
 }
-.exam .hero-img .box-exam .box-container .header-exam-info span {
+.exam .hero-img .box-exam .box-container .header-exam-info .info-exam span {
   font-size: 20px;
   color: springgreen;
   font-weight: bold;
 }
-.exam .hero-img .box-exam .box-container .header-exam-info p {
+.exam .hero-img .box-exam .box-container .header-exam-info .info-exam p {
   font-size: 18px;
+  margin-bottom: 0;
 }
-.exam .hero-img .box-exam .box-container .header-exam-info .noSpecificTimerToThink {
+.exam .hero-img .box-exam .box-container .header-exam-info .info-exam .noSpecificTimerToThink {
   display: none;
+}
+.exam .hero-img .box-exam .box-container .header-exam-info .endExam {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+}
+.exam .hero-img .box-exam .box-container .header-exam-info .endExam button {
+  background-color: aliceblue;
+  padding: 5px;
+  border-radius: 50%;
+  border: none;
 }
 .exam .hero-img .box-exam .box-container .container-exam {
   display: flex;
@@ -534,9 +551,9 @@ h2 {
   .exam .hero-img .box-exam .box-container .header-exam-info {
     width: 100%;
   }
-  .exam .hero-img .box-exam .box-container .container-exam span,
-  .exam .hero-img .box-exam .box-container .header-exam span,
-  .exam .hero-img .box-exam .box-container .header-exam-info span {
+  .exam .hero-img .box-exam .box-container .container-exam .info-exam span,
+  .exam .hero-img .box-exam .box-container .header-exam .info-exam span,
+  .exam .hero-img .box-exam .box-container .header-exam-info .info-exam span {
     font-size: 20px;
   }
   .exam .hero-img .box-exam .box-container .container-exam .normal-question .info-container,
@@ -559,7 +576,7 @@ h2 {
     width: 300px;
   }
   .exam .hero-img .box-exam .box-container .header-exam,
-  .exam .hero-img .box-exam .box-container .header-exam-info {
+  .exam .hero-img .box-exam .box-container .header-exam-info .info-exam {
     flex-direction: column;
   }
 }

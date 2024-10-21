@@ -108,13 +108,7 @@ h2 {
 				}
 
 				.header-exam-info {
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
-					flex-wrap: nowrap;
-					align-content: space-around;
-					align-items: stretch;
-					text-align: center;
+					position: relative;
 					padding: 20px;
 					background-color: rgba(0, 0, 0, 0.85);
 					border-radius: 20px;
@@ -123,31 +117,57 @@ h2 {
 					letter-spacing: 1px;
 					margin: 10px;
 					width: 80%;
-					gap: 25px;
 
-					.info {
-						font-style: italic;
-						letter-spacing: 1px;
+					.info-exam {
+						display: flex;
+						flex-direction: row;
+						justify-content: center;
+						flex-wrap: nowrap;
+						align-content: space-around;
+						align-items: stretch;
 						text-align: center;
+						gap: 25px;
+						padding-right: 40px;
 
-						.counter {
+						.info {
+							font-style: italic;
+							letter-spacing: 1px;
+							text-align: center;
+
+							.counter {
+								font-size: 20px;
+								font-style: normal;
+							}
+						}
+
+						span {
 							font-size: 20px;
-							font-style: normal;
+							color: $icon-color;
+							font-weight: bold;
+						}
+
+						p {
+							font-size: 18px;
+							margin-bottom: 0;
+						}
+
+						.noSpecificTimerToThink {
+							display: none;
 						}
 					}
 
-					span {
-						font-size: 20px;
-						color: $icon-color;
-						font-weight: bold;
-					}
+					.endExam {
+						position: absolute;
+						top: 50%;
+						right: 15px;
+						transform: translateY(-50%);
 
-					p {
-						font-size: 18px;
-					}
-
-					.noSpecificTimerToThink {
-						display: none;
+						button {
+							background-color: $text-color;
+							padding: 5px;
+							border-radius: 50%;
+							border: none;
+						}
 					}
 				}
 
@@ -500,7 +520,7 @@ h2 {
 					.header-exam,
 					.header-exam-info {
 						width: 100%;
-						span {
+						.info-exam span {
 							font-size: 20px;
 						}
 					}
@@ -543,7 +563,7 @@ h2 {
 					}
 
 					.header-exam,
-					.header-exam-info {
+					.header-exam-info .info-exam {
 						flex-direction: column;
 					}
 				}
