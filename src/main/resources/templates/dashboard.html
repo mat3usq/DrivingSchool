@@ -34,7 +34,7 @@
         <div class="hero-img">
             <div class="box-container">
                 <div class="box-category">
-                    <p class="title" data-aos="zoom-in" data-aos-delay="100">Dostepne Kategorie</p>
+                    <p class="title">Dostepne Kategorie</p>
                     <div class="container-category">
                         <form th:if="${!session.loggedInUser.getAvailableCategories().isEmpty()}"
                               th:each="category : ${session.loggedInUser.getAvailableCategories()}"
@@ -53,6 +53,13 @@
                             <img src="/assets/img/category/svg/gasStation.svg" alt="Stacja Paliw">
                             <p>Brak <span>Kategorii</span></p>
                         </div>
+                    </div>
+                </div>
+                <div class="box-statistics">
+                    <p class="title">Statystyki - Egzamin</p>
+                    <div class="container-statistics">
+                        <p>fajne statyystki ok ok ok</p>
+                        <br>
                     </div>
                 </div>
                 <div class="box-users">
