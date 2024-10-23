@@ -48,4 +48,16 @@ public class Test {
     public String getImageBase64() {
         return (this.image != null) ? "data:image/svg+xml;base64," + Base64.getEncoder().encodeToString(this.image) : null;
     }
+
+    @Override
+    public String toString() {
+        return "Test{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", drivingCategory='" + drivingCategory + '\'' +
+                ", numberQuestions=" + numberQuestions +
+                ", testType=" + testType +
+                ", counter=" + counter +
+                '}';
+    }
 }
