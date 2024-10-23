@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -23,9 +24,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
@@ -40,11 +40,15 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final MailService mailService;
     private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
+    private final QuestionRepository questionRepository; // Inject directly
+    private final TestRepository testRepository;
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
             schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
-                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository, StudentInstructorRepository studentInstructorRepository, CategoryRepository categoryRepository, MailService mailService) {
+                          SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository,
+                          StudentInstructorRepository studentInstructorRepository, CategoryRepository categoryRepository,
+                          MailService mailService, QuestionRepository questionRepository, TestRepository testRepository) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
@@ -55,7 +59,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.studentInstructorRepository = studentInstructorRepository;
         this.categoryRepository = categoryRepository;
         this.mailService = mailService;
+        this.questionRepository = questionRepository;
+        this.testRepository = testRepository;
     }
+
 
     @Override
     public void run(String... args) {
@@ -131,6 +138,114 @@ public class DatabaseSeeder implements CommandLineRunner {
         categories.forEach(this::addTeststoDb);
     }
 
+    @Transactional
+    private void mapQuestionsToDb() {
+        logger.info("Rozpoczynanie mapowania pytań z CSV do bazy danych...");
+
+        // Fetch all tests once
+        List<Test> tests = testService.getAllTests();
+
+        // Preprocess tests into a map for quick lookup
+        Map<String, List<Test>> testMap = tests.stream()
+                .collect(Collectors.groupingBy(test ->
+                        (test.getName().toLowerCase() + "|" +
+                                test.getTestType() + "|" +
+                                test.getDrivingCategory().toLowerCase()))
+                );
+
+        List<Question> questionsToSave = new ArrayList<>();
+        Map<Long, Integer> testQuestionCounts = new HashMap<>();
+
+        try (CSVReader reader = new CSVReaderBuilder(new FileReader("src/main/resources/data/questions/questions.csv"))
+                .withCSVParser(new CSVParserBuilder()
+                        .withSeparator(';')
+                        .build())
+                .build()) {
+            Iterator<String[]> iterator = reader.iterator();
+            if (iterator.hasNext()) {
+                iterator.next(); // Skip header
+            }
+            int iteration = 0;
+            long startTime = System.nanoTime();
+
+            while (iterator.hasNext()) {
+                String[] record = iterator.next();
+                Question question = new Question();
+
+                question.setQuestion(record[0]);
+                question.setMediaName(record[1]);
+                question.setDrivingCategory(record[2]);
+                question.setSubjectArea(record[3]);
+                question.setExplanation(record[4]);
+                question.setAnswerA(record[5]);
+                question.setAnswerB(record[6]);
+                question.setAnswerC(record[7]);
+                question.setCorrectAnswer(record[8].toUpperCase());
+                question.setPoints(Long.parseLong(record[9]));
+                question.setSource(record[10]);
+                question.setConnectionWithSecurity(record[11]);
+                question.setQuestionType("SPECJALISTYCZNY".equalsIgnoreCase(record[12]));
+
+                question.setAvailableAnswers(record[6].isEmpty() ? 2L : 3L);
+
+                if (question.getQuestionType()) {
+                    question.setAllTimeForQuestion(50);
+                } else {
+                    question.setTimeForPrepare(20);
+                    question.setTimeForThink(15);
+                    question.setAllTimeForQuestion(35);
+                }
+
+                // Build the key to find relevant tests
+                String key = (question.getSubjectArea().toLowerCase() + "|" +
+                        question.getQuestionType() + "|" +
+                        question.getDrivingCategory().toLowerCase());
+
+                List<Test> relevantTests = testMap.getOrDefault(key, Collections.emptyList());
+
+                if (!relevantTests.isEmpty()) {
+                    question.setTests(new ArrayList<>(relevantTests));
+                    questionsToSave.add(question);
+
+                    // Accumulate test question counts
+                    for (Test test : relevantTests) {
+                        testQuestionCounts.merge(test.getId(), 1, Integer::sum);
+                    }
+                }
+
+                iteration++;
+                if (iteration % 1000 == 0) {
+                    logger.info("Przetworzono {} pytań...", iteration);
+                }
+            }
+
+            // Batch save all questions
+            questionRepository.saveAll(questionsToSave);
+            logger.info("Zapisano {} pytań do bazy danych.", questionsToSave.size());
+
+            // Update tests with the new question counts
+            List<Test> testsToUpdate = tests.stream()
+                    .filter(test -> testQuestionCounts.containsKey(test.getId()))
+                    .peek(test -> test.setNumberQuestions(
+                            test.getNumberQuestions() + testQuestionCounts.get(test.getId())))
+                    .collect(Collectors.toList());
+
+            testRepository.saveAll(testsToUpdate);
+            logger.info("Zaktualizowano {} testów z nową liczbą pytań.", testsToUpdate.size());
+
+            long durationNano = System.nanoTime() - startTime;
+            long durationMillis = durationNano / 1_000_000;
+            long durationSeconds = durationMillis / 1000;
+            long minutes = durationSeconds / 60;
+            long seconds = durationSeconds % 60;
+            logger.info("Zmapowano {} pytań w czasie: {} minut {} sekund.", iteration, minutes, seconds);
+
+        } catch (IOException e) {
+            logger.error("Błąd podczas czytania pliku CSV z pytaniami.", e);
+        }
+    }
+
+
     private void createLectures() {
         try {
             Lecture l = new Lecture("RUCH POJAZDOW Kategoria B", null, 1, "B");
@@ -173,78 +288,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         }
     }
 
-    private void mapQuestionsToDb() {
-        List<Test> tests = testService.getAllTests();
-        try (CSVReader reader = new CSVReaderBuilder(new FileReader("src/main/resources/data/questions/questions.csv"))
-                .withCSVParser(new CSVParserBuilder()
-                        .withSeparator(';')
-                        .build())
-                .build()) {
-            List<String[]> records = reader.readAll();
-            int iteration = 1;
-            long startTime = System.nanoTime();
-            for (String[] record : records) {
-                if (iteration == 1) {
-                    iteration++;
-                    continue;
-                }
-                Question question = new Question();
 
-                question.setQuestion(record[0]);
-                question.setMediaName(record[1]);
-                question.setDrivingCategory(record[2]);
-                question.setSubjectArea(record[3]);
-                question.setExplanation(record[4]);
-                question.setAnswerA(record[5]);
-                question.setAnswerB(record[6]);
-                question.setAnswerC(record[7]);
-                question.setCorrectAnswer(record[8].toUpperCase());
-                question.setPoints(Long.valueOf(record[9]));
-                question.setSource(record[10]);
-                question.setConnectionWithSecurity(record[11]);
-                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
-
-                if (record[6].isEmpty())
-                    question.setAvailableAnswers(2L);
-                else
-                    question.setAvailableAnswers(3L);
-
-                if (question.getQuestionType())
-                    question.setAllTimeForQuestion(50);
-                else {
-                    question.setTimeForPrepare(20);
-                    question.setTimeForThink(15);
-                    question.setAllTimeForQuestion(35);
-                }
-
-                tests.forEach(t -> {
-                    if (t.getName().equalsIgnoreCase(question.getSubjectArea())
-                            && t.getTestType() == question.getQuestionType()
-                            && question.getDrivingCategory().contains(t.getDrivingCategory())) {
-                        List<Test> questionTests = question.getTests();
-                        questionTests.add(t);
-                        question.setTests(questionTests);
-                        questionService.save(question);
-                        t.setNumberQuestions(t.getNumberQuestions() + 1);
-                        testService.saveTest(t);
-                    }
-                });
-
-                ++iteration;
-//                System.out.println("iteration: " + iteration + " /3550" );
-            }
-
-            long durationNano = System.nanoTime() - startTime;
-            long durationMillis = durationNano / 1_000_000;
-            long durationSeconds = durationMillis / 1000;
-            long minutes = durationSeconds / 60;
-            long seconds = durationSeconds % 60;
-            logger.info("Zmapowano {} Pytan w czasie: {}minut {}sekund", iteration, minutes, seconds);
-
-        } catch (IOException | CsvException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void addTeststoDb(Category category) {
         for (String name : TestNames.getNames())
@@ -283,7 +327,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 new InstructionEvent("Ćwiczenia praktyczne: Bezpieczne poruszanie się po drogach", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 10, 3, 9, 0), LocalDateTime.of(2024, 10, 3, 11, 0), schoolUser, 3),
                 new InstructionEvent("Spotkanie informacyjne: Wprowadzenie do kursu jazdy", Constants.INFORMATION_SESSIONS, LocalDateTime.of(2024, 10, 4, 15, 0), LocalDateTime.of(2024, 10, 4, 17, 0), schoolUser, 100),
                 new InstructionEvent("Trening manewrów: Parkowanie, cofanie i zawracanie", Constants.BASIC_MANEUVERS, LocalDateTime.of(2024, 10, 5, 8, 0), LocalDateTime.of(2024, 10, 5, 10, 0), schoolUser, 54),
-                new InstructionEvent("Kurs pierwszej pomocy: Reagowanie na wypadki drogowe", Constants.FIRST_AID_CLASSES, LocalDateTime.of(2024, 10, 6, 13, 0), LocalDateTime.of(2024, 10, 6, 15, 0), schoolUser, 65),
+                new InstructionEvent("Kurs pierwszej pomocy : Reagowanie na wypadki drogowe", Constants.FIRST_AID_CLASSES, LocalDateTime.of(2024, 10, 6, 13, 0), LocalDateTime.of(2024, 10, 6, 15, 0), schoolUser, 65),
                 new InstructionEvent("Jazda miejska: Radzenie sobie z ruchem ulicznym", Constants.CITY_DRIVING, LocalDateTime.of(2024, 10, 7, 11, 0), LocalDateTime.of(2024, 10, 7, 13, 0), schoolUser, 12),
                 new InstructionEvent("Zaawansowane techniki jazdy: Skuteczność i bezpieczeństwo", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 10, 8, 12, 0), LocalDateTime.of(2024, 10, 8, 14, 0), schoolUser, 54),
                 new InstructionEvent("Dogłębna analiza przepisów ruchu drogowego", Constants.THEORY_OF_DRIVING_CLASSES, LocalDateTime.of(2024, 10, 9, 16, 0), LocalDateTime.of(2024, 10, 9, 18, 0), schoolUser, 34),
