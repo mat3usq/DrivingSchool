@@ -528,6 +528,17 @@ h2 {
 						width: 85%;
 					}
 				}
+
+				.lectureForm,
+				.sublectureForm,
+				.subjectForm {
+					box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+					border-radius: 20px;
+					backdrop-filter: blur(10px);
+					width: 60%;
+					padding: 20px 0;
+					margin: 20px 0;
+				}
 			}
 		}
 	}
@@ -601,9 +612,11 @@ h2 {
 					.lectureForm,
 					.sublectureForm,
 					.subjectForm {
+						width: 90%;
+
 						.input-field,
 						.input-file {
-							width: 100%;
+							width: 80%;
 						}
 					}
 					.container-sublecture,
@@ -647,6 +660,14 @@ h2 {
 						.box-sublecture {
 							font-size: 14px;
 							margin: 30px;
+						}
+					}
+
+					.lectureForm,
+					.sublectureForm,
+					.subjectForm {
+						.formTitle {
+							font-size: 16px;
 						}
 					}
 				}

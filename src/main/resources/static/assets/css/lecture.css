@@ -757,6 +757,17 @@ h2 {
 .subject .hero-img .box-subject .box-container .editSubjectForm .input-file {
   width: 85%;
 }
+.subject .hero-img .box-subject .box-container .lectureForm,
+.subject .hero-img .box-subject .box-container .sublectureForm,
+.subject .hero-img .box-subject .box-container .subjectForm {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  width: 60%;
+  padding: 20px 0;
+  margin: 20px 0;
+}
 
 .contact {
   padding: 20px;
@@ -813,13 +824,18 @@ h2 {
     top: 12vh;
     left: 0px;
   }
+  .subject .hero-img .box-subject .box-container .lectureForm,
+  .subject .hero-img .box-subject .box-container .sublectureForm,
+  .subject .hero-img .box-subject .box-container .subjectForm {
+    width: 90%;
+  }
   .subject .hero-img .box-subject .box-container .lectureForm .input-field,
   .subject .hero-img .box-subject .box-container .lectureForm .input-file,
   .subject .hero-img .box-subject .box-container .sublectureForm .input-field,
   .subject .hero-img .box-subject .box-container .sublectureForm .input-file,
   .subject .hero-img .box-subject .box-container .subjectForm .input-field,
   .subject .hero-img .box-subject .box-container .subjectForm .input-file {
-    width: 100%;
+    width: 80%;
   }
   .subject .hero-img .box-subject .box-container .container-sublecture,
   .subject .hero-img .box-subject .box-container .container-lecture {
@@ -848,6 +864,11 @@ h2 {
   .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture {
     font-size: 14px;
     margin: 30px;
+  }
+  .subject .hero-img .box-subject .box-container .lectureForm .formTitle,
+  .subject .hero-img .box-subject .box-container .sublectureForm .formTitle,
+  .subject .hero-img .box-subject .box-container .subjectForm .formTitle {
+    font-size: 16px;
   }
 }
 @media (max-width: 400px) {
