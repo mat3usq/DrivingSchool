@@ -246,6 +246,80 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
 
+//    private void mapQuestionsToDb() {
+//        List<Test> tests = testService.getAllTests();
+//        try (CSVReader reader = new CSVReaderBuilder(new FileReader("src/main/resources/data/questions/questions.csv"))
+//                .withCSVParser(new CSVParserBuilder()
+//                        .withSeparator(';')
+//                        .build())
+//                .build()) {
+//            List<String[]> records = reader.readAll();
+//            int iteration = 1;
+//            long startTime = System.nanoTime();
+//            for (String[] record : records) {
+//                if (iteration == 1) {
+//                    iteration++;
+//                    continue;
+//                }
+//                Question question = new Question();
+//
+//                question.setQuestion(record[0]);
+//                question.setMediaName(record[1]);
+//                question.setDrivingCategory(record[2]);
+//                question.setSubjectArea(record[3]);
+//                question.setExplanation(record[4]);
+//                question.setAnswerA(record[5]);
+//                question.setAnswerB(record[6]);
+//                question.setAnswerC(record[7]);
+//                question.setCorrectAnswer(record[8].toUpperCase());
+//                question.setPoints(Long.valueOf(record[9]));
+//                question.setSource(record[10]);
+//                question.setConnectionWithSecurity(record[11]);
+//                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
+//
+//                if (record[6].isEmpty())
+//                    question.setAvailableAnswers(2L);
+//                else
+//                    question.setAvailableAnswers(3L);
+//
+//                if (question.getQuestionType())
+//                    question.setAllTimeForQuestion(50);
+//                else {
+//                    question.setTimeForPrepare(20);
+//                    question.setTimeForThink(15);
+//                    question.setAllTimeForQuestion(35);
+//                }
+//
+//                tests.forEach(t -> {
+//                    if (t.getName().equalsIgnoreCase(question.getSubjectArea())
+//                            && t.getTestType() == question.getQuestionType()
+//                            && question.getDrivingCategory().contains(t.getDrivingCategory())) {
+//                        List<Test> questionTests = question.getTests();
+//                        questionTests.add(t);
+//                        question.setTests(questionTests);
+//                        questionService.save(question);
+//                        t.setNumberQuestions(t.getNumberQuestions() + 1);
+//                        testService.saveTest(t);
+//                    }
+//                });
+//
+//                ++iteration;
+////                System.out.println("iteration: " + iteration + " /3550" );
+//            }
+//
+//            long durationNano = System.nanoTime() - startTime;
+//            long durationMillis = durationNano / 1_000_000;
+//            long durationSeconds = durationMillis / 1000;
+//            long minutes = durationSeconds / 60;
+//            long seconds = durationSeconds % 60;
+//            logger.info("Zmapowano {} Pytan w czasie: {}minut {}sekund", iteration, minutes, seconds);
+//
+//        } catch (IOException | CsvException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
     private void createLectures() {
         try {
             Lecture l = new Lecture("RUCH POJAZDOW Kategoria B", null, 1, "B");
