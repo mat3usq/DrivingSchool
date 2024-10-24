@@ -4,33 +4,37 @@ package com.driving.school.service;
 import com.driving.school.model.Constants;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.model.StudentInstructor;
+import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.repository.StudentInstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentInstructorService {
     @Autowired
     StudentInstructorRepository studentInstructorRepository;
+    @Autowired
+    private SchoolUserRepository schoolUserRepository;
 
     public StudentInstructorService(StudentInstructorRepository studentInstructorRepository) {
         this.studentInstructorRepository = studentInstructorRepository;
     }
+
     public List<StudentInstructor> findByStudentId(Long studentId) {
-        return studentInstructorRepository.findByStudentId(studentId);
+        return studentInstructorRepository.findByStudentIdOrderByStatusAsc(studentId);
     }
 
-    public List<StudentInstructor> findByInstructorId(Long instructorId) {
-        return studentInstructorRepository.findByInstructorId(instructorId);
-    }
-
-    public StudentInstructor findByStudentIdAndInstructorId(Long studentId, Long instructorId) {
-        return studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
+    public Page<StudentInstructor> findByInstructorId(Long instructorId, Pageable pageable) {
+        return studentInstructorRepository.findByInstructorIdOrderByStatusAsc(instructorId, pageable);
     }
 
     public boolean existsByStudentAndInstructor(SchoolUser student, SchoolUser instructor) {
@@ -66,32 +70,39 @@ public class StudentInstructorService {
         studentInstructorRepository.deleteById(id);
     }
 
-    public void createStudentInstructorWithStatus(SchoolUser student, SchoolUser instructor, String status) {
-        if (!studentInstructorRepository.existsByStudentAndInstructor(student, instructor)) {
+    public boolean createStudentInstructorWithStatus(SchoolUser student, SchoolUser instructor, String status) {
+        boolean existsInProgress = studentInstructorRepository.existsByStudentAndInstructorAndStatus(student, instructor, Constants.ACTIVE);
+        boolean existsInPending = studentInstructorRepository.existsByStudentAndInstructorAndStatus(student, instructor, Constants.PENDING);
+
+        if (!existsInProgress && !existsInPending) {
             StudentInstructor studentInstructor = new StudentInstructor();
             studentInstructor.setStudent(student);
             studentInstructor.setInstructor(instructor);
             studentInstructor.setStatus(status);
             studentInstructorRepository.save(studentInstructor);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public void acceptStudent(Long studentInstructorId) {
+        Optional<StudentInstructor> opt = studentInstructorRepository.findById(studentInstructorId);
+        if (opt.isPresent()) {
+            StudentInstructor studentInstructor = opt.get();
+            studentInstructor.setStatus(Constants.ACTIVE);
+            studentInstructorRepository.save(studentInstructor);
         }
     }
 
-    public void deleteStudentInstructor(Long studentId, Long instructorId) {
-        StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
-        if (studentInstructor != null)
-            studentInstructorRepository.delete(studentInstructor);
-    }
-
-    public void acceptStudent(Long studentId, Long instructorId) {
-        StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
-        studentInstructor.setStatus(Constants.ACTIVE);
-        studentInstructorRepository.save(studentInstructor);
-    }
-
-    public void finishStudentInstructor(Long studentId, Long instructorId) {
-        StudentInstructor studentInstructor = studentInstructorRepository.findByStudentIdAndInstructorId(studentId, instructorId);
-        studentInstructor.setStatus(Constants.COMPLETED);
-        studentInstructor.setEndAt(LocalDateTime.now());
-        studentInstructorRepository.save(studentInstructor);
+    public void finishStudentInstructor(Long studentInstructorId) {
+        Optional<StudentInstructor> opt = studentInstructorRepository.findById(studentInstructorId);
+        if (opt.isPresent()) {
+            StudentInstructor studentInstructor = opt.get();
+            studentInstructor.setStatus(Constants.COMPLETED);
+            studentInstructor.setEndAt(LocalDateTime.now());
+            studentInstructorRepository.save(studentInstructor);
+        }
     }
 }

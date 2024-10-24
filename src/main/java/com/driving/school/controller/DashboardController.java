@@ -2,6 +2,7 @@ package com.driving.school.controller;
 
 import com.driving.school.model.Constants;
 import com.driving.school.model.SchoolUser;
+import com.driving.school.model.StudentInstructor;
 import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.StudentInstructorService;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 public class DashboardController {
@@ -41,10 +44,17 @@ public class DashboardController {
         switch (user.getRoleName()) {
             case Constants.STUDENT_ROLE ->
                     modelAndView.addObject("instructorStudents", studentInstructorService.findByStudentId(user.getId()));
-            case Constants.INSTRUCTOR_ROLE ->
-                    modelAndView.addObject("instructorStudents", studentInstructorService.findByInstructorId(user.getId()));
+            case Constants.INSTRUCTOR_ROLE -> {
+                Page<StudentInstructor> rel = studentInstructorService.findByInstructorId(user.getId(), PageRequest.of(0, size));
+                int totalPages = rel.getTotalPages();
+                page = (page < 0) ? 0 : (page >= totalPages && totalPages > 0) ? totalPages - 1 : page;
+                rel = studentInstructorService.findByInstructorId(user.getId(), PageRequest.of(page, size));
+                modelAndView.addObject("instructorStudents", rel.getContent());
+                modelAndView.addObject("currentPage", page);
+                modelAndView.addObject("totalPages", totalPages);
+            }
             case Constants.ADMIN_ROLE -> {
-                Page<SchoolUser> userPage = schoolUserService.findAllUsers(PageRequest.of(0, size)); // Temporarily fetch to check total pages
+                Page<SchoolUser> userPage = schoolUserService.findAllUsers(PageRequest.of(0, size));
                 int totalPages = userPage.getTotalPages();
                 page = (page < 0) ? 0 : (page >= totalPages && totalPages > 0) ? totalPages - 1 : page;
                 userPage = schoolUserService.findAllUsers(PageRequest.of(page, size));
@@ -73,11 +83,12 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/student/cancelInstructor")
-    public ModelAndView cancelInstructor(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
+    public ModelAndView cancelInstructor(@RequestParam("studentInstructorId") Long studentInstructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        if (loggedInUser.getId().equals(studentId))
-            studentInstructorService.deleteStudentInstructor(studentId, instructorId);
+        Optional<StudentInstructor> si = studentInstructorService.getStudentInstructorById(studentInstructorId);
+        if (si.isPresent() && loggedInUser.getId().equals(si.get().getStudent().getId()))
+            studentInstructorService.deleteStudentInstructor(studentInstructorId);
         return modelAndView;
     }
 
@@ -87,40 +98,41 @@ public class DashboardController {
         SchoolUser studentUser = schoolUserService.findUserByEmail(studentEmail);
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (studentUser != null && loggedInUser.getRoleName().equals(Constants.INSTRUCTOR_ROLE)) {
-            studentInstructorService.createStudentInstructorWithStatus(studentUser, loggedInUser, Constants.ACTIVE);
+        if (studentUser != null && loggedInUser.getRoleName().equals(Constants.INSTRUCTOR_ROLE) && studentInstructorService.createStudentInstructorWithStatus(studentUser, loggedInUser, Constants.ACTIVE))
             redirectAttributes.addFlashAttribute("assignStudentInfo", "Pomyślnie dodano studenta!");
-        } else {
-            redirectAttributes.addFlashAttribute("assignStudentInfo", "Nieprawidłowy email.");
-        }
+        else
+            redirectAttributes.addFlashAttribute("assignStudentInfo", "Nie udało się dodać studenta.");
 
         return modelAndView;
     }
 
     @PostMapping("/dashboard/instructor/acceptStudent")
-    public ModelAndView acceptStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
+    public ModelAndView acceptStudent(@RequestParam("studentInstructorId") Long studentInstructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        if (loggedInUser.getId().equals(instructorId))
-            studentInstructorService.acceptStudent(studentId, instructorId);
+        Optional<StudentInstructor> si = studentInstructorService.getStudentInstructorById(studentInstructorId);
+        if (si.isPresent() && loggedInUser.getId().equals(si.get().getInstructor().getId()))
+            studentInstructorService.acceptStudent(studentInstructorId);
         return modelAndView;
     }
 
     @PostMapping("/dashboard/instructor/cancelStudent")
-    public ModelAndView cancelStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
+    public ModelAndView cancelStudent(@RequestParam("studentInstructorId") Long studentInstructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        if (loggedInUser.getId().equals(instructorId))
-            studentInstructorService.deleteStudentInstructor(studentId, instructorId);
+        Optional<StudentInstructor> si = studentInstructorService.getStudentInstructorById(studentInstructorId);
+        if (si.isPresent() && loggedInUser.getId().equals(si.get().getInstructor().getId()))
+            studentInstructorService.deleteStudentInstructor(studentInstructorId);
         return modelAndView;
     }
 
     @PostMapping("/dashboard/instructor/finishStudent")
-    public ModelAndView finishStudent(@RequestParam("studentId") Long studentId, @RequestParam("instructorId") Long instructorId, HttpSession session) {
+    public ModelAndView finishStudent(@RequestParam("studentInstructorId") Long studentInstructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-        if (loggedInUser.getId().equals(instructorId))
-            studentInstructorService.finishStudentInstructor(studentId, instructorId);
+        Optional<StudentInstructor> si = studentInstructorService.getStudentInstructorById(studentInstructorId);
+        if (si.isPresent() && loggedInUser.getId().equals(si.get().getInstructor().getId()))
+            studentInstructorService.finishStudentInstructor(studentInstructorId);
         return modelAndView;
     }
 }
