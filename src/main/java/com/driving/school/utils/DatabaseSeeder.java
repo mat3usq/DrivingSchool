@@ -138,38 +138,35 @@ public class DatabaseSeeder implements CommandLineRunner {
         categories.forEach(this::addTeststoDb);
     }
 
-    @Transactional
     private void mapQuestionsToDb() {
-        logger.info("Rozpoczynanie mapowania pytań z CSV do bazy danych...");
-
-        // Fetch all tests once
         List<Test> tests = testService.getAllTests();
 
-        // Preprocess tests into a map for quick lookup
-        Map<String, List<Test>> testMap = tests.stream()
-                .collect(Collectors.groupingBy(test ->
-                        (test.getName().toLowerCase() + "|" +
-                                test.getTestType() + "|" +
-                                test.getDrivingCategory().toLowerCase()))
-                );
+        Map<String, List<Test>> testMapByNameAndType = tests.stream()
+                .collect(Collectors.groupingBy(
+                        t -> t.getName().toLowerCase() + "_" + t.getTestType()
+                ));
 
-        List<Question> questionsToSave = new ArrayList<>();
-        Map<Long, Integer> testQuestionCounts = new HashMap<>();
+        List<Test> otherTests = testRepository.findByName("Inne");
+        Map<Boolean, List<Test>> otherTestsByType = otherTests.stream()
+                .collect(Collectors.groupingBy(Test::getTestType));
 
         try (CSVReader reader = new CSVReaderBuilder(new FileReader("src/main/resources/data/questions/questions.csv"))
                 .withCSVParser(new CSVParserBuilder()
                         .withSeparator(';')
                         .build())
                 .build()) {
-            Iterator<String[]> iterator = reader.iterator();
-            if (iterator.hasNext()) {
-                iterator.next(); // Skip header
-            }
-            int iteration = 0;
+            List<String[]> records = reader.readAll();
+            int iteration = 1;
             long startTime = System.nanoTime();
 
-            while (iterator.hasNext()) {
-                String[] record = iterator.next();
+            List<Question> questionsToSave = new ArrayList<>();
+            Set<Test> testsToSave = new HashSet<>();
+
+            for (String[] record : records) {
+                if (iteration == 1) {
+                    iteration++;
+                    continue;
+                }
                 Question question = new Question();
 
                 question.setQuestion(record[0]);
@@ -181,144 +178,70 @@ public class DatabaseSeeder implements CommandLineRunner {
                 question.setAnswerB(record[6]);
                 question.setAnswerC(record[7]);
                 question.setCorrectAnswer(record[8].toUpperCase());
-                question.setPoints(Long.parseLong(record[9]));
+                question.setPoints(Long.valueOf(record[9]));
                 question.setSource(record[10]);
                 question.setConnectionWithSecurity(record[11]);
-                question.setQuestionType("SPECJALISTYCZNY".equalsIgnoreCase(record[12]));
+                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
 
-                question.setAvailableAnswers(record[6].isEmpty() ? 2L : 3L);
+                if (record[6].isEmpty())
+                    question.setAvailableAnswers(2L);
+                else
+                    question.setAvailableAnswers(3L);
 
-                if (question.getQuestionType()) {
+                if (question.getQuestionType())
                     question.setAllTimeForQuestion(50);
-                } else {
+                else {
                     question.setTimeForPrepare(20);
                     question.setTimeForThink(15);
                     question.setAllTimeForQuestion(35);
                 }
 
-                // Build the key to find relevant tests
-                String key = (question.getSubjectArea().toLowerCase() + "|" +
-                        question.getQuestionType() + "|" +
-                        question.getDrivingCategory().toLowerCase());
+                String key = question.getSubjectArea().toLowerCase() + "_" + question.getQuestionType();
+                List<Test> matchingTests = testMapByNameAndType.getOrDefault(key, new ArrayList<>());
 
-                List<Test> relevantTests = testMap.getOrDefault(key, Collections.emptyList());
+                List<Test> testsToAdd = new ArrayList<>();
 
-                if (!relevantTests.isEmpty()) {
-                    question.setTests(new ArrayList<>(relevantTests));
-                    questionsToSave.add(question);
-
-                    // Accumulate test question counts
-                    for (Test test : relevantTests) {
-                        testQuestionCounts.merge(test.getId(), 1, Integer::sum);
+                if (!matchingTests.isEmpty()) {
+                    for (Test t : matchingTests) {
+                        if (question.getDrivingCategory().contains(t.getDrivingCategory())) {
+                            testsToAdd.add(t);
+                            t.setNumberQuestions(t.getNumberQuestions() + 1);
+                            testsToSave.add(t);
+                        }
+                    }
+                } else {
+                    List<Test> otherMatchingTests = otherTestsByType.getOrDefault(question.getQuestionType(), new ArrayList<>());
+                    for (Test ot : otherMatchingTests) {
+                        if (question.getDrivingCategory().contains(ot.getDrivingCategory())) {
+                            testsToAdd.add(ot);
+                            ot.setNumberQuestions(ot.getNumberQuestions() + 1);
+                            testsToSave.add(ot);
+                        }
                     }
                 }
 
-                iteration++;
-                if (iteration % 1000 == 0) {
-                    logger.info("Przetworzono {} pytań...", iteration);
+                if (!testsToAdd.isEmpty()) {
+                    question.setTests(testsToAdd);
+                    questionsToSave.add(question);
                 }
+
+                ++iteration;
             }
 
-            // Batch save all questions
             questionRepository.saveAll(questionsToSave);
-            logger.info("Zapisano {} pytań do bazy danych.", questionsToSave.size());
-
-            // Update tests with the new question counts
-            List<Test> testsToUpdate = tests.stream()
-                    .filter(test -> testQuestionCounts.containsKey(test.getId()))
-                    .peek(test -> test.setNumberQuestions(
-                            test.getNumberQuestions() + testQuestionCounts.get(test.getId())))
-                    .collect(Collectors.toList());
-
-            testRepository.saveAll(testsToUpdate);
-            logger.info("Zaktualizowano {} testów z nową liczbą pytań.", testsToUpdate.size());
+            testRepository.saveAll(new ArrayList<>(testsToSave));
 
             long durationNano = System.nanoTime() - startTime;
             long durationMillis = durationNano / 1_000_000;
             long durationSeconds = durationMillis / 1000;
             long minutes = durationSeconds / 60;
             long seconds = durationSeconds % 60;
-            logger.info("Zmapowano {} pytań w czasie: {} minut {} sekund.", iteration, minutes, seconds);
+            logger.info("Zmapowano {} pytań w czasie: {} minut {} sekund", iteration, minutes, seconds);
 
-        } catch (IOException e) {
-            logger.error("Błąd podczas czytania pliku CSV z pytaniami.", e);
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
         }
     }
-
-
-//    private void mapQuestionsToDb() {
-//        List<Test> tests = testService.getAllTests();
-//        try (CSVReader reader = new CSVReaderBuilder(new FileReader("src/main/resources/data/questions/questions.csv"))
-//                .withCSVParser(new CSVParserBuilder()
-//                        .withSeparator(';')
-//                        .build())
-//                .build()) {
-//            List<String[]> records = reader.readAll();
-//            int iteration = 1;
-//            long startTime = System.nanoTime();
-//            for (String[] record : records) {
-//                if (iteration == 1) {
-//                    iteration++;
-//                    continue;
-//                }
-//                Question question = new Question();
-//
-//                question.setQuestion(record[0]);
-//                question.setMediaName(record[1]);
-//                question.setDrivingCategory(record[2]);
-//                question.setSubjectArea(record[3]);
-//                question.setExplanation(record[4]);
-//                question.setAnswerA(record[5]);
-//                question.setAnswerB(record[6]);
-//                question.setAnswerC(record[7]);
-//                question.setCorrectAnswer(record[8].toUpperCase());
-//                question.setPoints(Long.valueOf(record[9]));
-//                question.setSource(record[10]);
-//                question.setConnectionWithSecurity(record[11]);
-//                question.setQuestionType(record[12].equals("SPECJALISTYCZNY"));
-//
-//                if (record[6].isEmpty())
-//                    question.setAvailableAnswers(2L);
-//                else
-//                    question.setAvailableAnswers(3L);
-//
-//                if (question.getQuestionType())
-//                    question.setAllTimeForQuestion(50);
-//                else {
-//                    question.setTimeForPrepare(20);
-//                    question.setTimeForThink(15);
-//                    question.setAllTimeForQuestion(35);
-//                }
-//
-//                tests.forEach(t -> {
-//                    if (t.getName().equalsIgnoreCase(question.getSubjectArea())
-//                            && t.getTestType() == question.getQuestionType()
-//                            && question.getDrivingCategory().contains(t.getDrivingCategory())) {
-//                        List<Test> questionTests = question.getTests();
-//                        questionTests.add(t);
-//                        question.setTests(questionTests);
-//                        questionService.save(question);
-//                        t.setNumberQuestions(t.getNumberQuestions() + 1);
-//                        testService.saveTest(t);
-//                    }
-//                });
-//
-//                ++iteration;
-////                System.out.println("iteration: " + iteration + " /3550" );
-//            }
-//
-//            long durationNano = System.nanoTime() - startTime;
-//            long durationMillis = durationNano / 1_000_000;
-//            long durationSeconds = durationMillis / 1000;
-//            long minutes = durationSeconds / 60;
-//            long seconds = durationSeconds % 60;
-//            logger.info("Zmapowano {} Pytan w czasie: {}minut {}sekund", iteration, minutes, seconds);
-//
-//        } catch (IOException | CsvException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 
     private void createLectures() {
         try {
@@ -361,7 +284,6 @@ public class DatabaseSeeder implements CommandLineRunner {
             throw new RuntimeException(e);
         }
     }
-
 
 
     public void addTeststoDb(Category category) {
