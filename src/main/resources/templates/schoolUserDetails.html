@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Szczegóły Użytkownika</title>
+
+    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/schoolUserDetails.css"/>
+</head>
+<body>
+
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="details">
+        <div class="hero-img">
+            <div class="box-container">
+                <div class="box-user">
+                    <div class="account-schoolUser">
+                        <p class="title">Dane Użytkownika</p>
+                        <div class="account-details">
+                            <div class="detail">
+                                <span class="title-header">Imię oraz Nazwisko</span>
+                                <span class="content">
+                                    <span th:text="${user.name}"></span>
+                                    <span th:text="${user.surname}"></span>
+                                </span>
+                            </div>
+                            <div class="detail">
+                                <span class="title-header">Adres E-mail</span>
+                                <span class="content" th:text="${user.email}"></span>
+                            </div>
+                            <div class="detail">
+                                <span class="title-header">Kategorie</span>
+                                <span class="content">
+                                    <span th:each="category : ${user.availableCategories}"
+                                          th:text="${category.nameCategory} + ' '"></span>
+                                </span>
+                            </div>
+                            <div class="detail">
+                                <span class="title-header">Data Założenia</span>
+                                <span class="content"
+                                      th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <h2>Kontakt</h2>
+    <div class="underline"></div>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="row text-center contact-us">
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Główna Siedziba</h3>
+                    <p>ul. Złota 44</p>
+                    <p>12-432 Warszawa</p>
+                    <p>+48 492 345 234</p>
+                    <p>DrivingSchool@gmail.com</p>
+                </div>
+
+                <div class="order-0 order-lg-1 col-lg-4 contact-item">
+                    <h3>Social Media</h3>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                    <h3>Siedziba Poboczna</h3>
+                    <p>ul. Wiejska 45A</p>
+                    <p>32-643 Białystok</p>
+                    <p>+48 537 943 743</p>
+                    <p>DrivingSchool@apple.pl</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-shadow"></div>
+    </section>
+</main>
+
+<footer class="py-4 text-center">
+    <p class="mb-0">
+        &copy 2077 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+        <span class="orange-text">Driving</span> <span class="gold-text">School</span>
+    </p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+</body>
+</html>
