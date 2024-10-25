@@ -332,8 +332,8 @@
                                             </td>
                                             <td th:if="${user.availableCategories.isEmpty()}">---</td>
                                             <td class="operations">
-                                                <form th:action="@{/dashboard/admin/moreInfo}" method="post">
-                                                    <input type="hidden" name="studentId"
+                                                <form th:action="@{/dashboard/admin/userDetails}" method="post">
+                                                    <input type="hidden" name="userId"
                                                            th:value="${user.id}"/>
                                                     <button type="submit" class="info-btn"><i class="fa-solid fa-eye"></i></button>
                                                 </form>

@@ -135,4 +135,13 @@ public class DashboardController {
             studentInstructorService.finishStudentInstructor(studentInstructorId);
         return modelAndView;
     }
+
+    @PostMapping("/dashboard/admin/userDetails")
+    public ModelAndView userDetails(@RequestParam("userId") Long userId) {
+        ModelAndView modelAndView = new ModelAndView("schoolUserDetails");
+        SchoolUser user = schoolUserService.findUserById(userId);
+        if (user != null)
+            modelAndView.addObject("user", user);
+        return modelAndView;
+    }
 }
