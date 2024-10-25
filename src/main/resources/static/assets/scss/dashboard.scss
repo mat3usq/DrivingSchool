@@ -233,62 +233,87 @@ h2 {
 								position: relative;
 							}
 
-							.table-instructor-row {
-								position: relative;
-								transition: transform 0.3s ease;
-								left: -120px;
-
-								.operation-student {
-									background: transparent;
-									transition: transform 0.3s ease;
-								}
-
-								@media (hover: hover) and (pointer: fine) {
-									&:hover {
-										cursor: pointer;
-										padding-left: 100px;
-										transform: translateX(120px);
-									}
-								}
-
-								&.clicked {
-									transform: translateX(120px);
-								}
-							}
-
-							.table-student-row {
+							.table-one-option {
 								position: relative;
 								transition: transform 0.3s ease;
 
-								.operation-student {
+								.operations {
 									background: transparent;
 									position: absolute;
-									top: 6px;
-									left: -240px;
+									top: 50%;
+									transform: translateY(-50%);
+									left: -50px;
 									transition: transform 0.3s ease;
 									display: flex;
 									overflow: visible;
 									gap: 6px;
-
-									.correct-btn {
-										margin-left: 5px;
-									}
-
-									.cancel-btn {
-										margin-right: 5px;
-									}
 								}
 
 								@media (hover: hover) and (pointer: fine) {
 									&:hover {
 										cursor: pointer;
-										padding-left: 200px;
-										transform: translateX(240px);
+										transform: translateX(50px);
 									}
 								}
 
 								&.clicked {
-									transform: translateX(240px);
+									transform: translateX(50px);
+								}
+							}
+
+							.table-two-options {
+								position: relative;
+								transition: transform 0.3s ease;
+
+								.operations {
+									background: transparent;
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									left: -90px;
+									transition: transform 0.3s ease;
+									display: flex;
+									overflow: visible;
+									gap: 6px;
+								}
+
+								@media (hover: hover) and (pointer: fine) {
+									&:hover {
+										cursor: pointer;
+										transform: translateX(90px);
+									}
+								}
+
+								&.clicked {
+									transform: translateX(90px);
+								}
+							}
+
+							.table-three-options {
+								position: relative;
+								transition: transform 0.3s ease;
+
+								.operations {
+									background: transparent;
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									left: -130px;
+									transition: transform 0.3s ease;
+									display: flex;
+									overflow: visible;
+									gap: 6px;
+								}
+
+								@media (hover: hover) and (pointer: fine) {
+									&:hover {
+										cursor: pointer;
+										transform: translateX(130px);
+									}
+								}
+
+								&.clicked {
+									transform: translateX(130px);
 								}
 							}
 						}

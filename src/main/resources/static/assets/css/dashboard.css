@@ -339,124 +339,161 @@ h2 {
 .dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-normal-row {
   position: relative;
 }
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-instructor-row,
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-instructor-row,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-instructor-row,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-instructor-row,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-instructor-row,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-instructor-row,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-instructor-row,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-instructor-row {
-  position: relative;
-  transition: transform 0.3s ease;
-  left: -120px;
-}
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-instructor-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-instructor-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-instructor-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-instructor-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-instructor-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-instructor-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-instructor-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-instructor-row .operation-student {
-  background: transparent;
-  transition: transform 0.3s ease;
-}
-@media (hover: hover) and (pointer: fine) {
-  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-instructor-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-instructor-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-instructor-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-instructor-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-instructor-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-instructor-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-instructor-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-instructor-row:hover {
-    cursor: pointer;
-    padding-left: 100px;
-    transform: translateX(120px);
-  }
-}
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-instructor-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-instructor-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-instructor-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-instructor-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-instructor-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-instructor-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-instructor-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-instructor-row.clicked {
-  transform: translateX(120px);
-}
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row,
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row {
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-one-option,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-one-option,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-one-option,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-one-option,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-one-option,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-one-option,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-one-option,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-one-option {
   position: relative;
   transition: transform 0.3s ease;
 }
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row .operation-student,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row .operation-student {
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-one-option .operations,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-one-option .operations,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-one-option .operations,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-one-option .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-one-option .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-one-option .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-one-option .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-one-option .operations {
   background: transparent;
   position: absolute;
-  top: 6px;
-  left: -240px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -50px;
   transition: transform 0.3s ease;
   display: flex;
   overflow: visible;
   gap: 6px;
 }
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row .operation-student .correct-btn,
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row .operation-student .correct-btn,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row .operation-student .correct-btn,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row .operation-student .correct-btn,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row .operation-student .correct-btn,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row .operation-student .correct-btn,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row .operation-student .correct-btn,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row .operation-student .correct-btn {
-  margin-left: 5px;
-}
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row .operation-student .cancel-btn,
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row .operation-student .cancel-btn,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row .operation-student .cancel-btn,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row .operation-student .cancel-btn,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row .operation-student .cancel-btn,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row .operation-student .cancel-btn,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row .operation-student .cancel-btn,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row .operation-student .cancel-btn {
-  margin-right: 5px;
-}
 @media (hover: hover) and (pointer: fine) {
-  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row:hover,
-  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row:hover {
+  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-one-option:hover {
     cursor: pointer;
-    padding-left: 200px;
-    transform: translateX(240px);
+    transform: translateX(50px);
   }
 }
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-student-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-student-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-student-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-student-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-student-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-student-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-student-row.clicked,
-.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-student-row.clicked {
-  transform: translateX(240px);
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-one-option.clicked {
+  transform: translateX(50px);
+}
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-two-options,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-two-options,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-two-options,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-two-options,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-two-options,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-two-options,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-two-options,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-two-options {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-two-options .operations,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-two-options .operations,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-two-options .operations,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-two-options .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-two-options .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-two-options .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-two-options .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-two-options .operations {
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -90px;
+  transition: transform 0.3s ease;
+  display: flex;
+  overflow: visible;
+  gap: 6px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-two-options:hover {
+    cursor: pointer;
+    transform: translateX(90px);
+  }
+}
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-two-options.clicked {
+  transform: translateX(90px);
+}
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-three-options,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-three-options,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-three-options,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-three-options,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-three-options,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-three-options,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-three-options,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-three-options {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-three-options .operations,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-three-options .operations,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-three-options .operations,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-three-options .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-three-options .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-three-options .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-three-options .operations,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-three-options .operations {
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -130px;
+  transition: transform 0.3s ease;
+  display: flex;
+  overflow: visible;
+  gap: 6px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-three-options:hover {
+    cursor: pointer;
+    transform: translateX(130px);
+  }
+}
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .instructors-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .instructors-list .students-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .instructors-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-student .students-list .students-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .instructors-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .instructors-list .students-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .instructors-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .box-users .account-instructor .students-list .students-table .table-three-options.clicked {
+  transform: translateX(130px);
 }
 .dashboard .hero-img .box-container .box-users .account-student .select-instructor,
 .dashboard .hero-img .box-container .box-users .account-instructor .select-instructor {
