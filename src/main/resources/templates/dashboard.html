@@ -102,16 +102,8 @@
                                         <tbody>
                                         <th:block th:each="element : ${instructorStudents}"
                                                   th:with="Constants=${T(com.driving.school.model.Constants)}">
-                                            <tr class="table-instructor-row"
-                                                th:if="${!element.status.equals(Constants.COMPLETED)}">
-                                                <td class="operation-student">
-                                                    <form th:action="@{/dashboard/student/cancelInstructor}"
-                                                          method="post">
-                                                        <input type="hidden" name="studentInstructorId"
-                                                               th:value="${element.id}"/>
-                                                        <button type="submit" class="cancel-btn">Anuluj</button>
-                                                    </form>
-                                                </td>
+                                            <tr class="table-one-option"
+                                                th:if="${element.status.equals(Constants.PENDING)}">
                                                 <td th:text="${element.instructor.name}"></td>
                                                 <td th:text="${element.instructor.surname}"></td>
                                                 <td th:text="${element.instructor.email}"></td>
@@ -120,12 +112,45 @@
                                                         th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                 <td
                                                         th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td class="operations">
+                                                    <form th:action="@{/dashboard/student/cancelInstructor}"
+                                                          method="post">
+                                                        <input type="hidden" name="studentInstructorId"
+                                                               th:value="${element.id}"/>
+                                                        <button type="submit" class="cancel-btn"><i class="fa-solid fa-xmark"></i></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr class="table-two-options"
+                                                th:if="${element.status.equals(Constants.ACTIVE)}">
+                                                <td th:text="${element.instructor.name}"></td>
+                                                <td th:text="${element.instructor.surname}"></td>
+                                                <td th:text="${element.instructor.email}"></td>
+                                                <td th:text="${element.status}"></td>
+                                                <td
+                                                        th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td
+                                                        th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td class="operations">
+                                                    <form th:action="@{/dashboard/student/cancelInstructor}"
+                                                          method="post">
+                                                        <input type="hidden" name="studentInstructorId"
+                                                               th:value="${element.id}"/>
+                                                        <button type="submit" class="cancel-btn"><i class="fa-solid fa-xmark"></i></button>
+                                                    </form>
+                                                    <form th:action="@{/dashboard/student/showInstructor}"
+                                                          method="post">
+                                                        <input type="hidden" name="studentInstructorId"
+                                                               th:value="${element.id}"/>
+                                                        <button type="submit" class="info-btn"><i class="fa-solid fa-eye"></i></button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             <tr th:if="${element.status.equals(Constants.COMPLETED)}"
                                                 class="table-normal-row">
-                                                <td th:text="${element.student.name}"></td>
-                                                <td th:text="${element.student.surname}"></td>
-                                                <td th:text="${element.student.email}"></td>
+                                                <td th:text="${element.instructor.name}"></td>
+                                                <td th:text="${element.instructor.surname}"></td>
+                                                <td th:text="${element.instructor.email}"></td>
                                                 <td th:text="${element.status}"></td>
                                                 <td
                                                         th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
@@ -166,7 +191,6 @@
                                             <th>Początek</th>
                                             <th>Koniec</th>
                                             <th></th>
-                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -174,7 +198,7 @@
                                                 th:each="element : ${instructorStudents}"
                                                 th:with="Constants=${T(com.driving.school.model.Constants)}">
                                             <tr th:if="${element.status.equals(Constants.PENDING)}"
-                                                class="table-student-row">
+                                                class="table-two-options">
                                                 <td th:text="${element.student.name}"></td>
                                                 <td th:text="${element.student.surname}"></td>
                                                 <td th:text="${element.student.email}"></td>
@@ -183,23 +207,23 @@
                                                         th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                 <td
                                                         th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                <td class="operation-student">
+                                                <td class="operations">
                                                     <form th:action="@{/dashboard/instructor/cancelStudent}"
                                                           method="post">
                                                         <input type="hidden" name="studentInstructorId"
                                                                th:value="${element.id}"/>
-                                                        <button type="submit" class="cancel-btn">Odrzuc</button>
+                                                        <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
                                                     </form>
                                                     <form th:action="@{/dashboard/instructor/acceptStudent}"
                                                           method="post">
                                                         <input type="hidden" name="studentInstructorId"
                                                                th:value="${element.id}"/>
-                                                        <button type="submit" class="info-btn">Akceptuj</button>
+                                                        <button type="submit" class="correct-btn"><i class="fa-regular fa-square-check"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
                                             <tr th:if="${element.status.equals(Constants.ACTIVE)}"
-                                                class="table-student-row">
+                                                class="table-three-options">
                                                 <td th:text="${element.student.name}"></td>
                                                 <td th:text="${element.student.surname}"></td>
                                                 <td th:text="${element.student.email}"></td>
@@ -208,18 +232,24 @@
                                                         th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                 <td
                                                         th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                                <td class="operation-student">
+                                                <td class="operations">
                                                     <form th:action="@{/dashboard/instructor/cancelStudent}"
                                                           method="post">
                                                         <input type="hidden" name="studentInstructorId"
                                                                th:value="${element.id}"/>
-                                                        <button type="submit" class="cancel-btn">Anuluj</button>
+                                                        <button type="submit" class="cancel-btn"><i class="fa-solid fa-xmark"></i></button>
+                                                    </form>
+                                                    <form th:action="@{/dashboard/instructor/showStudent}"
+                                                          method="post">
+                                                        <input type="hidden" name="studentInstructorId"
+                                                               th:value="${element.id}"/>
+                                                        <button type="submit" class="info-btn"><i class="fa-solid fa-eye"></i></button>
                                                     </form>
                                                     <form th:action="@{/dashboard/instructor/finishStudent}"
                                                           method="post">
                                                         <input type="hidden" name="studentInstructorId"
                                                                th:value="${element.id}"/>
-                                                        <button type="submit" class="delete-btn">Zakończ</button>
+                                                        <button type="submit" class="correct-btn"><i class="fa-solid fa-flag-checkered"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -289,14 +319,7 @@
                                     <tbody>
                                     <th:block
                                             th:each="user : ${schoolUsers}">
-                                        <tr class="table-instructor-row">
-                                            <td class="operation-student">
-                                                <form th:action="@{/dashboard/admin/moreInfo}" method="post">
-                                                    <input type="hidden" name="studentId"
-                                                           th:value="${user.id}"/>
-                                                    <button type="submit" class="info-btn">Zobacz</button>
-                                                </form>
-                                            </td>
+                                        <tr class="table-one-option">
                                             <td th:text="${user.name}"></td>
                                             <td th:text="${user.surname}"></td>
                                             <td th:text="${user.email}"></td>
@@ -308,6 +331,13 @@
                                                 </th:block>
                                             </td>
                                             <td th:if="${user.availableCategories.isEmpty()}">---</td>
+                                            <td class="operations">
+                                                <form th:action="@{/dashboard/admin/moreInfo}" method="post">
+                                                    <input type="hidden" name="studentId"
+                                                           th:value="${user.id}"/>
+                                                    <button type="submit" class="info-btn"><i class="fa-solid fa-eye"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     </th:block>
                                     </tbody>
