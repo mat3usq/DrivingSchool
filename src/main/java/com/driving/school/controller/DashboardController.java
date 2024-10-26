@@ -3,6 +3,7 @@ package com.driving.school.controller;
 import com.driving.school.model.Constants;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.model.StudentInstructor;
+import com.driving.school.repository.PaymentRepository;
 import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.StudentInstructorService;
@@ -26,11 +27,13 @@ import java.util.Optional;
 public class DashboardController {
     private final SchoolUserService schoolUserService;
     private final StudentInstructorService studentInstructorService;
+    private final PaymentRepository paymentRepository;
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService) {
+    public DashboardController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService, PaymentRepository paymentRepository) {
         this.schoolUserService = schoolUserService;
         this.studentInstructorService = studentInstructorService;
+        this.paymentRepository = paymentRepository;
     }
 
     @GetMapping("/dashboard")
@@ -136,12 +139,24 @@ public class DashboardController {
         return modelAndView;
     }
 
+    @PostMapping("/dashboard/admin/searchUser")
+    public ModelAndView userDetailsByEmail(@RequestParam("userEmail") String userEmail) {
+        SchoolUser user = schoolUserService.findUserByEmail(userEmail);
+        if (user != null)
+            return getUserDetails(user, new ModelAndView("schoolUserDetails"));
+        return new ModelAndView("redirect:/dashboard");
+    }
+
     @PostMapping("/dashboard/admin/userDetails")
-    public ModelAndView userDetails(@RequestParam("userId") Long userId) {
-        ModelAndView modelAndView = new ModelAndView("schoolUserDetails");
+    public ModelAndView userDetailsByUserId(@RequestParam("userId") Long userId) {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
-            modelAndView.addObject("user", user);
+            return getUserDetails(user, new ModelAndView("schoolUserDetails"));
+        return new ModelAndView("redirect:/dashboard");
+    }
+
+    private ModelAndView getUserDetails(SchoolUser user, ModelAndView modelAndView) {
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 }

@@ -25,6 +25,9 @@ public class Category {
     @ManyToMany(mappedBy = "availableCategories")
     private List<SchoolUser> schoolUsers;
 
+    @ManyToMany(mappedBy = "categories")
+    private List<Payment> payments;
+
     public Category(String nameCategory, List<SchoolUser> schoolUsers) {
         this.nameCategory = nameCategory;
         this.schoolUsers = schoolUsers;

@@ -40,15 +40,16 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final MailService mailService;
     private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
-    private final QuestionRepository questionRepository; // Inject directly
+    private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
+    private final PaymentRepository paymentRepository;
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
             schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
                           SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository,
                           StudentInstructorRepository studentInstructorRepository, CategoryRepository categoryRepository,
-                          MailService mailService, QuestionRepository questionRepository, TestRepository testRepository) {
+                          MailService mailService, QuestionRepository questionRepository, TestRepository testRepository, PaymentRepository paymentRepository) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
@@ -61,6 +62,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.mailService = mailService;
         this.questionRepository = questionRepository;
         this.testRepository = testRepository;
+        this.paymentRepository = paymentRepository;
     }
 
 
@@ -136,6 +138,21 @@ public class DatabaseSeeder implements CommandLineRunner {
         studentInstructorRepository.save(new StudentInstructor(student2, instructor2, Constants.PENDING));
 
         categories.forEach(this::addTeststoDb);
+
+        Payment paymentFirst = new Payment();
+        paymentFirst.setSum(123.32);
+        paymentFirst.setCategories(Arrays.asList(categories.get(0), categories.get(1)));
+        paymentFirst.setComment("Oplata za pierwsze dwie kategorie :D");
+        paymentFirst.setSchoolUser(student);
+
+        Payment paymentSecond = new Payment();
+        paymentSecond.setSum(50.13);
+        paymentSecond.setCategories(Arrays.asList(categories.get(3)));
+        paymentSecond.setComment("Oplata za kategorie D.");
+        paymentSecond.setSchoolUser(student);
+
+        paymentRepository.save(paymentFirst);
+        paymentRepository.save(paymentSecond);
     }
 
     private void mapQuestionsToDb() {
