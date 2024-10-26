@@ -74,7 +74,8 @@
                                 <form class="operations" th:action="@{/dashboard/admin/deletePayment}" method="post">
                                     <input type="hidden" name="paymentId" th:value="${payment.id}"/>
                                     <input type="hidden" name="userId" th:value="${payment.schoolUser.id}"/>
-                                    <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
+                                    <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i>
+                                    </button>
                                 </form>
                                 <div class="box">
                                     <span class="title-header" th:text="${payment.comment}">komentarz</span>
@@ -90,6 +91,40 @@
                                     </span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="newPayment">
+                            <p class="mini-title">Dodawanie Płatności</p>
+                            <form th:action="@{/dashboard/admin/addPayment}" th:object="${payment}" method="post">
+                                <input type="hidden" name="userId" th:value="${user.id}"/>
+
+                                <div class="form-box">
+                                    <div class="payment-input">
+                                        <p>Komentarz</p>
+                                        <input type="text" placeholder="Komentarz" th:field="*{comment}"/>
+                                    </div>
+
+                                    <div class="payment-input">
+                                        <p>Kwota Płatności</p>
+                                        <input type="text" placeholder="Kwota Płatności" th:field="*{sum}"/>
+                                    </div>
+
+                                    <div class="payment-input-category">
+                                        <p>Kategorie</p>
+                                        <div class="box-category">
+                                            <div th:each="category : ${allCategories}" class="category-checkbox">
+                                                <input type="checkbox"
+                                                       th:field="*{categories}"
+                                                       th:value="${category.id}"/>
+                                                <label th:for="${#ids.prev('categories')}"
+                                                       th:text="${category.nameCategory}">Nazwa Kategorii</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="add-btn">Dodaj Płatność</button>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -149,6 +149,20 @@ h2 {
   white-space: nowrap;
   margin: 20px auto;
 }
+.details .hero-img .box-container .mini-title {
+  margin: 0px auto;
+  padding: 20px 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  font-size: 16px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+  box-shadow: 0px 0px 15px 3px rgba(7, 59, 76, 0.4352941176);
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.details .hero-img .box-container .add-btn,
 .details .hero-img .box-container .delete-btn {
   font-size: 18px;
   height: 35px;
@@ -162,6 +176,7 @@ h2 {
   cursor: pointer;
   transition: 0.3s ease;
 }
+.details .hero-img .box-container .add-btn:hover,
 .details .hero-img .box-container .delete-btn:hover {
   transform: scale(1.05);
 }
@@ -170,6 +185,13 @@ h2 {
 }
 .details .hero-img .box-container button.delete-btn:hover {
   background-color: #eb184a;
+}
+.details .hero-img .box-container button.add-btn {
+  font-size: 16px;
+  background-color: #2de300;
+}
+.details .hero-img .box-container button.add-btn:hover {
+  background-color: #23b000;
 }
 .details .hero-img .box-container .box-user .account-schoolUser {
   width: auto;
@@ -206,10 +228,10 @@ h2 {
 .details .hero-img .box-container .box-payments .account-payments {
   width: auto;
   max-width: 700px;
-  margin: 0px auto;
   display: flex;
   flex-direction: column;
   padding: 10px;
+  margin: 0px auto;
 }
 .details .hero-img .box-container .box-payments .account-payments .schoolUser-payments .payment {
   position: relative;
@@ -269,6 +291,131 @@ h2 {
 }
 .details .hero-img .box-container .box-payments .account-payments .schoolUser-payments .payment.clicked .operations {
   opacity: 1;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment {
+  background: linear-gradient(-135deg, rgba(3, 68, 90, 0.7098039216), rgba(51, 20, 82, 0.65));
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  padding: 30px 20px;
+  margin: 20px 0px;
+  color: aliceblue;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category {
+  display: flex;
+  flex-direction: column;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input p,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category p {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #6acff1;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input input[type=text],
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input select,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category input[type=text],
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: aliceblue;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input input[type=text]:focus,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input select:focus,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category input[type=text]:focus,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category select:focus {
+  outline: none;
+  border-color: #ef476f;
+  box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 7px 0;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category .category-checkbox,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category .category-checkbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category .category-checkbox input[type=checkbox],
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category .category-checkbox input[type=checkbox] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffd166;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category .category-checkbox input[type=checkbox]:hover,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category .category-checkbox input[type=checkbox]:hover {
+  border-color: #ffc233;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category .category-checkbox input[type=checkbox]:checked,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category .category-checkbox input[type=checkbox]:checked {
+  background-color: #ef476f;
+  border-color: #ef476f;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category .category-checkbox input[type=checkbox]:checked::after,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category .category-checkbox input[type=checkbox]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 6px;
+  height: 12px;
+  border: solid #ffd166;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category .category-checkbox input[type=checkbox]:checked ~ label,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category .category-checkbox input[type=checkbox]:checked ~ label {
+  font-weight: bold;
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category .category-checkbox label,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category .category-checkbox label {
+  font-size: 16px;
+  cursor: pointer;
+  color: aliceblue;
+  transition: color 0.3s ease;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input .box-category .category-checkbox label:hover,
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category .box-category .category-checkbox label:hover {
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form .form-box .payment-input-category {
+  text-align: center;
+}
+.details .hero-img .box-container .box-payments .account-payments .newPayment form button {
+  margin: 0 auto;
 }
 .details .hero-img .box-container .box-user,
 .details .hero-img .box-container .box-payments {
