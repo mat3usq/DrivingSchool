@@ -75,10 +75,12 @@ h2 {
 
 			.box-user {
 				.account-schoolUser {
-					width: 80%;
+					width: auto;
+					max-width: 700px;
 					margin: 0px auto;
 					display: flex;
 					flex-direction: column;
+					padding: 10px;
 
 					.account-details {
 						.detail {
@@ -112,14 +114,69 @@ h2 {
 				}
 			}
 
-			.box-user {
+			.box-payments {
+				.account-payments {
+					width: auto;
+					max-width: 700px;
+					margin: 0px auto;
+					display: flex;
+					flex-direction: column;
+					padding: 10px;
+
+					.schoolUser-payments {
+						.payment {
+							display: flex;
+							align-items: center;
+							flex-direction: column;
+							margin-bottom: 10px;
+							background-color: rgba(0, 0, 0, 0.8);
+							padding: 10px 15px;
+							border-bottom: 2px solid $text-color;
+							border-radius: 10px 10px 0 0;
+							gap: 5px;
+
+							.box {
+								width: 100%;
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+
+								.title-header {
+									font-style: italic;
+									font-size: 15px;
+									color: $info-color;
+								}
+
+								.content {
+									font-size: 15px;
+									color: $text-color;
+
+									span {
+										margin-left: 4px;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.box-user,
+			.box-payments {
 				margin: 40px 20px;
 				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 				position: relative;
 				overflow: hidden;
 				border-radius: 20px;
 				backdrop-filter: blur(9px);
-				background: linear-gradient(-135deg, $box-users-start, $box-end);
+			}
+
+			.box-user {
+				background: linear-gradient(-135deg, $box-third-start, $box-end);
+			}
+
+			.box-payments {
+				background: linear-gradient(-135deg, $box-second-start, $box-end);
 			}
 		}
 	}

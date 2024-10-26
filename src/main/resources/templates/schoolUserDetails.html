@@ -53,6 +53,7 @@
                                 <span class="content">
                                     <span th:each="category : ${user.availableCategories}"
                                           th:text="${category.nameCategory} + ' '"></span>
+                                    <span th:if="${user.availableCategories.isEmpty()}">Brak</span>
                                 </span>
                             </div>
                             <div class="detail">
@@ -63,7 +64,30 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="box-payments"
+                     th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                    <div class="account-payments">
+                        <p class="title">Płatności</p>
+                        <div class="schoolUser-payments">
+                            <div class="payment" th:each="payment : ${user.payments}">
+                                <div class="box">
+                                    <span class="title-header" th:text="${payment.comment}">komentarz</span>
+                                    <span class="content" th:text="${payment.sum} + 'zł'"></span>
+                                </div>
+                                <div class="box">
+                                    <span class="content"
+                                          th:text="${#temporals.format(payment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                                    <span class="title-header">
+                                        <th:block th:each="category : ${payment.categories}">
+                                            <th:block th:text="${category.nameCategory} + ' '"></th:block>
+                                        </th:block>
+                                    </span>
+                                </div>
+                            </div>
+                            <p th:if="${user.payments.isEmpty()}">Brak Płatności</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
