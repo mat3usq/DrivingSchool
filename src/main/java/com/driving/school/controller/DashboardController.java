@@ -27,13 +27,11 @@ import java.util.Optional;
 public class DashboardController {
     private final SchoolUserService schoolUserService;
     private final StudentInstructorService studentInstructorService;
-    private final PaymentRepository paymentRepository;
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService, PaymentRepository paymentRepository) {
+    public DashboardController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService) {
         this.schoolUserService = schoolUserService;
         this.studentInstructorService = studentInstructorService;
-        this.paymentRepository = paymentRepository;
     }
 
     @GetMapping("/dashboard")
@@ -158,5 +156,15 @@ public class DashboardController {
     private ModelAndView getUserDetails(SchoolUser user, ModelAndView modelAndView) {
         modelAndView.addObject("user", user);
         return modelAndView;
+    }
+
+    @PostMapping("/dashboard/admin/deletePayment")
+    public ModelAndView deletePayment(@RequestParam("userId") Long userId, @RequestParam("paymentId") Long paymentId) {
+        SchoolUser user = schoolUserService.findUserById(userId);
+        if (user != null) {
+            schoolUserService.deletePayment(paymentId);
+            return getUserDetails(user, new ModelAndView("schoolUserDetails"));
+        }
+        return new ModelAndView("redirect:/dashboard");
     }
 }

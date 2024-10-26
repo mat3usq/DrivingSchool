@@ -2,6 +2,7 @@ package com.driving.school.service;
 
 import com.driving.school.model.*;
 import com.driving.school.repository.CategoryRepository;
+import com.driving.school.repository.PaymentRepository;
 import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.repository.UserLikedQuestionRepository;
 import jakarta.transaction.Transactional;
@@ -12,19 +13,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SchoolUserService {
     private final SchoolUserRepository schoolUserRepository;
     private final CategoryRepository categoryRepository;
     private final UserLikedQuestionRepository userLikedQuestionRepository;
+    private final PaymentRepository paymentRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SchoolUserService(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, UserLikedQuestionRepository userLikedQuestionRepository, PasswordEncoder passwordEncoder) {
+    public SchoolUserService(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, UserLikedQuestionRepository userLikedQuestionRepository, PaymentRepository paymentRepository, PasswordEncoder passwordEncoder) {
         this.schoolUserRepository = schoolUserRepository;
         this.categoryRepository = categoryRepository;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
+        this.paymentRepository = paymentRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -92,6 +96,29 @@ public class SchoolUserService {
         if (category != null && user.getAvailableCategories().contains(category)) {
             user.setCurrentCategory(category.getNameCategory());
             schoolUserRepository.save(user);
+        }
+    }
+
+    public void deletePayment(Long paymentId) {
+        Optional<Payment> payment = paymentRepository.findById(paymentId);
+        if (payment.isPresent()) {
+            Payment pay = payment.get();
+            Optional<SchoolUser> user = schoolUserRepository.findById(pay.getSchoolUser().getId());
+
+            if (user.isPresent()) {
+                SchoolUser schoolUser = user.get();
+
+                List<Category> categories = schoolUser.getAvailableCategories();
+                categories.removeAll(pay.getCategories());
+                schoolUser.setAvailableCategories(categories);
+                pay.getCategories().forEach(c -> {
+                    if (c.getNameCategory().equals(schoolUser.getCurrentCategory()))
+                        schoolUser.setCurrentCategory("");
+                });
+
+                paymentRepository.delete(pay);
+                schoolUserRepository.save(schoolUser);
+            }
         }
     }
 }

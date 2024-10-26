@@ -73,6 +73,31 @@ h2 {
 				margin: 20px auto;
 			}
 
+			.delete-btn {
+				font-size: 18px;
+				height: 35px;
+				padding: 0px 10px;
+				border: none;
+				border-radius: 10px;
+				color: white;
+				font-weight: bold;
+				text-transform: uppercase;
+				text-align: center;
+				cursor: pointer;
+				transition: 0.3s ease;
+
+				&:hover {
+					transform: scale(1.05);
+				}
+			}
+
+			button.delete-btn {
+				background-color: $primary-color;
+				&:hover {
+					background-color: darken($primary-color, 10%);
+				}
+			}
+
 			.box-user {
 				.account-schoolUser {
 					width: auto;
@@ -125,6 +150,7 @@ h2 {
 
 					.schoolUser-payments {
 						.payment {
+							position: relative;
 							display: flex;
 							align-items: center;
 							flex-direction: column;
@@ -134,6 +160,7 @@ h2 {
 							border-bottom: 2px solid $text-color;
 							border-radius: 10px 10px 0 0;
 							gap: 5px;
+							transition: transform 0.3s ease;
 
 							.box {
 								width: 100%;
@@ -154,6 +181,39 @@ h2 {
 									span {
 										margin-left: 4px;
 									}
+								}
+							}
+
+							.operations {
+								background: transparent;
+								position: absolute;
+								top: 50%;
+								transform: translateY(-50%);
+								left: -45px;
+								transition: transform 0.3s ease, opacity 0.3s ease;
+								display: flex;
+								overflow: visible;
+								gap: 6px;
+								opacity: 0;
+								padding-right: 10px;
+							}
+
+							@media (hover: hover) and (pointer: fine) {
+								&:hover {
+									cursor: pointer;
+									transform: translateX(45px);
+
+									.operations {
+										opacity: 1;
+									}
+								}
+							}
+
+							&.clicked {
+								transform: translateX(45px);
+
+								.operations {
+									opacity: 1;
 								}
 							}
 						}
