@@ -468,15 +468,15 @@ h2 {
 			}
 
 			.box-category {
-				background: linear-gradient(-135deg, $box-category-start, $box-end);
+				background: linear-gradient(-135deg, $box-first-start, $box-end);
 			}
 
 			.box-statistics {
-				background: linear-gradient(-135deg, $box-statistics-start, $box-end);
+				background: linear-gradient(-135deg, $box-second-start, $box-end);
 			}
 
 			.box-users {
-				background: linear-gradient(-135deg, $box-users-start, $box-end);
+				background: linear-gradient(-135deg, $box-third-start, $box-end);
 			}
 		}
 	}
