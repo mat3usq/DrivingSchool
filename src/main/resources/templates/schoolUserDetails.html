@@ -94,7 +94,7 @@
                         </div>
                         <div class="newPayment">
                             <p class="mini-title">Dodawanie Płatności</p>
-                            <form th:action="@{/dashboard/admin/addPayment}" th:object="${payment}" method="post">
+                            <form th:action="@{/dashboard/admin/addPayment}" th:object="${newPayment}" method="post">
                                 <input type="hidden" name="userId" th:value="${user.id}"/>
 
                                 <div class="form-box">
@@ -119,7 +119,6 @@
                                                        th:text="${category.nameCategory}">Nazwa Kategorii</label>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
 

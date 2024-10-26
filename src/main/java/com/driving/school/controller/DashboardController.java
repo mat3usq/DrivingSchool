@@ -1,8 +1,7 @@
 package com.driving.school.controller;
 
-import com.driving.school.model.Constants;
-import com.driving.school.model.SchoolUser;
-import com.driving.school.model.StudentInstructor;
+import com.driving.school.model.*;
+import com.driving.school.repository.CategoryRepository;
 import com.driving.school.repository.PaymentRepository;
 import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.service.SchoolUserService;
@@ -14,10 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,11 +23,13 @@ import java.util.Optional;
 public class DashboardController {
     private final SchoolUserService schoolUserService;
     private final StudentInstructorService studentInstructorService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService) {
+    public DashboardController(SchoolUserService schoolUserService, StudentInstructorService studentInstructorService, CategoryRepository categoryRepository) {
         this.schoolUserService = schoolUserService;
         this.studentInstructorService = studentInstructorService;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/dashboard")
@@ -155,7 +153,19 @@ public class DashboardController {
 
     private ModelAndView getUserDetails(SchoolUser user, ModelAndView modelAndView) {
         modelAndView.addObject("user", user);
+        modelAndView.addObject("newPayment", new Payment());
+        modelAndView.addObject("allCategories", categoryRepository.findAll());
         return modelAndView;
+    }
+
+    @PostMapping("/dashboard/admin/addPayment")
+    public ModelAndView addPayment(@RequestParam("userId") Long userId, @ModelAttribute("newPayment") Payment payment) {
+        SchoolUser user = schoolUserService.findUserById(userId);
+        if (user != null) {
+            schoolUserService.addPayment(userId, payment);
+            return getUserDetails(user, new ModelAndView("schoolUserDetails"));
+        }
+        return userDetailsByUserId(userId);
     }
 
     @PostMapping("/dashboard/admin/deletePayment")
@@ -165,6 +175,6 @@ public class DashboardController {
             schoolUserService.deletePayment(paymentId);
             return getUserDetails(user, new ModelAndView("schoolUserDetails"));
         }
-        return new ModelAndView("redirect:/dashboard");
+        return userDetailsByUserId(userId);
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Optional;
 
@@ -117,6 +119,30 @@ public class SchoolUserService {
                 });
 
                 paymentRepository.delete(pay);
+                schoolUserRepository.save(schoolUser);
+            }
+        }
+    }
+
+    public void addPayment(Long userId, Payment payment) {
+        Optional<SchoolUser> userOptional = schoolUserRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            SchoolUser schoolUser = userOptional.get();
+            List<Category> availableCategories = schoolUser.getAvailableCategories();
+            List<Category> paymentCategories = payment.getCategories();
+
+            payment.setSchoolUser(schoolUser);
+            paymentRepository.save(payment);
+
+            Set<Long> existingCategoryIds = availableCategories.stream()
+                    .map(Category::getId)
+                    .collect(Collectors.toSet());
+            List<Category> newCategories = paymentCategories.stream()
+                    .filter(category -> !existingCategoryIds.contains(category.getId()))
+                    .toList();
+
+            if (!newCategories.isEmpty()) {
+                availableCategories.addAll(newCategories);
                 schoolUserRepository.save(schoolUser);
             }
         }
