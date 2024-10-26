@@ -567,6 +567,7 @@ header .fa-chevron-down:hover {
   border-radius: 4px;
   cursor: pointer;
   position: relative;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 .login input[type=checkbox]:checked {
   background-color: #ffd166;
@@ -574,8 +575,8 @@ header .fa-chevron-down:hover {
 .login input[type=checkbox]:checked::after {
   content: "";
   position: absolute;
-  left: 5px;
   top: 1px;
+  left: 4px;
   width: 6px;
   height: 12px;
   border: solid #4d84e2;
