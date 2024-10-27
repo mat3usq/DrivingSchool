@@ -65,7 +65,7 @@ public class SchoolUser {
     @OneToOne(mappedBy = "schoolUser")
     private UserStatistic userStatistic;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "SCHOOLUSER_CATEGORY",
             joinColumns = @JoinColumn(name = "SCHOOLUSERID"),

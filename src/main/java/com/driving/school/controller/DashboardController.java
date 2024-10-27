@@ -33,12 +33,9 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard")
-    public ModelAndView displayDashboard(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size,
-                                         Authentication authentication, HttpSession session) {
+    public ModelAndView displayDashboard(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
-        SchoolUser user = schoolUserService.findUserByEmail(authentication.getName());
-        session.setAttribute("loggedInUser", user);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
         switch (user.getRoleName()) {
             case Constants.STUDENT_ROLE ->
