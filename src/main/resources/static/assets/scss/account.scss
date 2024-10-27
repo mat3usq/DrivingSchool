@@ -91,6 +91,17 @@ h2 {
 					text-align: center;
 				}
 
+				.mini-title {
+					margin: 10px 40px 15px 40px;
+					font-size: 21px;
+					font-weight: bold;
+					color: $primary-color;
+					text-align: center;
+					padding-bottom: 10px;
+					border-bottom: 2px solid $placeHolder-color;
+					letter-spacing: 1px;
+				}
+
 				.container-account {
 					display: flex;
 					flex-direction: column;
@@ -99,6 +110,7 @@ h2 {
 					border-radius: 20px;
 					padding: 20px;
 					width: 50vw;
+					max-width: 800px;
 
 					.title-header {
 						letter-spacing: 2px;
@@ -112,7 +124,7 @@ h2 {
 					}
 
 					hr {
-						width: 80%;
+						width: 87%;
 						background-color: rgba(255, 255, 255, 1);
 						border-radius: 20px;
 						height: 5px;
@@ -120,13 +132,59 @@ h2 {
 					}
 
 					.account-details {
-						width: 80%;
-						font-size: 19px;
+						width: 87%;
+						font-size: 18px;
 						padding: 10px;
 
 						span {
 							color: $category-icon;
 							font-weight: bold;
+						}
+					}
+
+					.schoolUser-payments {
+						width: 87%;
+						background-color: #1e1d1d;
+						border-radius: 15px;
+						margin: 10px 0;
+						padding: 10px 10px;
+
+						.payment {
+							position: relative;
+							display: flex;
+							align-items: center;
+							flex-direction: column;
+							margin-bottom: 10px;
+							background-color: rgba(0, 0, 0, 0.8);
+							padding: 10px 15px;
+							border-bottom: 2px solid $text-color;
+							border-radius: 10px 10px 0 0;
+							gap: 5px;
+							transition: transform 0.3s ease;
+
+							.box {
+								width: 100%;
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+
+								.title-header {
+									font-style: italic;
+									letter-spacing: 0px;
+									padding-right: 10px;
+									font-size: 15px;
+									color: $info-color;
+								}
+
+								.content {
+									font-size: 15px;
+									color: $text-color;
+
+									span {
+										margin-left: 4px;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -204,15 +262,35 @@ h2 {
 				.box-container {
 					.container-account {
 						width: 100%;
-	
+
 						.account-details {
 							display: flex;
 							flex-direction: column;
 							align-items: center;
-	
+
 							p {
 								text-align: center;
 								font-size: 13px;
+							}
+						}
+
+						.schoolUser-payments {
+							margin: 7px 0;
+							padding: 7px 7px;
+	
+							.payment {
+								padding: 7px 12px;
+	
+								.box {
+									.title-header {
+										padding-left: 0px;
+										font-size: 13px;
+									}
+	
+									.content {
+										font-size: 13px;
+									}
+								}
 							}
 						}
 					}
