@@ -93,11 +93,15 @@ public class SchoolUserService {
     }
 
     public void changeCategory(SchoolUser user, Long categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElse(null);
+        Optional<SchoolUser> usr = schoolUserRepository.findById(user.getId());
+        if (usr.isPresent()) {
+            user = usr.get();
+            Category category = categoryRepository.findById(categoryId).orElse(null);
 
-        if (category != null && user.getAvailableCategories().contains(category)) {
-            user.setCurrentCategory(category.getNameCategory());
-            schoolUserRepository.save(user);
+            if (category != null && user.getAvailableCategories().contains(category)) {
+                user.setCurrentCategory(category.getNameCategory());
+                schoolUserRepository.save(user);
+            }
         }
     }
 
