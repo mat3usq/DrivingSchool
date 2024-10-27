@@ -36,7 +36,7 @@
         <a data-aos="fade-right" data-aos-delay="200" class="nav-link" th:href="@{/calendar}"
         ><i class="fa-solid fa-calendar-days"></i>Kalendarz</a
         >
-        <a data-aos="fade-right" data-aos-delay="250" class="nav-link" th:href="@{/mailBox}"
+        <a data-aos="fade-right" data-aos-delay="250" class="nav-link mailBox" th:href="@{/mailBox}"
         ><i class="fa-solid fa-envelopes-bulk"></i>Poczta</a
         >
         <div class="mail-nav">
@@ -74,7 +74,7 @@
 
             function updateActiveNavLink() {
                 navLinks.forEach(link => {
-                    if (currentPath === link.getAttribute('href')) {
+                    if (currentPath.includes(link.getAttribute('href'))) {
                         link.classList.add('active');
                     }
                 });
@@ -82,6 +82,9 @@
                 const mailNav = document.querySelector('.mail-nav');
                 if (currentPath.startsWith('/mailBox')) {
                     mailNav.style.display = 'block';
+
+                    if (currentPath.includes('/mailBox/'))
+                        document.querySelector('.mailBox').classList.remove('active')
                 } else {
                     if (mailNav) {
                         mailNav.remove();
