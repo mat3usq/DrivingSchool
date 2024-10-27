@@ -73,8 +73,9 @@
                                 marzec</p>
                         </div>
                         <hr/>
-                        <div class="schoolUser-payments" th:if="${user.payments}">
-                            <p class="mini-title">Płatności</p>
+                        <div class="schoolUser-payments" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                            <p th:unless="${user.payments.isEmpty()}" class="mini-title">Płatności</p>
+                            <p th:if="${user.payments.isEmpty()}" class="mini-title">Brak Płatności</p>
                             <div class="payment" th:each="payment : ${user.payments}">
                                 <div class="box">
                                     <span class="title-header" th:text="${payment.comment}">komentarz</span>
