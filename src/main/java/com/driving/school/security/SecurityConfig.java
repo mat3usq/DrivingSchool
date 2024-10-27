@@ -2,6 +2,7 @@ package com.driving.school.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,6 +20,13 @@ import java.io.IOException;
 
 @Configuration
 public class SecurityConfig {
+    private final CustomAuthenticationSuccessHandler successHandler;
+
+    @Autowired
+    public SecurityConfig(CustomAuthenticationSuccessHandler successHandler) {
+        this.successHandler = successHandler;
+    }
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository()))
@@ -53,7 +61,7 @@ public class SecurityConfig {
                 .formLogin(loginConfigurer -> loginConfigurer
                         .loginProcessingUrl("/loginUser")
                         .loginPage("/home")
-                        .defaultSuccessUrl("/dashboard", true)
+                        .successHandler(successHandler)
                         .failureUrl("/login?error=true").permitAll())
                 .logout(logoutConfigurer -> logoutConfigurer
                         .logoutUrl("/logout")
