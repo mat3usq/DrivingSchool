@@ -67,7 +67,7 @@
                         <div class="account-student">
                             <p class="title">Twoi Instruktorzy</p>
 
-                            <p class="mini-title" th:if="${instructorStudents.size() == 0}">
+                            <p class="mini-title" th:if="${mentorShips.size() == 0}">
                                 Brak instruktorów. Zaaplikuj do któregoś z poniższych!
                             </p>
 
@@ -85,7 +85,7 @@
                                 <button class="info-btn">Aplikuje</button>
                             </form>
 
-                            <th:block th:if="${instructorStudents.size() != 0}">
+                            <th:block th:if="${mentorShips.size() != 0}">
                                 <div class="instructors-list">
                                     <table class="instructors-table">
                                         <thead>
@@ -100,7 +100,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <th:block th:each="element : ${instructorStudents}"
+                                        <th:block th:each="element : ${mentorShips}"
                                                   th:with="Constants=${T(com.driving.school.model.Constants)}">
                                             <tr class="table-one-option"
                                                 th:if="${element.status.equals(Constants.PENDING)}">
@@ -115,7 +115,7 @@
                                                 <td class="operations">
                                                     <form th:action="@{/dashboard/student/cancelInstructor}"
                                                           method="post">
-                                                        <input type="hidden" name="studentInstructorId"
+                                                        <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>
                                                         <button type="submit" class="cancel-btn"><i class="fa-solid fa-xmark"></i></button>
                                                     </form>
@@ -134,13 +134,13 @@
                                                 <td class="operations">
                                                     <form th:action="@{/dashboard/student/cancelInstructor}"
                                                           method="post">
-                                                        <input type="hidden" name="studentInstructorId"
+                                                        <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>
                                                         <button type="submit" class="cancel-btn"><i class="fa-solid fa-xmark"></i></button>
                                                     </form>
                                                     <form th:action="@{/dashboard/student/showInstructor}"
                                                           method="post">
-                                                        <input type="hidden" name="studentInstructorId"
+                                                        <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>
                                                         <button type="submit" class="info-btn"><i class="fa-solid fa-eye"></i></button>
                                                     </form>
@@ -168,7 +168,7 @@
                         <div class="account-instructor">
                             <p class="title">Twoi Studenci</p>
 
-                            <p class="mini-title" th:if="${instructorStudents.size() == 0}">
+                            <p class="mini-title" th:if="${mentorShips.size() == 0}">
                                 Brak Studentów. Dodaj któregoś z poniższej listy!
                             </p>
 
@@ -179,7 +179,7 @@
                                 <button type="submit" class="info-btn">Dodaj</button>
                             </form>
 
-                            <th:block th:if="${instructorStudents.size() != 0}">
+                            <th:block th:if="${mentorShips.size() != 0}">
                                 <div class="students-list">
                                     <table class="students-table">
                                         <thead>
@@ -195,7 +195,7 @@
                                         </thead>
                                         <tbody>
                                         <th:block
-                                                th:each="element : ${instructorStudents}"
+                                                th:each="element : ${mentorShips}"
                                                 th:with="Constants=${T(com.driving.school.model.Constants)}">
                                             <tr th:if="${element.status.equals(Constants.PENDING)}"
                                                 class="table-two-options">
@@ -210,13 +210,13 @@
                                                 <td class="operations">
                                                     <form th:action="@{/dashboard/instructor/cancelStudent}"
                                                           method="post">
-                                                        <input type="hidden" name="studentInstructorId"
+                                                        <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>
                                                         <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
                                                     </form>
                                                     <form th:action="@{/dashboard/instructor/acceptStudent}"
                                                           method="post">
-                                                        <input type="hidden" name="studentInstructorId"
+                                                        <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>
                                                         <button type="submit" class="correct-btn"><i class="fa-regular fa-square-check"></i></button>
                                                     </form>
@@ -235,19 +235,19 @@
                                                 <td class="operations">
                                                     <form th:action="@{/dashboard/instructor/cancelStudent}"
                                                           method="post">
-                                                        <input type="hidden" name="studentInstructorId"
+                                                        <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>
                                                         <button type="submit" class="cancel-btn"><i class="fa-solid fa-xmark"></i></button>
                                                     </form>
                                                     <form th:action="@{/dashboard/instructor/studentDetails}"
                                                           method="post">
-                                                        <input type="hidden" name="studentInstructorId"
+                                                        <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>
                                                         <button type="submit" class="info-btn"><i class="fa-solid fa-eye"></i></button>
                                                     </form>
                                                     <form th:action="@{/dashboard/instructor/finishStudent}"
                                                           method="post">
-                                                        <input type="hidden" name="studentInstructorId"
+                                                        <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>
                                                         <button type="submit" class="correct-btn"><i class="fa-solid fa-flag-checkered"></i></button>
                                                     </form>

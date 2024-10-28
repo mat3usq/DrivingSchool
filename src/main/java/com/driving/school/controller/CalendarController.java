@@ -3,7 +3,7 @@ package com.driving.school.controller;
 import com.driving.school.model.*;
 import com.driving.school.repository.InstructionEventRepository;
 import com.driving.school.service.InstructorEventService;
-import com.driving.school.service.StudentInstructorService;
+import com.driving.school.service.MentorShipService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,14 +24,14 @@ import java.util.Objects;
 public class CalendarController {
     private final InstructionEventRepository instructionEventRepository;
     private final InstructorEventService instructorEventService;
-    private final StudentInstructorService studentInstructorService;
+    private final MentorShipService mentorShipService;
 
     @Autowired
     public CalendarController(InstructionEventRepository instructionEventRepository, InstructorEventService instructorEventService,
-                              StudentInstructorService studentInstructorService) {
+                              MentorShipService mentorShipService) {
         this.instructionEventRepository = instructionEventRepository;
         this.instructorEventService = instructorEventService;
-        this.studentInstructorService = studentInstructorService;
+        this.mentorShipService = mentorShipService;
     }
 
     @GetMapping("")
@@ -60,10 +60,10 @@ public class CalendarController {
 
         List<InstructionEvent> events = new ArrayList<>();
         if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
-            List<StudentInstructor> studentInstructors = studentInstructorService.findByStudentId(user.getId());
-            for (StudentInstructor si : studentInstructors) {
-                if (si.getStatus().equals(Constants.ACTIVE)) {
-                    List<InstructionEvent> eventsByInstructor = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, si.getInstructor().getId());
+            List<MentorShip> mentorShips = mentorShipService.findByStudentId(user.getId());
+            for (MentorShip ms : mentorShips) {
+                if (ms.getStatus().equals(Constants.ACTIVE)) {
+                    List<InstructionEvent> eventsByInstructor = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, ms.getInstructor().getId());
                     events.addAll(eventsByInstructor);
                 }
             }
@@ -97,7 +97,7 @@ public class CalendarController {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (studentInstructorService.existsByStudentAndInstructor(user, event.getInstructor()))
+        if (mentorShipService.existsByStudentAndInstructor(user, event.getInstructor()))
             if (event.getAvailableEventSlots() != 0)
                 if (event.getStudents().stream().noneMatch(s -> Objects.equals(s.getId(), user.getId()))) {
                     instructorEventService.addStudentToInstructionEvent(eventId, user.getId());
@@ -113,7 +113,7 @@ public class CalendarController {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (studentInstructorService.existsByStudentAndInstructor(user, event.getInstructor()))
+        if (mentorShipService.existsByStudentAndInstructor(user, event.getInstructor()))
             if (event.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId()))) {
                 instructorEventService.removeStudentFromInstructionEvent(eventId, user.getId());
                 event.setAvailableEventSlots(event.getAvailableEventSlots() + 1);

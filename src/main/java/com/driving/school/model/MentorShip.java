@@ -9,16 +9,15 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "STUDENTINSTRUCTOR")
+@Table(name = "MENTORSHIP")
 @EntityListeners(AuditingEntityListener.class)
-public class StudentInstructor {
+public class MentorShip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +44,7 @@ public class StudentInstructor {
     @Column(name = "STATUS", length = 128)
     private String status;
 
-    public StudentInstructor(SchoolUser student, SchoolUser instructor, String status) {
+    public MentorShip(SchoolUser student, SchoolUser instructor, String status) {
         this.student = student;
         this.instructor = instructor;
         this.status = status;

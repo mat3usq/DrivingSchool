@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -36,7 +35,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final SubjectRepository subjectRepository;
     private final TestService testService;
     private final InstructionEventRepository eventRepository;
-    private final StudentInstructorRepository studentInstructorRepository;
+    private final MentorShipRepository mentorShipRepository;
     private final CategoryRepository categoryRepository;
     private final MailService mailService;
     private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
@@ -48,7 +47,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
             schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
                           SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository,
-                          StudentInstructorRepository studentInstructorRepository, CategoryRepository categoryRepository,
+                          MentorShipRepository mentorShipRepository, CategoryRepository categoryRepository,
                           MailService mailService, QuestionRepository questionRepository, TestRepository testRepository, PaymentRepository paymentRepository) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
@@ -57,7 +56,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.subjectRepository = subjectRepository;
         this.testService = testService;
         this.eventRepository = eventRepository;
-        this.studentInstructorRepository = studentInstructorRepository;
+        this.mentorShipRepository = mentorShipRepository;
         this.categoryRepository = categoryRepository;
         this.mailService = mailService;
         this.questionRepository = questionRepository;
@@ -132,10 +131,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         schoolUserRepository.save(instructor2);
         schoolUserRepository.save(instructor3);
 
-        studentInstructorRepository.save(new StudentInstructor(student, instructor, Constants.ACTIVE));
-        studentInstructorRepository.save(new StudentInstructor(student, instructor2, Constants.ACTIVE));
-        studentInstructorRepository.save(new StudentInstructor(student2, instructor, Constants.ACTIVE));
-        studentInstructorRepository.save(new StudentInstructor(student2, instructor2, Constants.PENDING));
+        mentorShipRepository.save(new MentorShip(student, instructor, Constants.ACTIVE));
+        mentorShipRepository.save(new MentorShip(student, instructor2, Constants.ACTIVE));
+        mentorShipRepository.save(new MentorShip(student2, instructor, Constants.ACTIVE));
+        mentorShipRepository.save(new MentorShip(student2, instructor2, Constants.PENDING));
 
         categories.forEach(this::addTeststoDb);
 
