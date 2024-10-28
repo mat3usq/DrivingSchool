@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.csrfTokenRepository(new CookieCsrfTokenRepository()))
                 .authorizeHttpRequests(requests -> requests
                         // dashboard
-                        .requestMatchers("/dashboard/**").authenticated()
+                        .requestMatchers("/dashboard", "/dashboard/changeCurrentCategory").authenticated()
                         .requestMatchers("/dashboard/student/**").hasRole("STUDENT")
                         .requestMatchers("/dashboard/instructor/**").hasRole("INSTRUCTOR")
                         .requestMatchers("/dashboard/admin/**").hasRole("ADMIN")

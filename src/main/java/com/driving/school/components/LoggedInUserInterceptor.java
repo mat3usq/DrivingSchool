@@ -22,13 +22,12 @@ public class LoggedInUserInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        if (request.getSession().getAttribute("loggedInUser") == null) {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
-                SchoolUser user = schoolUserRepository.findByEmail(auth.getName());
-                request.getSession().setAttribute("loggedInUser", user);
-            }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
+            SchoolUser user = schoolUserRepository.findByEmail(auth.getName());
+            request.getSession().setAttribute("loggedInUser", user);
         }
+
         return true;
     }
 
