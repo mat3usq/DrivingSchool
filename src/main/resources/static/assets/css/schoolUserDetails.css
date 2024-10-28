@@ -139,7 +139,7 @@ h2 {
 }
 .details .hero-img .box-container .title {
   display: inline-block;
-  padding: 20px 10px;
+  padding: 20px 25px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 20px;
   font-size: 20px;
@@ -417,8 +417,189 @@ h2 {
 .details .hero-img .box-container .box-payments .account-payments .newPayment form button {
   margin: 0 auto;
 }
+.details .hero-img .box-container .box-courses .container-courses {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 0px auto;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 25px;
+  margin: 10px 20px;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses .course {
+  max-width: 250px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-bottom: 2px solid aliceblue;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses .course .name {
+  font-size: 14px;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses .course .title-category {
+  letter-spacing: 1px;
+  font-size: 17px;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses .course .time {
+  font-style: italic;
+  font-size: 15px;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses .course .hours {
+  color: #ffd166;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses .course span {
+  color: #4cc9f0;
+  font-weight: bold;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses .course img {
+  width: 120px;
+  height: 120px;
+  padding: 10px;
+}
+.details .hero-img .box-container .box-courses .container-courses .schoolUser-courses .course:hover {
+  transform: scale(1.05);
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse {
+  background: linear-gradient(-135deg, rgba(155, 6, 57, 0.65), rgba(3, 68, 90, 0.7098039216));
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  padding: 30px 20px;
+  margin: 20px auto;
+  color: aliceblue;
+  max-width: 600px;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category {
+  display: flex;
+  flex-direction: column;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input p,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category p {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #6acff1;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input input[type=text],
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input select,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category input[type=text],
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: aliceblue;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input input[type=text]:focus,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input select:focus,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category input[type=text]:focus,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category select:focus {
+  outline: none;
+  border-color: #ef476f;
+  box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 7px 0;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox],
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffd166;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox]:hover,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox]:hover {
+  border-color: #ffc233;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox]:checked,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox]:checked {
+  background-color: #ef476f;
+  border-color: #ef476f;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox]:checked::after,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 6px;
+  height: 12px;
+  border: solid #ffd166;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox]:checked ~ label,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox]:checked ~ label {
+  font-weight: bold;
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox label,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox label {
+  font-size: 16px;
+  cursor: pointer;
+  color: aliceblue;
+  transition: color 0.3s ease;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox label:hover,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox label:hover {
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category {
+  text-align: center;
+}
+.details .hero-img .box-container .box-courses .container-courses .newCourse form button {
+  margin: 0 auto;
+}
 .details .hero-img .box-container .box-user,
-.details .hero-img .box-container .box-payments {
+.details .hero-img .box-container .box-payments,
+.details .hero-img .box-container .box-courses {
   margin: 40px 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -432,6 +613,9 @@ h2 {
 }
 .details .hero-img .box-container .box-payments {
   background: linear-gradient(-135deg, rgba(153, 84, 0, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+.details .hero-img .box-container .box-courses {
+  background: linear-gradient(-135deg, rgba(51, 20, 82, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 
 .contact {
