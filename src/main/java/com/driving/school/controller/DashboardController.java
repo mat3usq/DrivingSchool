@@ -174,4 +174,18 @@ public class DashboardController {
         }
         return userDetailsByUserId(userId);
     }
+
+    @PostMapping("/dashboard/instructor/studentDetails")
+    public ModelAndView showStudentForInstructor(@RequestParam("studentInstructorId") Long studentInstructorId, HttpSession session) {
+        Optional<StudentInstructor> si = studentInstructorService.getStudentInstructorById(studentInstructorId);
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (si.isPresent() && loggedInUser.getId().equals(si.get().getInstructor().getId())) {
+            SchoolUser user = schoolUserService.findUserById(si.get().getStudent().getId());
+            if (user != null)
+                return getUserDetails(user, new ModelAndView("schoolUserDetails"));
+        }
+
+        return new ModelAndView("redirect:/dashboard");
+    }
 }

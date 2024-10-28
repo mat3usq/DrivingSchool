@@ -64,14 +64,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-payments"
-                     th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                <div class="box-payments">
                     <div class="account-payments">
                         <p class="title" th:unless="${user.payments.isEmpty()}">Płatności</p>
                         <p class="title" th:if="${user.payments.isEmpty()}">Brak Płatności</p>
                         <div class="schoolUser-payments">
                             <div class="payment" th:each="payment : ${user.payments}">
-                                <form class="operations" th:action="@{/dashboard/admin/deletePayment}" method="post">
+                                <form sec:authorize="hasRole('ROLE_ADMIN')" class="operations" th:action="@{/dashboard/admin/deletePayment}" method="post">
                                     <input type="hidden" name="paymentId" th:value="${payment.id}"/>
                                     <input type="hidden" name="userId" th:value="${payment.schoolUser.id}"/>
                                     <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i>
@@ -92,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="newPayment">
+                        <div class="newPayment" sec:authorize="hasRole('ROLE_ADMIN')">
                             <p class="mini-title">Dodawanie Płatności</p>
                             <form th:action="@{/dashboard/admin/addPayment}" th:object="${newPayment}" method="post">
                                 <input type="hidden" name="userId" th:value="${user.id}"/>
