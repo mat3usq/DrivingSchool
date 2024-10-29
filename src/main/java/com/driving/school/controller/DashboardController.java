@@ -178,8 +178,12 @@ public class DashboardController {
 
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId())) {
             SchoolUser user = schoolUserService.findUserById(ms.get().getStudent().getId());
-            if (user != null)
-                return getUserDetails(user, new ModelAndView("schoolUserDetails"));
+            if (user != null) {
+                ModelAndView model = getUserDetails(user, new ModelAndView("schoolUserDetails"));
+                model.addObject("mentorShip", ms.get());
+                model.addObject("newCourse", new Course());
+                return model;
+            }
         }
 
         return new ModelAndView("redirect:/dashboard");
