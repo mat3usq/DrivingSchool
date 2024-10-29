@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-courses">
+                <div class="box-courses" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
                     <div class="container-courses">
                         <p class="title">Kursy</p>
 <!--                        <p class="title" th:if="${user.payments.isEmpty()}">Brak Kursów</p>-->
@@ -138,41 +138,29 @@
                                 <p>65 <span class="hours">h</span></p>
                                 <span class="time">2024-10-28</span>
                             </div>
-                            <div class="course">
-                                <img src="/assets/img/category/svg/B.svg" alt="Stacja Paliw">
-                                <p class="title-category">Kategoria <span>B</span></p>
-                                <p class="name">Kurs prawo jazdy obejmujacy teorie.</p>
-                                <p>25 <span class="hours">h</span></p>
-                                <span class="time">2024-10-28</span>
-                            </div>
-                            <div class="course">
-                                <img src="/assets/img/category/svg/C.svg" alt="Stacja Paliw">
-                                <p class="title-category">Kategoria <span>C</span></p>
-                                <p class="name">Kurs prawo jazdy obejmujacy praktyke.</p>
-                                <p>30 <span class="hours">h</span></p>
-                                <span class="time">2024-10-28</span>
-                            </div>
                         </div>
                         <div class="newCourse">
                             <p class="mini-title">Dodawanie Kursu</p>
-                            <form method="post">
-                                <input type="hidden" name="userId" th:value="${user.id}"/>
+                            <form method="post" th:action="@{/course/instructor/addCourse}" th:object="${newCourse}">
+                                <input type="hidden" name="mentorShipId" th:value="${mentorShip.id}"/>
                                 <div class="form-box">
                                     <div class="course-input">
                                         <p>Krótki Opis</p>
-                                        <input type="text" placeholder="Krótki Opis"/>
+                                        <input th:field="*{description}" type="text" placeholder="Krótki Opis"/>
                                     </div>
                                     <div class="course-input">
                                         <p>Czas Trwania Kursu</p>
-                                        <input type="text" placeholder="Czas Trwania Kursu"/>
+                                        <input th:field="*{duration}" type="text" placeholder="Czas Trwania Kursu"/>
                                     </div>
                                     <div class="course-input-category">
-                                        <p>Kategorie</p>
+                                        <p>Wybierz Kategorie</p>
                                         <div class="box-category">
-                                            <div th:each="category : ${allCategories}" class="category-checkbox">
-                                                <input type="checkbox"
-                                                       th:value="${category.id}"/>
-                                                <label th:text="${category.nameCategory}">Nazwa Kategorii</label>
+                                            <div th:each="category : ${user.availableCategories}" class="category-radio">
+                                                <input type="radio"
+                                                       th:field="*{category}"
+                                                       th:value="${category.id}"
+                                                       th:id="'category_' + ${category.id}"/>
+                                                <label th:for="'category_' + ${category.id}" th:text="${category.nameCategory}">Nazwa Kategorii</label>
                                             </div>
                                         </div>
                                     </div>

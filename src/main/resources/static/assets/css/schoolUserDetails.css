@@ -481,11 +481,13 @@ h2 {
   margin: 20px auto;
   color: aliceblue;
   max-width: 600px;
+  width: 100%;
 }
 .details .hero-img .box-container .box-courses .container-courses .newCourse form {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 20px;
 }
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box {
   display: flex;
@@ -532,15 +534,15 @@ h2 {
   gap: 10px;
   margin: 7px 0;
 }
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox,
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox {
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-radio,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-radio {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
 }
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox],
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox] {
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-radio input[type=radio],
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-radio input[type=radio] {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -549,46 +551,46 @@ h2 {
   width: 20px;
   height: 20px;
   border: 3px solid #ffd166;
-  border-radius: 4px;
+  border-radius: 50%;
   cursor: pointer;
   position: relative;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox]:hover,
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox]:hover {
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-radio input[type=radio]:hover,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-radio input[type=radio]:hover {
   border-color: #ffc233;
 }
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox]:checked,
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox]:checked {
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-radio input[type=radio]:checked,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-radio input[type=radio]:checked {
   background-color: #ef476f;
   border-color: #ef476f;
 }
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox]:checked::after,
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox]:checked::after {
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-radio input[type=radio]:checked::after,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-radio input[type=radio]:checked::after {
   content: "";
   position: absolute;
-  left: 4px;
-  top: 1px;
-  width: 6px;
-  height: 12px;
-  border: solid #ffd166;
-  border-width: 0 3px 3px 0;
-  transform: rotate(45deg);
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #ffd166;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 }
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox input[type=checkbox]:checked ~ label,
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox input[type=checkbox]:checked ~ label {
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-radio input[type=radio]:checked ~ label,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-radio input[type=radio]:checked ~ label {
   font-weight: bold;
   color: #ef476f;
 }
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox label,
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox label {
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-radio label,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-radio label {
   font-size: 16px;
   cursor: pointer;
   color: aliceblue;
   transition: color 0.3s ease;
 }
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-checkbox label:hover,
-.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-checkbox label:hover {
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input .box-category .category-radio label:hover,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category .box-category .category-radio label:hover {
   color: #ef476f;
 }
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category {
