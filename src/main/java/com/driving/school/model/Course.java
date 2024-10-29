@@ -3,13 +3,19 @@ package com.driving.school.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "COURSE")
 public class Course {
     @Id
@@ -17,19 +23,28 @@ public class Course {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "NAME", length = 64)
-    private String name;
-
-    @Column(name = "DESCRIPTION", length = 64)
+    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "DURATION", length = 9)
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY")
+    private Category category;
+
+    @Column(name = "PASSED")
+    private Boolean passed;
+
+    @CreatedDate
+    @Column(name = "STARTEDAT")
+    private LocalDate startedAt;
+
+    @Column(name = "ENDAT")
+    private LocalDate endAt;
+
+    @Column(name = "DURATION")
     private String duration;
 
-    @Column(name = "CATEGORY", length = 64)
-    private String category;
-
-    @OneToMany(mappedBy = "course")
-    private Set<StudentCourse> studentCourses = new LinkedHashSet<>();
-
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "MENTORSHIP_ID", nullable = false)
+    private MentorShip mentorShip;
 }

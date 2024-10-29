@@ -53,9 +53,6 @@ public class SchoolUser {
     private Set<StudentAnswersTest> studentAnswersTests = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "schoolUser")
-    private Set<StudentCourse> studentCourses = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "schoolUser")
     private Set<StudentExam> studentExams = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -124,7 +121,6 @@ public class SchoolUser {
                 ", payments=" + payments +
                 ", sensitiveData=" + sensitiveData +
                 ", studentAnswersTests=" + studentAnswersTests +
-                ", studentCourses=" + studentCourses +
                 ", studentExams=" + studentExams +
                 ", userStatistic=" + userStatistic +
                 ", createdAt=" + createdAt +

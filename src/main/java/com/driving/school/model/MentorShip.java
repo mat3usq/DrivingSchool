@@ -10,6 +10,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -43,6 +45,9 @@ public class MentorShip {
 
     @Column(name = "STATUS", length = 128)
     private String status;
+
+    @OneToMany(mappedBy = "mentorShip")
+    private Set<Course> studentCourses = new LinkedHashSet<>();
 
     public MentorShip(SchoolUser student, SchoolUser instructor, String status) {
         this.student = student;
