@@ -2,6 +2,7 @@ package com.driving.school.controller;
 
 import com.driving.school.model.*;
 import com.driving.school.repository.CategoryRepository;
+import com.driving.school.repository.CourseRepository;
 import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.MentorShipService;
 import jakarta.servlet.http.HttpSession;
@@ -20,12 +21,14 @@ public class DashboardController {
     private final SchoolUserService schoolUserService;
     private final MentorShipService mentorShipService;
     private final CategoryRepository categoryRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService, CategoryRepository categoryRepository) {
+    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService, CategoryRepository categoryRepository, CourseRepository courseRepository) {
         this.schoolUserService = schoolUserService;
         this.mentorShipService = mentorShipService;
         this.categoryRepository = categoryRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("/dashboard")
@@ -148,6 +151,7 @@ public class DashboardController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("newPayment", new Payment());
         modelAndView.addObject("allCategories", categoryRepository.findAll());
+        modelAndView.addObject("newCourse", new Course());
         return modelAndView;
     }
 
@@ -180,8 +184,8 @@ public class DashboardController {
             SchoolUser user = schoolUserService.findUserById(ms.get().getStudent().getId());
             if (user != null) {
                 ModelAndView model = getUserDetails(user, new ModelAndView("schoolUserDetails"));
+                model.addObject("courses", courseRepository.findByMentorShipId(mentorShipId));
                 model.addObject("mentorShip", ms.get());
-                model.addObject("newCourse", new Course());
                 return model;
             }
         }
