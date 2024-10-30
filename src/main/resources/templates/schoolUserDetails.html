@@ -132,18 +132,27 @@
                         <p class="title" th:unless="${courses.isEmpty()}">Kursy</p>
                         <p class="title" th:if="${courses.isEmpty()}">Brak Kursów</p>
                         <div class="schoolUser-courses">
-                            <div class="course" th:each="course : ${courses}" th:classappend="${course.passed == true ? 'passed' : (course.passed == false ? 'failed' : '')}">
-                                <img th:src="'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'"
-                                     th:alt="${course.category.nameCategory}">
-                                <p class="title-category">Kategoria <span
-                                        th:text="${course.category.nameCategory}">A</span></p>
-                                <p class="name" th:text="${course.description}">Kurs prawo jazdy obejmujacy teorie oraz
-                                    praktyke.</p>
-                                <p th:text="${course.duration}">65 <span class="hours">h</span></p>
-                                <span class="time"><th:block
-                                        th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></th:block><th:block
-                                        th:if="${course.endAt}"> / <th:block th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></th:block></th:block></span>
-                            </div>
+                            <th:block th:each="course : ${courses}">
+                                <div class="course"
+                                     th:onclick="'document.getElementById(\'form-' + ${course.id} + '\').submit();'"
+                                     th:classappend="${course.passed == true ? 'passed' : (course.passed == false ? 'failed' : '')}">
+                                    <img th:src="'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'"
+                                         th:alt="${course.category.nameCategory}">
+                                    <p class="title-category">Kategoria <span
+                                            th:text="${course.category.nameCategory}">A</span></p>
+                                    <p class="name" th:text="${course.description}">Kurs prawo jazdy obejmujacy teorie
+                                        oraz
+                                        praktyke.</p>
+                                    <p th:text="${course.duration}">65 <span class="hours">h</span></p>
+                                    <span class="time"><th:block
+                                            th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></th:block><th:block
+                                            th:if="${course.endAt}"> / <th:block
+                                            th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></th:block></th:block></span>
+                                </div>
+                                <form th:id="'form-' + ${course.id}" hidden="hidden" method="post" th:action="@{/course/instructor/showCourse}">
+                                    <input type="hidden" name="courseId" th:value="${course.id}"/>
+                                </form>
+                            </th:block>
                         </div>
                         <div class="newCourse">
                             <p class="mini-title">Dodawanie Kursu</p>

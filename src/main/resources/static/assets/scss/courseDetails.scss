@@ -1,0 +1,248 @@
+@import '_colors.scss';
+@import '_animation.scss';
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	position: relative;
+	color: $text-color;
+	background-color: #333;
+	font-family: 'Montserrat', sans-serif;
+	overflow-x: hidden;
+}
+
+h2 {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.orange-text {
+	color: $primary-color;
+	font-weight: bold;
+}
+
+.gold-text {
+	color: $secondary-color;
+	font-weight: bold;
+}
+
+.shadow-bg {
+	background-color: rgba(0, 0, 0, 0.85);
+}
+
+.underline {
+	background-color: $primary-color;
+	width: 220px;
+	height: 5px;
+	margin: 0 auto 30px;
+}
+
+.details {
+	.hero-img {
+		position: relative;
+		height: 110vh;
+		background-image: url('../img/backgroundPaneldashboard.png');
+		background-position: center;
+		background-size: cover;
+		overflow: hidden;
+
+		.box-container {
+			position: absolute;
+			top: 12vh;
+			left: 300px;
+			width: calc(100vw - 300px);
+			max-height: 97vh;
+			overflow-y: auto;
+
+			.title {
+				display: inline-block;
+				padding: 20px 25px;
+				background-color: rgba(0, 0, 0, 0.8);
+				border-radius: 20px;
+				font-size: 20px;
+				font-style: italic;
+				letter-spacing: 1px;
+				text-align: center;
+				white-space: nowrap;
+				margin: 20px auto;
+			}
+
+			.mini-title {
+				margin: 0px auto;
+				padding: 20px 10px;
+				background-color: rgba(0, 0, 0, 0.8);
+				border-radius: 20px;
+				font-size: 16px;
+				font-style: italic;
+				letter-spacing: 1px;
+				text-align: center;
+				box-shadow: 0px 0px 15px 3px rgba(7, 59, 76, 0.4352941176);
+				width: fit-content;
+			}
+
+			.add-btn,
+			.delete-btn {
+				font-size: 18px;
+				height: 35px;
+				padding: 0px 10px;
+				border: none;
+				border-radius: 10px;
+				color: white;
+				font-weight: bold;
+				text-transform: uppercase;
+				text-align: center;
+				cursor: pointer;
+				transition: 0.3s ease;
+
+				&:hover {
+					transform: scale(1.05);
+				}
+			}
+
+			button.delete-btn {
+				background-color: $primary-color;
+				&:hover {
+					background-color: darken($primary-color, 10%);
+				}
+			}
+
+			button.add-btn {
+				font-size: 16px;
+				background-color: #2de300;
+
+				&:hover {
+					background-color: darken(#2de300, 10%);
+				}
+			}
+
+			.box-course {
+				.course-schoolUser {
+					width: auto;
+					max-width: 700px;
+					margin: 0px auto;
+					display: flex;
+					flex-direction: column;
+					padding: 10px;
+
+					.course-details {
+						.detail {
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							margin-bottom: 10px;
+							background-color: rgba(0, 0, 0, 0.8);
+							padding: 10px;
+							border-bottom: 2px solid $text-color;
+							border-radius: 10px 10px 0 0;
+							gap: 10px;
+
+							.title-header {
+								font-style: italic;
+								font-size: 15px;
+								color: $info-color;
+							}
+
+							.content {
+								font-size: 15px;
+								color: $text-color;
+								text-align: right;
+
+								span {
+									margin-left: 4px;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.box-course {
+				margin: 40px 20px;
+				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+				position: relative;
+				overflow: hidden;
+				border-radius: 20px;
+				backdrop-filter: blur(9px);
+			}
+
+			.box-course {
+				background: linear-gradient(-135deg, $box-third-start, $box-end);
+			}
+		}
+	}
+}
+
+.contact {
+	padding: 20px;
+	position: relative;
+	background-image: url('../img/contact.jpg');
+	background-position: center;
+	background-size: cover;
+	background-attachment: fixed;
+	z-index: 200;
+
+	i {
+		padding: 10px;
+		font-size: 24px;
+		color: $icon-color;
+		transition: 0.3s;
+	}
+
+	i:hover {
+		color: $secondary-color;
+	}
+
+	h2 {
+		font-size: 32px;
+		font-weight: bold;
+	}
+
+	.contact-shadow {
+		z-index: -5;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.6);
+		top: 0;
+		left: 0;
+	}
+
+	.contact-us {
+		display: flex;
+		align-items: center;
+
+		.contact-item {
+			margin: 30px 0px;
+
+			h3 {
+				margin-bottom: 20px;
+				color: $nav-color;
+				text-transform: uppercase;
+				font-weight: bold;
+				letter-spacing: 2px;
+			}
+
+			p {
+				font-size: 18px;
+				color: antiquewhite;
+			}
+		}
+	}
+}
+
+@media (max-width: 720px) {
+	.details {
+		.hero-img {
+			.box-container {
+				left: 0px;
+				width: 100%;
+			}
+		}
+	}
+}

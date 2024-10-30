@@ -47,4 +47,18 @@ public class CourseController {
 
         return dashboardController.showStudentForInstructor(mentorShipId, session);
     }
+
+    @PostMapping("/course/instructor/showCourse")
+    public ModelAndView showCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
+        SchoolUser instructor = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+
+        if (optionalCourse.isPresent() && optionalCourse.get().getMentorShip().getInstructor().equals(instructor)) {
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("course", optionalCourse.get());
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
 }
