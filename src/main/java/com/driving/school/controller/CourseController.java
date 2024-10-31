@@ -91,6 +91,7 @@ public class CourseController {
             drivingSessionService.updateDrivingSession(editDrivingSessionId, editDrivingSession);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
+            modelAndView.addObject("editDrivingSession", null);
             return modelAndView;
         }
 
