@@ -56,25 +56,17 @@
 
 ## TODO must have
 - Dashboard:
-  - Wybieranie kategori
   - Jakies podstawowe statysstyki do ucznia (wykresy w js)
-  - Aktualnosci (blog)
 - Dodanie strony error...
-- Rozwiązywanie testów i podział testów na kategorie
 - Statystyki rozwiązanych testów
 - Powiadomienia
-- Komunikacja
-- Zarządzanie płatnościami
 - Walidacja przy rejestracji (dodanie pola confirm pwd, email)
 - Walidacja przy logowaniu (email, pwd)
 - Poprawka frontu + aktualnosci w dashboard
 - Walidacja do dodawania wykladu/podwykladu/rozdzialu
 - Przeniesienie formularzy w wykladach do sekcji nizej
 - Poprawienie responsywnosci w wykladzie
-- Testy: 
-  - Dodanie i ostylowanie wyjasnien w testach
 - Zamiana footera i ostatniej sekcji na th:fragment
-- Dodanie do pytan wyjasnien bedzie lux wygladalo to wtedy 
 - Dodanie zdjec do instrukcji z rozwiązywania pytan specjalistycznych oraz podstawowych
 
 ## TODO optional
