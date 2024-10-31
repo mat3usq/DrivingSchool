@@ -87,7 +87,9 @@ h2 {
 			}
 
 			.add-btn,
-			.delete-btn {
+			.delete-btn,
+			.info-btn,
+			.cancel-btn {
 				font-size: 18px;
 				height: 35px;
 				padding: 0px 10px;
@@ -121,6 +123,20 @@ h2 {
 				}
 			}
 
+			button.info-btn {
+				background-color: $btn-bg-color;
+				&:hover {
+					background-color: darken($btn-bg-color, 10%);
+				}
+			}
+
+			button.cancel-btn {
+				background-color: darken($secondary-color, 10%);
+				&:hover {
+					background-color: darken($secondary-color, 20%);
+				}
+			}
+
 			.box-course {
 				.course-schoolUser {
 					width: auto;
@@ -131,7 +147,8 @@ h2 {
 					padding: 10px;
 
 					.course-details {
-						.detail {
+						.detail,
+						.detail-title {
 							display: flex;
 							justify-content: space-between;
 							align-items: center;
@@ -156,13 +173,162 @@ h2 {
 								span {
 									margin-left: 4px;
 								}
+
+								.hours {
+									font-weight: bold;
+									color: $secondary-color;
+								}
+							}
+						}
+
+						.detail-title {
+							flex-direction: column;
+
+							.content {
+								text-align: center;
 							}
 						}
 					}
 				}
 			}
 
-			.box-course {
+			.box-drivingSessions {
+				.account-drivingSessions {
+					width: auto;
+					max-width: 700px;
+					display: flex;
+					flex-direction: column;
+					padding: 10px;
+					margin: 0px auto;
+
+					.schoolUser-drivingSessions {
+						.drivingSession {
+							position: relative;
+							display: flex;
+							align-items: center;
+							flex-direction: column;
+							background-color: rgba(0, 0, 0, 0.8);
+							padding: 10px 15px;
+							border-bottom: 1px solid $calendar-font-color;
+							transition: transform 0.3s ease;
+
+							&:first-child {
+								border-radius: 10px 10px 0 0;
+							}
+
+							.box {
+								width: 100%;
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+								align-items: center;
+								gap: 10px;
+
+								.title-header {
+									font-size: 15px;
+									color: $btn-bg-color-hover;
+								}
+
+								.content, 
+								.time {
+									font-size: 15px;
+									color: $text-color;
+
+									span {
+										margin-left: 4px;
+									}
+								}
+
+								.time {
+									.hours {
+										font-weight: bold;
+										color: $secondary-color;
+									}
+								}
+							}
+
+							.operations {
+								background: transparent;
+								position: absolute;
+								top: 50%;
+								transform: translateY(-50%);
+								left: -90px;
+								transition: transform 0.3s ease, opacity 0.3s ease;
+								display: flex;
+								overflow: visible;
+								gap: 6px;
+								opacity: 0;
+								padding-right: 10px;
+							}
+
+							@media (hover: hover) and (pointer: fine) {
+								&:hover {
+									cursor: pointer;
+									transform: translateX(100px);
+
+									.operations {
+										opacity: 1;
+									}
+								}
+							}
+
+							&.clicked {
+								transform: translateX(100px);
+
+								.operations {
+									opacity: 1;
+								}
+							}
+						}
+
+						.drivingSummary {
+							position: relative;
+							display: flex;
+							align-items: center;
+							flex-direction: column;
+							background-color: rgba(0, 0, 0, 0.8);
+							padding: 10px 15px;
+							border-top: 1px solid $text-color;
+							border-radius: 0px 0px 10px 10px;
+
+							.box {
+								width: 100%;
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+								align-items: center;
+								gap: 10px;
+
+								.title-header {
+									font-weight: bold;
+									font-size: 15px;
+									color: $secondary-color;
+								}
+
+								.content, 
+								.time {
+									font-size: 15px;
+									color: $text-color;
+
+									span {
+										margin-left: 4px;
+									}
+								}
+
+								.time {
+									font-weight: bold;
+									.hours {
+										color: $secondary-color;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.box-course,
+			.box-drivingSessions {
 				margin: 40px 20px;
 				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 				position: relative;
@@ -173,6 +339,10 @@ h2 {
 
 			.box-course {
 				background: linear-gradient(-135deg, $box-third-start, $box-end);
+			}
+
+			.box-drivingSessions {
+				background: linear-gradient(-135deg, $box-second-start, $box-end);
 			}
 		}
 	}

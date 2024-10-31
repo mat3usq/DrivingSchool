@@ -532,8 +532,10 @@ h2 {
   color: #6acff1;
 }
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input input[type=text],
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input input[type=number],
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input select,
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category input[type=text],
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category input[type=number],
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category select {
   padding: 10px;
   border: 1px solid #ccc;
@@ -543,8 +545,10 @@ h2 {
   color: aliceblue;
 }
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input input[type=text]:focus,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input input[type=number]:focus,
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input select:focus,
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category input[type=text]:focus,
+.details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category input[type=number]:focus,
 .details .hero-img .box-container .box-courses .container-courses .newCourse form .form-box .course-input-category select:focus {
   outline: none;
   border-color: #ef476f;
