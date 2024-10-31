@@ -9,7 +9,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -41,10 +43,17 @@ public class Course {
     private LocalDate endAt;
 
     @Column(name = "DURATION")
-    private String duration;
+    private Double duration;
+
+    @Column(name = "SUMMARY_DURATION_HOURS")
+    private Double summaryDurationHours;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "MENTORSHIP_ID", nullable = false)
     private MentorShip mentorShip;
+
+    @OrderBy("sessionDate ASC")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DrivingSession> drivingSessions = new ArrayList<>();
 }
