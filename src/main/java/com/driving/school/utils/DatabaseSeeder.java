@@ -42,13 +42,15 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
     private final PaymentRepository paymentRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
             schoolUserRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository,
                           SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository,
                           MentorShipRepository mentorShipRepository, CategoryRepository categoryRepository,
-                          MailService mailService, QuestionRepository questionRepository, TestRepository testRepository, PaymentRepository paymentRepository) {
+                          MailService mailService, QuestionRepository questionRepository, TestRepository testRepository, PaymentRepository paymentRepository,
+                          CourseRepository courseRepository) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
@@ -62,6 +64,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.questionRepository = questionRepository;
         this.testRepository = testRepository;
         this.paymentRepository = paymentRepository;
+        this.courseRepository = courseRepository;
     }
 
 
@@ -131,7 +134,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         schoolUserRepository.save(instructor2);
         schoolUserRepository.save(instructor3);
 
-        mentorShipRepository.save(new MentorShip(student, instructor, Constants.ACTIVE));
+        MentorShip ms = new MentorShip(student, instructor, Constants.ACTIVE);
+        mentorShipRepository.save(ms);
         mentorShipRepository.save(new MentorShip(student, instructor2, Constants.ACTIVE));
         mentorShipRepository.save(new MentorShip(student2, instructor, Constants.ACTIVE));
         mentorShipRepository.save(new MentorShip(student2, instructor2, Constants.PENDING));
@@ -152,6 +156,17 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         paymentRepository.save(paymentFirst);
         paymentRepository.save(paymentSecond);
+
+        Course course = new Course();
+        course.setCategory(categories.getFirst());
+        course.setMentorShip(ms);
+        course.setDescription("Kurs na prawo jazdy doskonalajacy umiejetnosci techniczne oraz doswiadczenie za kierownica.");
+        course.setDuration(120.0);
+        course.setSummaryDurationHours(6.5);
+        course.setDrivingSessions(List.of(new DrivingSession(LocalDateTime.now(), 2.0, "Pierwsza jazda nie poszla az tak zle.", course),
+                new DrivingSession(LocalDateTime.now(), 1.5, "Druga spoko juz lepiej poszlo jest git.", course),
+                new DrivingSession(LocalDateTime.now(), 3.0, "Trzecia jazda prawie co bylby wypadek.", course)));
+        courseRepository.save(course);
     }
 
     private void mapQuestionsToDb() {

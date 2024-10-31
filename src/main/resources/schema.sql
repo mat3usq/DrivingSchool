@@ -11,7 +11,7 @@
 DROP TABLE blog;
 DROP TABLE contact;
 DROP TABLE course;
-DROP TABLE drivingLesson;
+DROP TABLE drivingSession;
 DROP TABLE lecture;
 DROP TABLE lectureMeeting;
 DROP TABLE payment;
@@ -70,7 +70,7 @@ CREATE TABLE course
 ALTER TABLE course
     ADD CONSTRAINT course_pk PRIMARY KEY (id);
 
-CREATE TABLE drivingLesson
+CREATE TABLE drivingSession
 (
     id            INTEGER NOT NULL,
     startTime     DATE,
@@ -81,7 +81,7 @@ CREATE TABLE drivingLesson
     status        VARCHAR2(128 CHAR)
 );
 
-ALTER TABLE drivingLesson
+ALTER TABLE drivingSession
     ADD CONSTRAINT drivinglesson_pk PRIMARY KEY (id);
 
 CREATE TABLE exam
@@ -308,7 +308,7 @@ CREATE UNIQUE INDEX userstatistic__idx ON
 ALTER TABLE userStatistic
     ADD CONSTRAINT userstatistic_pk PRIMARY KEY (id);
 
-ALTER TABLE drivingLesson
+ALTER TABLE drivingSession
     ADD CONSTRAINT drivinglesson_schooluser_fk FOREIGN KEY (schoolUserId)
         REFERENCES schoolUser (id);
 
