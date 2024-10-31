@@ -191,7 +191,6 @@ h2 {
   background-color: #eb184a;
 }
 .details .hero-img .box-container button.add-btn {
-  font-size: 16px;
   background-color: #2de300;
 }
 .details .hero-img .box-container button.add-btn:hover {
@@ -368,57 +367,57 @@ h2 {
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time .hours {
   color: #ffd166;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession {
   position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.8);
   padding: 10px 15px;
-  border: 2px solid #6acff1;
+  border: 1.5px solid #6acff1;
   transition: transform 0.3s ease;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit:first-child {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession:first-child {
   border-radius: 10px 10px 0 0;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit .rowSession {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .rowSession {
   display: flex;
   align-items: center;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit .top-row {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row {
   justify-content: space-between;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit .top-row .title-header {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .title-header {
   font-size: 16px;
   color: #99d98c;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit .top-row .time {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time {
   display: flex;
   align-items: center;
   font-size: 16px;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit .top-row .time input {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time input {
   width: 70px;
   margin-right: 5px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit .top-row .time .hours {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time .hours {
   font-weight: bold;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit .comment-row {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .comment-row {
   width: 100%;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit .comment-row input {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .comment-row input {
   width: 100%;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit input {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit input {
   padding: 10px;
   font-size: 16px;
   color: aliceblue;
@@ -426,15 +425,82 @@ h2 {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .box-edit input:focus {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSessionEdit .button-group {
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .button-group {
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession {
+  background: linear-gradient(-135deg, rgba(0, 0, 0, 0.93), rgba(10, 76, 98, 0.8823529412));
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  padding: 15px;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box {
+  width: 100%;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box p {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4cc9f0;
+  margin-top: 20px;
+  text-align: center;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box hr {
+  border: none;
+  border-top: 1px solid aliceblue;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession {
+  display: flex;
+  align-items: center;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession .title-header {
+  flex: 1;
+  color: #fff;
+  margin-right: 10px;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession input {
+  padding: 10px;
+  font-size: 16px;
+  color: aliceblue;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession input:focus {
+  outline: none;
+  border-color: #ef476f;
+  box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession .hours {
+  margin-left: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffd166;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .bottom-row input {
+  width: 80px;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .comment-row {
+  flex-direction: column;
+  gap: 5px;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .comment-row input {
+  width: 90%;
 }
 .details .hero-img .box-container .box-course,
 .details .hero-img .box-container .box-drivingSessions {

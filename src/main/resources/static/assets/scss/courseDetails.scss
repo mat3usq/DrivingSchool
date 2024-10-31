@@ -115,7 +115,6 @@ h2 {
 			}
 
 			button.add-btn {
-				font-size: 16px;
 				background-color: #2de300;
 
 				&:hover {
@@ -324,14 +323,14 @@ h2 {
 							}
 						}
 
-						.drivingSessionEdit {
+						.editDrivingSession {
 							position: relative;
 							display: flex;
 							align-items: center;
 							flex-direction: column;
 							background-color: rgba(0, 0, 0, 0.8);
 							padding: 10px 15px;
-							border: 2px solid $info-color;
+							border: 1.5px solid $info-color;
 							transition: transform 0.3s ease;
 
 							&:first-child {
@@ -403,6 +402,88 @@ h2 {
 								display: flex;
 								justify-content: center;
 								gap: 10px;
+							}
+						}
+
+						.newDrivingSession {
+							background: linear-gradient(-135deg, rgba(0, 0, 0, 0.93), #0a4c62e1);
+							border-radius: 20px;
+							box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+							max-width: 500px;
+							padding: 15px;
+							margin: 0 auto;
+							margin-top: 25px;
+
+							.box-new {
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								gap: 15px;
+
+								.title-box {
+									width: 100%;
+
+									p {
+										font-size: 20px;
+										font-weight: bold;
+										color: $category-icon;
+										margin-top: 20px;
+										text-align: center;
+									}
+
+									hr {
+										border: none;
+										border-top: 1px solid $text-color;
+									}
+								}
+
+								.rowSession {
+									display: flex;
+									align-items: center;
+
+									.title-header {
+										flex: 1;
+										color: #fff;
+										margin-right: 10px;
+									}
+
+									input {
+										padding: 10px;
+										font-size: 16px;
+										color: $text-color;
+										border: 1px solid #ccc;
+										border-radius: 8px;
+										background-color: rgba(255, 255, 255, 0.1);
+
+										&:focus {
+											outline: none;
+											border-color: $primary-color;
+											box-shadow: 0 0 5px rgba($primary-color, 0.5);
+										}
+									}
+
+									.hours {
+										margin-left: 5px;
+										font-size: 16px;
+										font-weight: bold;
+										color: $secondary-color;
+									}
+								}
+
+								.bottom-row {
+									input {
+										width: 80px;
+									}
+								}
+
+								.comment-row {
+									flex-direction: column;
+									gap: 5px;
+
+									input {
+										width: 90%;
+									}
+								}
 							}
 						}
 					}

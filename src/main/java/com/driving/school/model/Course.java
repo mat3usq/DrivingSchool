@@ -53,7 +53,7 @@ public class Course {
     @JoinColumn(name = "MENTORSHIP_ID", nullable = false)
     private MentorShip mentorShip;
 
-    @OrderBy("sessionDate ASC")
+    @OrderBy("sessionDate DESC")
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DrivingSession> drivingSessions = new ArrayList<>();
 }

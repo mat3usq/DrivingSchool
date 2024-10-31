@@ -22,8 +22,10 @@ public class DrivingSessionService {
         this.courseRepository = courseRepository;
     }
 
-    public DrivingSession createDrivingSession(DrivingSession drivingSession) {
-        return drivingSessionRepository.save(drivingSession);
+    public void createDrivingSession(DrivingSession drivingSession, Course course) {
+        course.setSummaryDurationHours(course.getSummaryDurationHours() + drivingSession.getDurationHours());
+        drivingSession.setCourse(course);
+        drivingSessionRepository.save(drivingSession);
     }
 
     public Optional<DrivingSession> getDrivingSessionById(Long id) {

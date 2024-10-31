@@ -60,6 +60,24 @@ public class CourseController {
         )) {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", optionalCourse.get());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
+
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
+    @PostMapping("/course/instructor/addDrivingSession")
+    public ModelAndView addDrivingSession(@ModelAttribute("newDrivingSession") DrivingSession newDrivingSession,
+                                          @RequestParam("courseId") Long courseId, HttpSession session) {
+        Optional<Course> course = courseRepository.findById(courseId);
+
+        if (course.isPresent()) {
+            drivingSessionService.createDrivingSession(newDrivingSession, course.get());
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("course", course.get());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
             return modelAndView;
         }
 
@@ -75,6 +93,7 @@ public class CourseController {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("editDrivingSession", ds.get());
             modelAndView.addObject("course", ds.get().getCourse());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
             return modelAndView;
         }
 
@@ -91,7 +110,7 @@ public class CourseController {
             drivingSessionService.updateDrivingSession(editDrivingSessionId, editDrivingSession);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
-            modelAndView.addObject("editDrivingSession", null);
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
             return modelAndView;
         }
 
@@ -107,6 +126,7 @@ public class CourseController {
             drivingSessionService.deleteDrivingSession(drivingSessionId);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
             return modelAndView;
         }
 

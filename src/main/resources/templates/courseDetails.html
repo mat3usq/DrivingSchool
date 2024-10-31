@@ -105,8 +105,7 @@
                             </th:block>
                             <th:block th:if="${editDrivingSession}">
                                 <th:block th:each="drivingSession : ${course.drivingSessions}">
-                                    <div class="drivingSessionEdit"
-                                         th:if="${drivingSession.id == editDrivingSession.id}">
+                                    <div class="editDrivingSession" th:if="${drivingSession.id == editDrivingSession.id}">
                                         <form class="box-edit" method="post"
                                               th:action="@{/course/instructor/updateDrivingSession}"
                                               th:object="${editDrivingSession}">
@@ -138,6 +137,23 @@
 
                                     <div class="drivingSession"
                                          th:unless="${drivingSession.id == editDrivingSession.id}">
+                                        <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                                            <form th:action="@{/course/instructor/deleteDrivingSession}" method="post">
+                                                <input type="hidden" name="drivingSessionId"
+                                                       th:value="${drivingSession.id}"/>
+                                                <button type="submit" class="delete-btn"><i
+                                                        class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                            <form th:action="@{/course/instructor/editDrivingSession}"
+                                                  method="post">
+                                                <input type="hidden" name="drivingSessionId"
+                                                       th:value="${drivingSession.id}"/>
+                                                <button type="submit" class="info-btn"><i
+                                                        class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                         <div class="box">
                                             <span class="content"><span class="title-header"
                                                                         th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
@@ -163,6 +179,29 @@
                                             class="hours">h</span></span>
                                 </div>
                             </div>
+
+                            <div class="newDrivingSession">
+                                <form class="box-new" method="post" th:action="@{/course/instructor/addDrivingSession}" th:object="${newDrivingSession}">
+                                    <input type="hidden" name="courseId" th:value="${course.id}" />
+                                    <div class="title-box">
+                                        <p>Dodawanie Sesji Jazdy</p>
+                                        <hr>
+                                    </div>
+                                    <div class="rowSession comment-row">
+                                        <span class="title-header">Uwagi oraz Komentarze do Jazdy</span>
+                                        <input type="text" th:field="*{instructorComment}" placeholder="Wprowadź komentarz" />
+                                    </div>
+
+                                    <div class="rowSession bottom-row">
+                                        <span class="title-header">Odbyte Godziny Jazdy</span>
+                                        <input type="number" placeholder="Godz" step="0.1" th:field="*{durationHours}" />
+                                        <span class="hours">h</span>
+                                    </div>
+
+                                    <button type="submit" class="add-btn">Dodaj</button>
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -14,6 +16,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "DRIVING_SESSION")
 public class DrivingSession {
     @Id
@@ -21,10 +24,11 @@ public class DrivingSession {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "SESSION_DATE", nullable = false)
+    @CreatedDate
+    @Column(name = "SESSION_DATE")
     private LocalDateTime sessionDate;
 
-    @Column(name = "DURATION_HOURS", nullable = false)
+    @Column(name = "DURATION_HOURS")
     private Double durationHours;
 
     @Column(name = "INSTRUCTOR_COMMENT")
