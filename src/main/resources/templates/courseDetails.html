@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
@@ -50,7 +49,8 @@
                             </div>
                             <div class="detail">
                                 <span class="title-header">Czas Trwania</span>
-                                <span class="content"><th:block th:text="${course.duration}"></th:block><span class="hours">h</span></span>
+                                <span class="content"><th:block th:text="${course.duration}"></th:block><span
+                                        class="hours">h</span></span>
                             </div>
                             <div class="detail" th:if="${course.passed}">
                                 <span class="title-header">Wynik Koncowy</span>
@@ -74,28 +74,93 @@
                         <p class="title" th:unless="${course.drivingSessions.isEmpty()}">Sesje Jazd</p>
                         <p class="title" th:if="${course.drivingSessions.isEmpty()}">Brak Sesji Jazd</p>
                         <div class="schoolUser-drivingSessions">
-                            <div class="drivingSession" th:each="drivingSession : ${course.drivingSessions}">
-                                <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
-                                    <form th:action="@{/course/instructor/deleteHours}" method="post">
-                                        <input type="hidden" name="drivingSessionId" th:value="${drivingSession.id}"/>
-                                        <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                    </form>
-                                    <form th:action="@{/course/instructor/editHours}" method="post">
-                                        <input type="hidden" name="drivingSessionId" th:value="${drivingSession.id}"/>
-                                        <button type="submit" class="info-btn"><i class="fa-regular fa-pen-to-square"></i>
-                                        </button>
-                                    </form>
+                            <th:block th:unless="${editDrivingSession}">
+                                <div class="drivingSession" th:each="drivingSession : ${course.drivingSessions}">
+                                    <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                                        <form th:action="@{/course/instructor/deleteDrivingSession}" method="post">
+                                            <input type="hidden" name="drivingSessionId"
+                                                   th:value="${drivingSession.id}"/>
+                                            <button type="submit" class="delete-btn"><i
+                                                    class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </form>
+                                        <form th:action="@{/course/instructor/editDrivingSession}"
+                                              method="post">
+                                            <input type="hidden" name="drivingSessionId"
+                                                   th:value="${drivingSession.id}"/>
+                                            <button type="submit" class="info-btn"><i
+                                                    class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="box">
+                                        <span class="content"><span class="title-header"
+                                                                    th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                                th:text="${drivingSession.instructorComment}"></th:block></span>
+                                        <span class="time"><th:block
+                                                th:text="${drivingSession.durationHours}"></th:block><span
+                                                class="hours">h</span></span>
+                                    </div>
                                 </div>
+                            </th:block>
+                            <th:block th:if="${editDrivingSession}">
+                                <th:block th:each="drivingSession : ${course.drivingSessions}">
+                                    <div class="drivingSessionEdit"
+                                         th:if="${drivingSession.id == editDrivingSession.id}">
+                                        <form class="box-edit" method="post"
+                                              th:action="@{/course/instructor/updateDrivingSession}"
+                                              th:object="${editDrivingSession}">
+                                            <input type="hidden" name="editDrivingSessionId" th:value="${editDrivingSession.id}"/>
+                                            <div class="rowSession top-row">
+                                                <span class="title-header"
+                                                      th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                                <span class="time">
+                                                    <input type="number" step="0.1" th:field="*{durationHours}"/>
+                                                    <span class="hours">h</span>
+                                                </span>
+                                            </div>
+                                            <div class="rowSession comment-row">
+                                                <input type="text" th:field="*{instructorComment}"
+                                                       placeholder="Wprowadź komentarz"/>
+                                            </div>
+                                            <div class="button-group">
+                                                <button type="button" class="cancel-btn"
+                                                        onclick="document.getElementById('backForm').submit();">Anuluj
+                                                </button>
+                                                <button type="submit" class="add-btn">Zapisz</button>
+                                            </div>
+                                        </form>
+                                        <form id="backForm" hidden="hidden" method="post"
+                                              th:action="@{/course/showCourse}">
+                                            <input type="hidden" name="courseId" th:value="${course.id}"/>
+                                        </form>
+                                    </div>
+
+                                    <div class="drivingSession"
+                                         th:unless="${drivingSession.id == editDrivingSession.id}">
+                                        <div class="box">
+                                            <span class="content"><span class="title-header"
+                                                                        th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                                    th:text="${drivingSession.instructorComment}"></th:block></span>
+                                            <span class="time"><th:block
+                                                    th:text="${drivingSession.durationHours}"></th:block><span
+                                                    class="hours">h</span></span>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </th:block>
+                            <div class="drivingSession" th:if="${course.drivingSessions.isEmpty()}">
                                 <div class="box">
-                                    <span class="content"><span class="title-header" th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block th:text="${drivingSession.instructorComment}"></th:block></span>
-                                    <span class="time"><th:block th:text="${drivingSession.durationHours}"></th:block><span class="hours">h</span></span>
+                                    <span class="content"><span class="title-header">Nie dodano jeszcze żadnych sesji jazdy.</span></span>
+                                    <span class="time">Dodaj pierwszą <span class="hours">sesję</span>!</span>
                                 </div>
                             </div>
                             <div class="drivingSummary">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Podsumowanie</span> Łączna ilość przejechanych godzin</span>
-                                    <span class="time"><th:block th:text="${course.summaryDurationHours}"></th:block><span class="hours">h</span></span>
+                                    <span class="time"><th:block
+                                            th:text="${course.summaryDurationHours}"></th:block><span
+                                            class="hours">h</span></span>
                                 </div>
                             </div>
                         </div>

@@ -6,11 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -42,5 +40,13 @@ public class DrivingSession {
         this.durationHours = durationHours;
         this.instructorComment = instructorComment;
         this.course = course;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DrivingSession that = (DrivingSession) o;
+        return Objects.equals(id, that.id) && Objects.equals(sessionDate, that.sessionDate) && Objects.equals(durationHours, that.durationHours) && Objects.equals(instructorComment, that.instructorComment) && Objects.equals(course.getId(), that.course.getId());
     }
 }
