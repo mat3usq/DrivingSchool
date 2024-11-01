@@ -65,9 +65,14 @@ public interface Constants {
 
 
     // Mail Status
-    String MAIL_UNREAD ="UNREAD";
-    String MAIL_READ ="READ";
+    String MAIL_UNREAD = "UNREAD";
+    String MAIL_READ = "READ";
     String MAIL_REPLY = "REPLY";
-    String MAIL_TRASHED ="TRASHED";
-    String MAIL_DELETED ="DELETED";
+    String MAIL_TRASHED = "TRASHED";
+    String MAIL_DELETED = "DELETED";
+
+    // Course Status
+    String COURSE_PASSED = "Pozytywny";
+    String COURSE_FAILED = "Negatywny";
+    String COURSE_NOTSPECIFIED = "Brak";
 }

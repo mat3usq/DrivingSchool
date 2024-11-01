@@ -33,7 +33,7 @@ public class Course {
     private Category category;
 
     @Column(name = "PASSED")
-    private Boolean passed;
+    private String passed = Constants.COURSE_NOTSPECIFIED;
 
     @CreatedDate
     @Column(name = "STARTEDAT")

@@ -49,6 +49,23 @@ public class CourseController {
         return dashboardController.showStudentForInstructor(mentorShipId, session);
     }
 
+    @PostMapping("/course/instructor/editCourse")
+    public ModelAndView editCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+
+        if (optionalCourse.isPresent() && optionalCourse.get().getMentorShip().getInstructor().equals(user)) {
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("editCourse", true);
+            modelAndView.addObject("availableCategories", optionalCourse.get().getMentorShip().getStudent().getAvailableCategories());
+            modelAndView.addObject("course", optionalCourse.get());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
     @PostMapping("/course/instructor/deleteCourse")
     public ModelAndView deleteCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
         SchoolUser instructor = (SchoolUser) session.getAttribute("loggedInUser");
