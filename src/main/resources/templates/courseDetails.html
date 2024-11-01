@@ -67,6 +67,19 @@
                                       th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></span>
                             </div>
                         </div>
+                        <div class="btn-box">
+                            <form class="deleteCourse" th:action="@{/course/instructor/deleteCourse}" method="post">
+                                <input type="hidden" name="courseId"
+                                       th:value="${course.id}"/>
+                                <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs</button>
+                            </form>
+                            <form class="editCourse" th:action="@{/course/instructor/editCourse}"
+                                  method="post">
+                                <input type="hidden" name="courseId"
+                                       th:value="${course.id}"/>
+                                <button type="submit" class="info-btn"><i class="fa-regular fa-pen-to-square"></i> Edytuj Kurs</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="box-drivingSessions">
