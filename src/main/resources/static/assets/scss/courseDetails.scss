@@ -137,7 +137,8 @@ h2 {
 			}
 
 			.box-course {
-				.course-schoolUser {
+				.course-schoolUser,
+				.editCourse-schoolUser {
 					width: auto;
 					max-width: 700px;
 					margin: 0px auto;
@@ -199,6 +200,109 @@ h2 {
 
 							.content {
 								text-align: center;
+							}
+						}
+					}
+				}
+
+				.editCourse-schoolUser {
+					.detail-title {
+						input {
+							width: 95%;
+						}
+					}
+
+					.time {
+						input {
+							width: 85px;
+						}
+						.hours {
+							font-weight: bold;
+							color: $secondary-color;
+						}
+					}
+
+					.detail-title,
+					.detail {
+						input {
+							padding: 10px;
+							font-size: 18px;
+							color: $text-color;
+							border: 1px solid #ccc;
+							border-radius: 8px;
+							background-color: rgba(255, 255, 255, 0.1);
+
+							&:focus {
+								outline: none;
+								border-color: $primary-color;
+								box-shadow: 0 0 5px rgba($primary-color, 0.5);
+							}
+						}
+
+						input[type='radio'] {
+							appearance: none;
+							background-color: transparent;
+							vertical-align: middle;
+							width: 15px;
+							height: 15px;
+							padding: 7px;
+							border: 3px solid $secondary-color;
+							border-radius: 50%;
+							cursor: pointer;
+							position: relative;
+							transition: border-color 0.3s ease, background-color 0.3s ease;
+
+							&:hover {
+								border-color: darken($secondary-color, 10%);
+							}
+
+							&:checked {
+								background-color: $primary-color;
+								border-color: $primary-color;
+
+								&::after {
+									content: '';
+									position: absolute;
+									top: 50%;
+									left: 50%;
+									width: 10px;
+									height: 10px;
+									background-color: $secondary-color;
+									border-radius: 50%;
+									transform: translate(-50%, -50%);
+								}
+
+								& ~ label {
+									font-weight: bold;
+									color: $primary-color;
+								}
+							}
+						}
+
+						label {
+							font-size: 16px;
+							cursor: pointer;
+							color: $text-color;
+							transition: color 0.3s ease;
+
+							&:hover {
+								color: $primary-color;
+							}
+						}
+
+						.category-container, 
+						.passed-box {
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							justify-content: center;
+							flex-wrap: wrap;
+							gap: 10px;
+
+							.category-box, .passed {
+								display: flex;
+								flex-direction: column;
+								align-items: center;
 							}
 						}
 					}

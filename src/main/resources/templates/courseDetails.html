@@ -34,7 +34,7 @@
         <div class="hero-img">
             <div class="box-container">
                 <div class="box-course">
-                    <div class="course-schoolUser">
+                    <div class="course-schoolUser" th:unless="${editCourse}">
                         <p class="title">Szczegóły Kursu</p>
                         <div class="course-details">
                             <div class="detail-title">
@@ -52,9 +52,9 @@
                                 <span class="content"><th:block th:text="${course.duration}"></th:block><span
                                         class="hours">h</span></span>
                             </div>
-                            <div class="detail" th:if="${course.passed}">
+                            <div class="detail">
                                 <span class="title-header">Wynik Koncowy</span>
-                                <span class="content" th:text="${course.passed} ? 'Pozytywny' : 'Negatywny'"></span>
+                                <span class="content" th:text="${course.passed}"></span>
                             </div>
                             <div class="detail">
                                 <span class="title-header">Data Rozpoczęcia</span>
@@ -68,17 +68,105 @@
                             </div>
                         </div>
                         <div class="btn-box">
-                            <form class="deleteCourse" th:action="@{/course/instructor/deleteCourse}" method="post">
+                            <form th:action="@{/course/instructor/deleteCourse}" method="post">
                                 <input type="hidden" name="courseId"
                                        th:value="${course.id}"/>
-                                <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs</button>
+                                <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs
+                                </button>
                             </form>
-                            <form class="editCourse" th:action="@{/course/instructor/editCourse}"
+                            <form th:action="@{/course/instructor/editCourse}"
                                   method="post">
                                 <input type="hidden" name="courseId"
                                        th:value="${course.id}"/>
-                                <button type="submit" class="info-btn"><i class="fa-regular fa-pen-to-square"></i> Edytuj Kurs</button>
+                                <button type="submit" class="info-btn"><i class="fa-regular fa-pen-to-square"></i>
+                                    Edytuj Kurs
+                                </button>
                             </form>
+                        </div>
+                    </div>
+                    <div class="editCourse-schoolUser" th:if="${editCourse}">
+                        <p class="title">Edycja Kursu</p>
+                        <form class="course-details" th:action="@{/course/instructor/updateCourse}"
+                              method="post" th:object="${course}" id="editCourseForm">
+                            <input type="hidden" name="courseId" th:value="${course.id}"/>
+
+                            <div class="detail-title">
+                                <span class="title-header">Opis</span>
+                                <input class="content" th:field="*{description}"/>
+                            </div>
+
+                            <div class="detail">
+                                <span class="title-header">Kategoria Kursu</span>
+                                <div class="category-container">
+                                    <div class="category-box" th:each="category : ${availableCategories}">
+                                        <input type="radio"
+                                               th:field="*{category}"
+                                               th:value="${category.id}"
+                                               th:id="'category_' + ${category.id}"/>
+                                        <label th:for="'category_' + ${category.id}"
+                                               th:text="${category.nameCategory}">Nazwa Kategorii</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="detail">
+                                <span class="title-header">Czas Trwania</span>
+                                <span class="time">
+                                    <input type="number" step="0.1" th:field="*{duration}"/>
+                                    <span class="hours">h</span>
+                                </span>
+                            </div>
+
+                            <div class="detail">
+                                <span class="title-header">Wynik Końcowy</span>
+                                <div class="passed-box">
+                                    <div class="passed">
+                                        <input type="radio" id="passedTrue"
+                                               th:field="*{passed}"
+                                               th:value="${T(com.driving.school.model.Constants).COURSE_PASSED}"/>
+                                        <label for="passedTrue"
+                                               th:text="${T(com.driving.school.model.Constants).COURSE_PASSED}">Pozytywny</label>
+                                    </div>
+
+                                    <div class="passed">
+                                        <input type="radio" id="passedFalse"
+                                               th:field="*{passed}"
+                                               th:value="${T(com.driving.school.model.Constants).COURSE_FAILED}"/>
+                                        <label for="passedFalse"
+                                               th:text="${T(com.driving.school.model.Constants).COURSE_FAILED}">Negatywny</label>
+                                    </div>
+
+                                    <div class="passed">
+                                        <input type="radio" id="passedNone"
+                                               th:field="*{passed}"
+                                               th:value="${T(com.driving.school.model.Constants).COURSE_NOTSPECIFIED}"/>
+                                        <label for="passedNone"
+                                               th:text="${T(com.driving.school.model.Constants).COURSE_NOTSPECIFIED}">Nie
+                                            określono</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="detail">
+                                <span class="title-header">Data Rozpoczęcia</span>
+                                <span class="content"
+                                      th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></span>
+                            </div>
+
+                            <div class="detail" th:if="${course.endAt}">
+                                <span class="title-header">Data Zakończenia</span>
+                                <span class="content" th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></span>
+                            </div>
+                        </form>
+                        <div class="btn-box">
+                            <form th:action="@{/course/showCourse}" method="post">
+                                <input type="hidden" name="courseId"
+                                       th:value="${course.id}"/>
+                                <button type="submit" class="cancel-btn">Powrót</button>
+                            </form>
+                            <button onclick="document.getElementById('editCourseForm').submit();" class="add-btn">Zapisz
+                                Kurs
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -118,11 +206,13 @@
                             </th:block>
                             <th:block th:if="${editDrivingSession}">
                                 <th:block th:each="drivingSession : ${course.drivingSessions}">
-                                    <div class="editDrivingSession" th:if="${drivingSession.id == editDrivingSession.id}">
+                                    <div class="editDrivingSession"
+                                         th:if="${drivingSession.id == editDrivingSession.id}">
                                         <form class="box-edit" method="post"
                                               th:action="@{/course/instructor/updateDrivingSession}"
                                               th:object="${editDrivingSession}">
-                                            <input type="hidden" name="editDrivingSessionId" th:value="${editDrivingSession.id}"/>
+                                            <input type="hidden" name="editDrivingSessionId"
+                                                   th:value="${editDrivingSession.id}"/>
                                             <div class="rowSession top-row">
                                                 <span class="title-header"
                                                       th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span>
@@ -194,20 +284,22 @@
                             </div>
 
                             <div class="newDrivingSession">
-                                <form class="box-new" method="post" th:action="@{/course/instructor/addDrivingSession}" th:object="${newDrivingSession}">
-                                    <input type="hidden" name="courseId" th:value="${course.id}" />
+                                <form class="box-new" method="post" th:action="@{/course/instructor/addDrivingSession}"
+                                      th:object="${newDrivingSession}">
+                                    <input type="hidden" name="courseId" th:value="${course.id}"/>
                                     <div class="title-box">
                                         <p>Dodawanie Sesji Jazdy</p>
                                         <hr>
                                     </div>
                                     <div class="rowSession comment-row">
                                         <span class="title-header">Uwagi oraz Komentarze do Jazdy</span>
-                                        <input type="text" th:field="*{instructorComment}" placeholder="Wprowadź komentarz" />
+                                        <input type="text" th:field="*{instructorComment}"
+                                               placeholder="Wprowadź komentarz"/>
                                     </div>
 
                                     <div class="rowSession bottom-row">
                                         <span class="title-header">Odbyte Godziny Jazdy</span>
-                                        <input type="number" placeholder="Godz" step="0.1" th:field="*{durationHours}" />
+                                        <input type="number" placeholder="Godz" step="0.1" th:field="*{durationHours}"/>
                                         <span class="hours">h</span>
                                     </div>
 

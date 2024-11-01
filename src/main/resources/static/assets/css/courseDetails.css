@@ -208,7 +208,8 @@ h2 {
 .details .hero-img .box-container button.cancel-btn:hover {
   background-color: #ffb200;
 }
-.details .hero-img .box-container .box-course .course-schoolUser {
+.details .hero-img .box-container .box-course .course-schoolUser,
+.details .hero-img .box-container .box-course .editCourse-schoolUser {
   width: auto;
   max-width: 700px;
   margin: 0px auto;
@@ -216,7 +217,8 @@ h2 {
   flex-direction: column;
   padding: 10px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .btn-box {
+.details .hero-img .box-container .box-course .course-schoolUser .btn-box,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .btn-box {
   margin: 10px 0;
   display: flex;
   flex-wrap: wrap;
@@ -225,11 +227,14 @@ h2 {
   justify-content: space-evenly;
   gap: 10px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .btn-box button {
+.details .hero-img .box-container .box-course .course-schoolUser .btn-box button,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .btn-box button {
   font-size: 16px;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title {
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -241,31 +246,141 @@ h2 {
   gap: 10px;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .title-header,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .title-header {
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .title-header,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .title-header,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .title-header {
   font-style: italic;
   font-size: 15px;
   color: #6acff1;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content {
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content {
   font-size: 15px;
   color: aliceblue;
   text-align: right;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content span,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content span {
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content span,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content span,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content span {
   margin-left: 4px;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content .hours,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content .hours {
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content .hours,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content .hours,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content .hours {
   font-weight: bold;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title {
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title {
   flex-direction: column;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content {
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content {
   text-align: center;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input {
+  width: 95%;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .time input {
+  width: 85px;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .time .hours {
+  font-weight: bold;
+  color: #ffd166;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail input {
+  padding: 10px;
+  font-size: 18px;
+  color: aliceblue;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input:focus,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail input:focus {
+  outline: none;
+  border-color: #ef476f;
+  box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio],
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+  padding: 7px;
+  border: 3px solid #ffd166;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio]:hover,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio]:hover {
+  border-color: #ffc233;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio]:checked,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio]:checked {
+  background-color: #ef476f;
+  border-color: #ef476f;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio]:checked::after,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #ffd166;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio]:checked ~ label,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio]:checked ~ label {
+  font-weight: bold;
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title label,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail label {
+  font-size: 16px;
+  cursor: pointer;
+  color: aliceblue;
+  transition: color 0.3s ease;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title label:hover,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail label:hover {
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .category-container,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .passed-box,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail .category-container,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail .passed-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .category-container .category-box, .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .category-container .passed,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .passed-box .category-box,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .passed-box .passed,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail .category-container .category-box,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail .category-container .passed,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail .passed-box .category-box,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail .passed-box .passed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions {
   width: auto;

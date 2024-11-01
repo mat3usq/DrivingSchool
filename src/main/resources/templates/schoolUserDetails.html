@@ -135,7 +135,7 @@
                             <th:block th:each="course : ${courses}">
                                 <div class="course"
                                      th:onclick="'document.getElementById(\'form-' + ${course.id} + '\').submit();'"
-                                     th:classappend="${course.passed == true ? 'passed' : (course.passed == false ? 'failed' : '')}">
+                                     th:classappend="${course.passed == T(com.driving.school.model.Constants).COURSE_PASSED ? 'passed' : (course.passed == T(com.driving.school.model.Constants).COURSE_FAILED ? 'failed' : '')}">
                                     <img th:src="'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'"
                                          th:alt="${course.category.nameCategory}">
                                     <p class="title-category">Kategoria <span
