@@ -3,9 +3,9 @@ package com.driving.school.controller;
 import com.driving.school.model.*;
 import com.driving.school.repository.CategoryRepository;
 import com.driving.school.repository.CourseRepository;
+import com.driving.school.service.CourseService;
 import com.driving.school.service.DrivingSessionService;
 import com.driving.school.service.MentorShipService;
-import com.driving.school.service.SchoolUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,22 +18,17 @@ import java.util.Optional;
 
 @Controller
 public class CourseController {
-    private final SchoolUserService schoolUserService;
     private final MentorShipService mentorShipService;
-    private final CategoryRepository categoryRepository;
-    private final CourseRepository courseRepository;
-
     private final DashboardController dashboardController;
     private final DrivingSessionService drivingSessionService;
+    private final CourseService courseService;
 
     @Autowired
-    public CourseController(SchoolUserService schoolUserService, MentorShipService mentorShipService, CategoryRepository categoryRepository, CourseRepository courseRepository, DashboardController dashboardController, DrivingSessionService drivingSessionService) {
-        this.schoolUserService = schoolUserService;
+    public CourseController(MentorShipService mentorShipService, DashboardController dashboardController, DrivingSessionService drivingSessionService, CourseService courseService) {
         this.mentorShipService = mentorShipService;
-        this.categoryRepository = categoryRepository;
-        this.courseRepository = courseRepository;
         this.dashboardController = dashboardController;
         this.drivingSessionService = drivingSessionService;
+        this.courseService = courseService;
     }
 
     @PostMapping("/course/instructor/addCourse")
@@ -43,7 +38,7 @@ public class CourseController {
 
         if (optMs.isPresent() && optMs.get().getInstructor().equals(instructor)) {
             course.setMentorShip(optMs.get());
-            courseRepository.save(course);
+            courseService.createCourse(course);
         }
 
         return dashboardController.showStudentForInstructor(mentorShipId, session);
@@ -52,13 +47,29 @@ public class CourseController {
     @PostMapping("/course/instructor/editCourse")
     public ModelAndView editCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        Optional<Course> optionalCourse = courseService.getCourseById(courseId);
 
         if (optionalCourse.isPresent() && optionalCourse.get().getMentorShip().getInstructor().equals(user)) {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
-            modelAndView.addObject("editCourse", true);
+            modelAndView.addObject("isEditCourse", true);
             modelAndView.addObject("availableCategories", optionalCourse.get().getMentorShip().getStudent().getAvailableCategories());
             modelAndView.addObject("course", optionalCourse.get());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
+    @PostMapping("/course/instructor/updateCourse")
+    public ModelAndView updateCourse(@ModelAttribute("course") Course editedCourse, @RequestParam("courseId") Long courseId, HttpSession session) {
+        Optional<Course> course = courseService.getCourseById(courseId);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user) ) {
+            courseService.updateCourse(courseId, editedCourse);
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("course", course.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             return modelAndView;
         }
@@ -69,10 +80,10 @@ public class CourseController {
     @PostMapping("/course/instructor/deleteCourse")
     public ModelAndView deleteCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
         SchoolUser instructor = (SchoolUser) session.getAttribute("loggedInUser");
-        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        Optional<Course> optionalCourse = courseService.getCourseById(courseId);
 
         if (optionalCourse.isPresent() && optionalCourse.get().getMentorShip().getInstructor().equals(instructor)) {
-            courseRepository.delete(optionalCourse.get());
+            courseService.deleteCourse(optionalCourse.get().getId());
             return dashboardController.showStudentForInstructor(optionalCourse.get().getMentorShip().getId(), session);
         }
 
@@ -82,7 +93,7 @@ public class CourseController {
     @PostMapping("/course/showCourse")
     public ModelAndView showCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        Optional<Course> optionalCourse = courseService.getCourseById(courseId);
 
         if (optionalCourse.isPresent() && (
                 optionalCourse.get().getMentorShip().getInstructor().equals(user) ||
@@ -101,7 +112,7 @@ public class CourseController {
     @PostMapping("/course/instructor/addDrivingSession")
     public ModelAndView addDrivingSession(@ModelAttribute("newDrivingSession") DrivingSession newDrivingSession,
                                           @RequestParam("courseId") Long courseId, HttpSession session) {
-        Optional<Course> course = courseRepository.findById(courseId);
+        Optional<Course> course = courseService.getCourseById(courseId);
 
         if (course.isPresent()) {
             drivingSessionService.createDrivingSession(newDrivingSession, course.get());
@@ -121,6 +132,7 @@ public class CourseController {
 
         if (ds.isPresent() && ds.get().getCourse().getMentorShip().getInstructor().equals(user)) {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("isEditDrivingSession", true);
             modelAndView.addObject("editDrivingSession", ds.get());
             modelAndView.addObject("course", ds.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
