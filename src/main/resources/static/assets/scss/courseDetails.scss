@@ -192,6 +192,40 @@ h2 {
 									font-weight: bold;
 									color: $secondary-color;
 								}
+
+								&.failed {
+									position: relative;
+									color: $primary-color;
+									padding-right: 20px;
+
+									&::after {
+										content: '\f00d';
+										font-family: 'Font Awesome 5 Free';
+										font-weight: 900;
+										position: absolute;
+										top: -3px;
+										right: 0;
+										font-size: 20px;
+										color: $primary-color;
+									}
+								}
+
+								&.passed {
+									position: relative;
+									color: $icon-color;
+									padding-right: 20px;
+
+									&::after {
+										content: '\f00c';
+										font-family: 'Font Awesome 5 Free';
+										font-weight: 900;
+										position: absolute;
+										top: -4px;
+										right: -3px;
+										font-size: 20px;
+										color: $icon-color;
+									}
+								}
 							}
 						}
 
@@ -290,7 +324,7 @@ h2 {
 							}
 						}
 
-						.category-container, 
+						.category-container,
 						.passed-box {
 							display: flex;
 							flex-direction: row;
@@ -299,7 +333,8 @@ h2 {
 							flex-wrap: wrap;
 							gap: 10px;
 
-							.category-box, .passed {
+							.category-box,
+							.passed {
 								display: flex;
 								flex-direction: column;
 								align-items: center;

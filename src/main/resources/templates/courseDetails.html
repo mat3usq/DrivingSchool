@@ -34,7 +34,7 @@
         <div class="hero-img">
             <div class="box-container">
                 <div class="box-course">
-                    <div class="course-schoolUser" th:unless="${editCourse}">
+                    <div class="course-schoolUser" th:unless="${isEditCourse}">
                         <p class="title">Szczegóły Kursu</p>
                         <div class="course-details">
                             <div class="detail-title">
@@ -54,7 +54,9 @@
                             </div>
                             <div class="detail">
                                 <span class="title-header">Wynik Koncowy</span>
-                                <span class="content" th:text="${course.passed}"></span>
+                                <span class="content"
+                                      th:classappend="${course.passed == T(com.driving.school.model.Constants).COURSE_PASSED ? 'passed' : (course.passed == T(com.driving.school.model.Constants).COURSE_FAILED ? 'failed' : '')}"
+                                      th:text="${course.passed}"></span>
                             </div>
                             <div class="detail">
                                 <span class="title-header">Data Rozpoczęcia</span>
@@ -84,7 +86,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="editCourse-schoolUser" th:if="${editCourse}">
+                    <div class="editCourse-schoolUser" th:if="${isEditCourse}">
                         <p class="title">Edycja Kursu</p>
                         <form class="course-details" th:action="@{/course/instructor/updateCourse}"
                               method="post" th:object="${course}" id="editCourseForm">
@@ -175,7 +177,7 @@
                         <p class="title" th:unless="${course.drivingSessions.isEmpty()}">Sesje Jazd</p>
                         <p class="title" th:if="${course.drivingSessions.isEmpty()}">Brak Sesji Jazd</p>
                         <div class="schoolUser-drivingSessions">
-                            <th:block th:unless="${editDrivingSession}">
+                            <th:block th:unless="${isEditDrivingSession}">
                                 <div class="drivingSession" th:each="drivingSession : ${course.drivingSessions}">
                                     <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
                                         <form th:action="@{/course/instructor/deleteDrivingSession}" method="post">
@@ -204,7 +206,7 @@
                                     </div>
                                 </div>
                             </th:block>
-                            <th:block th:if="${editDrivingSession}">
+                            <th:block th:if="${isEditDrivingSession}">
                                 <th:block th:each="drivingSession : ${course.drivingSessions}">
                                     <div class="editDrivingSession"
                                          th:if="${drivingSession.id == editDrivingSession.id}">
@@ -277,9 +279,10 @@
                             <div class="drivingSummary">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Podsumowanie</span> Łączna ilość przejechanych godzin</span>
-                                    <span class="time"><th:block
-                                            th:text="${course.summaryDurationHours}"></th:block><span
-                                            class="hours">h</span></span>
+                                    <span class="time">
+                                        <th:block th:text="${#numbers.formatDecimal(course.summaryDurationHours, 2, 1)}"></th:block>
+                                        <span class="hours">h</span>
+                                    </span>
                                 </div>
                             </div>
 
