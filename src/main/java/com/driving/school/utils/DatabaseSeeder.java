@@ -166,6 +166,9 @@ public class DatabaseSeeder implements CommandLineRunner {
         course.setDrivingSessions(List.of(new DrivingSession(LocalDateTime.now(), 2.0, "Pierwsza jazda nie poszla az tak zle.", course),
                 new DrivingSession(LocalDateTime.now(), 1.5, "Druga spoko juz lepiej poszlo jest git.", course),
                 new DrivingSession(LocalDateTime.now(), 3.0, "Trzecia jazda prawie co bylby wypadek.", course)));
+        course.setTestCourses(List.of(new TestCourse(LocalDateTime.now(), "Spoko poszedl ci ten egzamin ale popraw znaki", Constants.COURSE_TEST_THEORETICAL, 96.5, course),
+                new TestCourse(LocalDateTime.now(), "Ogolne egzamin nie poszedl az tak zle xd", Constants.COURSE_TEST_GENERAL, 86.5, course),
+                new TestCourse(LocalDateTime.now(), "Nie wyjechales nad z placu no to lipa xd", Constants.COURSE_TEST_PRACTICAL, 16.0, course)));
         courseRepository.save(course);
     }
 
