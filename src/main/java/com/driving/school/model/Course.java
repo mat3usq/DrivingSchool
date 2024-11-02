@@ -56,4 +56,8 @@ public class Course {
     @OrderBy("sessionDate DESC")
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DrivingSession> drivingSessions = new ArrayList<>();
+
+    @OrderBy("testDate DESC")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TestCourse> testCourses = new ArrayList<>();
 }

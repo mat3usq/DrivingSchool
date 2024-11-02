@@ -75,4 +75,9 @@ public interface Constants {
     String COURSE_PASSED = "Pozytywny";
     String COURSE_FAILED = "Negatywny";
     String COURSE_NOTSPECIFIED = "Brak";
+
+    // Course TEST types
+    String COURSE_TEST_THEORETICAL = "Test Teoretyczny";
+    String COURSE_TEST_PRACTICAL = "Test Praktyczny";
+    String COURSE_TEST_GENERAL = "Test Ogólny";
 }
