@@ -48,6 +48,9 @@ public class Course {
     @Column(name = "SUMMARY_DURATION_HOURS")
     private Double summaryDurationHours;
 
+    @Column(name = "SUMMARY_AVERAGE_RESULT_TEST")
+    private Double summaryAverageResultTest;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "MENTORSHIP_ID", nullable = false)

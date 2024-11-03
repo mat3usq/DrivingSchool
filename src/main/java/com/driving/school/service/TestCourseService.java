@@ -1,5 +1,6 @@
 package com.driving.school.service;
 
+import com.driving.school.model.Course;
 import com.driving.school.model.TestCourse;
 import com.driving.school.repository.TestCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class TestCourseService {
         this.testCourseRepository = testCourseRepository;
     }
 
-    public List<TestCourse> getAllTestCourses() {
-        return testCourseRepository.findAll();
+    public List<TestCourse> getAllTestCoursesByCourse(Course course) {
+        return testCourseRepository.findAllByCourse(course);
     }
 
     public Optional<TestCourse> getTestCourseById(Long id) {

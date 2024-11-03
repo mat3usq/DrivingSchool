@@ -163,6 +163,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         course.setDescription("Kurs na prawo jazdy doskonalajacy umiejetnosci techniczne oraz doswiadczenie za kierownica.");
         course.setDuration(120.0);
         course.setSummaryDurationHours(6.5);
+        course.setSummaryAverageResultTest(66.33);
         course.setDrivingSessions(List.of(new DrivingSession(LocalDateTime.now(), 2.0, "Pierwsza jazda nie poszla az tak zle.", course),
                 new DrivingSession(LocalDateTime.now(), 1.5, "Druga spoko juz lepiej poszlo jest git.", course),
                 new DrivingSession(LocalDateTime.now(), 3.0, "Trzecia jazda prawie co bylby wypadek.", course)));
