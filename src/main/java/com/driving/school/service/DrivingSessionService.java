@@ -2,6 +2,7 @@ package com.driving.school.service;
 
 import com.driving.school.model.DrivingSession;
 import com.driving.school.model.Course;
+import com.driving.school.model.TestCourse;
 import com.driving.school.repository.CourseRepository;
 import com.driving.school.repository.DrivingSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ public class DrivingSessionService {
     }
 
     public void createDrivingSession(DrivingSession drivingSession, Course course) {
-        course.setSummaryDurationHours(course.getSummaryDurationHours() == null ? 0 : course.getSummaryDurationHours() + drivingSession.getDurationHours());
         drivingSession.setCourse(course);
         drivingSessionRepository.save(drivingSession);
+        updateSummaryHoursInCourse(course);
     }
 
     public Optional<DrivingSession> getDrivingSessionById(Long id) {
@@ -46,30 +47,23 @@ public class DrivingSessionService {
             drivingSession.setInstructorComment(drivingSessionDetails.getInstructorComment());
 
             drivingSessionRepository.save(drivingSession);
-
-            Course course = drivingSession.getCourse();
-            double totalDuration = course.getDrivingSessions().stream()
-                    .mapToDouble(DrivingSession::getDurationHours)
-                    .sum();
-            course.setSummaryDurationHours(totalDuration);
-
-            courseRepository.save(course);
-        } else {
-            throw new RuntimeException("DrivingSession not found with id " + id);
+            updateSummaryHoursInCourse(drivingSession.getCourse());
         }
     }
 
-
     public void deleteDrivingSession(Long id) {
-        Optional<DrivingSession> optionalDrivingSession = drivingSessionRepository.findById(id);
-        if (optionalDrivingSession.isPresent()) {
-            Optional<Course> courseOptional = courseRepository.findById(optionalDrivingSession.get().getCourse().getId());
-            if (courseOptional.isPresent()) {
-                Course course = courseOptional.get();
-                course.setSummaryDurationHours(course.getSummaryDurationHours() - optionalDrivingSession.get().getDurationHours());
-                course.getDrivingSessions().remove(optionalDrivingSession.get());
-                courseRepository.save(course);
-            }
+        Optional<DrivingSession> drivingSession = drivingSessionRepository.findById(id);
+
+        if (drivingSession.isPresent()) {
+            drivingSessionRepository.delete(drivingSession.get());
+            updateSummaryHoursInCourse(drivingSession.get().getCourse());
         }
+    }
+
+    private void updateSummaryHoursInCourse(Course course) {
+        course.setSummaryDurationHours(course.getDrivingSessions().stream()
+                .mapToDouble(DrivingSession::getDurationHours)
+                .sum());
+        courseRepository.save(course);
     }
 }

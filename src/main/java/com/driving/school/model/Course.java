@@ -46,10 +46,10 @@ public class Course {
     private Double duration;
 
     @Column(name = "SUMMARY_DURATION_HOURS")
-    private Double summaryDurationHours;
+    private Double summaryDurationHours = 0.0;
 
     @Column(name = "SUMMARY_AVERAGE_RESULT_TEST")
-    private Double summaryAverageResultTest;
+    private Double summaryAverageResultTest = 0.0;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
