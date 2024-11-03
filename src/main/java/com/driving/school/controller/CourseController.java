@@ -176,6 +176,40 @@ public class CourseController {
         return dashboardController.displayDashboard(0, 10, session);
     }
 
+    @PostMapping("/course/instructor/editTestCourse")
+    public ModelAndView editTestCourse(@RequestParam("testCourseId") Long testCourseId, HttpSession session) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<TestCourse> testCourse = testCourseService.getTestCourseById(testCourseId);
+
+        if (testCourse.isPresent() && testCourse.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("isEditTestCourse", true);
+            modelAndView.addObject("editTestCourse", testCourse.get());
+            modelAndView.addObject("course", testCourse.get().getCourse());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
+    @PostMapping("/course/instructor/updateTestCourse")
+    public ModelAndView updateTestCourse(@ModelAttribute("editTestCourse") TestCourse editTestCourse,
+                                             @RequestParam("editTestCourseId") Long editTestCourseId, HttpSession session) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<TestCourse> tc = testCourseService.getTestCourseById(editTestCourseId);
+
+        if (tc.isPresent() && tc.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+            testCourseService.updateTestCourse(editTestCourseId, editTestCourse);
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("course", tc.get().getCourse());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
     @PostMapping("/course/instructor/deleteTestCourse")
     public ModelAndView deleteTestCourse(@RequestParam("testCourseId") Long testCourseId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");

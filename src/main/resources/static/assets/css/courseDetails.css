@@ -812,7 +812,7 @@ h2 {
 .details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult .percentages {
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse {
   position: relative;
   display: flex;
   align-items: center;
@@ -822,47 +822,119 @@ h2 {
   border: 1.5px solid #6acff1;
   transition: transform 0.3s ease;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession:first-child {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse:first-child {
   border-radius: 10px 10px 0 0;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .rowSession {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse {
   display: flex;
   align-items: center;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row {
+  flex-direction: column;
+  justify-content: center;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+  padding: 7px;
+  border: 3px solid #ffd166;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:hover {
+  border-color: #ffc233;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked {
+  background-color: #ef476f;
+  border-color: #ef476f;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #ffd166;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked ~ label {
+  font-weight: bold;
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label {
+  font-size: 16px;
+  cursor: pointer;
+  color: aliceblue;
+  transition: color 0.3s ease;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label:hover {
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label img {
+  width: 45px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .title-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .testType {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .testType .type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row {
   justify-content: space-between;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row .title-header {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .title-header {
   font-size: 16px;
   color: #99d98c;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row .time {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult {
   display: flex;
   align-items: center;
   font-size: 16px;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row .time input {
-  width: 70px;
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult input {
+  width: 85px;
   margin-right: 5px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row .time .hours {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult .percentages {
   font-weight: bold;
-  color: #ffd166;
+  color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .comment-row {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .comment-row {
   width: 100%;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .comment-row input {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .comment-row input {
   width: 100%;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit input {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit input {
   padding: 10px;
   font-size: 16px;
   color: aliceblue;
@@ -870,12 +942,12 @@ h2 {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit input:focus {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .button-group {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .button-group {
   display: flex;
   justify-content: center;
   gap: 10px;

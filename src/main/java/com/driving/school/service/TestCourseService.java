@@ -40,10 +40,11 @@ public class TestCourseService {
 
         if (optionalTestCourse.isPresent()) {
             TestCourse existingTestCourse = optionalTestCourse.get();
-            existingTestCourse.setTestDate(testCourse.getTestDate());
             existingTestCourse.setInstructorComment(testCourse.getInstructorComment());
             existingTestCourse.setTestType(testCourse.getTestType());
             existingTestCourse.setTestResult(testCourse.getTestResult());
+            updateAverageInCourse(existingTestCourse.getCourse());
+            testCourseRepository.save(existingTestCourse);
         }
     }
 
@@ -52,15 +53,15 @@ public class TestCourseService {
 
         if (testCourse.isPresent()) {
             testCourseRepository.delete(testCourse.get());
-
-            Course course = testCourse.get().getCourse();
-
-            course.setSummaryAverageResultTest(course.getTestCourses().stream()
-                    .mapToDouble(TestCourse::getTestResult)
-                    .average()
-                    .orElse(0.0));
-
-            courseRepository.save(course);
+            updateAverageInCourse(testCourse.get().getCourse());
         }
+    }
+
+    private void updateAverageInCourse(Course course) {
+        course.setSummaryAverageResultTest(course.getTestCourses().stream()
+                .mapToDouble(TestCourse::getTestResult)
+                .average()
+                .orElse(0.0));
+        courseRepository.save(course);
     }
 }

@@ -805,7 +805,7 @@ h2 {
 							}
 						}
 
-						.editDrivingSession {
+						.editTestCourse {
 							position: relative;
 							display: flex;
 							align-items: center;
@@ -825,9 +825,91 @@ h2 {
 								flex-direction: column;
 								gap: 15px;
 
-								.rowSession {
+								.rowTestCourse {
 									display: flex;
 									align-items: center;
+
+									&.type-row {
+										flex-direction: column;
+										justify-content: center;
+
+										input[type='radio'] {
+											appearance: none;
+											background-color: transparent;
+											vertical-align: middle;
+											width: 15px;
+											height: 15px;
+											padding: 7px;
+											border: 3px solid $secondary-color;
+											border-radius: 50%;
+											cursor: pointer;
+											position: relative;
+											transition: border-color 0.3s ease, background-color 0.3s ease;
+
+											&:hover {
+												border-color: darken($secondary-color, 10%);
+											}
+
+											&:checked {
+												background-color: $primary-color;
+												border-color: $primary-color;
+
+												&::after {
+													content: '';
+													position: absolute;
+													top: 50%;
+													left: 50%;
+													width: 10px;
+													height: 10px;
+													background-color: $secondary-color;
+													border-radius: 50%;
+													transform: translate(-50%, -50%);
+												}
+
+												& ~ label {
+													font-weight: bold;
+													color: $primary-color;
+												}
+											}
+										}
+
+										label {
+											font-size: 16px;
+											cursor: pointer;
+											color: $text-color;
+											transition: color 0.3s ease;
+
+											&:hover {
+												color: $primary-color;
+											}
+
+											img {
+												width: 45px;
+											}
+										}
+
+										.title-header {
+											font-size: 20px;
+											font-weight: bold;
+											margin-bottom: 10px;
+										}
+
+										.testType {
+											display: flex;
+											flex-direction: row;
+											justify-content: center;
+											align-items: center;
+											flex-wrap: wrap;
+											gap: 10px;
+
+											.type {
+												display: flex;
+												flex-direction: column;
+												align-items: center;
+												gap: 7px;
+											}
+										}
+									}
 								}
 
 								.top-row {
@@ -838,20 +920,20 @@ h2 {
 										color: $btn-bg-color-hover;
 									}
 
-									.time {
+									.percentagesResult {
 										display: flex;
 										align-items: center;
 										font-size: 16px;
 										color: $text-color;
 
 										input {
-											width: 70px;
+											width: 85px;
 											margin-right: 5px;
 										}
 
-										.hours {
+										.percentages {
 											font-weight: bold;
-											color: $secondary-color;
+											color: $primary-color;
 										}
 									}
 								}
