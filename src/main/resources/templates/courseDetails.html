@@ -277,14 +277,14 @@
                             <div class="drivingSession" th:if="${course.drivingSessions.isEmpty()}">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Nie dodano jeszcze żadnych sesji jazdy.</span></span>
-                                    <span class="time">Dodaj pierwszą <span class="hours">sesję</span>!</span>
+                                    <span class="time">Dodaj pierwszą<span class="hours">sesję</span>!</span>
                                 </div>
                             </div>
                             <div class="drivingSummary">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Podsumowanie</span> Łączna ilość przejechanych godzin</span>
                                     <span class="time">
-                                        <th:block th:text="${#numbers.formatDecimal(course.summaryDurationHours, 0, 1)}"></th:block>
+                                        <th:block th:text="${course.summaryDurationHours == 0 ? '0' : #numbers.formatDecimal(course.summaryDurationHours, 0, 1)}"></th:block>
                                         <span class="hours">h</span>
                                     </span>
                                 </div>
@@ -357,7 +357,7 @@
                                                 th:text="${testCourse.instructorComment}"></th:block>
                                         </span>
                                         <span class="percentagesResult">
-                                            <th:block th:text="${#numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
                                             <span class="percentages">%</span></span>
                                     </div>
                                 </div>
@@ -429,14 +429,14 @@
                             <div class="testCourse" th:if="${course.testCourses.isEmpty()}">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Nie dodano jeszcze żadnych wyników testów.</span></span>
-                                    <span class="percentagesResult">Dodaj pierwszy <span class="percentages">Test</span>!</span>
+                                    <span class="percentagesResult">Dodaj pierwszy<span class="percentages">Test</span>!</span>
                                 </div>
                             </div>
                             <div class="testCourseSummary">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Podsumowanie</span> Średnia wyników wszystkich testów</span>
                                     <span class="percentagesResult">
-                                        <th:block th:text="${#numbers.formatDecimal(course.summaryAverageResultTest, 0, 2)}"></th:block>
+                                      <th:block th:text="${course.summaryAverageResultTest == 0 ? '0' : #numbers.formatDecimal(course.summaryAverageResultTest, 0, 2)}"></th:block>
                                         <span class="percentages">%</span>
                                     </span>
                                 </div>

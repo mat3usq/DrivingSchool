@@ -417,7 +417,8 @@ h2 {
 								overflow: visible;
 								gap: 6px;
 								opacity: 0;
-								padding-right: 10px;
+								padding: 10px;
+								padding-left: 0;
 							}
 
 							@media (hover: hover) and (pointer: fine) {
@@ -734,7 +735,8 @@ h2 {
 								overflow: visible;
 								gap: 6px;
 								opacity: 0;
-								padding-right: 10px;
+								padding: 10px;
+								padding-left: 0;
 							}
 
 							@media (hover: hover) and (pointer: fine) {

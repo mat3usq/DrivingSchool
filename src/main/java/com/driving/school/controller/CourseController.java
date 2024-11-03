@@ -1,11 +1,10 @@
 package com.driving.school.controller;
 
 import com.driving.school.model.*;
-import com.driving.school.repository.CategoryRepository;
-import com.driving.school.repository.CourseRepository;
 import com.driving.school.service.CourseService;
 import com.driving.school.service.DrivingSessionService;
 import com.driving.school.service.MentorShipService;
+import com.driving.school.service.TestCourseService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,13 +21,15 @@ public class CourseController {
     private final DashboardController dashboardController;
     private final DrivingSessionService drivingSessionService;
     private final CourseService courseService;
+    private final TestCourseService testCourseService;
 
     @Autowired
-    public CourseController(MentorShipService mentorShipService, DashboardController dashboardController, DrivingSessionService drivingSessionService, CourseService courseService) {
+    public CourseController(MentorShipService mentorShipService, DashboardController dashboardController, DrivingSessionService drivingSessionService, CourseService courseService, TestCourseService testCourseService) {
         this.mentorShipService = mentorShipService;
         this.dashboardController = dashboardController;
         this.drivingSessionService = drivingSessionService;
         this.courseService = courseService;
+        this.testCourseService = testCourseService;
     }
 
     @PostMapping("/course/instructor/addCourse")
@@ -168,6 +169,22 @@ public class CourseController {
             drivingSessionService.deleteDrivingSession(drivingSessionId);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
+    @PostMapping("/course/instructor/deleteTestCourse")
+    public ModelAndView deleteTestCourse(@RequestParam("testCourseId") Long testCourseId, HttpSession session) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<TestCourse> testCourse = testCourseService.getTestCourseById(testCourseId);
+
+        if (testCourse.isPresent() && testCourse.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+            testCourseService.deleteTestCourse(testCourseId);
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("course", testCourse.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             return modelAndView;
         }

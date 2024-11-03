@@ -2,6 +2,7 @@ package com.driving.school.service;
 
 import com.driving.school.model.Course;
 import com.driving.school.model.TestCourse;
+import com.driving.school.repository.CourseRepository;
 import com.driving.school.repository.TestCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,13 @@ import java.util.Optional;
 public class TestCourseService {
 
     private final TestCourseRepository testCourseRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
-    public TestCourseService(TestCourseRepository testCourseRepository) {
+    public TestCourseService(TestCourseRepository testCourseRepository,
+                             CourseRepository courseRepository) {
         this.testCourseRepository = testCourseRepository;
+        this.courseRepository = courseRepository;
     }
 
     public List<TestCourse> getAllTestCoursesByCourse(Course course) {
@@ -45,6 +49,18 @@ public class TestCourseService {
 
     public void deleteTestCourse(Long id) {
         Optional<TestCourse> testCourse = testCourseRepository.findById(id);
-        testCourse.ifPresent(testCourseRepository::delete);
+
+        if (testCourse.isPresent()) {
+            testCourseRepository.delete(testCourse.get());
+
+            Course course = testCourse.get().getCourse();
+
+            course.setSummaryAverageResultTest(course.getTestCourses().stream()
+                    .mapToDouble(TestCourse::getTestResult)
+                    .average()
+                    .orElse(0.0));
+
+            courseRepository.save(course);
+        }
     }
 }
