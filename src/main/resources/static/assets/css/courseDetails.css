@@ -467,9 +467,16 @@ h2 {
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time span {
   margin-left: 4px;
 }
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time {
+  display: inline-block;
+  white-space: nowrap;
+}
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time .hours {
   font-weight: bold;
   color: #ffd166;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box img {
+  width: 35px;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .operations {
   background: transparent;
@@ -532,6 +539,8 @@ h2 {
   margin-left: 4px;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time {
+  display: inline-block;
+  white-space: nowrap;
   font-weight: bold;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time .hours {
@@ -564,8 +573,15 @@ h2 {
   justify-content: space-between;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .title-header {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
   font-size: 16px;
   color: #99d98c;
+}
+.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .title-header img {
+  width: 35px;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time {
   display: flex;
@@ -672,8 +688,266 @@ h2 {
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .comment-row input {
   width: 90%;
 }
+.details .hero-img .box-container .box-testCourses .account-testCourses {
+  width: auto;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 0px auto;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px 15px;
+  border-bottom: 1px solid #373c4f;
+  transition: transform 0.3s ease;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:first-child {
+  border-radius: 10px 10px 0 0;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .title-header {
+  font-size: 15px;
+  color: #99d98c;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content,
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult {
+  font-size: 15px;
+  color: aliceblue;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content span,
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult span {
+  margin-left: 4px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content img,
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult img {
+  width: 35px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult {
+  display: inline-block;
+  white-space: nowrap;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult .percentages {
+  font-weight: bold;
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .operations {
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -90px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  overflow: visible;
+  gap: 6px;
+  opacity: 0;
+  padding-right: 10px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:hover {
+    cursor: pointer;
+    transform: translateX(100px);
+  }
+  .details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:hover .operations {
+    opacity: 1;
+  }
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse.clicked {
+  transform: translateX(100px);
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse.clicked .operations {
+  opacity: 1;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px 15px;
+  border-top: 1px solid aliceblue;
+  border-radius: 0px 0px 10px 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .title-header {
+  font-weight: bold;
+  font-size: 15px;
+  color: #ffd166;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .content,
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult {
+  font-size: 15px;
+  color: aliceblue;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .content span,
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult span {
+  margin-left: 4px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult {
+  display: inline-block;
+  white-space: nowrap;
+  font-weight: bold;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult .percentages {
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px 15px;
+  border: 1.5px solid #6acff1;
+  transition: transform 0.3s ease;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession:first-child {
+  border-radius: 10px 10px 0 0;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .rowSession {
+  display: flex;
+  align-items: center;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row {
+  justify-content: space-between;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row .title-header {
+  font-size: 16px;
+  color: #99d98c;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row .time {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: aliceblue;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row .time input {
+  width: 70px;
+  margin-right: 5px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .top-row .time .hours {
+  font-weight: bold;
+  color: #ffd166;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .comment-row {
+  width: 100%;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit .comment-row input {
+  width: 100%;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit input {
+  padding: 10px;
+  font-size: 16px;
+  color: aliceblue;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .box-edit input:focus {
+  outline: none;
+  border-color: #ef476f;
+  box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editDrivingSession .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession {
+  background: linear-gradient(-135deg, rgba(0, 0, 0, 0.93), rgba(10, 76, 98, 0.8823529412));
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  padding: 15px;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .title-box {
+  width: 100%;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .title-box p {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4cc9f0;
+  margin-top: 20px;
+  text-align: center;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .title-box hr {
+  border: none;
+  border-top: 1px solid aliceblue;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession {
+  display: flex;
+  align-items: center;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession .title-header {
+  flex: 1;
+  color: #fff;
+  margin-right: 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession input {
+  padding: 10px;
+  font-size: 16px;
+  color: aliceblue;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession input:focus {
+  outline: none;
+  border-color: #ef476f;
+  box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession .hours {
+  margin-left: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffd166;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .bottom-row input {
+  width: 80px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .comment-row {
+  flex-direction: column;
+  gap: 5px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .comment-row input {
+  width: 90%;
+}
 .details .hero-img .box-container .box-course,
-.details .hero-img .box-container .box-drivingSessions {
+.details .hero-img .box-container .box-drivingSessions,
+.details .hero-img .box-container .box-testCourses {
   margin: 40px 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -687,6 +961,9 @@ h2 {
 }
 .details .hero-img .box-container .box-drivingSessions {
   background: linear-gradient(-135deg, rgba(153, 84, 0, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+.details .hero-img .box-container .box-testCourses {
+  background: linear-gradient(-135deg, rgba(51, 20, 82, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 
 .contact {
