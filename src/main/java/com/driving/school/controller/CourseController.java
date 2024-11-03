@@ -56,6 +56,7 @@ public class CourseController {
             modelAndView.addObject("availableCategories", optionalCourse.get().getMentorShip().getStudent().getAvailableCategories());
             modelAndView.addObject("course", optionalCourse.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 
@@ -72,6 +73,7 @@ public class CourseController {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 
@@ -103,6 +105,7 @@ public class CourseController {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", optionalCourse.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
 
             return modelAndView;
         }
@@ -114,12 +117,14 @@ public class CourseController {
     public ModelAndView addDrivingSession(@ModelAttribute("newDrivingSession") DrivingSession newDrivingSession,
                                           @RequestParam("courseId") Long courseId, HttpSession session) {
         Optional<Course> course = courseService.getCourseById(courseId);
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (course.isPresent()) {
+        if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user)) {
             drivingSessionService.createDrivingSession(newDrivingSession, course.get());
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 
@@ -137,6 +142,7 @@ public class CourseController {
             modelAndView.addObject("editDrivingSession", ds.get());
             modelAndView.addObject("course", ds.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 
@@ -154,6 +160,7 @@ public class CourseController {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 
@@ -170,6 +177,25 @@ public class CourseController {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
+    @PostMapping("/course/instructor/addTestCourse")
+    public ModelAndView addTestCourse(@ModelAttribute("newTestCourse") TestCourse newTestCourse,
+                                          @RequestParam("courseId") Long courseId, HttpSession session) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<Course> course = courseService.getCourseById(courseId);
+
+        if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user)) {
+            testCourseService.createTestCourse(newTestCourse, course.get());
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("course", course.get());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 
@@ -187,6 +213,7 @@ public class CourseController {
             modelAndView.addObject("editTestCourse", testCourse.get());
             modelAndView.addObject("course", testCourse.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 
@@ -204,6 +231,7 @@ public class CourseController {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", tc.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 
@@ -220,6 +248,7 @@ public class CourseController {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", testCourse.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
         }
 

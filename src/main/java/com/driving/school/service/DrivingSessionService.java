@@ -23,7 +23,7 @@ public class DrivingSessionService {
     }
 
     public void createDrivingSession(DrivingSession drivingSession, Course course) {
-        course.setSummaryDurationHours(course.getSummaryDurationHours() + drivingSession.getDurationHours());
+        course.setSummaryDurationHours(course.getSummaryDurationHours() == null ? 0 : course.getSummaryDurationHours() + drivingSession.getDurationHours());
         drivingSession.setCourse(course);
         drivingSessionRepository.save(drivingSession);
     }

@@ -32,7 +32,7 @@ public class TestCourse {
     private String instructorComment;
 
     @Column(name = "TEST_TYPE")
-    private String testType;
+    private String testType = Constants.COURSE_TEST_GENERAL;
 
     @Column(name = "TEST_RESULT")
     private Double testResult;

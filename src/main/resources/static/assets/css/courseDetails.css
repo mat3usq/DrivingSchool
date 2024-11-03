@@ -952,7 +952,7 @@ h2 {
   justify-content: center;
   gap: 10px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse {
   background: linear-gradient(-135deg, rgba(0, 0, 0, 0.93), rgba(10, 76, 98, 0.8823529412));
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -961,36 +961,35 @@ h2 {
   margin: 0 auto;
   margin-top: 25px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .title-box {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box {
   width: 100%;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .title-box p {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box p {
   font-size: 20px;
   font-weight: bold;
   color: #4cc9f0;
   margin-top: 20px;
   text-align: center;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .title-box hr {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box hr {
   border: none;
   border-top: 1px solid aliceblue;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse {
   display: flex;
   align-items: center;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession .title-header {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse .title-header {
   flex: 1;
-  color: #fff;
-  margin-right: 10px;
+  color: aliceblue;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession input {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse input {
   padding: 10px;
   font-size: 16px;
   color: aliceblue;
@@ -998,25 +997,98 @@ h2 {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession input:focus {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .rowSession .hours {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse .percentages {
   margin-left: 5px;
   font-size: 16px;
   font-weight: bold;
-  color: #ffd166;
+  color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .bottom-row input {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row {
+  flex-direction: column;
+  justify-content: center;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+  padding: 7px;
+  border: 3px solid #ffd166;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:hover {
+  border-color: #ffc233;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked {
+  background-color: #ef476f;
+  border-color: #ef476f;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #ffd166;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked ~ label {
+  font-weight: bold;
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label {
+  font-size: 16px;
+  cursor: pointer;
+  color: aliceblue;
+  transition: color 0.3s ease;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label:hover {
+  color: #ef476f;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label img {
+  width: 45px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .title-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .testType {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .testType .type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .bottom-row input {
+  margin-left: 10px;
   width: 80px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .comment-row {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .comment-row {
   flex-direction: column;
   gap: 5px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newDrivingSession .box-new .comment-row input {
+.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .comment-row input {
   width: 90%;
 }
 .details .hero-img .box-container .box-course,

@@ -320,7 +320,7 @@
                     <div class="account-testCourses">
                         <p class="title" th:unless="${course.testCourses.isEmpty()}">Wyniki Testów</p>
                         <p class="title" th:if="${course.testCourses.isEmpty()}">Brak Wyników Testów</p>
-                        <div class="schoolUser-testCourses">
+                        <div class="schoolUser-testCourses" th:with="Constants=${T(com.driving.school.model.Constants)}">
                             <th:block th:unless="${isEditTestCourse}">
                                 <div class="testCourse" th:each="testCourse : ${course.testCourses}">
                                     <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
@@ -341,7 +341,7 @@
                                         </form>
                                     </div>
                                     <div class="box">
-                                        <span class="content" th:with="Constants=${T(com.driving.school.model.Constants)}">
+                                        <span class="content">
                                             <th:block th:if="${testCourse.testType.equals(Constants.COURSE_TEST_GENERAL)}">
                                                 <img src="/assets/img/generalTest.svg" alt="ikona testu ogolnego">
                                             </th:block>
@@ -472,29 +472,56 @@
                                 </div>
                             </div>
 
-<!--                            <div class="newDrivingSession">-->
-<!--                                <form class="box-new" method="post" th:action="@{/course/instructor/addDrivingSession}"-->
-<!--                                      th:object="${newDrivingSession}">-->
-<!--                                    <input type="hidden" name="courseId" th:value="${course.id}"/>-->
-<!--                                    <div class="title-box">-->
-<!--                                        <p>Dodawanie Sesji Jazdy</p>-->
-<!--                                        <hr>-->
-<!--                                    </div>-->
-<!--                                    <div class="rowSession comment-row">-->
-<!--                                        <span class="title-header">Uwagi oraz Komentarze do Jazdy</span>-->
-<!--                                        <input type="text" th:field="*{instructorComment}"-->
-<!--                                               placeholder="Wprowadź komentarz"/>-->
-<!--                                    </div>-->
+                            <div class="newTestCourse">
+                                <form class="box-new" method="post" th:action="@{/course/instructor/addTestCourse}"
+                                      th:object="${newTestCourse}">
+                                    <input type="hidden" name="courseId" th:value="${course.id}"/>
+                                    <div class="title-box">
+                                        <p>Dodawanie Wyniku Testu</p>
+                                        <hr>
+                                    </div>
 
-<!--                                    <div class="rowSession bottom-row">-->
-<!--                                        <span class="title-header">Odbyte Godziny Jazdy</span>-->
-<!--                                        <input type="number" placeholder="Godz" step="0.1" th:field="*{durationHours}"/>-->
-<!--                                        <span class="hours">h</span>-->
-<!--                                    </div>-->
+                                    <div class="rowTestCourse type-row">
+                                        <span class="title-header">Rodzaj Testu</span>
+                                        <div class="testType">
+                                            <div class="type">
+                                                <input type="radio" id="typeGeneralTest"
+                                                       th:field="*{testType}"
+                                                       th:value="${Constants.COURSE_TEST_GENERAL}"/>
+                                                <label for="typeGeneralTest" title="Jest to ogolny rodzaj testu (teoria+praktyka)."><img src="/assets/img/generalTest.svg" alt="ikona testu ogolnego"></label>
+                                            </div>
 
-<!--                                    <button type="submit" class="add-btn">Dodaj</button>-->
-<!--                                </form>-->
-<!--                            </div>-->
+                                            <div class="type">
+                                                <input type="radio" id="typePracticalTest"
+                                                       th:field="*{testType}"
+                                                       th:value="${Constants.COURSE_TEST_PRACTICAL}"/>
+                                                <label for="typePracticalTest" title="Jest to praktyczny rodzaj testu."><img src="/assets/img/practicalTest.svg" alt="ikona testu praktycznego"></label>
+                                            </div>
+
+                                            <div class="type">
+                                                <input type="radio" id="typeTheoreticalTest"
+                                                       th:field="*{testType}"
+                                                       th:value="${Constants.COURSE_TEST_THEORETICAL}"/>
+                                                <label for="typeTheoreticalTest" title="Jest to teoratyczny rodzaj testu."><img src="/assets/img/theoreticalTest.svg" alt="ikona testu teoretycznego"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rowTestCourse comment-row">
+                                        <span class="title-header">Uwagi oraz Komentarze do Testu</span>
+                                        <input type="text" th:field="*{instructorComment}"
+                                               placeholder="Wprowadź komentarz"/>
+                                    </div>
+
+                                    <div class="rowTestCourse bottom-row">
+                                        <span class="title-header">Wynik Testu</span>
+                                        <input type="number" placeholder="Proc." step="0.01" max="100" th:field="*{testResult}"/>
+                                        <span class="percentages">%</span>
+                                    </div>
+
+                                    <button type="submit" class="add-btn">Dodaj</button>
+                                </form>
+                            </div>
 
                         </div>
                     </div>

@@ -31,8 +31,10 @@ public class TestCourseService {
         return testCourseRepository.findById(id);
     }
 
-    public TestCourse createTestCourse(TestCourse testCourse) {
-        return testCourseRepository.save(testCourse);
+    public void createTestCourse(TestCourse testCourse, Course course) {
+        testCourse.setCourse(course);
+        testCourseRepository.save(testCourse);
+        updateAverageInCourse(course);
     }
 
     public void updateTestCourse(Long id, TestCourse testCourse) {
