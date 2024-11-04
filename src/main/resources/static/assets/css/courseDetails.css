@@ -233,8 +233,10 @@ h2 {
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -247,45 +249,57 @@ h2 {
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .title-header,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .title-header,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .title-header,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .title-header,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .title-header {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .title-header,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .title-header {
   font-style: italic;
   font-size: 15px;
   color: #6acff1;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content {
   font-size: 15px;
   color: aliceblue;
   text-align: right;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content span,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content span,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content span,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content span,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content span {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content span,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content span {
   margin-left: 4px;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content .hours,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content .hours,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content .hours,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content .hours,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content .hours {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content .hours,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content .hours {
   font-weight: bold;
   color: #ffd166;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content.failed,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content.failed,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content.failed,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content.failed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.failed {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.failed,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content.failed {
   position: relative;
   color: #ef476f;
   padding-right: 20px;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content.failed::after,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content.failed::after,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content.failed::after,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content.failed::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.failed::after {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.failed::after,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content.failed::after {
   content: "\f00d";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
@@ -297,16 +311,20 @@ h2 {
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content.passed,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content.passed,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content.passed,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content.passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.passed {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.passed,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content.passed {
   position: relative;
   color: springgreen;
   padding-right: 20px;
 }
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content.passed::after,
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content.passed::after,
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content.passed::after,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content.passed::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.passed::after {
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.passed::after,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content.passed::after {
   content: "\f00c";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
@@ -323,6 +341,43 @@ h2 {
 .details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content {
   text-align: center;
+}
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment {
+  flex-direction: column;
+}
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .title-header,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .title-header {
+  text-align: center;
+}
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box {
+  width: 100%;
+  font-size: 14px;
+  list-style: none;
+  padding-left: 5px;
+}
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box li,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li {
+  position: relative;
+  margin-bottom: 7px;
+  padding-left: 15px;
+}
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box li::before,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #99d98c;
+}
+.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box .date-time,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box .date-time {
+  color: #99d98c;
 }
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input {
   width: 95%;

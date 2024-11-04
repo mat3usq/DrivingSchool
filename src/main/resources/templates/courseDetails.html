@@ -52,6 +52,15 @@
                                 <span class="content"><th:block th:text="${course.duration}"></th:block><span
                                         class="hours">h</span></span>
                             </div>
+                            <div class="detail-comment">
+                                <span class="title-header">Komentarze oraz Uwagi</span>
+                                <ul class="comment-box">
+                                    <li th:each="comment : ${course.commentCourses}">
+                                        [<span class="date-time" th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]
+                                        <span th:text="${comment.instructorComment}"></span>
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="detail">
                                 <span class="title-header">Wynik Koncowy</span>
                                 <span class="content"
@@ -204,7 +213,7 @@
                                             <span class="title-header" th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
                                                 th:text="${drivingSession.instructorComment}"></th:block></span>
                                         <span class="time"><th:block
-                                                th:text="${drivingSession.durationHours}"></th:block><span
+                                                th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block><span
                                                 class="hours">h</span></span>
                                     </div>
                                 </div>
@@ -266,7 +275,7 @@
                                                 <span class="title-header" th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
                                                     th:text="${drivingSession.instructorComment}"></th:block></span>
                                             <span class="time"><th:block
-                                                    th:text="${drivingSession.durationHours}"></th:block><span
+                                                    th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block><span
                                                     class="hours">h</span></span>
                                         </div>
                                     </div>
@@ -315,7 +324,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="box-testCourses">
                     <div class="account-testCourses">
                         <p class="title" th:unless="${course.testCourses.isEmpty()}">Wyniki Testów</p>
