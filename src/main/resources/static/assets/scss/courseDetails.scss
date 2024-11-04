@@ -278,124 +278,130 @@ h2 {
 				}
 
 				.editCourse-schoolUser {
-					.detail-title {
-						input {
-							width: 95%;
-						}
-					}
-
-					.time {
-						input {
-							width: 85px;
-						}
-						.hours {
-							font-weight: bold;
-							color: $secondary-color;
-						}
-					}
-
-					.detail-comment,
-					.detail-title,
-					.detail {
-						input {
-							padding: 10px;
-							font-size: 15px;
-							color: $text-color;
-							border: 1px solid #ccc;
-							border-radius: 8px;
-							background-color: rgba(255, 255, 255, 0.1);
-
-							&:focus {
-								outline: none;
-								border-color: $primary-color;
-								box-shadow: 0 0 5px rgba($primary-color, 0.5);
+					.course-details {
+						.detail-title {
+							input {
+								width: 95%;
 							}
 						}
 
-						input[type='radio'] {
-							appearance: none;
-							background-color: transparent;
-							vertical-align: middle;
-							width: 15px;
-							height: 15px;
-							padding: 7px;
-							border: 3px solid $secondary-color;
-							border-radius: 50%;
-							cursor: pointer;
-							position: relative;
-							transition: border-color 0.3s ease, background-color 0.3s ease;
+						.time {
+							input {
+								width: 85px;
+							}
+							.hours {
+								font-weight: bold;
+								color: $secondary-color;
+							}
+						}
 
-							&:hover {
-								border-color: darken($secondary-color, 10%);
+						.detail-comment,
+						.detail-title,
+						.detail {
+							input {
+								padding: 10px;
+								font-size: 15px;
+								color: $text-color;
+								border: 1px solid #ccc;
+								border-radius: 8px;
+								background-color: rgba(255, 255, 255, 0.1);
+
+								&:focus {
+									outline: none;
+									border-color: $primary-color;
+									box-shadow: 0 0 5px rgba($primary-color, 0.5);
+								}
 							}
 
-							&:checked {
-								background-color: $primary-color;
-								border-color: $primary-color;
+							input[type='radio'] {
+								appearance: none;
+								background-color: transparent;
+								vertical-align: middle;
+								width: 15px;
+								height: 15px;
+								padding: 7px;
+								border: 3px solid $secondary-color;
+								border-radius: 50%;
+								cursor: pointer;
+								position: relative;
+								transition: border-color 0.3s ease, background-color 0.3s ease;
 
-								&::after {
-									content: '';
-									position: absolute;
-									top: 50%;
-									left: 50%;
-									width: 10px;
-									height: 10px;
-									background-color: $secondary-color;
-									border-radius: 50%;
-									transform: translate(-50%, -50%);
+								&:hover {
+									border-color: darken($secondary-color, 10%);
 								}
 
-								& ~ label {
-									font-weight: bold;
+								&:checked {
+									background-color: $primary-color;
+									border-color: $primary-color;
+
+									&::after {
+										content: '';
+										position: absolute;
+										top: 50%;
+										left: 50%;
+										width: 10px;
+										height: 10px;
+										background-color: $secondary-color;
+										border-radius: 50%;
+										transform: translate(-50%, -50%);
+									}
+
+									& ~ label {
+										font-weight: bold;
+										color: $primary-color;
+									}
+								}
+							}
+
+							label {
+								font-size: 16px;
+								cursor: pointer;
+								color: $text-color;
+								transition: color 0.3s ease;
+
+								&:hover {
 									color: $primary-color;
 								}
 							}
-						}
 
-						label {
-							font-size: 16px;
-							cursor: pointer;
-							color: $text-color;
-							transition: color 0.3s ease;
-
-							&:hover {
-								color: $primary-color;
-							}
-						}
-
-						.category-container,
-						.passed-box {
-							display: flex;
-							flex-direction: row;
-							align-items: center;
-							justify-content: center;
-							flex-wrap: wrap;
-							gap: 10px;
-
-							.category-box,
-							.passed {
+							.category-container,
+							.passed-box {
 								display: flex;
-								flex-direction: column;
+								flex-direction: row;
 								align-items: center;
-							}
-						}
-
-						ul.comment-box {
-							li {
-								display: flex;
+								justify-content: center;
 								flex-wrap: wrap;
-								align-items: center;
+								gap: 10px;
 
-								p {
-									width: 130px; 
-									flex-shrink: 0; 
-									margin: 0 10px 5px 0; 
+								.category-box,
+								.passed {
+									display: flex;
+									flex-direction: column;
+									align-items: center;
 								}
+							}
 
-								input[type='text'] {
-									flex: 1 1 200px; 
-									min-width: 200px; 
-									box-sizing: border-box; 
+							ul.comment-box {
+								li {
+									display: flex;
+									flex-wrap: wrap;
+									align-items: center;
+
+									&::before {
+										top: 45%;
+									}
+
+									p {
+										width: 140px;
+										flex-shrink: 0;
+										margin: 0 10px 5px 0;
+									}
+
+									input[type='text'] {
+										flex: 1 1 200px;
+										min-width: 200px;
+										box-sizing: border-box;
+									}
 								}
 							}
 						}

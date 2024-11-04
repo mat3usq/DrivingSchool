@@ -3,6 +3,7 @@ package com.driving.school.service;
 import com.driving.school.model.CommentCourse;
 import com.driving.school.model.Constants;
 import com.driving.school.model.Course;
+import com.driving.school.repository.CommentCourseRepository;
 import com.driving.school.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 public class CourseService {
 
     private final CourseRepository courseRepository;
+    private final CommentCourseRepository commentCourseRepository;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, CommentCourseRepository commentCourseRepository) {
         this.courseRepository = courseRepository;
+        this.commentCourseRepository = commentCourseRepository;
     }
 
     public void createCourse(Course course) {
@@ -37,7 +40,7 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public void updateCourse(Long id, Course courseDetails) {
+    public void updateCourse(Long id, Course courseDetails, CommentCourse newCommentCourse) {
         courseRepository.findById(id).ifPresent(course -> {
             course.setDescription(courseDetails.getDescription());
             course.setCategory(courseDetails.getCategory());
@@ -53,6 +56,13 @@ public class CourseService {
                     existingComment.setInstructorComment(updatedComment.getInstructorComment());
                 }
             });
+
+            if (newCommentCourse != null && newCommentCourse.getInstructorComment() != null
+                    && !newCommentCourse.getInstructorComment().trim().isEmpty()) {
+                newCommentCourse.setCourse(course);
+                course.getCommentCourses().addFirst(newCommentCourse);
+                commentCourseRepository.save(newCommentCourse);
+            }
 
             switch (courseDetails.getPassed()) {
                 case Constants.COURSE_PASSED:

@@ -56,14 +56,15 @@
                                 <span class="title-header">Uwagi dla Studenta</span>
                                 <ul class="comment-box">
                                     <li th:each="comment : ${course.commentCourses}">
-                                        <p>[<span class="date-time" th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]</p>
+                                        [<span class="date-time" th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]
                                         <span th:text="${comment.instructorComment}"></span>
                                     </li>
                                 </ul>
                             </div>
 
-                            <div class="detail-comment" th:if="${course.commentCourses.isEmpty()}">
-                                <span class="title-header">Brak uwag dla Studenta</span>
+                            <div class="detail" th:if="${course.commentCourses.isEmpty()}">
+                                <span class="title-header">Uwagi dla Studenta</span>
+                                <span class="content">Brak</span>
                             </div>
 
                             <div class="detail">
@@ -140,6 +141,10 @@
                                         <input type="hidden" th:field="*{commentCourses[__${iterStat.index}__].id}"/>
                                         <p>[<span class="date-time" th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]</p>
                                         <input type="text" th:field="*{commentCourses[__${iterStat.index}__].instructorComment}"/>
+                                    </li>
+                                    <li th:object="${newCommentCourse}">
+                                        <p>[<span class="date-time">Dodawanie Uwagi</span>]</p>
+                                        <input type="text" th:field="*{instructorComment}" placeholder="Treść Nowej Uwagi"/>
                                     </li>
                                 </ul>
                             </div>

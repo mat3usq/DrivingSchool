@@ -57,6 +57,7 @@ public class CourseController {
             modelAndView.addObject("course", optionalCourse.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             modelAndView.addObject("newTestCourse", new TestCourse());
+            modelAndView.addObject("newCommentCourse", new CommentCourse());
             return modelAndView;
         }
 
@@ -64,12 +65,12 @@ public class CourseController {
     }
 
     @PostMapping("/course/instructor/updateCourse")
-    public ModelAndView updateCourse(@ModelAttribute("course") Course editedCourse, @RequestParam("courseId") Long courseId, HttpSession session) {
+    public ModelAndView updateCourse(@ModelAttribute("course") Course editedCourse, @RequestParam("courseId") Long courseId, @ModelAttribute("newCommentCourse") CommentCourse newCommentCourse, HttpSession session) {
         Optional<Course> course = courseService.getCourseById(courseId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
         if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user) ) {
-            courseService.updateCourse(courseId, editedCourse);
+            courseService.updateCourse(courseId, editedCourse, newCommentCourse);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
