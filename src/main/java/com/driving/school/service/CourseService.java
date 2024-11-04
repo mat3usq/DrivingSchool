@@ -1,5 +1,6 @@
 package com.driving.school.service;
 
+import com.driving.school.model.CommentCourse;
 import com.driving.school.model.Constants;
 import com.driving.school.model.Course;
 import com.driving.school.repository.CourseRepository;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -34,19 +38,33 @@ public class CourseService {
     }
 
     public void updateCourse(Long id, Course courseDetails) {
-        courseRepository.findById(id).map(course -> {
+        courseRepository.findById(id).ifPresent(course -> {
             course.setDescription(courseDetails.getDescription());
             course.setCategory(courseDetails.getCategory());
             course.setDuration(courseDetails.getDuration());
             course.setPassed(courseDetails.getPassed());
 
-            if (courseDetails.getPassed().equals(Constants.COURSE_PASSED) ||
-                    courseDetails.getPassed().equals(Constants.COURSE_FAILED))
-                course.setEndAt(LocalDate.now());
-            else if (courseDetails.getPassed().equals(Constants.COURSE_NOTSPECIFIED))
-                course.setEndAt(null);
+            Map<Long, CommentCourse> editCommentsMap = courseDetails.getCommentCourses().stream()
+                    .collect(Collectors.toMap(CommentCourse::getId, Function.identity()));
 
-            return courseRepository.save(course);
+            course.getCommentCourses().forEach(existingComment -> {
+                CommentCourse updatedComment = editCommentsMap.get(existingComment.getId());
+                if (updatedComment != null) {
+                    existingComment.setInstructorComment(updatedComment.getInstructorComment());
+                }
+            });
+
+            switch (courseDetails.getPassed()) {
+                case Constants.COURSE_PASSED:
+                case Constants.COURSE_FAILED:
+                    course.setEndAt(LocalDate.now());
+                    break;
+                case Constants.COURSE_NOTSPECIFIED:
+                    course.setEndAt(null);
+                    break;
+            }
+
+            courseRepository.save(course);
         });
     }
 

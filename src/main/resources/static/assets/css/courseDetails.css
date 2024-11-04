@@ -389,21 +389,24 @@ h2 {
   font-weight: bold;
   color: #ffd166;
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment input,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail input {
   padding: 10px;
-  font-size: 18px;
+  font-size: 15px;
   color: aliceblue;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment input:focus,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input:focus,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment input[type=radio],
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio],
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio] {
   -webkit-appearance: none;
@@ -420,15 +423,18 @@ h2 {
   position: relative;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment input[type=radio]:hover,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio]:hover,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio]:hover {
   border-color: #ffc233;
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment input[type=radio]:checked,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio]:checked,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio]:checked {
   background-color: #ef476f;
   border-color: #ef476f;
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment input[type=radio]:checked::after,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio]:checked::after,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio]:checked::after {
   content: "";
@@ -441,11 +447,13 @@ h2 {
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment input[type=radio]:checked ~ label,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title input[type=radio]:checked ~ label,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail input[type=radio]:checked ~ label {
   font-weight: bold;
   color: #ef476f;
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment label,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title label,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail label {
   font-size: 16px;
@@ -453,10 +461,13 @@ h2 {
   color: aliceblue;
   transition: color 0.3s ease;
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment label:hover,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title label:hover,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail label:hover {
   color: #ef476f;
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment .category-container,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment .passed-box,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .category-container,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .passed-box,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail .category-container,
@@ -468,6 +479,10 @@ h2 {
   flex-wrap: wrap;
   gap: 10px;
 }
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment .category-container .category-box,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment .category-container .passed,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment .passed-box .category-box,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment .passed-box .passed,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .category-container .category-box,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .category-container .passed,
 .details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title .passed-box .category-box,
@@ -479,6 +494,27 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment ul.comment-box li,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title ul.comment-box li,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail ul.comment-box li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment ul.comment-box li p,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title ul.comment-box li p,
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail ul.comment-box li p {
+  width: 130px;
+  flex-shrink: 0;
+  margin: 0 10px 5px 0;
+}
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-comment ul.comment-box li input[type=text],
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail-title ul.comment-box li input[type=text],
+.details .hero-img .box-container .box-course .editCourse-schoolUser .detail ul.comment-box li input[type=text] {
+  flex: 1 1 200px;
+  min-width: 200px;
+  box-sizing: border-box;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions {
   width: auto;
