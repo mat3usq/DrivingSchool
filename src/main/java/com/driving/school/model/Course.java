@@ -63,4 +63,8 @@ public class Course {
     @OrderBy("testDate DESC")
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TestCourse> testCourses = new ArrayList<>();
+
+    @OrderBy("commentDate DESC")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommentCourse> commentCourses = new ArrayList<>();
 }
