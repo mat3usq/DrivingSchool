@@ -10,3 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function deleteComment(commentId) {
+    const form = document.getElementById('deleteCommentCourse');
+    const hiddenInput = document.getElementById('commentCourseId');
+    hiddenInput.value = commentId;
+    form.submit();
+}

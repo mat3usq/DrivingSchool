@@ -397,10 +397,18 @@ h2 {
 										margin: 0 10px 5px 0;
 									}
 
-									input[type='text'] {
-										flex: 1 1 200px;
-										min-width: 200px;
+									.comment-actions {
+										display: flex;
+										flex: 1 1 230px;
+										min-width: 230px;
 										box-sizing: border-box;
+										align-items: center;
+										gap: 10px;
+
+										input[type='text'] {
+											flex: 1;
+										}
+
 									}
 								}
 							}
