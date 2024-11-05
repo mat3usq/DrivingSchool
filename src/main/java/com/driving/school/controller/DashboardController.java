@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -152,6 +153,11 @@ public class DashboardController {
         modelAndView.addObject("newPayment", new Payment());
         modelAndView.addObject("allCategories", categoryRepository.findAll());
         modelAndView.addObject("newCourse", new Course());
+        if (Objects.equals(user.getRoleName(), Constants.INSTRUCTOR_ROLE))
+            modelAndView.addObject("mentorShips", mentorShipService.findByInstructorId(user.getId()));
+        if (Objects.equals(user.getRoleName(), Constants.STUDENT_ROLE))
+            modelAndView.addObject("mentorShips", mentorShipService.findByStudentId(user.getId()));
+
         return modelAndView;
     }
 

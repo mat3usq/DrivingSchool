@@ -35,9 +35,13 @@
             <div class="box-container">
                 <div class="box-user">
                     <div class="account-schoolUser">
-                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).ADMIN_ROLE}">Dane Administratora</p>
-                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Dane Instruktora</p>
-                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">Dane Studenta</p>
+                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).ADMIN_ROLE}">
+                            Dane Administratora</p>
+                        <p class="title"
+                           th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Dane
+                            Instruktora</p>
+                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                            Dane Studenta</p>
                         <div class="account-details">
                             <div class="detail">
                                 <span class="title-header">Imię oraz Nazwisko</span>
@@ -129,7 +133,150 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-courses">
+                <div class="box-users">
+                    <div class="account-schoolUser">
+                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Studenci Instruktora</p>
+                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">Instruktorzy Studenta</p>
+
+                        <p class="mini-title" th:if="${mentorShips.size() == 0}">
+                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Brak Studentów. Dodaj któregoś z poniższej listy!</th:block>
+                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">Brak Instruktorów. Dodaj któregoś z poniższej listy!</th:block>
+                        </p>
+
+                        <form class="select-schoolUser" th:action="@{/dashboard/instructor/assignStudent}"
+                              method="post">
+                            <input type="text" name="studentEmail" placeholder="Wpisz email użytkownika"/>
+                            <button type="submit" class="info-btn">Dodaj</button>
+                        </form>
+
+                        <th:block th:if="${mentorShips.size() != 0}">
+                            <div class="schoolUser-list">
+                                <table class="schoolUser-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Imię</th>
+                                        <th>Nazwisko</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Początek</th>
+                                        <th>Koniec</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <th:block
+                                            th:each="element : ${mentorShips}"
+                                            th:with="Constants=${T(com.driving.school.model.Constants)}">
+                                        <tr th:if="${element.status.equals(Constants.PENDING)}"
+                                            class="table-two-options">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                                                <td th:text="${element.student.name}"></td>
+                                                <td th:text="${element.student.surname}"></td>
+                                                <td th:text="${element.student.email}"></td>
+                                            </th:block>
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                                <td th:text="${element.instructor.name}"></td>
+                                                <td th:text="${element.instructor.surname}"></td>
+                                                <td th:text="${element.instructor.email}"></td>
+                                            </th:block>
+                                            <td th:text="${element.status}"></td>
+                                            <td
+                                                    th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td
+                                                    th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td class="operations">
+                                                <form th:action="@{/dashboard/instructor/cancelStudent}"
+                                                      method="post">
+                                                    <input type="hidden" name="mentorShipId"
+                                                           th:value="${element.id}"/>
+                                                    <button type="submit" class="delete-btn"><i
+                                                            class="fa-solid fa-trash-can"></i></button>
+                                                </form>
+                                                <form th:action="@{/dashboard/instructor/acceptStudent}"
+                                                      method="post">
+                                                    <input type="hidden" name="mentorShipId"
+                                                           th:value="${element.id}"/>
+                                                    <button type="submit" class="correct-btn"><i
+                                                            class="fa-regular fa-square-check"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr th:if="${element.status.equals(Constants.ACTIVE)}"
+                                            class="table-three-options">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                                                <td th:text="${element.student.name}"></td>
+                                                <td th:text="${element.student.surname}"></td>
+                                                <td th:text="${element.student.email}"></td>
+                                            </th:block>
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                                <td th:text="${element.instructor.name}"></td>
+                                                <td th:text="${element.instructor.surname}"></td>
+                                                <td th:text="${element.instructor.email}"></td>
+                                            </th:block>
+                                            <td th:text="${element.status}"></td>
+                                            <td
+                                                    th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td
+                                                    th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td class="operations">
+                                                <form th:action="@{/dashboard/instructor/cancelStudent}"
+                                                      method="post">
+                                                    <input type="hidden" name="mentorShipId"
+                                                           th:value="${element.id}"/>
+                                                    <button type="submit" class="cancel-btn"><i
+                                                            class="fa-solid fa-xmark"></i></button>
+                                                </form>
+                                                <form th:action="@{/dashboard/instructor/studentDetails}"
+                                                      method="post">
+                                                    <input type="hidden" name="mentorShipId"
+                                                           th:value="${element.id}"/>
+                                                    <button type="submit" class="info-btn"><i
+                                                            class="fa-solid fa-eye"></i></button>
+                                                </form>
+                                                <form th:action="@{/dashboard/instructor/finishStudent}"
+                                                      method="post">
+                                                    <input type="hidden" name="mentorShipId"
+                                                           th:value="${element.id}"/>
+                                                    <button type="submit" class="correct-btn"><i
+                                                            class="fa-solid fa-flag-checkered"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr th:if="${element.status.equals(Constants.COMPLETED)}"
+                                            class="table-one-option">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                                                <td th:text="${element.student.name}"></td>
+                                                <td th:text="${element.student.surname}"></td>
+                                                <td th:text="${element.student.email}"></td>
+                                            </th:block>
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                                <td th:text="${element.instructor.name}"></td>
+                                                <td th:text="${element.instructor.surname}"></td>
+                                                <td th:text="${element.instructor.email}"></td>
+                                            </th:block>
+                                            <td th:text="${element.status}"></td>
+                                            <td
+                                                    th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td
+                                                    th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td class="operations">
+                                                <form th:action="@{/dashboard/instructor/studentDetails}"
+                                                      method="post">
+                                                    <input type="hidden" name="mentorShipId"
+                                                           th:value="${element.id}"/>
+                                                    <button type="submit" class="info-btn"><i
+                                                            class="fa-solid fa-eye"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+                <div class="box-courses" th:if="${courses}">
                     <div class="container-courses">
                         <p class="title" th:unless="${courses.isEmpty()}">Kursy</p>
                         <p class="title" th:if="${courses.isEmpty()}">Brak Kursów</p>
@@ -143,13 +290,16 @@
                                     <p class="title-category">Kategoria <span
                                             th:text="${course.category.nameCategory}">A</span></p>
                                     <p class="name" th:text="${course.description}">Kurs prawo jazdy</p>
-                                    <p><th:block th:text="${course.duration}"></th:block> <span class="hours">h</span></p>
+                                    <p>
+                                        <th:block th:text="${course.duration}"></th:block>
+                                        <span class="hours">h</span></p>
                                     <span class="time"><th:block
                                             th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></th:block><th:block
                                             th:if="${course.endAt}"> / <th:block
                                             th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></th:block></th:block></span>
                                 </div>
-                                <form th:id="'form-' + ${course.id}" hidden="hidden" method="post" th:action="@{/course/showCourse}">
+                                <form th:id="'form-' + ${course.id}" hidden="hidden" method="post"
+                                      th:action="@{/course/showCourse}">
                                     <input type="hidden" name="courseId" th:value="${course.id}"/>
                                 </form>
                             </th:block>
@@ -165,7 +315,8 @@
                                     </div>
                                     <div class="course-input">
                                         <p>Czas Trwania Kursu</p>
-                                        <input th:field="*{duration}" type="number" step="0.1" placeholder="Czas Trwania Kursu (w godzinach)"/>
+                                        <input th:field="*{duration}" type="number" step="0.1"
+                                               placeholder="Czas Trwania Kursu (w godzinach)"/>
                                     </div>
                                     <div class="course-input-category">
                                         <p>Wybierz Kategorie</p>

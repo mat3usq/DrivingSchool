@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface MentorShipRepository extends JpaRepository<MentorShip, Long> {
     List<MentorShip> findByStudentIdOrderByStatusAsc(Long studentId);
+    List<MentorShip> findByInstructorIdOrderByStatusAsc(Long instructorId);
     Page<MentorShip> findByInstructorIdOrderByStatusAsc(Long instructorId, Pageable pageable);
     MentorShip findByStudentIdAndInstructorIdAndStatus(Long studentId, Long instructorId, String status);
     MentorShip findByStudentIdAndInstructorId(Long studentId, Long instructorId);

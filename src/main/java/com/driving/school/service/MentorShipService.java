@@ -26,6 +26,10 @@ public class MentorShipService {
         return mentorShipRepository.findByStudentIdOrderByStatusAsc(studentId);
     }
 
+    public List<MentorShip> findByInstructorId(Long studentId) {
+        return mentorShipRepository.findByInstructorIdOrderByStatusAsc(studentId);
+    }
+
     public Page<MentorShip> findByInstructorId(Long instructorId, Pageable pageable) {
         return mentorShipRepository.findByInstructorIdOrderByStatusAsc(instructorId, pageable);
     }

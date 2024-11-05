@@ -86,8 +86,10 @@ h2 {
 				width: fit-content;
 			}
 
-			.add-btn,
-			.delete-btn {
+			.correct-btn,
+			.delete-btn,
+			.info-btn,
+			.cancel-btn {
 				font-size: 18px;
 				height: 35px;
 				padding: 0px 10px;
@@ -112,12 +114,25 @@ h2 {
 				}
 			}
 
-			button.add-btn {
-				font-size: 16px;
+			button.correct-btn {
 				background-color: #2de300;
 
 				&:hover {
 					background-color: darken(#2de300, 10%);
+				}
+			}
+
+			button.info-btn {
+				background-color: $btn-bg-color;
+				&:hover {
+					background-color: darken($btn-bg-color, 10%);
+				}
+			}
+
+			button.cancel-btn {
+				background-color: darken($secondary-color, 10%);
+				&:hover {
+					background-color: darken($secondary-color, 20%);
 				}
 			}
 
@@ -450,8 +465,8 @@ h2 {
 								border: 2px solid $primary-color;
 
 								&::after {
-									content: '\f00d'; 
-									font-family: 'Font Awesome 5 Free'; 
+									content: '\f00d';
+									font-family: 'Font Awesome 5 Free';
 									font-weight: 900;
 									position: absolute;
 									top: 10px;
@@ -594,9 +609,226 @@ h2 {
 				}
 			}
 
+			.box-users {
+				margin-bottom: 60px;
+
+				.account-schoolUser {
+					max-width: 740px;
+					font-size: 19px;
+					padding: 10px;
+					margin: 0 auto;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					gap: 10px;
+
+					.info-text::before {
+						content: '\f05a';
+					}
+
+					.info-text {
+						color: $text-color;
+						border-left: 4px solid $text-color;
+						border-right: 4px solid $text-color;
+						font-weight: bold;
+						background-color: rgba(0, 0, 0, 0.85);
+						border-radius: 10px;
+						padding: 10px;
+						padding-left: 35px;
+						text-align: right;
+						position: relative;
+					}
+
+					.info-text::before {
+						font-family: 'Font Awesome 5 Free';
+						font-weight: 900;
+						color: inherit;
+						position: absolute;
+						left: 10px;
+						top: 50%;
+						transform: translateY(-50%);
+					}
+
+					.mini-title {
+						margin-top: 0px;
+						padding: 20px 10px;
+						background-color: rgba(0, 0, 0, 0.8);
+						border-radius: 20px;
+						font-size: 17px;
+						font-style: italic;
+						letter-spacing: 1px;
+						text-align: center;
+						border: 5px dotted #ffd166;
+						box-shadow: 0px 0px 15px 3px rgba(7, 59, 76, 0.4352941176);
+						width: fit-content;
+					}
+
+					.schoolUser-list {
+						width: 100%;
+						margin-top: 20px;
+						overflow: scroll;
+						border-radius: 10px;
+
+						.schoolUser-table {
+							margin: 0 auto;
+							border-collapse: collapse;
+							background-color: rgba(0, 0, 0, 0.95);
+							overflow: hidden;
+
+							th,
+							td {
+								text-align: center;
+								font-size: 15px;
+								padding: 7px;
+								color: #f5f5f5;
+								min-width: 120px;
+								max-width: 120px;
+								overflow-x: scroll;
+							}
+
+							thead {
+								background-color: $primary-color;
+							}
+
+							th {
+								text-transform: uppercase;
+								font-weight: bold;
+								letter-spacing: 1px;
+								min-width: 120px;
+								max-width: 120px;
+							}
+
+							.table-normal-row {
+								position: relative;
+							}
+
+							.table-one-option {
+								position: relative;
+								transition: transform 0.3s ease;
+
+								.operations {
+									background: transparent;
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									left: -50px;
+									transition: transform 0.3s ease;
+									display: flex;
+									overflow: visible;
+									gap: 6px;
+								}
+
+								@media (hover: hover) and (pointer: fine) {
+									&:hover {
+										cursor: pointer;
+										transform: translateX(50px);
+									}
+								}
+
+								&.clicked {
+									transform: translateX(50px);
+								}
+							}
+
+							.table-two-options {
+								position: relative;
+								transition: transform 0.3s ease;
+
+								.operations {
+									background: transparent;
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									left: -90px;
+									transition: transform 0.3s ease;
+									display: flex;
+									overflow: visible;
+									gap: 6px;
+								}
+
+								@media (hover: hover) and (pointer: fine) {
+									&:hover {
+										cursor: pointer;
+										transform: translateX(90px);
+									}
+								}
+
+								&.clicked {
+									transform: translateX(90px);
+								}
+							}
+
+							.table-three-options {
+								position: relative;
+								transition: transform 0.3s ease;
+
+								.operations {
+									background: transparent;
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									left: -130px;
+									transition: transform 0.3s ease;
+									display: flex;
+									overflow: visible;
+									gap: 6px;
+								}
+
+								@media (hover: hover) and (pointer: fine) {
+									&:hover {
+										cursor: pointer;
+										transform: translateX(130px);
+									}
+								}
+
+								&.clicked {
+									transform: translateX(130px);
+								}
+							}
+						}
+					}
+
+					.select-schoolUser {
+						padding: 10px 0px;
+						display: flex;
+						flex-wrap: wrap;
+						flex-direction: row;
+						justify-content: space-evenly;
+						align-content: space-around;
+						align-items: center;
+						gap: 20px;
+
+						input,
+						select {
+							height: 35px;
+							width: 300px;
+							outline: none;
+							border: none;
+							border: 2px solid #f5f5f5;
+							padding: 0 10px;
+							font-size: 16px;
+							font-weight: 500;
+							color: $calendar-font-color;
+							border-radius: 5px;
+
+							&:focus {
+								outline: none;
+								border-color: $calendar-color;
+							}
+						}
+
+						button,
+						input {
+							margin: 7px;
+						}
+					}
+				}
+			}
+
 			.box-user,
 			.box-payments,
-			.box-courses {
+			.box-courses,
+			.box-users {
 				margin: 40px 20px;
 				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 				position: relative;
@@ -615,6 +847,10 @@ h2 {
 
 			.box-courses {
 				background: linear-gradient(-135deg, $box-first-start, $box-end);
+			}
+
+			.box-users {
+				background: linear-gradient(-135deg, $box-fourth-start, $box-end);
 			}
 		}
 	}
