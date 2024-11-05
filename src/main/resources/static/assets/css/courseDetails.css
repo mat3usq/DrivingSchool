@@ -557,6 +557,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .title-header {
   font-size: 15px;
@@ -821,6 +822,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 .details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .title-header {
   font-size: 15px;

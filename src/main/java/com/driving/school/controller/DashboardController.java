@@ -192,4 +192,22 @@ public class DashboardController {
 
         return new ModelAndView("redirect:/dashboard");
     }
+
+    @PostMapping("/dashboard/student/instructorDetails")
+    public ModelAndView showInstructorForStudent(@RequestParam("mentorShipId") Long mentorShipId, HttpSession session) {
+        Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getStudent().getId())) {
+            SchoolUser user = schoolUserService.findUserById(ms.get().getInstructor().getId());
+            if (user != null) {
+                ModelAndView model = getUserDetails(user, new ModelAndView("schoolUserDetails"));
+                model.addObject("courses", courseRepository.findByMentorShipId(mentorShipId));
+                model.addObject("mentorShip", ms.get());
+                return model;
+            }
+        }
+
+        return new ModelAndView("redirect:/dashboard");
+    }
 }

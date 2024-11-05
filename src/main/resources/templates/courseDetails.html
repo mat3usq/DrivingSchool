@@ -84,7 +84,7 @@
                                       th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></span>
                             </div>
                         </div>
-                        <div class="btn-box">
+                        <div class="btn-box" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                             <form th:action="@{/course/instructor/deleteCourse}" method="post">
                                 <input type="hidden" name="courseId"
                                        th:value="${course.id}"/>
@@ -221,7 +221,7 @@
                         <div class="schoolUser-drivingSessions">
                             <th:block th:unless="${isEditDrivingSession}">
                                 <div class="drivingSession" th:each="drivingSession : ${course.drivingSessions}">
-                                    <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                                    <div class="operations" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                                         <form th:action="@{/course/instructor/deleteDrivingSession}" method="post">
                                             <input type="hidden" name="drivingSessionId"
                                                    th:value="${drivingSession.id}"/>
@@ -283,7 +283,7 @@
 
                                     <div class="drivingSession"
                                          th:unless="${drivingSession.id == editDrivingSession.id}">
-                                        <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                                        <div class="operations">
                                             <form th:action="@{/course/instructor/deleteDrivingSession}" method="post">
                                                 <input type="hidden" name="drivingSessionId"
                                                        th:value="${drivingSession.id}"/>
@@ -315,7 +315,8 @@
                             <div class="drivingSession" th:if="${course.drivingSessions.isEmpty()}">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Nie dodano jeszcze żadnych sesji jazdy.</span></span>
-                                    <span class="time">Dodaj pierwszą<span class="hours">sesję</span>!</span>
+                                    <span sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')" class="time">Dodaj pierwszą<span class="hours">sesję</span>!</span>
+                                    <span sec:authorize="hasRole('ROLE_STUDENT')" class="time">Poczekaj na pierwsza<span class="hours">sesję</span>!</span>
                                 </div>
                             </div>
                             <div class="drivingSummary">
@@ -328,7 +329,7 @@
                                 </div>
                             </div>
 
-                            <div class="newDrivingSession">
+                            <div class="newDrivingSession" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                                 <form class="box-new" method="post" th:action="@{/course/instructor/addDrivingSession}"
                                       th:object="${newDrivingSession}">
                                     <input type="hidden" name="courseId" th:value="${course.id}"/>
@@ -362,7 +363,7 @@
                         <div class="schoolUser-testCourses" th:with="Constants=${T(com.driving.school.model.Constants)}">
                             <th:block th:unless="${isEditTestCourse}">
                                 <div class="testCourse" th:each="testCourse : ${course.testCourses}">
-                                    <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                                    <div class="operations" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                                         <form th:action="@{/course/instructor/deleteTestCourse}" method="post">
                                             <input type="hidden" name="testCourseId"
                                                    th:value="${testCourse.id}"/>
@@ -457,7 +458,7 @@
                                     </div>
 
                                     <div class="testCourse" th:unless="${testCourse.id == editTestCourse.id}">
-                                        <div class="operations" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                                        <div class="operations">
                                             <form th:action="@{/course/instructor/deleteTestCourse}" method="post">
                                                 <input type="hidden" name="testCourseId"
                                                        th:value="${testCourse.id}"/>
@@ -497,8 +498,9 @@
                             </th:block>
                             <div class="testCourse" th:if="${course.testCourses.isEmpty()}">
                                 <div class="box">
-                                    <span class="content"><span class="title-header">Nie dodano jeszcze żadnych wyników testów.</span></span>
-                                    <span class="percentagesResult">Dodaj pierwszy<span class="percentages">Test</span>!</span>
+                                    <span class="content"><span class="title-header">Nie dodano żadnych wyników testów.</span></span>
+                                    <span class="percentagesResult" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">Dodaj pierwszy<span class="percentages">Test</span>!</span>
+                                    <span class="percentagesResult" sec:authorize="hasRole('ROLE_STUDENT')" >Poczekaj na wynik<span class="percentages">testów</span>!</span>
                                 </div>
                             </div>
                             <div class="testCourseSummary">
@@ -511,7 +513,7 @@
                                 </div>
                             </div>
 
-                            <div class="newTestCourse">
+                            <div class="newTestCourse" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                                 <form class="box-new" method="post" th:action="@{/course/instructor/addTestCourse}"
                                       th:object="${newTestCourse}">
                                     <input type="hidden" name="courseId" th:value="${course.id}"/>
