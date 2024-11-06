@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/dashboard/admin/**").hasRole("ADMIN")
                         // course
                         .requestMatchers("/course/showCourse").authenticated()
-                        .requestMatchers("/course/instructor/**").hasRole("INSTRUCTOR")
+                        .requestMatchers("/course/instructor/**").hasAnyRole("INSTRUCTOR", "ADMIN")
                         .requestMatchers("/course/admin/**").hasRole("ADMIN")
                         // lecture
                         .requestMatchers("/lecture").authenticated()

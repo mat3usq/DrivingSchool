@@ -85,7 +85,13 @@
                             </div>
                         </div>
                         <div class="btn-box" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
-                            <form th:action="@{/course/instructor/deleteCourse}" method="post">
+                            <form sec:authorize="hasRole('ROLE_INSTRUCTOR')" th:action="@{/course/instructor/deleteCourse}" method="post">
+                                <input type="hidden" name="courseId"
+                                       th:value="${course.id}"/>
+                                <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs
+                                </button>
+                            </form>
+                            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/course/admin/deleteCourse}" method="post">
                                 <input type="hidden" name="courseId"
                                        th:value="${course.id}"/>
                                 <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs

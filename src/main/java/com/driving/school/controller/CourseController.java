@@ -71,24 +71,14 @@ public class CourseController {
         return dashboardController.showStudentForInstructor(mentorShipId, session);
     }
 
-    @PostMapping("/course/admin/addCourse")
-    public ModelAndView addCourse(@RequestParam("mentorShipId") Long mentorShipId, @ModelAttribute("newCourse") Course course, @RequestParam("parentUserMail") String parentUserMail) {
-        Optional<MentorShip> optMs = mentorShipService.getMentorShipById(mentorShipId);
-
-        if (optMs.isPresent()) {
-            course.setMentorShip(optMs.get());
-            courseService.createCourse(course);
-        }
-
-        return dashboardController.showUserCourseDetails(mentorShipId, parentUserMail);
-    }
-
     @PostMapping("/course/instructor/editCourse")
     public ModelAndView editCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<Course> optionalCourse = courseService.getCourseById(courseId);
 
-        if (optionalCourse.isPresent() && optionalCourse.get().getMentorShip().getInstructor().equals(user)) {
+        if (optionalCourse.isPresent() &&
+                (optionalCourse.get().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("isEditCourse", true);
             modelAndView.addObject("availableCategories", optionalCourse.get().getMentorShip().getStudent().getAvailableCategories());
@@ -104,13 +94,15 @@ public class CourseController {
 
     @PostMapping("/course/instructor/updateCourse")
     public ModelAndView updateCourse(@ModelAttribute("course") Course editedCourse, @RequestParam("courseId") Long courseId, @ModelAttribute("newCommentCourse") CommentCourse newCommentCourse, HttpSession session) {
-        Optional<Course> course = courseService.getCourseById(courseId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<Course> optionalCourse = courseService.getCourseById(courseId);
 
-        if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user)) {
+        if (optionalCourse.isPresent() &&
+                (optionalCourse.get().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             courseService.updateCourse(courseId, editedCourse, newCommentCourse);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
-            modelAndView.addObject("course", course.get());
+            modelAndView.addObject("course", optionalCourse.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             modelAndView.addObject("newTestCourse", new TestCourse());
             return modelAndView;
@@ -127,6 +119,30 @@ public class CourseController {
         if (optionalCourse.isPresent() && optionalCourse.get().getMentorShip().getInstructor().equals(instructor)) {
             courseService.deleteCourse(optionalCourse.get().getId());
             return dashboardController.showStudentForInstructor(optionalCourse.get().getMentorShip().getId(), session);
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
+    @PostMapping("/course/admin/addCourse")
+    public ModelAndView addCourse(@RequestParam("mentorShipId") Long mentorShipId, @ModelAttribute("newCourse") Course course, @RequestParam("parentUserMail") String parentUserMail) {
+        Optional<MentorShip> optMs = mentorShipService.getMentorShipById(mentorShipId);
+
+        if (optMs.isPresent()) {
+            course.setMentorShip(optMs.get());
+            courseService.createCourse(course);
+        }
+
+        return dashboardController.showUserCourseDetails(mentorShipId, parentUserMail);
+    }
+
+    @PostMapping("/course/admin/deleteCourse")
+    public ModelAndView deleteCourseByAdmin(@RequestParam("courseId") Long courseId, HttpSession session) {
+        Optional<Course> optionalCourse = courseService.getCourseById(courseId);
+
+        if (optionalCourse.isPresent()) {
+            courseService.deleteCourse(optionalCourse.get().getId());
+            return dashboardController.showUserCourseDetails(optionalCourse.get().getMentorShip().getId(), optionalCourse.get().getMentorShip().getInstructor().getEmail());
         }
 
         return dashboardController.displayDashboard(0, 10, session);
