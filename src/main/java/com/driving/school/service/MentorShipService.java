@@ -102,4 +102,14 @@ public class MentorShipService {
             mentorShipRepository.save(mentorShip);
         }
     }
+
+    public void backToActiveMentorShip(Long mentorShipId) {
+        Optional<MentorShip> opt = mentorShipRepository.findById(mentorShipId);
+        if (opt.isPresent()) {
+            MentorShip mentorShip = opt.get();
+            mentorShip.setStatus(Constants.ACTIVE);
+            mentorShip.setEndAt(null);
+            mentorShipRepository.save(mentorShip);
+        }
+    }
 }

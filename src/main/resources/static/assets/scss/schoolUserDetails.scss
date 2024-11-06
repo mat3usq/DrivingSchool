@@ -739,7 +739,7 @@ h2 {
 									position: absolute;
 									top: 50%;
 									transform: translateY(-50%);
-									left: -90px;
+									left: -100px;
 									transition: transform 0.3s ease;
 									display: flex;
 									overflow: visible;
@@ -749,12 +749,12 @@ h2 {
 								@media (hover: hover) and (pointer: fine) {
 									&:hover {
 										cursor: pointer;
-										transform: translateX(90px);
+										transform: translateX(100px);
 									}
 								}
 
 								&.clicked {
-									transform: translateX(90px);
+									transform: translateX(100px);
 								}
 							}
 

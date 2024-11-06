@@ -132,6 +132,16 @@ public class DashboardController {
         return modelAndView;
     }
 
+    @PostMapping("/dashboard/instructor/backToActive")
+    public ModelAndView backToActiveMentorShip(@RequestParam("mentorShipId") Long mentorShipId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
+        if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId()))
+            mentorShipService.backToActiveMentorShip(mentorShipId);
+        return modelAndView;
+    }
+
     @PostMapping("/dashboard/admin/searchUser")
     public ModelAndView userDetailsByEmail(@RequestParam("userEmail") String userEmail) {
         SchoolUser user = schoolUserService.findUserByEmail(userEmail);
