@@ -35,6 +35,29 @@ public class CourseController {
         this.commentCourseRepository = commentCourseRepository;
     }
 
+    // Course Mappings
+
+    @PostMapping("/course/showCourse")
+    public ModelAndView showCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        Optional<Course> optionalCourse = courseService.getCourseById(courseId);
+
+        if (optionalCourse.isPresent() && (
+                optionalCourse.get().getMentorShip().getInstructor().equals(user) ||
+                        optionalCourse.get().getMentorShip().getStudent().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE)
+        )) {
+            ModelAndView modelAndView = new ModelAndView("courseDetails");
+            modelAndView.addObject("course", optionalCourse.get());
+            modelAndView.addObject("newDrivingSession", new DrivingSession());
+            modelAndView.addObject("newTestCourse", new TestCourse());
+
+            return modelAndView;
+        }
+
+        return dashboardController.displayDashboard(0, 10, session);
+    }
+
     @PostMapping("/course/instructor/addCourse")
     public ModelAndView addCourse(@RequestParam("mentorShipId") Long mentorShipId, @ModelAttribute("newCourse") Course course, HttpSession session) {
         SchoolUser instructor = (SchoolUser) session.getAttribute("loggedInUser");
@@ -46,6 +69,18 @@ public class CourseController {
         }
 
         return dashboardController.showStudentForInstructor(mentorShipId, session);
+    }
+
+    @PostMapping("/course/admin/addCourse")
+    public ModelAndView addCourse(@RequestParam("mentorShipId") Long mentorShipId, @ModelAttribute("newCourse") Course course, @RequestParam("parentUserMail") String parentUserMail) {
+        Optional<MentorShip> optMs = mentorShipService.getMentorShipById(mentorShipId);
+
+        if (optMs.isPresent()) {
+            course.setMentorShip(optMs.get());
+            courseService.createCourse(course);
+        }
+
+        return dashboardController.showUserCourseDetails(mentorShipId, parentUserMail);
     }
 
     @PostMapping("/course/instructor/editCourse")
@@ -72,7 +107,7 @@ public class CourseController {
         Optional<Course> course = courseService.getCourseById(courseId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user) ) {
+        if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user)) {
             courseService.updateCourse(courseId, editedCourse, newCommentCourse);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
@@ -97,25 +132,7 @@ public class CourseController {
         return dashboardController.displayDashboard(0, 10, session);
     }
 
-    @PostMapping("/course/showCourse")
-    public ModelAndView showCourse(@RequestParam("courseId") Long courseId, HttpSession session) {
-        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-        Optional<Course> optionalCourse = courseService.getCourseById(courseId);
-
-        if (optionalCourse.isPresent() && (
-                optionalCourse.get().getMentorShip().getInstructor().equals(user) ||
-                        optionalCourse.get().getMentorShip().getStudent().equals(user)
-        )) {
-            ModelAndView modelAndView = new ModelAndView("courseDetails");
-            modelAndView.addObject("course", optionalCourse.get());
-            modelAndView.addObject("newDrivingSession", new DrivingSession());
-            modelAndView.addObject("newTestCourse", new TestCourse());
-
-            return modelAndView;
-        }
-
-        return dashboardController.displayDashboard(0, 10, session);
-    }
+    // Driving Sessions mappings
 
     @PostMapping("/course/instructor/addDrivingSession")
     public ModelAndView addDrivingSession(@ModelAttribute("newDrivingSession") DrivingSession newDrivingSession,
@@ -188,9 +205,11 @@ public class CourseController {
         return dashboardController.displayDashboard(0, 10, session);
     }
 
+    // Results Test in Course mappings
+
     @PostMapping("/course/instructor/addTestCourse")
     public ModelAndView addTestCourse(@ModelAttribute("newTestCourse") TestCourse newTestCourse,
-                                          @RequestParam("courseId") Long courseId, HttpSession session) {
+                                      @RequestParam("courseId") Long courseId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<Course> course = courseService.getCourseById(courseId);
 
@@ -226,7 +245,7 @@ public class CourseController {
 
     @PostMapping("/course/instructor/updateTestCourse")
     public ModelAndView updateTestCourse(@ModelAttribute("editTestCourse") TestCourse editTestCourse,
-                                             @RequestParam("editTestCourseId") Long editTestCourseId, HttpSession session) {
+                                         @RequestParam("editTestCourseId") Long editTestCourseId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<TestCourse> tc = testCourseService.getTestCourseById(editTestCourseId);
 

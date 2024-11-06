@@ -346,35 +346,70 @@
                         </div>
                         <div class="newCourse" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                             <p class="mini-title">Dodawanie Kursu</p>
-                            <form method="post" th:action="@{/course/instructor/addCourse}" th:object="${newCourse}">
-                                <input type="hidden" name="mentorShipId" th:value="${mentorShip.id}"/>
-                                <div class="form-box">
-                                    <div class="course-input">
-                                        <p>Krótki Opis</p>
-                                        <input th:field="*{description}" type="text" placeholder="Krótki Opis"/>
-                                    </div>
-                                    <div class="course-input">
-                                        <p>Czas Trwania Kursu</p>
-                                        <input th:field="*{duration}" type="number" step="0.1"
-                                               placeholder="Czas Trwania Kursu (w godzinach)"/>
-                                    </div>
-                                    <div class="course-input-category">
-                                        <p>Wybierz Kategorie</p>
-                                        <div class="box-category">
-                                            <div th:each="category : ${user.availableCategories}"
-                                                 class="category-radio">
-                                                <input type="radio"
-                                                       th:field="*{category}"
-                                                       th:value="${category.id}"
-                                                       th:id="'category_' + ${category.id}"/>
-                                                <label th:for="'category_' + ${category.id}"
-                                                       th:text="${category.nameCategory}">Nazwa Kategorii</label>
+                            <th:block sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                                <form method="post" th:action="@{/course/instructor/addCourse}" th:object="${newCourse}">
+                                    <input type="hidden" name="mentorShipId" th:value="${mentorShip.id}"/>
+                                    <div class="form-box">
+                                        <div class="course-input">
+                                            <p>Krótki Opis</p>
+                                            <input th:field="*{description}" type="text" placeholder="Krótki Opis"/>
+                                        </div>
+                                        <div class="course-input">
+                                            <p>Czas Trwania Kursu</p>
+                                            <input th:field="*{duration}" type="number" step="0.1"
+                                                   placeholder="Czas Trwania Kursu (w godzinach)"/>
+                                        </div>
+                                        <div class="course-input-category">
+                                            <p>Wybierz Kategorie</p>
+                                            <div class="box-category">
+                                                <div th:each="category : ${user.availableCategories}"
+                                                     class="category-radio">
+                                                    <input type="radio"
+                                                           th:field="*{category}"
+                                                           th:value="${category.id}"
+                                                           th:id="'category_' + ${category.id}"/>
+                                                    <label th:for="'category_' + ${category.id}"
+                                                           th:text="${category.nameCategory}">Nazwa Kategorii</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <button type="submit" class="correct-btn">Dodaj Kurs</button>
-                            </form>
+                                    <button type="submit" class="correct-btn">Dodaj Kurs</button>
+                                </form>
+                            </th:block>
+
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <form method="post" th:action="@{/course/admin/addCourse}" th:object="${newCourse}">
+                                    <input type="hidden" name="mentorShipId" th:value="${mentorShip.id}"/>
+                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                    <div class="form-box">
+                                        <div class="course-input">
+                                            <p>Krótki Opis</p>
+                                            <input th:field="*{description}" type="text" placeholder="Krótki Opis"/>
+                                        </div>
+                                        <div class="course-input">
+                                            <p>Czas Trwania Kursu</p>
+                                            <input th:field="*{duration}" type="number" step="0.1"
+                                                   placeholder="Czas Trwania Kursu (w godzinach)"/>
+                                        </div>
+                                        <div class="course-input-category">
+                                            <p>Wybierz Kategorie</p>
+                                            <div class="box-category">
+                                                <div th:each="category : ${user.availableCategories}"
+                                                     class="category-radio">
+                                                    <input type="radio"
+                                                           th:field="*{category}"
+                                                           th:value="${category.id}"
+                                                           th:id="'category_' + ${category.id}"/>
+                                                    <label th:for="'category_' + ${category.id}"
+                                                           th:text="${category.nameCategory}">Nazwa Kategorii</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="correct-btn">Dodaj Kurs</button>
+                                </form>
+                            </th:block>
                         </div>
                     </div>
                 </div>

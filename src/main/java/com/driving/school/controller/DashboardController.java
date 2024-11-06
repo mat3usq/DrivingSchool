@@ -236,7 +236,7 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/admin/assignSchoolUser")
-    public ModelAndView assignSchoolUser(@RequestParam("parentUserMail") String parentUserMail, @RequestParam("userMail") String userMail, HttpSession session) {
+    public ModelAndView assignSchoolUser(@RequestParam("parentUserMail") String parentUserMail, @RequestParam("userMail") String userMail) {
         SchoolUser parentUser = schoolUserService.findUserByEmail(parentUserMail);
         SchoolUser user = schoolUserService.findUserByEmail(userMail);
 
@@ -250,7 +250,7 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/admin/cancelMentorShip")
-    public ModelAndView cancelMentorShip(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail, HttpSession session) {
+    public ModelAndView cancelMentorShip(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent())
             mentorShipService.deleteMentorShipById(mentorShipId);
@@ -259,7 +259,7 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/admin/acceptMentorShip")
-    public ModelAndView acceptMentorShip(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail, HttpSession session) {
+    public ModelAndView acceptMentorShip(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent())
             mentorShipService.acceptStudent(mentorShipId);
@@ -268,7 +268,7 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/admin/finishMentorShip")
-    public ModelAndView finishMentorShip(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail, HttpSession session) {
+    public ModelAndView finishMentorShip(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent())
             mentorShipService.finishMentorShip(mentorShipId);
@@ -277,7 +277,7 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/admin/backToActiveMentorShip")
-    public ModelAndView backToActiveMentorShip(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail, HttpSession session) {
+    public ModelAndView backToActiveMentorShip(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent())
             mentorShipService.backToActiveMentorShip(mentorShipId);
@@ -286,7 +286,7 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/admin/userCourseDetails")
-    public ModelAndView showUserCourseDetails(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail, HttpSession session) {
+    public ModelAndView showUserCourseDetails(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         SchoolUser user = schoolUserService.findUserByEmail(parentUserMail);
 
