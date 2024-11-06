@@ -135,12 +135,19 @@
                 </div>
                 <div class="box-users" th:if="${mentorShips}" sec:authorize="hasRole('ROLE_ADMIN')">
                     <div class="account-schoolUser">
-                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Studenci Instruktora</p>
-                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">Instruktorzy Studenta</p>
+                        <p class="title"
+                           th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Studenci
+                            Instruktora</p>
+                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                            Instruktorzy Studenta</p>
 
                         <p class="mini-title" th:if="${mentorShips.size() == 0}">
-                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Brak Studentów. Dodaj któregoś z poniższej listy!</th:block>
-                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">Brak Instruktorów. Dodaj któregoś z poniższej listy!</th:block>
+                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                                Brak Studentów. Dodaj któregoś z poniższej listy!
+                            </th:block>
+                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                Brak Instruktorów. Dodaj któregoś z poniższej listy!
+                            </th:block>
                         </p>
 
                         <form class="select-schoolUser" th:action="@{/dashboard/admin/assignSchoolUser}" method="post">
@@ -169,12 +176,14 @@
                                             th:with="Constants=${T(com.driving.school.model.Constants)}">
                                         <tr th:if="${element.status.equals(Constants.PENDING)}"
                                             class="table-two-options">
-                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                                            <th:block
+                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
                                                 <td th:text="${element.student.name}"></td>
                                                 <td th:text="${element.student.surname}"></td>
                                                 <td th:text="${element.student.email}"></td>
                                             </th:block>
-                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                            <th:block
+                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
                                                 <td th:text="${element.instructor.name}"></td>
                                                 <td th:text="${element.instructor.surname}"></td>
                                                 <td th:text="${element.instructor.email}"></td>
@@ -187,7 +196,8 @@
                                             <td class="operations">
                                                 <form th:action="@{/dashboard/admin/cancelMentorShip}"
                                                       method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input hidden="hidden" type="text" name="parentUserMail"
+                                                           th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="delete-btn"><i
@@ -195,7 +205,8 @@
                                                 </form>
                                                 <form th:action="@{/dashboard/admin/acceptMentorShip}"
                                                       method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input hidden="hidden" type="text" name="parentUserMail"
+                                                           th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="correct-btn"><i
@@ -205,12 +216,14 @@
                                         </tr>
                                         <tr th:if="${element.status.equals(Constants.ACTIVE)}"
                                             class="table-three-options">
-                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                                            <th:block
+                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
                                                 <td th:text="${element.student.name}"></td>
                                                 <td th:text="${element.student.surname}"></td>
                                                 <td th:text="${element.student.email}"></td>
                                             </th:block>
-                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                            <th:block
+                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
                                                 <td th:text="${element.instructor.name}"></td>
                                                 <td th:text="${element.instructor.surname}"></td>
                                                 <td th:text="${element.instructor.email}"></td>
@@ -223,7 +236,8 @@
                                             <td class="operations">
                                                 <form th:action="@{/dashboard/admin/cancelMentorShip}"
                                                       method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input hidden="hidden" type="text" name="parentUserMail"
+                                                           th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="delete-btn"><i
@@ -231,7 +245,8 @@
                                                 </form>
                                                 <form th:action="@{/dashboard/admin/userCourseDetails}"
                                                       method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input hidden="hidden" type="text" name="parentUserMail"
+                                                           th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="info-btn"><i
@@ -239,7 +254,8 @@
                                                 </form>
                                                 <form th:action="@{/dashboard/admin/finishMentorShip}"
                                                       method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input hidden="hidden" type="text" name="parentUserMail"
+                                                           th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="correct-btn"><i
@@ -249,12 +265,14 @@
                                         </tr>
                                         <tr th:if="${element.status.equals(Constants.COMPLETED)}"
                                             class="table-two-options">
-                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                                            <th:block
+                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
                                                 <td th:text="${element.student.name}"></td>
                                                 <td th:text="${element.student.surname}"></td>
                                                 <td th:text="${element.student.email}"></td>
                                             </th:block>
-                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                            <th:block
+                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
                                                 <td th:text="${element.instructor.name}"></td>
                                                 <td th:text="${element.instructor.surname}"></td>
                                                 <td th:text="${element.instructor.email}"></td>
@@ -267,14 +285,17 @@
                                             <td class="operations">
                                                 <form th:action="@{/dashboard/admin/backToActiveMentorShip}"
                                                       method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input hidden="hidden" type="text" name="parentUserMail"
+                                                           th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
-                                                    <button type="submit" class="delete-btn"><i class="fa-solid fa-rotate-left"></i></button>
+                                                    <button type="submit" class="delete-btn"><i
+                                                            class="fa-solid fa-rotate-left"></i></button>
                                                 </form>
                                                 <form th:action="@{/dashboard/admin/userCourseDetails}"
                                                       method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input hidden="hidden" type="text" name="parentUserMail"
+                                                           th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="info-btn"><i
@@ -291,7 +312,13 @@
                 </div>
                 <div class="box-courses" th:if="${courses}">
                     <div class="container-courses">
-                        <p class="title" th:unless="${courses.isEmpty()}">Kursy</p>
+                        <th:block th:unless="${seeWhoseCourseIs}">
+                            <p class="title" th:unless="${courses.isEmpty()}">Kursy</p>
+                        </th:block>
+                        <th:block th:if="${seeWhoseCourseIs}">
+                            <p class="mini-title" th:unless="${courses.isEmpty()}"
+                               th:text="${descSeeWhoseCourseIs}"></p>
+                        </th:block>
                         <p class="title" th:if="${courses.isEmpty()}">Brak Kursów</p>
                         <div class="schoolUser-courses">
                             <th:block th:each="course : ${courses}">

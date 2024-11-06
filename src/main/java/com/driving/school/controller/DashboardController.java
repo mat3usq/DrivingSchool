@@ -284,4 +284,25 @@ public class DashboardController {
 
         return userDetailsByEmail(parentUserMail);
     }
+
+    @PostMapping("/dashboard/admin/userCourseDetails")
+    public ModelAndView showUserCourseDetails(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail, HttpSession session) {
+        Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
+        SchoolUser user = schoolUserService.findUserByEmail(parentUserMail);
+
+        if (ms.isPresent() && user != null) {
+            ModelAndView model = getUserDetails(user, new ModelAndView("schoolUserDetails"));
+            model.addObject("courses", courseRepository.findByMentorShipId(mentorShipId));
+            model.addObject("mentorShip", ms.get());
+            model.addObject("seeWhoseCourseIs", true);
+            if (user.getRoleName().equals(Constants.INSTRUCTOR_ROLE))
+                model.addObject("descSeeWhoseCourseIs", "Kursy stworzone dla uzytkownika: " + ms.get().getStudent().getName());
+            else if (user.getRoleName().equals(Constants.STUDENT_ROLE))
+                model.addObject("descSeeWhoseCourseIs", "Kursy stworzone przez uzytkownika: " + ms.get().getInstructor().getName());
+
+            return model;
+        }
+
+        return userDetailsByEmail(parentUserMail);
+    }
 }
