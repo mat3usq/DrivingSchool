@@ -238,7 +238,9 @@ public class CourseController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<Course> course = courseService.getCourseById(courseId);
 
-        if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user)) {
+        if (course.isPresent() && (
+                course.get().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             testCourseService.createTestCourse(newTestCourse, course.get());
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
@@ -255,7 +257,9 @@ public class CourseController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<TestCourse> testCourse = testCourseService.getTestCourseById(testCourseId);
 
-        if (testCourse.isPresent() && testCourse.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+        if (testCourse.isPresent() && (
+                testCourse.get().getCourse().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("isEditTestCourse", true);
             modelAndView.addObject("editTestCourse", testCourse.get());
@@ -274,7 +278,8 @@ public class CourseController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<TestCourse> tc = testCourseService.getTestCourseById(editTestCourseId);
 
-        if (tc.isPresent() && tc.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+        if (tc.isPresent() && (tc.get().getCourse().getMentorShip().getInstructor().equals(user)
+                || user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             testCourseService.updateTestCourse(editTestCourseId, editTestCourse);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", tc.get().getCourse());
@@ -291,7 +296,9 @@ public class CourseController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<TestCourse> testCourse = testCourseService.getTestCourseById(testCourseId);
 
-        if (testCourse.isPresent() && testCourse.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+        if (testCourse.isPresent() && (
+                testCourse.get().getCourse().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             testCourseService.deleteTestCourse(testCourseId);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", testCourse.get().getCourse());
@@ -308,7 +315,9 @@ public class CourseController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<CommentCourse> commentCourse = commentCourseRepository.findById(commentCourseId);
 
-        if (commentCourse.isPresent() && commentCourse.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+        if (commentCourse.isPresent() && (
+                commentCourse.get().getCourse().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             commentCourseRepository.delete(commentCourse.get());
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", commentCourse.get().getCourse());
