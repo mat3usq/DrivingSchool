@@ -272,7 +272,7 @@
                                                 <td
                                                         th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                                 <td class="operations">
-                                                    <form th:action="@{/dashboard/instructor/backToActive}"
+                                                    <form th:action="@{/dashboard/instructor/backToActiveMentorShip}"
                                                           method="post">
                                                         <input type="hidden" name="mentorShipId"
                                                                th:value="${element.id}"/>

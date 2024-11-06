@@ -787,7 +787,7 @@ h2 {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: -130px;
+  left: -135px;
   transition: transform 0.3s ease;
   display: flex;
   overflow: visible;
@@ -796,11 +796,11 @@ h2 {
 @media (hover: hover) and (pointer: fine) {
   .details .hero-img .box-container .box-users .account-schoolUser .schoolUser-list .schoolUser-table .table-three-options:hover {
     cursor: pointer;
-    transform: translateX(130px);
+    transform: translateX(135px);
   }
 }
 .details .hero-img .box-container .box-users .account-schoolUser .schoolUser-list .schoolUser-table .table-three-options.clicked {
-  transform: translateX(130px);
+  transform: translateX(135px);
 }
 .details .hero-img .box-container .box-users .account-schoolUser .select-schoolUser {
   padding: 10px 0px;

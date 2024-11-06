@@ -133,7 +133,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-users">
+                <div class="box-users" th:if="${mentorShips}" sec:authorize="hasRole('ROLE_ADMIN')">
                     <div class="account-schoolUser">
                         <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Studenci Instruktora</p>
                         <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">Instruktorzy Studenta</p>
@@ -143,9 +143,9 @@
                             <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">Brak Instruktorów. Dodaj któregoś z poniższej listy!</th:block>
                         </p>
 
-                        <form class="select-schoolUser" th:action="@{/dashboard/instructor/assignStudent}"
-                              method="post">
-                            <input type="text" name="studentEmail" placeholder="Wpisz email użytkownika"/>
+                        <form class="select-schoolUser" th:action="@{/dashboard/admin/assignSchoolUser}" method="post">
+                            <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                            <input type="text" name="userMail" placeholder="Wpisz email użytkownika"/>
                             <button type="submit" class="info-btn">Dodaj</button>
                         </form>
 
@@ -185,15 +185,17 @@
                                             <td
                                                     th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                             <td class="operations">
-                                                <form th:action="@{/dashboard/instructor/cancelStudent}"
+                                                <form th:action="@{/dashboard/admin/cancelMentorShip}"
                                                       method="post">
+                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="delete-btn"><i
                                                             class="fa-solid fa-trash-can"></i></button>
                                                 </form>
-                                                <form th:action="@{/dashboard/instructor/acceptStudent}"
+                                                <form th:action="@{/dashboard/admin/acceptMentorShip}"
                                                       method="post">
+                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="correct-btn"><i
@@ -219,22 +221,25 @@
                                             <td
                                                     th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                             <td class="operations">
-                                                <form th:action="@{/dashboard/instructor/cancelStudent}"
+                                                <form th:action="@{/dashboard/admin/cancelMentorShip}"
                                                       method="post">
+                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
-                                                    <button type="submit" class="cancel-btn"><i
-                                                            class="fa-solid fa-xmark"></i></button>
+                                                    <button type="submit" class="delete-btn"><i
+                                                            class="fa-solid fa-trash-can"></i></button>
                                                 </form>
-                                                <form th:action="@{/dashboard/instructor/studentDetails}"
+                                                <form th:action="@{/dashboard/admin/userCourseDetails}"
                                                       method="post">
+                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="info-btn"><i
                                                             class="fa-solid fa-eye"></i></button>
                                                 </form>
-                                                <form th:action="@{/dashboard/instructor/finishStudent}"
+                                                <form th:action="@{/dashboard/admin/finishMentorShip}"
                                                       method="post">
+                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="correct-btn"><i
@@ -260,14 +265,16 @@
                                             <td
                                                     th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                             <td class="operations">
-                                                <form th:action="@{/dashboard/instructor/backToActive}"
+                                                <form th:action="@{/dashboard/admin/backToActiveMentorShip}"
                                                       method="post">
+                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="delete-btn"><i class="fa-solid fa-rotate-left"></i></button>
                                                 </form>
-                                                <form th:action="@{/dashboard/instructor/studentDetails}"
+                                                <form th:action="@{/dashboard/admin/userCourseDetails}"
                                                       method="post">
+                                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
                                                     <input type="hidden" name="mentorShipId"
                                                            th:value="${element.id}"/>
                                                     <button type="submit" class="info-btn"><i
