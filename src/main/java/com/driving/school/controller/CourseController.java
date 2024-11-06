@@ -156,7 +156,10 @@ public class CourseController {
         Optional<Course> course = courseService.getCourseById(courseId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (course.isPresent() && course.get().getMentorShip().getInstructor().equals(user)) {
+        if (course.isPresent() && (
+                course.get().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE)
+        )) {
             drivingSessionService.createDrivingSession(newDrivingSession, course.get());
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
@@ -173,7 +176,9 @@ public class CourseController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<DrivingSession> ds = drivingSessionService.getDrivingSessionById(drivingSessionId);
 
-        if (ds.isPresent() && ds.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+        if (ds.isPresent() && (
+                ds.get().getCourse().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("isEditDrivingSession", true);
             modelAndView.addObject("editDrivingSession", ds.get());
@@ -192,7 +197,9 @@ public class CourseController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<DrivingSession> ds = drivingSessionService.getDrivingSessionById(editDrivingSessionId);
 
-        if (ds.isPresent() && ds.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+        if (ds.isPresent() && (
+                ds.get().getCourse().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             drivingSessionService.updateDrivingSession(editDrivingSessionId, editDrivingSession);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
@@ -209,7 +216,9 @@ public class CourseController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<DrivingSession> ds = drivingSessionService.getDrivingSessionById(drivingSessionId);
 
-        if (ds.isPresent() && ds.get().getCourse().getMentorShip().getInstructor().equals(user)) {
+        if (ds.isPresent() && (
+                ds.get().getCourse().getMentorShip().getInstructor().equals(user) ||
+                        user.getRoleName().equals(Constants.ADMIN_ROLE))) {
             drivingSessionService.deleteDrivingSession(drivingSessionId);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
