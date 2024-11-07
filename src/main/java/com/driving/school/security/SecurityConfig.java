@@ -61,7 +61,8 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/logout").authenticated()
-                        .requestMatchers("/assets/**").permitAll())
+                        .requestMatchers("/assets/**").permitAll()
+                        .requestMatchers("/error").authenticated())
                 .formLogin(loginConfigurer -> loginConfigurer
                         .loginProcessingUrl("/loginUser")
                         .loginPage("/home")
