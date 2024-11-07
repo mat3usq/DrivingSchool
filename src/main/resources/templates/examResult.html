@@ -61,10 +61,10 @@
 
                     <div class="container-examResult">
                         <div class="examResult-info">
-                            <div class="img" th:if="${!exam.passed}">
+                            <div class="img" th:if="${exam.passed}">
                                 <th:block th:replace="~{carAnimation :: positive-exam}"></th:block>
                             </div>
-                            <div class="img" th:if="${exam.passed}">
+                            <div class="img" th:unless="${exam.passed}">
                                 <th:block th:replace="~{carAnimation :: negative-exam}"></th:block>
                             </div>
                             <div class="box-info">
