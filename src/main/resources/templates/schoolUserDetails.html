@@ -70,6 +70,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="box-statistics-exam" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
+                    <p class="title">Statystyki - Egzamin</p>
+                    <div class="container-statistics">
+                        <p>Sobotka i beda robione statystyki do egzaminow byczku 🚔</p>
+                        <br>
+                    </div>
+                </div>
+                <div class="box-statistics-test" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
+                    <p class="title">Statystyki - Testy</p>
+                    <div class="container-statistics">
+                        <p>Sobotka i beda robione statystyki do testow byczku 🚔</p>
+                        <br>
+                    </div>
+                </div>
                 <div class="box-payments" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                     <div class="account-payments">
                         <p class="title" th:unless="${user.payments.isEmpty()}">Płatności</p>

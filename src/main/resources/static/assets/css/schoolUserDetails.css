@@ -308,7 +308,7 @@ h2 {
   opacity: 1;
 }
 .details .hero-img .box-container .box-payments .account-payments .newPayment {
-  background: linear-gradient(-135deg, rgba(3, 68, 90, 0.7098039216), rgba(51, 20, 82, 0.65));
+  background: linear-gradient(-135deg, rgba(3, 68, 90, 0.7098039216), rgba(77, 42, 111, 0.65));
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   -webkit-backdrop-filter: blur(10px);
@@ -513,7 +513,7 @@ h2 {
   color: #ef476f;
 }
 .details .hero-img .box-container .box-courses .container-courses .newCourse {
-  background: linear-gradient(-135deg, rgba(155, 6, 57, 0.65), rgba(3, 68, 90, 0.7098039216));
+  background: linear-gradient(-135deg, rgba(188, 24, 80, 0.65), rgba(3, 68, 90, 0.7098039216));
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   -webkit-backdrop-filter: blur(10px);
@@ -834,10 +834,25 @@ h2 {
 .details .hero-img .box-container .box-users .account-schoolUser .select-schoolUser input {
   margin: 7px;
 }
+.details .hero-img .box-container .box-statistics-exam,
+.details .hero-img .box-container .box-statistics-test {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.details .hero-img .box-container .box-statistics-exam .container-statistics,
+.details .hero-img .box-container .box-statistics-test .container-statistics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
 .details .hero-img .box-container .box-user,
 .details .hero-img .box-container .box-payments,
 .details .hero-img .box-container .box-courses,
-.details .hero-img .box-container .box-users {
+.details .hero-img .box-container .box-users,
+.details .hero-img .box-container .box-statistics-exam,
+.details .hero-img .box-container .box-statistics-test {
   margin: 40px 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -847,16 +862,22 @@ h2 {
           backdrop-filter: blur(9px);
 }
 .details .hero-img .box-container .box-user {
-  background: linear-gradient(-135deg, rgba(155, 6, 57, 0.65), rgba(3, 68, 90, 0.7098039216));
+  background: linear-gradient(-135deg, rgba(77, 42, 111, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+.details .hero-img .box-container .box-statistics-exam {
+  background: linear-gradient(-135deg, rgba(56, 111, 12, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+.details .hero-img .box-container .box-statistics-test {
+  background: linear-gradient(-135deg, rgba(174, 98, 4, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 .details .hero-img .box-container .box-payments {
-  background: linear-gradient(-135deg, rgba(153, 84, 0, 0.65), rgba(3, 68, 90, 0.7098039216));
+  background: linear-gradient(-135deg, rgba(3, 76, 113, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 .details .hero-img .box-container .box-courses {
-  background: linear-gradient(-135deg, rgba(51, 20, 82, 0.65), rgba(3, 68, 90, 0.7098039216));
+  background: linear-gradient(-135deg, rgba(75, 2, 39, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 .details .hero-img .box-container .box-users {
-  background: linear-gradient(-135deg, rgba(1, 39, 31, 0.65), rgba(3, 68, 90, 0.7098039216));
+  background: linear-gradient(-135deg, rgba(188, 24, 80, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 
 .contact {

@@ -97,12 +97,32 @@
                                 <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs
                                 </button>
                             </form>
+
+                            <form sec:authorize="hasRole('ROLE_INSTRUCTOR')" th:action="@{/dashboard/instructor/studentDetails}" method="post">
+                                <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
+                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i> Powrót
+                                </button>
+                            </form>
+                            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/dashboard/admin/userCourseDetails}" method="post">
+                                <input hidden="hidden" type="text" name="parentUserMail" th:value="${course.mentorShip.instructor.email}"/>
+                                <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
+                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i> Powrót
+                                </button>
+                            </form>
+
                             <form th:action="@{/course/instructor/editCourse}"
                                   method="post">
                                 <input type="hidden" name="courseId"
                                        th:value="${course.id}"/>
-                                <button type="submit" class="info-btn"><i class="fa-regular fa-pen-to-square"></i>
+                                <button type="submit" class="add-btn"><i class="fa-regular fa-pen-to-square"></i>
                                     Edytuj Kurs
+                                </button>
+                            </form>
+                        </div>
+                        <div class="btn-box" sec:authorize="hasRole('ROLE_STUDENT')">
+                            <form  th:action="@{/dashboard/student/instructorDetails}" method="post">
+                                <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
+                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i> Powrót
                                 </button>
                             </form>
                         </div>

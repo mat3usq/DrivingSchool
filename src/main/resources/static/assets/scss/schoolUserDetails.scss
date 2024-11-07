@@ -825,10 +825,26 @@ h2 {
 				}
 			}
 
+			.box-statistics-exam,
+			.box-statistics-test {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				.container-statistics {
+					display: flex;
+					flex-wrap: wrap;
+					gap: 10px;
+					justify-content: center;
+				}
+			}
+
 			.box-user,
 			.box-payments,
 			.box-courses,
-			.box-users {
+			.box-users,
+			.box-statistics-exam,
+			.box-statistics-test {
 				margin: 40px 20px;
 				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 				position: relative;
@@ -838,19 +854,27 @@ h2 {
 			}
 
 			.box-user {
-				background: linear-gradient(-135deg, $box-third-start, $box-end);
-			}
-
-			.box-payments {
-				background: linear-gradient(-135deg, $box-second-start, $box-end);
-			}
-
-			.box-courses {
 				background: linear-gradient(-135deg, $box-first-start, $box-end);
 			}
 
-			.box-users {
+			.box-statistics-exam {
 				background: linear-gradient(-135deg, $box-fourth-start, $box-end);
+			}
+
+			.box-statistics-test {
+				background: linear-gradient(-135deg, $box-second-start, $box-end);
+			}
+
+			.box-payments {
+				background: linear-gradient(-135deg, $box-fifth-start, $box-end);
+			}
+
+			.box-courses {
+				background: linear-gradient(-135deg, $box-sixth-start, $box-end);
+			}
+
+			.box-users {
+				background: linear-gradient(-135deg, $box-third-start, $box-end);
 			}
 		}
 	}

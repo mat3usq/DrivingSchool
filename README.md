@@ -68,6 +68,10 @@
 - Poprawienie responsywnosci w wykladzie
 - Zamiana footera i ostatniej sekcji na th:fragment
 - Dodanie zdjec do instrukcji z rozwiązywania pytan specjalistycznych oraz podstawowych
+- Ogarniecie main.html
+- Resetowanie hasel
+- Tworzenie instruktora/admina poprzez tokeny
+- Zmienianie role usera w admin view
 
 ## TODO optional
 - Podział na różne permisje dla kursu
