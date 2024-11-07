@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -106,27 +107,28 @@ public class SchoolUserService {
     }
 
     public void deletePayment(Long paymentId) {
-        Optional<Payment> payment = paymentRepository.findById(paymentId);
-        if (payment.isPresent()) {
-            Payment pay = payment.get();
-            Optional<SchoolUser> user = schoolUserRepository.findById(pay.getSchoolUser().getId());
+        Optional<Payment> paymentOpt = paymentRepository.findById(paymentId);
+        if (paymentOpt.isPresent()) {
+            Payment payment = paymentOpt.get();
+            SchoolUser schoolUser = payment.getSchoolUser();
 
-            if (user.isPresent()) {
-                SchoolUser schoolUser = user.get();
+            paymentRepository.delete(payment);
+            List<Payment> remainingPayments = paymentRepository.findAllBySchoolUserId(schoolUser.getId());
 
-                List<Category> categories = schoolUser.getAvailableCategories();
-                categories.removeAll(pay.getCategories());
-                schoolUser.setAvailableCategories(categories);
-                pay.getCategories().forEach(c -> {
-                    if (c.getNameCategory().equals(schoolUser.getCurrentCategory()))
-                        schoolUser.setCurrentCategory("");
-                });
+            Set<Category> updatedCategories = remainingPayments.stream()
+                    .flatMap(p -> p.getCategories().stream())
+                    .collect(Collectors.toSet());
 
-                paymentRepository.delete(pay);
-                schoolUserRepository.save(schoolUser);
-            }
+            schoolUser.setAvailableCategories(new ArrayList<>(updatedCategories));
+
+            if (updatedCategories.stream()
+                    .noneMatch(c -> c.getNameCategory().equals(schoolUser.getCurrentCategory())))
+                schoolUser.setCurrentCategory("");
+
+            schoolUserRepository.save(schoolUser);
         }
     }
+
 
     public void addPayment(Long userId, Payment payment) {
         Optional<SchoolUser> userOptional = schoolUserRepository.findById(userId);

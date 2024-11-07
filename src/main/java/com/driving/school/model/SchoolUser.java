@@ -43,6 +43,7 @@ public class SchoolUser {
     @ManyToMany(mappedBy = "students")
     private List<InstructionEvent> studentEvents = new ArrayList<>();
 
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "schoolUser")
     private Set<Payment> payments = new LinkedHashSet<>();
 
