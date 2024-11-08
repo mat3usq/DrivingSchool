@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -67,15 +66,6 @@ public class ExamController {
         if (session.getAttribute("questionSet") == null)
             return examInfo(session);
 
-        // 1. TODO: dodac jak przekroczy czas 25 minut to przekierowac na result
-        //
-
-        // 3. todo: naprawic buga, gdy sie robi jakies pytanka w egz i jest sie na tym pytaniu to
-        // 3. todo: gdy sie da ctrl+r czy odswiezy sie strone to przeskakuje na nowe pytanie i
-        // 3. todo: zapisuje w bazie jakies poprzednie pytanie i ja idk czy cos z tym robimy???
-        //
-        // 4. todo: dodac guzik zakoncz egzamin czy cus
-
         ModelAndView modelAndView = new ModelAndView("solveExam");
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
 
@@ -115,10 +105,12 @@ public class ExamController {
                                                   questionId, @RequestParam("action") String action, HttpSession session) {
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
+        if (questionSet == null || studentExam == null)
+            return new ModelAndView("instructionExam");
 
         studentExam = studentExamService.getStudentExamById(studentExam.getId());
         Question question = questionService.findById(questionId).orElse(null);
-        if (question == null)
+        if (question == null || studentExamService.existsAnswerToQuestionInExam(studentExam, question))
             return examSolve(session, false);
 
         StudentExamAnswer studentExamAnswer = new StudentExamAnswer();
@@ -145,14 +137,19 @@ public class ExamController {
     }
 
     public ModelAndView summary(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("examResult");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
-        studentExam = studentExamService.setSummaryOfExam(studentExamService.getStudentExamById(studentExam.getId()));
-        modelAndView.addObject("exam", studentExam);
-        session.setAttribute("questionSet", null);
-        session.setAttribute("exam", null);
-        session.setAttribute("latestQuestion", null);
-        return modelAndView;
+
+        if(studentExam != null){
+            ModelAndView modelAndView = new ModelAndView("examResult");
+            studentExam = studentExamService.setSummaryOfExam(studentExamService.getStudentExamById(studentExam.getId()));
+            modelAndView.addObject("exam", studentExam);
+            session.setAttribute("questionSet", null);
+            session.setAttribute("exam", null);
+            session.setAttribute("latestQuestion", null);
+            return modelAndView;
+        }
+
+        return new ModelAndView("instructionExam");
     }
 
     @PostMapping("/exam/result")
@@ -182,7 +179,9 @@ public class ExamController {
     }
 
     @GetMapping("/exam/end")
-    public ModelAndView endExam(@RequestParam("questionId") Long questionId, @RequestParam("action") String action, HttpSession session){
-            return examSolve(session, false);
+    public ModelAndView endExam(HttpSession session) {
+        if (session.getAttribute("exam") == null)
+            return new ModelAndView("instructionExam");
+        return summary(session);
     }
 }

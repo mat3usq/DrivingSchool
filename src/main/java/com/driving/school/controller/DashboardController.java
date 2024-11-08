@@ -34,9 +34,6 @@ public class DashboardController {
 
     // FOR ALL USERS
 
-    // todo: cos tam jeszcze z github'a (dodac sekcje na statystyki moze)
-    // todo: poprawic button konca w egzaminie
-
     @GetMapping("/dashboard")
     public ModelAndView displayDashboard(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");

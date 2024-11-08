@@ -132,7 +132,6 @@ public class QuestionService {
 
     public List<Question> getRandomSpecialistcQuestionsByCategory(String category,int exactPoints, int numberOfQuestions) {
         List<Question> filteredQuestions = getAllSpecialisticQuestionByCategoryAndExactPoints(category,(long) exactPoints);
-        System.out.println(filteredQuestions.size());
         if (filteredQuestions.size() < numberOfQuestions) {
             throw new IllegalArgumentException("Not enough questions available");
         }

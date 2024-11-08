@@ -4,16 +4,14 @@ package com.driving.school.service;
 import com.driving.school.model.Question;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.model.StudentExam;
+import com.driving.school.model.StudentExamAnswer;
 import com.driving.school.repository.StudentExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class StudentExamService {
@@ -115,5 +113,9 @@ public class StudentExamService {
         examStatisticsService.updateStatisticsExamForUser(studentExam);
 
         return studentExam;
+    }
+
+    public boolean existsAnswerToQuestionInExam(StudentExam studentExam, Question question) {
+        return studentExam.getStudentExamAnswers().stream().anyMatch(a -> Objects.equals(a.getQuestion().getId(), question.getId()));
     }
 }

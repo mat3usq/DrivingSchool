@@ -95,6 +95,7 @@
                             </div>
                         </div>
                         <div class="questions">
+                            <th:block th:if="${exam.getSortedStudentExamAnswers().size() > 0}">
                             <h5 class="content">Czesc Podstawowa</h5>
                             <div class="answer-box">
                                 <div class="answer-container">
@@ -110,7 +111,9 @@
                                     </th:block>
                                 </div>
                             </div>
+                            </th:block>
 
+                            <th:block th:if="${exam.getSortedStudentExamAnswers().size() > 20}">
                             <h5 class="content">Czesc Specjalistyczna</h5>
                             <div class="answer-box">
                                 <div class="answer-container">
@@ -126,6 +129,7 @@
                                     </th:block>
                                 </div>
                             </div>
+                            </th:block>
 
                             <div class="button-box">
                                 <button class="back"><a href="/exam">Powrot</a></button>
