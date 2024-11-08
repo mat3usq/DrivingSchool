@@ -147,6 +147,38 @@ h2 {
 	align-items: center;
 	width: 65%;
 
+	.formTitle {
+		padding: 20px 10px;
+		background-color: rgba(0, 0, 0, 0.6);
+		border-radius: 20px;
+		font-size: 20px;
+		letter-spacing: 1px;
+		text-align: center;
+		font-weight: bold;
+		border-bottom: 3px solid $primary-color;
+		border-top: 3px solid $primary-color;
+		margin: 0 auto;
+		max-width: 400px;
+		cursor: pointer;
+		user-select: none;
+
+		.left-arrow,
+		.right-arrow {
+			font-weight: bold;
+		}
+	}
+
+	.collapsible-content {
+		width: 100%;
+		height: 100%;
+		display: none;
+		transition: opacity 0.3s ease;
+
+		&.show {
+			display: block;
+		}
+	}
+
 	#sublecturesContainer,
 	#subjectsContainer {
 		width: 100%;
@@ -177,20 +209,6 @@ h2 {
 			border-bottom: 1px solid $info-color;
 			border-top: 1px solid $info-color;
 		}
-	}
-
-	.formTitle {
-		padding: 20px 10px;
-		background-color: rgba(0, 0, 0, 0.6);
-		border-radius: 20px;
-		font-size: 20px;
-		letter-spacing: 1px;
-		text-align: center;
-		font-weight: bold;
-		border-bottom: 3px solid $primary-color;
-		border-top: 3px solid $primary-color;
-		max-width: 400px;
-		margin: 0 auto;
 	}
 
 	.input-file {

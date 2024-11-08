@@ -213,6 +213,61 @@ h2 {
   align-items: center;
   width: 65%;
 }
+.lectureForm .formTitle,
+.sublectureForm .formTitle,
+.subjectForm .formTitle,
+.editLectureForm .formTitle,
+.editSublectureForm .formTitle,
+.editSubjectForm .formTitle {
+  padding: 20px 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 3px solid #ef476f;
+  border-top: 3px solid #ef476f;
+  margin: 0 auto;
+  max-width: 400px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.lectureForm .formTitle .left-arrow,
+.lectureForm .formTitle .right-arrow,
+.sublectureForm .formTitle .left-arrow,
+.sublectureForm .formTitle .right-arrow,
+.subjectForm .formTitle .left-arrow,
+.subjectForm .formTitle .right-arrow,
+.editLectureForm .formTitle .left-arrow,
+.editLectureForm .formTitle .right-arrow,
+.editSublectureForm .formTitle .left-arrow,
+.editSublectureForm .formTitle .right-arrow,
+.editSubjectForm .formTitle .left-arrow,
+.editSubjectForm .formTitle .right-arrow {
+  font-weight: bold;
+}
+.lectureForm .collapsible-content,
+.sublectureForm .collapsible-content,
+.subjectForm .collapsible-content,
+.editLectureForm .collapsible-content,
+.editSublectureForm .collapsible-content,
+.editSubjectForm .collapsible-content {
+  width: 100%;
+  height: 100%;
+  display: none;
+  transition: opacity 0.3s ease;
+}
+.lectureForm .collapsible-content.show,
+.sublectureForm .collapsible-content.show,
+.subjectForm .collapsible-content.show,
+.editLectureForm .collapsible-content.show,
+.editSublectureForm .collapsible-content.show,
+.editSubjectForm .collapsible-content.show {
+  display: block;
+}
 .lectureForm #sublecturesContainer,
 .lectureForm #subjectsContainer,
 .sublectureForm #sublecturesContainer,
@@ -283,24 +338,6 @@ h2 {
   background-color: rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid #6acff1;
   border-top: 1px solid #6acff1;
-}
-.lectureForm .formTitle,
-.sublectureForm .formTitle,
-.subjectForm .formTitle,
-.editLectureForm .formTitle,
-.editSublectureForm .formTitle,
-.editSubjectForm .formTitle {
-  padding: 20px 10px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 20px;
-  font-size: 20px;
-  letter-spacing: 1px;
-  text-align: center;
-  font-weight: bold;
-  border-bottom: 3px solid #ef476f;
-  border-top: 3px solid #ef476f;
-  max-width: 400px;
-  margin: 0 auto;
 }
 .lectureForm .input-file,
 .sublectureForm .input-file,
