@@ -7,7 +7,7 @@ function addSublectureForm() {
         subjectCounters[sublectureCounters] = 0
 
         const htmlContent = `
-<div id="sublecture-${sublectureCounters}">
+<div class="sublectures-of-lecture" id="sublecture-${sublectureCounters}">
 <p class="formTitle">Dodawanie ${sublectureCounters + 1}. Podwykładu</p>
 <div class="input-field">
     <i class="fas fa-book"></i>
@@ -105,7 +105,7 @@ function addSubjectForm(sublectureIndex) {
         const subjectIndex = subjectCounters[sublectureIndex]
         const btnContainer = document.getElementById(`subject-container-${sublectureIndex}`)
         const htmlContent = `
-<div id="subject-${sublectureIndex}-${subjectIndex}">
+<div class="subjects-of-sublecture-of-lecture" id="subject-${sublectureIndex}-${subjectIndex}">
     <p class="formTitle">Dodawanie ${subjectIndex + 1}. Rozdziału</p>
     <div class="input-field">
         <i class="fas fa-bookmark"></i>
@@ -195,7 +195,7 @@ function addFormSubject() {
         const container = document.getElementById('subjectsContainer');
         const subjectIndex = subjectCounter;
         const htmlContent = `
-<div id="subject-${subjectIndex}">
+<div class="subjects-of-sublecture" id="subject-${subjectIndex}">
     <p class="formTitle">Dodawanie ${subjectIndex + 1}. Rozdziału</p>
     <div class="input-field">
         <i class="fas fa-bookmark"></i>

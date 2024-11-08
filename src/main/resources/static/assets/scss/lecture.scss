@@ -134,6 +134,232 @@ h2 {
 	overflow: hidden;
 }
 
+.lectureForm,
+.sublectureForm,
+.subjectForm,
+.editLectureForm,
+.editSublectureForm,
+.editSubjectForm {
+	margin: 0;
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 65%;
+
+	#sublecturesContainer,
+	#subjectsContainer {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+
+		.sublectures-of-lecture {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+			padding: 20px 0;
+			background-color: rgba(0, 0, 0, 0.3);
+			border-bottom: 1px solid $text-color;
+			border-top: 1px solid $text-color;
+
+			.subjects-of-sublecture-of-lecture {
+				padding: 20px 0;
+				background-color: rgba(0, 0, 0, 0.3);
+				border-bottom: 1px solid $info-color;
+				border-top: 1px solid $info-color;
+			}
+		}
+
+		.subjects-of-sublecture {
+			padding: 20px 0;
+			background-color: rgba(0, 0, 0, 0.3);
+			border-bottom: 1px solid $info-color;
+			border-top: 1px solid $info-color;
+		}
+	}
+
+	.formTitle {
+		padding: 20px 10px;
+		background-color: rgba(0, 0, 0, 0.6);
+		border-radius: 20px;
+		font-size: 20px;
+		letter-spacing: 1px;
+		text-align: center;
+		font-weight: bold;
+		border-bottom: 3px solid $primary-color;
+		border-top: 3px solid $primary-color;
+		max-width: 400px;
+		margin: 0 auto;
+	}
+
+	.input-file {
+		width: 80%;
+		margin: 20px auto;
+		padding: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		background: #e0eafc;
+		background: -webkit-linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+		background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+		color: black;
+		border-radius: 10px;
+		border: 2px solid black;
+
+		h3 {
+			font-weight: bold;
+			font-size: 17px;
+			margin-bottom: 20px;
+		}
+
+		.drag-area {
+			width: 100%;
+			min-height: 250px;
+			max-height: 500px;
+			border: 3px dashed rgb(86, 86, 86);
+			border-radius: 10px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: 10px auto;
+
+			.icon {
+				font-size: 50px;
+				color: #1683ff;
+			}
+
+			.header {
+				font-size: 20px;
+				font-weight: 500;
+			}
+
+			.header.second {
+				transition: opacity 0.3s ease;
+			}
+
+			.support {
+				font-size: 12px;
+				color: gray;
+				margin: 10px 0 15px 0;
+			}
+
+			.button {
+				font-size: 20px;
+				font-weight: 500;
+				color: #1683ff;
+				cursor: pointer;
+			}
+
+			img {
+				width: 100%;
+				min-height: 250px;
+				max-height: 500px;
+				object-fit: cover;
+				padding: 3px;
+			}
+		}
+
+		.active {
+			border: 4px dashed $primary-color;
+			outline: none;
+		}
+	}
+
+	.input-field {
+		position: relative;
+		margin: 20px auto;
+		width: 80%;
+
+		i {
+			position: absolute;
+			left: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: $bg-price-color;
+			font-size: 18px;
+		}
+
+		input,
+		textarea,
+		select {
+			width: 100%;
+			padding: 10px 10px 10px 40px;
+			border-radius: 10px;
+			border: 2px solid black;
+			font-size: 18px;
+			// background-color: rgba(252, 240, 221, 0.84);
+			background: #e0eafc;
+			background: -webkit-linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+			background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+			color: black;
+
+			&::placeholder {
+				color: black;
+			}
+
+			&:focus {
+				outline: none;
+				border-color: $primary-color;
+			}
+		}
+	}
+
+	.box-btn {
+		display: flex;
+		flex-direction: row;
+		align-content: space-around;
+		justify-content: center;
+		align-items: stretch;
+		flex-wrap: wrap;
+		margin-top: 10px;
+		margin-bottom: 20px;
+	}
+
+	button.add-btn,
+	.delete-btn,
+	.info-btn {
+		margin: 10px;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 10px;
+		color: white;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-align: center;
+		cursor: pointer;
+		transition: 0.3s ease;
+
+		&:hover {
+			transform: scale(1.05);
+		}
+	}
+
+	button.add-btn {
+		background-color: #2de300;
+
+		&:hover {
+			background-color: darken(#2de300, 10%);
+		}
+	}
+
+	button.info-btn {
+		background-color: $btn-bg-color;
+		&:hover {
+			background-color: darken($btn-bg-color, 10%);
+		}
+	}
+
+	button.delete-btn {
+		background-color: $primary-color;
+		&:hover {
+			background-color: darken($primary-color, 10%);
+		}
+	}
+}
+
 .subject {
 	.hero-img {
 		position: relative;
@@ -155,22 +381,22 @@ h2 {
 		.box-subject {
 			position: absolute;
 			top: 12vh;
-			left: 150px;
+			left: 300px;
+			width: calc(100vw - 300px);
 			height: 97vh;
-			width: 100%;
 			overflow: scroll;
 
 			.box-container {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				margin: 10px auto;
 
 				.container {
 					display: flex;
 					flex-direction: column;
 					align-items: center;
 					width: 100%;
+					margin-top: 30px;
 
 					.edit-box {
 						.edit-item {
@@ -208,15 +434,14 @@ h2 {
 				.container-lecture {
 					display: flex;
 					flex-direction: column;
-					margin: 0 50px;
 
 					.box-sublecture {
 						font-size: 19px;
 						display: flex;
 						flex-direction: column;
 						align-items: center;
-						margin: 30px 50px;
-						padding: 20px 40px;
+						margin: 30px 0px;
+						padding: 20px;
 						background-color: rgba(0, 0, 0, 0.7);
 						border-radius: 20px;
 						text-align: center;
@@ -260,7 +485,7 @@ h2 {
 						.subject-details,
 						.sublecture-details,
 						.lecture-details {
-							margin: 10px 0;
+							margin: 15px 0;
 							border-radius: 10px;
 							border: 3px dashed rgba(102, 102, 102, 0.879);
 						}
@@ -288,7 +513,6 @@ h2 {
 					display: flex;
 					flex-direction: column;
 					align-items: center;
-					max-width: 60%;
 					padding: 20px 30px;
 					background-color: rgba(0, 0, 0, 0.6);
 					border-radius: 20px;
@@ -301,205 +525,6 @@ h2 {
 						margin: 0px;
 						padding: 0px 10px;
 						background-color: transparent;
-					}
-				}
-
-				.lectureForm,
-				.sublectureForm,
-				.subjectForm,
-				.editLectureForm,
-				.editSublectureForm,
-				.editSubjectForm {
-					margin: 0;
-					margin-top: 50px;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					width: 65%;
-
-					#sublecturesContainer,
-					#subjectsContainer {
-						width: 100%;
-					}
-
-					.formTitle {
-						padding: 20px 10px;
-						background-color: rgba(0, 0, 0, 0.6);
-						border-radius: 20px;
-						font-size: 20px;
-						letter-spacing: 1px;
-						text-align: center;
-						font-weight: bold;
-						border-bottom: 3px solid $primary-color;
-						border-top: 3px solid $primary-color;
-						max-width: 400px;
-						margin: 0 auto;
-					}
-
-					.input-file {
-						width: 70%;
-						margin: 20px auto;
-						padding: 30px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						flex-direction: column;
-						background: #e0eafc;
-						background: -webkit-linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
-						background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
-						color: black;
-						border-radius: 10px;
-						border: 2px solid black;
-
-						h3 {
-							font-weight: bold;
-							font-size: 17px;
-							margin-bottom: 20px;
-						}
-
-						.drag-area {
-							width: 100%;
-							min-height: 250px;
-							max-height: 500px;
-							border: 3px dashed rgb(86, 86, 86);
-							border-radius: 10px;
-							display: flex;
-							flex-direction: column;
-							align-items: center;
-							justify-content: center;
-							margin: 10px auto;
-
-							.icon {
-								font-size: 50px;
-								color: #1683ff;
-							}
-
-							.header {
-								font-size: 20px;
-								font-weight: 500;
-							}
-
-							.header.second {
-								transition: opacity 0.3s ease;
-							}
-
-							.support {
-								font-size: 12px;
-								color: gray;
-								margin: 10px 0 15px 0;
-							}
-
-							.button {
-								font-size: 20px;
-								font-weight: 500;
-								color: #1683ff;
-								cursor: pointer;
-							}
-
-							img {
-								width: 100%;
-								min-height: 250px;
-								max-height: 500px;
-								object-fit: cover;
-								padding: 3px;
-							}
-						}
-
-						.active {
-							border: 4px dashed $primary-color;
-							outline: none;
-						}
-					}
-
-					.input-field {
-						position: relative;
-						margin: 20px auto;
-						width: 70%;
-
-						i {
-							position: absolute;
-							left: 10px;
-							top: 50%;
-							transform: translateY(-50%);
-							color: $bg-price-color;
-							font-size: 18px;
-						}
-
-						input,
-						textarea,
-						select {
-							width: 100%;
-							padding: 10px 10px 10px 40px;
-							border-radius: 10px;
-							border: 2px solid black;
-							font-size: 18px;
-							// background-color: rgba(252, 240, 221, 0.84);
-							background: #e0eafc;
-							background: -webkit-linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
-							background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
-							color: black;
-
-							&::placeholder {
-								color: black;
-							}
-
-							&:focus {
-								outline: none;
-								border-color: $primary-color;
-							}
-						}
-					}
-
-					.box-btn {
-						display: flex;
-						flex-direction: row;
-						align-content: space-around;
-						justify-content: center;
-						align-items: stretch;
-						flex-wrap: wrap;
-						margin-top: 10px;
-						margin-bottom: 20px;
-					}
-
-					button.add-btn,
-					.delete-btn,
-					.info-btn {
-						margin: 10px;
-						padding: 10px 20px;
-						border: none;
-						border-radius: 10px;
-						color: white;
-						font-weight: bold;
-						text-transform: uppercase;
-						text-align: center;
-						cursor: pointer;
-						transition: 0.3s ease;
-
-						&:hover {
-							transform: scale(1.05);
-						}
-					}
-
-					button.add-btn {
-						background-color: #2de300;
-
-						&:hover {
-							background-color: darken(#2de300, 10%);
-						}
-					}
-
-					button.info-btn {
-						background-color: $btn-bg-color;
-						&:hover {
-							background-color: darken($btn-bg-color, 10%);
-						}
-					}
-
-					button.delete-btn {
-						background-color: $primary-color;
-						&:hover {
-							background-color: darken($primary-color, 10%);
-						}
 					}
 				}
 
@@ -528,19 +553,38 @@ h2 {
 						width: 85%;
 					}
 				}
-
-				.lectureForm,
-				.sublectureForm,
-				.subjectForm {
-					box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-					border-radius: 20px;
-					backdrop-filter: blur(10px);
-					width: 60%;
-					padding: 20px 0;
-					margin: 20px 0;
-				}
 			}
 		}
+	}
+}
+
+.addLectures {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+
+	.lectureForm,
+	.sublectureForm,
+	.subjectForm {
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+		border-radius: 20px;
+		width: 90%;
+		max-width: 900px;
+		padding: 20px 0;
+		margin: 20px 0;
+	}
+
+	.lectureForm {
+		background: linear-gradient(160deg, $box-third-start, $box-end);
+	}
+
+	.sublectureForm {
+		background: linear-gradient(120deg, $box-second-start, $box-end);
+	}
+
+	.subjectForm {
+		background: linear-gradient(80deg, $box-sixth-start, $box-end);
 	}
 }
 
@@ -606,24 +650,27 @@ h2 {
 	.subject {
 		.hero-img {
 			.box-subject {
-				top: 12vh;
 				left: 0px;
+				width: 100%;
 				.box-container {
-					.lectureForm,
-					.sublectureForm,
-					.subjectForm {
-						width: 90%;
-
-						.input-field,
-						.input-file {
-							width: 80%;
-						}
-					}
 					.container-sublecture,
 					.container-lecture {
 						max-width: 100%;
 					}
 				}
+			}
+		}
+	}
+
+	.addLectures {
+		.lectureForm,
+		.sublectureForm,
+		.subjectForm {
+			width: 90%;
+
+			.input-field,
+			.input-file {
+				width: 80%;
 			}
 		}
 	}
@@ -659,18 +706,31 @@ h2 {
 						margin: 0 10px;
 						.box-sublecture {
 							font-size: 14px;
-							margin: 30px;
-						}
-					}
-
-					.lectureForm,
-					.sublectureForm,
-					.subjectForm {
-						.formTitle {
-							font-size: 16px;
 						}
 					}
 				}
+			}
+		}
+	}
+
+	.addLectures {
+		.lectureForm,
+		.sublectureForm,
+		.subjectForm {
+			.formTitle {
+				font-size: 16px;
+			}
+		}
+	}
+
+	.editLectureForm,
+	.editSublectureForm,
+	.editSubjectForm {
+		.input-field {
+			input,
+			textarea,
+			select {
+				font-size: 13px;
 			}
 		}
 	}
