@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -40,7 +40,13 @@
                         <div class="error-car"></div>
                         <p><span class="title-header">Status</span> <span class="info-text" th:text="${status}">Błąd</span></p>
                         <p><span class="title-header">Wiadomość</span> <span class="info-text" th:text="${errorMsg}">Nieznana</span></p>
+                        <p><span class="title-header">Żądany URI</span> <span class="info-text" th:text="${requestUri}">Nieznana</span></p>
+                        <p><span class="title-header">Servlet</span> <span class="info-text" th:text="${servletName}">Nieznana</span></p>
                     </div>
+                </div>
+                <div class="box-stack" sec:authorize="!hasRole('ROLE_STUDENT')">
+                    <h2 class="title">Stack Trace</h2>
+                    <pre class="info-stack" th:text="${stackTrace}">Nieznana</pre>
                 </div>
             </div>
         </div>

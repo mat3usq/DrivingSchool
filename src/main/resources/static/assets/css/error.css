@@ -131,6 +131,9 @@ h2 {
   overflow: hidden;
 }
 .error .hero-img .error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
   top: 12vh;
   left: 300px;
@@ -148,13 +151,15 @@ h2 {
   letter-spacing: 1px;
   text-align: center;
 }
-.error .hero-img .error-container .box-error {
+.error .hero-img .error-container .box-error,
+.error .hero-img .error-container .box-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 }
-.error .hero-img .error-container .box-error .error-window {
+.error .hero-img .error-container .box-error .error-window,
+.error .hero-img .error-container .box-stack .error-window {
   padding: 30px;
   background: #100f0f;
   border-radius: 8px;
@@ -162,30 +167,51 @@ h2 {
   color: #ef476f;
   font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
 }
-.error .hero-img .error-container .box-error .error-window .error-car {
+.error .hero-img .error-container .box-error .error-window .error-car,
+.error .hero-img .error-container .box-stack .error-window .error-car {
   margin: 10px auto;
   width: 70%;
   transform: rotateY(180deg);
 }
-.error .hero-img .error-container .box-error .error-window .info-text {
+.error .hero-img .error-container .box-error .error-window .info-text,
+.error .hero-img .error-container .box-stack .error-window .info-text {
   color: aliceblue;
 }
-.error .hero-img .error-container .box-error .error-window .title-header {
+.error .hero-img .error-container .box-error .error-window .title-header,
+.error .hero-img .error-container .box-stack .error-window .title-header {
   letter-spacing: 1px;
   font-weight: bold;
   color: #6acff1;
 }
-.error .hero-img .error-container .box-error {
+.error .hero-img .error-container .box-error,
+.error .hero-img .error-container .box-stack {
+  width: 90%;
+  max-width: 1000px;
   margin: 40px 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
-  overflow: hidden;
   border-radius: 20px;
   -webkit-backdrop-filter: blur(9px);
           backdrop-filter: blur(9px);
 }
 .error .hero-img .error-container .box-error {
   background: linear-gradient(-135deg, rgba(188, 24, 80, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+.error .hero-img .error-container .box-stack {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  border: 3px solid #ef476f;
+}
+.error .hero-img .error-container .box-stack .info-stack {
+  display: block;
+  white-space: pre;
+  overflow-x: auto;
+  max-width: 100%;
+  color: aliceblue;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .contact {
