@@ -12,10 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -101,7 +98,6 @@ public class QuestionService {
     }
 
 
-
     public List<Question> getAllNoSpecialisticQuestionByCategoryAndExactPoints(String category, Long exactPoints) {
         return findAll().stream()
                 .filter(q -> q.getDrivingCategory().contains(category)
@@ -124,22 +120,30 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    public List<Question> getRandomNoSpecialistcQuestionsByCategory(String category, int exactPoints, int numberOfQuestions) {
-        List<Question> filteredQuestions = new ArrayList<>(getAllNoSpecialisticQuestionByCategoryAndExactPoints(category,(long) exactPoints));
-        Collections.shuffle(filteredQuestions);
-        return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
-    }
+    public List<Question> getRandomQuestionsByCategoryForExam(String category, int exactPoints, int numberOfQuestions, boolean isSpecial) {
+        List<Question> filteredQuestions;
+        if (isSpecial)
+            filteredQuestions = getAllSpecialisticQuestionByCategoryAndExactPoints(category, (long) exactPoints);
+        else
+            filteredQuestions = getAllNoSpecialisticQuestionByCategoryAndExactPoints(category, (long) exactPoints);
 
-    public List<Question> getRandomSpecialistcQuestionsByCategory(String category,int exactPoints, int numberOfQuestions) {
-        List<Question> filteredQuestions = getAllSpecialisticQuestionByCategoryAndExactPoints(category,(long) exactPoints);
-        if (filteredQuestions.size() < numberOfQuestions) {
-            throw new IllegalArgumentException("Not enough questions available");
+        int size = filteredQuestions.size();
+
+        if (numberOfQuestions > size) {
+            throw new IllegalArgumentException("Requested number of quantity access questions.");
         }
 
-        List<Question> shuffledQuestions = new ArrayList<>(filteredQuestions);
+        Random rand = new Random();
+        Set<Integer> indices = new HashSet<>();
 
-        Collections.shuffle(shuffledQuestions);
-        return filteredQuestions.stream().limit(numberOfQuestions).collect(Collectors.toList());
+        while (indices.size() < numberOfQuestions) {
+            int randomIndex = rand.nextInt(size);
+            indices.add(randomIndex);
+        }
+
+        return indices.stream()
+                .map(filteredQuestions::get)
+                .collect(Collectors.toList());
     }
 
     public Question getQuestion(Long questionId) {

@@ -78,16 +78,14 @@ public class StudentExamService {
         int numberOfSpecialistQuestionsWithThreePoints = 6;
 
         List<Question> noSpecialistQuestions = new ArrayList<>();
-        noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 1, numberOfNoSpecialistQuestionsWithOnePoint));
-        noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 2, numberOfNoSpecialistQuestionsWithTwoPoints));
-        noSpecialistQuestions.addAll(questionService.getRandomNoSpecialistcQuestionsByCategory(category, 3, numberOfNoSpecialistQuestionsWithThreePoints));
-        Collections.shuffle(noSpecialistQuestions);
+        noSpecialistQuestions.addAll(questionService.getRandomQuestionsByCategoryForExam(category, 1, numberOfNoSpecialistQuestionsWithOnePoint, false));
+        noSpecialistQuestions.addAll(questionService.getRandomQuestionsByCategoryForExam(category, 2, numberOfNoSpecialistQuestionsWithTwoPoints, false));
+        noSpecialistQuestions.addAll(questionService.getRandomQuestionsByCategoryForExam(category, 3, numberOfNoSpecialistQuestionsWithThreePoints, false));
 
         List<Question> specialistQuestions = new ArrayList<>();
-        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category, 1, numberOfSpecialistQuestionsWithOnePoint));
-        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category, 2, numberOfSpecialistQuestionsWithTwoPoints));
-        specialistQuestions.addAll(questionService.getRandomSpecialistcQuestionsByCategory(category, 3, numberOfSpecialistQuestionsWithThreePoints));
-        Collections.shuffle(specialistQuestions);
+        specialistQuestions.addAll(questionService.getRandomQuestionsByCategoryForExam(category, 1, numberOfSpecialistQuestionsWithOnePoint, true));
+        specialistQuestions.addAll(questionService.getRandomQuestionsByCategoryForExam(category, 2, numberOfSpecialistQuestionsWithTwoPoints, true));
+        specialistQuestions.addAll(questionService.getRandomQuestionsByCategoryForExam(category, 3, numberOfSpecialistQuestionsWithThreePoints, true));
 
         noSpecialistQuestions.addAll(specialistQuestions);
         return noSpecialistQuestions;
