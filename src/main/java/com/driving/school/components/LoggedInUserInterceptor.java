@@ -30,21 +30,26 @@ public class LoggedInUserInterceptor implements HandlerInterceptor {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
-            SchoolUser user = schoolUserRepository.findByEmail(auth.getName());
-            request.getSession().setAttribute("loggedInUser", user);
+            SchoolUser currentUser = schoolUserRepository.findByEmail(auth.getName());
+            SchoolUser sessionUser = (SchoolUser) request.getSession().getAttribute("loggedInUser");
+
+            if (sessionUser != null &&  !currentUser.getRoleName().equals(sessionUser.getRoleName()))
+                updateSecurityContext(currentUser);
+
+            request.getSession().setAttribute("loggedInUser", currentUser);
         }
 
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
             SchoolUser currentUser = schoolUserRepository.findByEmail(auth.getName());
             SchoolUser sessionUser = (SchoolUser) request.getSession().getAttribute("loggedInUser");
 
-            if (sessionUser != null && !currentUser.getRoleName().equals(sessionUser.getRoleName())){
+            if (sessionUser != null && !currentUser.getRoleName().equals(sessionUser.getRoleName())) {
                 updateSecurityContext(currentUser);
                 request.getSession().setAttribute("loggedInUser", currentUser);
             }
