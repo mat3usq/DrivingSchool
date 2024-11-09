@@ -218,20 +218,36 @@ public class DashboardController {
     @PostMapping("/dashboard/admin/addPayment")
     public ModelAndView addPayment(@RequestParam("userId") Long userId, @ModelAttribute("newPayment") Payment payment) {
         SchoolUser user = schoolUserService.findUserById(userId);
-        if (user != null) {
+        if (user != null)
             schoolUserService.addPayment(userId, payment);
-            return getUserDetails(user, new ModelAndView("schoolUserDetails"));
-        }
+
         return userDetailsByUserId(userId);
     }
 
     @PostMapping("/dashboard/admin/deletePayment")
     public ModelAndView deletePayment(@RequestParam("userId") Long userId, @RequestParam("paymentId") Long paymentId) {
         SchoolUser user = schoolUserService.findUserById(userId);
-        if (user != null) {
+        if (user != null)
             schoolUserService.deletePayment(paymentId);
-            return getUserDetails(user, new ModelAndView("schoolUserDetails"));
-        }
+
+        return userDetailsByUserId(userId);
+    }
+
+    @PostMapping("/dashboard/admin/promoteUser")
+    public ModelAndView promoteUser(@RequestParam("userId") Long userId) {
+        SchoolUser user = schoolUserService.findUserById(userId);
+        if (user != null)
+            schoolUserService.promoteUser(user);
+
+        return userDetailsByUserId(userId);
+    }
+
+    @PostMapping("/dashboard/admin/demoteUser")
+    public ModelAndView demoteUser(@RequestParam("userId") Long userId) {
+        SchoolUser user = schoolUserService.findUserById(userId);
+        if (user != null)
+            schoolUserService.demoteUser(user);
+
         return userDetailsByUserId(userId);
     }
 

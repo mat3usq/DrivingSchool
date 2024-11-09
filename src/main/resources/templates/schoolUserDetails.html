@@ -63,8 +63,26 @@
                                     <span th:if="${user.availableCategories.isEmpty()}">Brak</span>
                                 </span>
                             </div>
+                            <div class="detail" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <span class="title-header">Uprawnienia</span>
+                                <div class="roleName">
+                                    <form th:if="${user.roleName != T(com.driving.school.model.Constants).STUDENT_ROLE}" class="operations"
+                                          th:action="@{/dashboard/admin/demoteUser}" method="post">
+                                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                                        <button type="submit" class="delete-btn"><i class="fa-solid fa-angles-down"></i>
+                                        </button>
+                                    </form>
+                                    <span class="content" th:text="${user.roleName}"></span>
+                                    <form th:if="${user.roleName != T(com.driving.school.model.Constants).ADMIN_ROLE}" class="operations"
+                                          th:action="@{/dashboard/admin/promoteUser}" method="post">
+                                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                                        <button type="submit" class="correct-btn"><i class="fa-solid fa-angles-up"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                             <div class="detail">
-                                <span class="title-header">Data Założenia</span>
+                                <span class="title-header">Data Założenia Konta</span>
                                 <span class="content"
                                       th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
                             </div>

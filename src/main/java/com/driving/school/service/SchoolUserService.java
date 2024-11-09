@@ -153,4 +153,32 @@ public class SchoolUserService {
             }
         }
     }
+
+    public void promoteUser(SchoolUser user) {
+        switch (user.getRoleName()) {
+            case Constants.INSTRUCTOR_ROLE:
+                user.setRoleName(Constants.ADMIN_ROLE);
+                schoolUserRepository.save(user);
+                break;
+
+            case Constants.STUDENT_ROLE:
+                user.setRoleName(Constants.INSTRUCTOR_ROLE);
+                schoolUserRepository.save(user);
+                break;
+        }
+    }
+
+    public void demoteUser(SchoolUser user) {
+        switch (user.getRoleName()) {
+            case Constants.ADMIN_ROLE:
+                user.setRoleName(Constants.INSTRUCTOR_ROLE);
+                schoolUserRepository.save(user);
+                break;
+
+            case Constants.INSTRUCTOR_ROLE:
+                user.setRoleName(Constants.STUDENT_ROLE);
+                schoolUserRepository.save(user);
+                break;
+        }
+    }
 }
