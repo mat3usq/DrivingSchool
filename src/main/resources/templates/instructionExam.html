@@ -55,6 +55,20 @@
                                 na pytania losowo wyświetlane w czasie rzeczywistym przez system komputerowy. Pytania
                                 odzwierciedlają sytuacje drogowe, z którymi kierowcy mogą spotkać się na co dzień.
                             </p>
+
+                            <th:block th:if="${category}">
+                                <h2>Egzamin Na Kategorie <span style="color: #2ecc71" th:text="${category.getNameCategory}"></span></h2>
+                                <div class="underline"></div>
+
+                                <div>
+                                    <p>O kategorie <th:block th:text="${category.getNameCategory}"></th:block> mozna ubiegać się 3 miesiące przed ukończniem <strong><span style="color: #e74c3c" th:text="${category.minimumAge}">3</span></strong> oraz upoważnia ona do kierowania:</p>
+                                    <ul>
+                                        <th:block th:each="auth : ${category.authorization}">
+                                            <li th:text="${auth}"></li>
+                                        </th:block>
+                                    </ul>
+                                </div>
+                            </th:block>
                         </div>
                         <div class="instruction">
                             <h2>Zasady egzaminu</h2>
@@ -76,24 +90,27 @@
                                 drogowego:
                             </p>
 
-                            <p>
-                                <span>Podział pytań podstawowych:</span><br/>
-                                10 pytań o wysokim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">3</span> punkty za pytanie</strong><br/>
-                                6 pytań o średnim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">2</span> punkty za
-                                pytanie</strong><br/>
-                                4 pytania o niskim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">1</span> punkt za pytanie</strong>
-                            </p>
+                            <div>
+                                <p><span>Podział pytań podstawowych:</span><br/></p>
+                                <ul>
+                                    <li>10 pytań o wysokim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">3</span> punkty za pytanie</strong></li>
+                                    <li>6 pytań o średnim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">2</span> punkty za
+                                        pytanie</strong></li>
+                                    <li>4 pytania o niskim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">1</span> punkt za pytanie</strong></li>
+                                </ul>
+                            </div>
 
-                            <p>
-                                <span>Podział pytań specjalistycznych:</span><br/>
-                                6 pytań o wysokim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">3</span> punkty za
-                                pytanie</strong><br/>
-                                4 pytania o średnim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">2</span> punkty za
-                                pytanie</strong><br/>
-                                2 pytania o niskim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">1</span> punkt za
-                                pytanie</strong><br/>
-                                &nbsp;
-                            </p>
+                            <div>
+                            <p><span>Podział pytań specjalistycznych:</span><br/></p>
+                                <ul>
+                                    <li>6 pytań o wysokim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">3</span> punkty za
+                                        pytanie</strong></li>
+                                    <li>4 pytania o średnim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">2</span> punkty za
+                                        pytanie</strong></li>
+                                    <li>2 pytania o niskim znaczeniu dla bezpieczeństwa – <strong><span style="color: #2ecc71">1</span> punkt za
+                                        pytanie</strong></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="instruction">
 

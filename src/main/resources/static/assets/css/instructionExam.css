@@ -201,6 +201,10 @@ h2 {
 .instruction .hero-img .box-instruction .box-container .container-instruction .instruction .underline {
   margin: 0 auto 0px;
 }
+.instruction .hero-img .box-instruction .box-container .container-instruction .instruction ul li {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
 .instruction .hero-img .box-instruction .box-container button {
   border: none;
   outline: none;

@@ -1,6 +1,7 @@
 package com.driving.school.controller;
 
 import com.driving.school.model.*;
+import com.driving.school.repository.CategoryRepository;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.StudentExamAnswerService;
 import com.driving.school.service.StudentExamService;
@@ -22,18 +23,20 @@ public class ExamController {
     private final QuestionService questionService;
     private final StudentExamService studentExamService;
     private final StudentExamAnswerService studentExamAnswerService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ExamController(QuestionService questionService, StudentExamService studentExamService, StudentExamAnswerService studentExamAnswerService) {
+    public ExamController(QuestionService questionService, StudentExamService studentExamService, StudentExamAnswerService studentExamAnswerService, CategoryRepository categoryRepository) {
         this.questionService = questionService;
         this.studentExamService = studentExamService;
         this.studentExamAnswerService = studentExamAnswerService;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/exam")
     public ModelAndView examInfo(HttpSession session) {
         if (session.getAttribute("exam") == null)
-            return new ModelAndView("instructionExam");
+            return getInstructionExam(session);
         return examSolve(session, false);
     }
 
@@ -106,7 +109,7 @@ public class ExamController {
         List<Question> questionSet = (List<Question>) session.getAttribute("questionSet");
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
         if (questionSet == null || studentExam == null)
-            return new ModelAndView("instructionExam");
+            return getInstructionExam(session);
 
         studentExam = studentExamService.getStudentExamById(studentExam.getId());
         Question question = questionService.findById(questionId).orElse(null);
@@ -139,7 +142,7 @@ public class ExamController {
     public ModelAndView summary(HttpSession session) {
         StudentExam studentExam = (StudentExam) session.getAttribute("exam");
 
-        if(studentExam != null){
+        if (studentExam != null) {
             ModelAndView modelAndView = new ModelAndView("examResult");
             studentExam = studentExamService.setSummaryOfExam(studentExamService.getStudentExamById(studentExam.getId()));
             modelAndView.addObject("exam", studentExam);
@@ -149,7 +152,7 @@ public class ExamController {
             return modelAndView;
         }
 
-        return new ModelAndView("instructionExam");
+        return getInstructionExam(session);
     }
 
     @PostMapping("/exam/result")
@@ -181,7 +184,15 @@ public class ExamController {
     @GetMapping("/exam/end")
     public ModelAndView endExam(HttpSession session) {
         if (session.getAttribute("exam") == null)
-            return new ModelAndView("instructionExam");
+            return getInstructionExam(session);
         return summary(session);
+    }
+
+    private ModelAndView getInstructionExam(HttpSession session) {
+        ModelAndView model = new ModelAndView("instructionExam");
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        if (user != null)
+            model.addObject("category", categoryRepository.findByNameCategory(user.getCurrentCategory()));
+        return model;
     }
 }
