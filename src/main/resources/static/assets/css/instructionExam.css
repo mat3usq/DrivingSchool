@@ -96,8 +96,14 @@ body {
 }
 
 h2 {
+  margin-top: 15px;
+  padding: 10px 0;
   text-align: center;
   text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 20px;
+  font-style: italic;
+  color: #ffd166;
 }
 
 .orange-text {
@@ -116,9 +122,11 @@ h2 {
 
 .underline {
   background-color: #ef476f;
-  width: 220px;
+  width: 250px;
   height: 5px;
   margin: 0 auto 30px;
+  border-radius: 20px;
+  border: 3px solid #ef476f;
 }
 
 .navbar-left {
@@ -189,6 +197,9 @@ h2 {
 }
 .instruction .hero-img .box-instruction .box-container .container-instruction .instruction p {
   margin: 20px;
+}
+.instruction .hero-img .box-instruction .box-container .container-instruction .instruction .underline {
+  margin: 0 auto 0px;
 }
 .instruction .hero-img .box-instruction .box-container button {
   border: none;

@@ -18,8 +18,14 @@ body {
 }
 
 h2 {
+	margin-top: 15px;
+	padding: 10px 0;
 	text-align: center;
 	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 20px;
+	font-style: italic;
+	color: $secondary-color;
 }
 
 .orange-text {
@@ -38,9 +44,11 @@ h2 {
 
 .underline {
 	background-color: $primary-color;
-	width: 220px;
+	width: 250px;
 	height: 5px;
 	margin: 0 auto 30px;
+	border-radius: 20px;
+	border: 3px solid $primary-color;
 }
 
 .navbar-left {
@@ -117,6 +125,10 @@ h2 {
 
 						p {
 							margin: 20px;
+						}
+
+						.underline{
+							margin: 0 auto 0px;	
 						}
 					}
 				}

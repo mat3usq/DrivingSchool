@@ -107,18 +107,61 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         // "A,B,C,D,T,AM,A1,A2,B1,C1,D1,PT"
         List<Category> categories = new ArrayList<>();
-        categories.add(new Category("A", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("B", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("C", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("D", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("T", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("AM", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("A1", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("A2", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("B1", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("C1", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("D1", Arrays.asList(admin, instructor, instructor2, instructor3)));
-        categories.add(new Category("PT", Arrays.asList(admin, instructor, instructor2, instructor3)));
+        categories.add(new Category("A", Arrays.asList(admin, instructor, instructor2, instructor3), "20 lat - jeśli masz już od co najmniej 2 lat prawo jazdy kategorii A2 /\\ 24 lata - jeśli nie masz od co najmniej 2 lat prawa jazdy kategorii A2",
+                Arrays.asList("każdym motocyklem,",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM,",
+                        "zespołem pojazdów złożonym z pojazdu określonego dla tej kategorii wraz z przyczepą – tylko w Polsce.")));
+        categories.add(new Category("B", Arrays.asList(admin, instructor, instructor2, instructor3), "18 lat",
+                Arrays.asList("pojazdem samochodowym o dopuszczalnej masie całkowitej nieprzekraczającej 3,5 t, z wyjątkiem autobusu i motocykla,",
+                        "zespołem pojazdów złożonym z pojazdu, o którym mowa wyżej oraz z przyczepy lekkiej,",
+                        "zespołem pojazdów samochodowych o dopuszczalnej masie całkowitej nieprzekraczającej 3,5 t oraz z przyczepy innej niż lekka, o ile łączna dopuszczalna masa całkowita zespołu tych pojazdów nie przekracza 4250 kg,",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM,",
+                        "ciągnikiem rolniczym, pojazdem wolnobieżnym oraz zespołem złożonym z tego pojazdu i przyczepy lekkiej – tylko w Polsce,",
+                        "motocyklem o pojemności skokowej silnika nieprzekraczającej 125 cm3, mocy nieprzekraczającej 11 kW i stosunku mocy do masy własnej nieprzekraczającym 0,1 kW/kg, lub motocyklem trójkołowym, pod warunkiem że osoba posiada prawo jazdy kategorii B od co najmniej 3 lat,",
+                        "pojazdem samochodowym zasilanym paliwami alternatywnymi o dopuszczalnej masie całkowitej przekraczającej 3,5 t oraz nieprzekraczającej 4250 kg, jeżeli przekroczenie dopuszczalnej masy całkowitej 3,5 t wynika z zastosowania paliw alternatywnych, o których mowa w przepisach wydanych na podstawie art. 66 ust. 5 ustawy z dnia 20 czerwca 1997 r. - Prawo o ruchu drogowym, a informacja o tym przekroczeniu jest odnotowana w dowodzie rejestracyjnym, pod warunkiem że osoba posiada prawo jazdy kategorii B od co najmniej 2 lat.")));
+        categories.add(new Category("C", Arrays.asList(admin, instructor, instructor2, instructor3), "21 lat",
+                Arrays.asList("pojazdem samochodowym o dopuszczalnej masie całkowitej przekraczającej 3,5 t, z wyjątkiem autobusu,",
+                        "zespołem pojazdów złożonym z pojazdu, o którym mowa wyżej oraz z przyczepy lekkiej,",
+                        "ciągnikiem rolniczym, pojazdem wolnobieżnym oraz zespołem złożonym z tego pojazdu i przyczepy lekkiej – tylko w Polsce,",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM.")));
+        categories.add(new Category("D", Arrays.asList(admin, instructor, instructor2, instructor3), "24 lata",
+                Arrays.asList("autobusem,",
+                        "zespołem pojazdów złożonym z pojazdu, o którym wyżej oraz z przyczepy lekkiej,",
+                        "ciągnikiem rolniczym, pojazdem wolnobieżnym oraz zespołem złożonym z tego pojazdu i przyczepy lekkiej – tylko w Polsce,",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM.")));
+        categories.add(new Category("T", Arrays.asList(admin, instructor, instructor2, instructor3), "16 lat",
+                Arrays.asList("ciągnikiem rolniczym lub pojazdem wolnobieżnym,",
+                        "zespołem pojazdów złożonym z ciągnika rolniczego z przyczepą (przyczepami) lub pojazdem wolnobieżnym z przyczepą (przyczepami),",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM.")));
+        categories.add(new Category("AM", Arrays.asList(admin, instructor, instructor2, instructor3), "14 lat",
+                Arrays.asList("motorowerem,", "czterokołowcem lekkim (tzw. małym quadem),", "zespołem pojazdów złożonym z pojazdu określonego dla tej kategorii wraz z przyczepą – tylko w Polsce.")));
+        categories.add(new Category("A1", Arrays.asList(admin, instructor, instructor2, instructor3), "16 lat",
+                Arrays.asList("motocyklem o pojemności skokowej silnika nieprzekraczającej 125 cm3, mocy nieprzekraczającej 11 kW i stosunku mocy do masy własnej nieprzekraczającym 0,1 kW/kg,",
+                        "motocyklem trójkołowym o mocy nieprzekraczającej 15 kW,",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM,",
+                        "zespołem pojazdów złożonym z pojazdu określonego dla tej kategorii wraz z przyczepą – tylko w Polsce.")));
+        categories.add(new Category("A2", Arrays.asList(admin, instructor, instructor2, instructor3), "18 lat",
+                Arrays.asList("motocyklem o mocy nieprzekraczającej 35 kW i stosunku mocy do masy własnej nieprzekraczającym 0,2 kW/kg, przy czym nie może on powstać w wyniku wprowadzenia zmian w pojeździe o mocy przekraczającej dwukrotność mocy tego motocykla,",
+                        "motocyklem trójkołowym o mocy nieprzekraczającej 15 kW,",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM,",
+                        "zespołem pojazdów złożonym z pojazdu określonego dla tej kategorii wraz z przyczepą – tylko w Polsce.")));
+        categories.add(new Category("B1", Arrays.asList(admin, instructor, instructor2, instructor3), "16 lat",
+                Arrays.asList("czterokołowcem,", "pojazdami określonymi dla prawa jazdy kategorii AM.")));
+        categories.add(new Category("C1", Arrays.asList(admin, instructor, instructor2, instructor3), "18 lat",
+                Arrays.asList("pojazdem samochodowym o dopuszczalnej masie całkowitej przekraczającej 3,5 t i nieprzekraczającej 7,5 t, z wyjątkiem autobusu,",
+                        "zespołem pojazdów złożonym z pojazdu, o którym mowa wyżej oraz z przyczepy lekkiej,",
+                        "ciągnikiem rolniczym, pojazdem wolnobieżnym oraz zespołem złożonym z tego pojazdu i przyczepy lekkiej – tylko w Polsce,",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM.")));
+        categories.add(new Category("D1", Arrays.asList(admin, instructor, instructor2, instructor3), "21 lat",
+                Arrays.asList("autobusem przeznaczonym konstrukcyjnie do przewozu nie więcej niż 17 osób łącznie z kierowcą, o długości nieprzekraczającej 8 m,",
+                        "zespołem pojazdów złożonym z pojazdu, o którym mowa wyżej oraz z przyczepy lekkiej,",
+                        "ciągnikiem rolniczym, pojazdem wolnobieżnym oraz zespołem złożonym z tego pojazdu i przyczepy lekkiej – tylko w Polsce,",
+                        "pojazdami określonymi dla prawa jazdy kategorii AM.")));
+        categories.add(new Category("PT", Arrays.asList(admin, instructor, instructor2, instructor3), "21 lat",
+                Arrays.asList("tramwaj,",
+                        "ciągnik rolniczy i pojazd wolnobieżny,",
+                        "zespół pojazdów złożony z ciągnika rolniczego lub pojazdu wolnobieżnego oraz jednej i więcej przyczep,",
+                        "pojazd kategorii AM.")));
 
         categoryRepository.saveAll(categories);
 

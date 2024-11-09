@@ -28,9 +28,22 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private List<Payment> payments;
 
-    public Category(String nameCategory, List<SchoolUser> schoolUsers) {
+    @ElementCollection
+    @CollectionTable(
+            name = "CATEGORY_AUTHORIZATIONS",
+            joinColumns = @JoinColumn(name = "CATEGORY_ID")
+    )
+    @Column(name = "AUTHORIZATION", columnDefinition = "TEXT")
+    private List<String> authorization;
+
+    @Column(name = "MINIMUM_AGE", nullable = false)
+    private String minimumAge;
+
+    public Category(String nameCategory, List<SchoolUser> schoolUsers, String minimumAge, List<String> authorizations) {
         this.nameCategory = nameCategory;
         this.schoolUsers = schoolUsers;
+        this.authorization = authorizations;
+        this.minimumAge = minimumAge;
     }
 
     @Override
