@@ -10,21 +10,30 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @Configuration
 public class SecurityConfig {
     private final CustomAuthenticationSuccessHandler successHandler;
+    private final CustomUserDetailsService userDetailsService;
+    private final DataSource dataSource;
 
     @Autowired
-    public SecurityConfig(CustomAuthenticationSuccessHandler successHandler) {
+    public SecurityConfig(CustomAuthenticationSuccessHandler successHandler, CustomUserDetailsService userDetailsService, DataSource dataSource) {
         this.successHandler = successHandler;
+        this.userDetailsService = userDetailsService;
+        this.dataSource = dataSource;
     }
 
     @Bean
@@ -73,7 +82,15 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID", "remember-me")
                         .permitAll())
+                .rememberMe(rememberMe -> rememberMe
+                        .userDetailsService(userDetailsService)
+                        .tokenRepository(persistentTokenRepository())
+                        .tokenValiditySeconds(60 * 60 * 24 * 7) // 7 dni
+                        .key("B{sF6,bAxD!@1Oe@PAGnhV-jfZWNq4QEwYip,NW.N29cn=ID$4")
+                        .authenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/dashboard"))
+                        .rememberMeParameter("rememberMe"))
                 .exceptionHandling(handler -> handler.accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .httpBasic(Customizer.withDefaults());
 
@@ -81,13 +98,21 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        int cpuCost = 65536; // 2^16
-        int memoryCost = 8;
-        int parallelization = 1;
-        int keyLength = 32;
-        int saltLength = 64;
-        return new SCryptPasswordEncoder(cpuCost, memoryCost, parallelization, keyLength, saltLength);
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+
+        // drop table with start app
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.execute("DROP TABLE IF EXISTS persistent_logins");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        tokenRepository.setCreateTableOnStartup(true);
+
+        return tokenRepository;
     }
 
     private static class CustomAccessDeniedHandler implements AccessDeniedHandler {
@@ -95,7 +120,9 @@ public class SecurityConfig {
         public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null && auth.isAuthenticated())
-                if (request.getRequestURI().startsWith("/lecture"))
+                if (request.getRequestURI().startsWith("/course"))
+                    response.sendRedirect("/course");
+                else if (request.getRequestURI().startsWith("/lecture"))
                     response.sendRedirect("/lecture");
                 else if (request.getRequestURI().startsWith("/calendar"))
                     response.sendRedirect("/calendar");
@@ -103,10 +130,10 @@ public class SecurityConfig {
                     response.sendRedirect("/mailBox");
                 else if (request.getRequestURI().startsWith("/account"))
                     response.sendRedirect("/account");
-                else if (request.getRequestURI().startsWith("/exam"))
-                    response.sendRedirect("/exam");
                 else if (request.getRequestURI().startsWith("/tests"))
                     response.sendRedirect("/tests");
+                else if (request.getRequestURI().startsWith("/exam"))
+                    response.sendRedirect("/exam");
                 else
                     response.sendRedirect("/dashboard");
             else
