@@ -25,9 +25,11 @@ public class LoginController {
 
     @GetMapping(value = "/login")
     public ModelAndView catchLoginMessage(@RequestParam(required = false) String error,
-                                          @RequestParam(required = false) String logout) {
+                                          @RequestParam(required = false) String logout,
+                                          @RequestParam(required = false) String sessionExpired) {
         String loginErrorMessage = null;
         String logoutMessage = null;
+        String sessionExpiredMessage = null;
         ModelAndView m = new ModelAndView();
         m.setViewName("home");
 
@@ -37,8 +39,13 @@ public class LoginController {
         if (logout != null)
             logoutMessage = "Wylogowałeś sie poprawnie!";
 
+        if (sessionExpired != null)
+            sessionExpiredMessage = "Twoja sesja wygasła! Zaloguj sie ponownie";
+
+
         m.addObject("loginErrorMessage", loginErrorMessage);
         m.addObject("logoutMessage", logoutMessage);
+        m.addObject("sessionExpiredMessage", sessionExpiredMessage);
         m.addObject("registerUser", new SchoolUser());
         return m;
     }

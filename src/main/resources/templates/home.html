@@ -301,6 +301,7 @@
                            th:text="${registerPositiveMessage}"></p>
                         <p class="info-text" th:if="${logoutMessage}" th:text="${logoutMessage}"></p>
                         <p class="warning-text" th:if="${loginErrorMessage}" th:text="${loginErrorMessage}"></p>
+                        <p class="info-text" th:if="${sessionExpiredMessage}" th:text="${sessionExpiredMessage}"></p>
                         <div class="input-field">
                             <i class="fas fa-user"></i>
                             <input type="text" placeholder="Email" name="username" id="username"/>

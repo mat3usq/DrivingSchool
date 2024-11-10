@@ -1,5 +1,6 @@
 package com.driving.school.security;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.security.web.session.SimpleRedirectInvalidSessionStrategy;
+import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -91,6 +95,12 @@ public class SecurityConfig {
                         .key("B{sF6,bAxD!@1Oe@PAGnhV-jfZWNq4QEwYip,NW.N29cn=ID$4")
                         .authenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/dashboard"))
                         .rememberMeParameter("rememberMe"))
+
+                .sessionManagement(session -> session
+                        .invalidSessionStrategy(new SimpleRedirectInvalidSessionStrategy("/login?sessionExpired=true"))
+                        .maximumSessions(1)
+                        .expiredSessionStrategy(new SimpleRedirectSessionInformationExpiredStrategy("/login?sessionExpired=true")))
+
                 .exceptionHandling(handler -> handler.accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .httpBasic(Customizer.withDefaults());
 

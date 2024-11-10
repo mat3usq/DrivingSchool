@@ -28,5 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.hash = 'login';
     } else if (url.pathname === '/login' && new URLSearchParams(url.search).get('logout') === 'true') {
         window.location.hash = 'login';
+    } else if (url.pathname === '/login' && new URLSearchParams(url.search).get('sessionExpired') === 'true') {
+        window.location.hash = 'login';
     }
 });
