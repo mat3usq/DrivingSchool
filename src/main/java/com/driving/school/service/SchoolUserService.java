@@ -50,6 +50,10 @@ public class SchoolUserService {
         return isSaved;
     }
 
+    public void saveUser(SchoolUser user) {
+        schoolUserRepository.save(user);
+    }
+
     public SchoolUser findUserById(Long id) {
         return schoolUserRepository.findById(id).orElse(null);
     }

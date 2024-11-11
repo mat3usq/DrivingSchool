@@ -35,7 +35,9 @@ public class MailService {
         if (parentMail != null)
             parentMail.getReplies().add(mail);
 
-        return mailRepository.save(mail);
+        Mail sendMail = mailRepository.save(mail);
+        updateNumberOfMails(recipient);
+        return sendMail;
     }
 
     @Transactional
@@ -47,6 +49,7 @@ public class MailService {
             sendMail.setStatusRecipient(Constants.MAIL_UNREAD);
             sendMail.setStatusSender(Constants.MAIL_READ);
             mailRepository.save(sendMail);
+            updateNumberOfMails(recipient);
             return true;
         } else return false;
     }
@@ -62,15 +65,15 @@ public class MailService {
                 parentMail.getReplies().add(replyMail);
                 replyMail.setParentMail(parentMail);
                 replyMail.setSubject(parentMail.getSubject());
+                boolean whoseUser = false;
 
-                if (Objects.equals(parentMail.getSender(), loggedInUser))
-                {
+                if (Objects.equals(parentMail.getSender(), loggedInUser)) {
                     parentMail.setStatusRecipient(Constants.MAIL_UNREAD);
                     replyMail.setStatusSender(Constants.MAIL_REPLY);
                     replyMail.setSender(loggedInUser);
                     replyMail.setRecipient(parentMail.getRecipient());
-                }
-                else if (Objects.equals(parentMail.getRecipient(), loggedInUser)) {
+                    whoseUser = true;
+                } else if (Objects.equals(parentMail.getRecipient(), loggedInUser)) {
                     parentMail.setStatusSender(Constants.MAIL_UNREAD);
                     replyMail.setStatusRecipient(Constants.MAIL_REPLY);
                     replyMail.setSender(loggedInUser);
@@ -79,6 +82,10 @@ public class MailService {
 
                 mailRepository.save(replyMail);
                 mailRepository.save(parentMail);
+
+                if (whoseUser)
+                    updateNumberOfMails(parentMail.getRecipient());
+                else updateNumberOfMails(parentMail.getSender());
 
                 return true;
             }
@@ -98,6 +105,7 @@ public class MailService {
                 mail.setStatusSender(Constants.MAIL_READ);
                 mailRepository.save(mail);
             }
+            updateNumberOfMails(user);
             return Optional.of(mail);
         }
         return Optional.empty();
@@ -192,5 +200,10 @@ public class MailService {
         mails.addAll(getMailsForSenderByStatus(user, Constants.MAIL_TRASHED));
         mails.sort(Comparator.comparing(Mail::getUpdatedAt).reversed());
         return mails;
+    }
+
+    private void updateNumberOfMails(SchoolUser user) {
+        user.setNumberOfMails(getUnreadMailsForUser(user).size());
+        schoolUserService.saveUser(user);
     }
 }

@@ -40,6 +40,9 @@ public class SchoolUser {
     @Column(name = "ROLENAME", length = 128)
     private String roleName;
 
+    @Column(name = "NUMBEROFMAILS")
+    private int numberOfMails = 0;
+
     @ManyToMany(mappedBy = "students")
     private List<InstructionEvent> studentEvents = new ArrayList<>();
 

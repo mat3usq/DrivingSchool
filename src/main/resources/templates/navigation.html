@@ -37,7 +37,7 @@
         ><i class="fa-solid fa-calendar-days"></i>Kalendarz</a
         >
         <a data-aos="fade-right" data-aos-delay="250" class="nav-link mailBox" th:href="@{/mailBox}"
-        ><i class="fa-solid fa-comment"></i>Wiadomości<span class="countMails">91</span></a
+        ><i class="fa-solid fa-comment"></i>Wiadomości<span th:if="${session.loggedInUser.numberOfMails > 0}" class="countMails" th:text="${session.loggedInUser.numberOfMails}"></span></a
         >
         <div class="mail-nav">
             <a data-aos="fade-right" data-aos-delay="300" class="nav-link" th:href="@{/mailBox/read}">
@@ -85,6 +85,10 @@
 
                     if (currentPath.includes('/mailBox/'))
                         document.querySelector('.mailBox').classList.remove('active')
+
+                    if (currentPath.includes('/mailBox/showMail') ||
+                        currentPath.includes('/mailBox/getMailToReply'))
+                        document.querySelector('.mailBox').classList.add('active')
                 } else {
                     if (mailNav) {
                         mailNav.remove();
