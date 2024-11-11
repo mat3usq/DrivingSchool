@@ -155,6 +155,8 @@ nav .fa-bars:hover {
 }
 .navbar-left .navbar-nav .nav-link {
   padding: 10px 20px;
+  display: flex;
+  align-items: center;
 }
 .navbar-left .navbar-nav .logout {
   display: none;
@@ -216,9 +218,20 @@ nav .fa-bars:hover {
 .navbar-left .navbar-nav .mail-nav .nav-link:last-child::before {
   bottom: 50%;
 }
+.navbar-left .navbar-nav .countMails {
+  position: absolute;
+  top: 12px;
+  left: 40px;
+  background-color: #ef476f;
+  color: aliceblue;
+  font-weight: bold;
+  font-size: 9.3px;
+  border-radius: 100%;
+  padding: 1.5px 5px;
+}
 .navbar-left i {
-  font-size: 20px;
-  margin-right: 10px;
+  font-size: 23px;
+  margin-right: 13px;
   color: #4cc9f0;
 }
 

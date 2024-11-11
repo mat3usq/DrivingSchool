@@ -91,6 +91,8 @@ nav {
 
 		.nav-link {
 			padding: 10px 20px;
+			display: flex;
+			align-items: center;
 		}
 
 		.logout {
@@ -165,11 +167,23 @@ nav {
 				}
 			}
 		}
+
+		.countMails {
+			position: absolute;
+			top: 12px;
+			left: 40px;
+			background-color: #ef476f;
+			color: aliceblue;
+			font-weight: bold;
+			font-size: 9.3px;
+			border-radius: 100%;
+			padding: 1.5px 5px;
+		}
 	}
 
 	i {
-		font-size: 20px;
-		margin-right: 10px;
+		font-size: 23px;
+		margin-right: 13px;
 		color: $category-icon;
 	}
 }
@@ -183,7 +197,6 @@ nav {
 	justify-content: space-between;
 	align-items: center;
 	z-index: 3000;
-
 
 	button {
 		margin: 20px;
