@@ -1,6 +1,11 @@
 package com.driving.school.model;
 
+import com.driving.school.annotations.FieldsValueMatch;
+import com.driving.school.annotations.PasswordValidator;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +21,13 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
+@FieldsValueMatch.List({
+        @FieldsValueMatch(
+                field = "password",
+                fieldMatch = "confirmPassword",
+                message = "Hasła nie pasuja do siebie."
+        ),
+})
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "SCHOOLUSER")
@@ -25,15 +37,27 @@ public class SchoolUser {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+    @NotBlank(message = "Imie nie moze byc puste.")
+    @Size(min = 3, message = "Imie nie moze byc krótsze niż 3 litery.")
     @Column(name = "NAME", length = 64)
     private String name;
 
+    @NotBlank(message = "Nazwisko nie moze byc puste.")
+    @Size(min = 2, message = "Imie nie moze byc krótsze niż 2 litery.")
     @Column(name = "SURNAME", length = 64)
     private String surname;
 
+    @Size(min = 5, message = "Hasło musi zawierac conajmniej 5 znaków.")
+    @PasswordValidator
     @Column(name = "PASSWORD", length = 256)
     private String password;
 
+    @Size(min = 5, message = "Hasło musi zawierac conajmniej 5 znaków.")
+    @Transient
+    private String confirmPassword;
+
+    @NotBlank(message = "Email nie moze byc pusty")
+    @Email(message = "Prosze wprowadz poprawny email.")
     @Column(name = "EMAIL", length = 64)
     private String email;
 
