@@ -24,7 +24,7 @@ html {
 }
 
 .danger-text {
-  color: $primary-color; 
+  color: $text-color; 
   border-left: 4px solid $primary-color;
   border-right: 4px solid $primary-color;
 }
@@ -633,7 +633,7 @@ header {
   }
 
   .input-field {
-    max-width: 380px;
+    max-width: 400px;
     width: 100%;
     background-color: $input-color;
     margin: 10px 0;
@@ -643,6 +643,16 @@ header {
     grid-template-columns: 15% 85%;
     padding: 0 0.4rem;
     position: relative;
+
+    .valid-info{
+      display: none;
+      top: 6px;
+      right: 40px;
+      position: absolute;
+      background-color: #333333;
+      font-size: 14px;
+      z-index: 100;
+    }
   }
 
   .input-field i {
@@ -651,6 +661,13 @@ header {
     color: $secondary-color;
     transition: 0.5s;
     font-size: 1.1rem;
+
+    &.fa-circle-info{
+      position: absolute;
+      right: 15px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
   }
 
   .input-field input {
@@ -661,7 +678,8 @@ header {
     font-weight: 600;
     font-size: 1.1rem;
     color: $text-color;
-    padding: 0 20px;
+    padding-left: 10px;
+    padding-right: 30px;
   }
 
   .input-field input::placeholder {

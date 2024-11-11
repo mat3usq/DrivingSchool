@@ -72,3 +72,30 @@ reset_btn.addEventListener('click', () => {
 })
 
 back_login_btn.addEventListener('click', hideReset)
+
+document.addEventListener('DOMContentLoaded', function () {
+	const infoIcons = document.querySelectorAll('.fa-circle-info');
+
+	infoIcons.forEach(icon => {
+		icon.addEventListener('click', function (event) {
+			event.stopPropagation();
+			const infoText = this.nextElementSibling;
+			if (infoText) {
+				if (infoText.style.display === 'block') {
+					infoText.style.display = 'none';
+				} else {
+					document.querySelectorAll('.valid-info').forEach(span => {
+						span.style.display = 'none';
+					});
+					infoText.style.display = 'block';
+				}
+			}
+		});
+	});
+
+	document.addEventListener('click', function () {
+		document.querySelectorAll('.valid-info').forEach(span => {
+			span.style.display = 'none';
+		});
+	});
+});

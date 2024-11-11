@@ -343,22 +343,55 @@
                         <div class="underline"></div>
                         <p class="warning-text" th:if="${registerErrorMessage != null}"
                            th:text="${registerErrorMessage}"></p>
+                        <p class="danger-text" th:if="${validationMessage != null}" th:text="${validationMessage}"></p>
+
                         <div class="input-field">
                             <i class="fas fa-user"></i>
                             <input type="text" th:field="*{name}" placeholder="Imie"/>
+                            <th:block th:if="${#fields.hasErrors('name')}">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span class="valid-info danger-text" th:errors="*{name}"></span>
+                            </th:block>
                         </div>
+
                         <div class="input-field">
                             <i class="far fa-user"></i>
                             <input type="text" th:field="*{surname}" placeholder="Nazwisko"/>
+                            <th:block th:if="${#fields.hasErrors('surname')}">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span class="valid-info danger-text" th:errors="*{surname}"></span>
+                            </th:block>
                         </div>
+
                         <div class="input-field">
                             <i class="fas fa-envelope"></i>
                             <input type="text" th:field="*{email}" placeholder="Email"/>
+                            <th:block th:if="${#fields.hasErrors('email')}" >
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span class="valid-info danger-text" th:errors="*{email}"></span>
+                            </th:block>
                         </div>
+
                         <div class="input-field">
                             <i class="fas fa-lock"></i>
                             <input type="password" th:field="*{password}" placeholder="Haslo"/>
+                            <th:block th:if="${#fields.hasErrors('password')}">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span class="valid-info danger-text" th:errors="*{password}"></span>
+                            </th:block>
                         </div>
+
+                        <div class="input-field">
+                            <i class="fas fa-unlock"></i>
+                            <input type="password" th:field="*{confirmPassword}" placeholder="Powtórz Haslo"/>
+                            <th:block th:if="${#fields.hasErrors('confirmPassword')}">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span class="valid-info danger-text" th:errors="*{confirmPassword}"></span>
+                            </th:block>
+                        </div>
+<!--                        <div th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="alert alert-danger"-->
+<!--                             role="alert">-->
+<!--                        </div>-->
                         <input type="submit" class="btn" value="Zarejestruj sie"/>
 <!--                        <p class="social-text">Zarejestruj sie za pomoca platform</p>-->
 <!--                        <div class="social-media">-->

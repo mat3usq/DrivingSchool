@@ -2,14 +2,10 @@ package com.driving.school.controller;
 
 import com.driving.school.model.SchoolUser;
 import com.driving.school.service.SchoolUserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,10 +47,12 @@ public class LoginController {
     }
 
     @GetMapping(value = "/register")
-    public ModelAndView catchRegisterMessage(@ModelAttribute("registerUser") SchoolUser registerUser,
-                                             @RequestParam(required = false) String register) {
+    public ModelAndView catchRegisterMessage(@Valid @ModelAttribute("registerUser") SchoolUser registerUser, Errors errors,
+                                             @RequestParam(required = false) String register,
+                                             @RequestParam(required = false) String validation) {
         String registerErrorMessage = null;
         String registerPositiveMessage = null;
+        String validationMessage = null;
         ModelAndView m = new ModelAndView();
         m.setViewName("home");
 
@@ -62,15 +60,24 @@ public class LoginController {
             registerPositiveMessage = "Rejestracja przebiegła pomyślnie!";
         else if (register != null && register.equals("false"))
             registerErrorMessage = "Uzytkownik pod danym emailem juz istnieje!";
+        else if (validation != null && validation.equals("false"))
+            validationMessage = "Wprowadz poprawne dane!";
 
         m.addObject("registerErrorMessage", registerErrorMessage);
         m.addObject("registerPositiveMessage", registerPositiveMessage);
+        m.addObject("validationMessage", validationMessage);
         m.addObject("registerUser", registerUser);
         return m;
     }
 
     @PostMapping(value = "/registerUser")
-    public String registerUser(@ModelAttribute("registerUser") SchoolUser user, RedirectAttributes redirectAttributes) {
+    public String registerUser(@Valid @ModelAttribute("registerUser") SchoolUser user, Errors errors, RedirectAttributes redirectAttributes) {
+        if (errors.hasErrors()) {
+            System.out.println(errors);
+            redirectAttributes.addFlashAttribute("registerUser", user);
+            return "redirect:/register?validation=false#login";
+        }
+
         if (schoolUserService.createNewUser(user)) {
             redirectAttributes.addFlashAttribute("registerUser", new SchoolUser());
             return "redirect:/register?register=true#login";

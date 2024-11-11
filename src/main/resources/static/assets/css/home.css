@@ -102,7 +102,7 @@ html {
 }
 
 .danger-text {
-  color: #ef476f;
+  color: aliceblue;
   border-left: 4px solid #ef476f;
   border-right: 4px solid #ef476f;
 }
@@ -629,7 +629,7 @@ header .fa-chevron-down:hover {
   margin: 10px;
 }
 .login .input-field {
-  max-width: 380px;
+  max-width: 400px;
   width: 100%;
   background-color: #0077b6;
   margin: 10px 0;
@@ -640,12 +640,27 @@ header .fa-chevron-down:hover {
   padding: 0 0.4rem;
   position: relative;
 }
+.login .input-field .valid-info {
+  display: none;
+  top: 6px;
+  right: 40px;
+  position: absolute;
+  background-color: #333333;
+  font-size: 14px;
+  z-index: 100;
+}
 .login .input-field i {
   padding-left: 25px;
   line-height: 55px;
   color: #ffd166;
   transition: 0.5s;
   font-size: 1.1rem;
+}
+.login .input-field i.fa-circle-info {
+  position: absolute;
+  right: 15px;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 .login .input-field input {
   background: none;
@@ -655,7 +670,8 @@ header .fa-chevron-down:hover {
   font-weight: 600;
   font-size: 1.1rem;
   color: aliceblue;
-  padding: 0 20px;
+  padding-left: 10px;
+  padding-right: 30px;
 }
 .login .input-field input::-moz-placeholder {
   color: rgb(192, 192, 219);
