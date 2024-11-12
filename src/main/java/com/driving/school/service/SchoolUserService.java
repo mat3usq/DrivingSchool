@@ -5,6 +5,7 @@ import com.driving.school.repository.CategoryRepository;
 import com.driving.school.repository.PaymentRepository;
 import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.repository.UserLikedQuestionRepository;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,14 +26,16 @@ public class SchoolUserService {
     private final UserLikedQuestionRepository userLikedQuestionRepository;
     private final PaymentRepository paymentRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailSenderService emailSenderService;
 
     @Autowired
-    public SchoolUserService(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, UserLikedQuestionRepository userLikedQuestionRepository, PaymentRepository paymentRepository, PasswordEncoder passwordEncoder) {
+    public SchoolUserService(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, UserLikedQuestionRepository userLikedQuestionRepository, PaymentRepository paymentRepository, PasswordEncoder passwordEncoder, EmailSenderService emailSenderService) {
         this.schoolUserRepository = schoolUserRepository;
         this.categoryRepository = categoryRepository;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
         this.paymentRepository = paymentRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailSenderService = emailSenderService;
     }
 
     public boolean createNewUser(SchoolUser user) {
@@ -43,12 +46,20 @@ public class SchoolUserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setCurrentCategory("");
             user = schoolUserRepository.save(user);
-            if (user.getId() > 0)
+            if (user.getId() > 0) {
                 isSaved = true;
+
+                try {
+                    emailSenderService.sendWelcomeMail(user);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return isSaved;
     }
+
 
     public void saveUser(SchoolUser user) {
         schoolUserRepository.save(user);
