@@ -43,7 +43,7 @@ public class SchoolUser {
     private String name;
 
     @NotBlank(message = "Nazwisko nie moze byc puste.")
-    @Size(min = 2, message = "Imie nie moze byc krótsze niż 2 litery.")
+    @Size(min = 2, message = "Nazwisko nie moze byc krótsze niż 2 litery.")
     @Column(name = "SURNAME", length = 64)
     private String surname;
 
@@ -57,7 +57,7 @@ public class SchoolUser {
     private String confirmPassword;
 
     @NotBlank(message = "Email nie moze byc pusty")
-    @Email(message = "Prosze wprowadz poprawny email.")
+    @Email(message = "Wprowadz poprawny email.")
     @Column(name = "EMAIL", length = 64)
     private String email;
 

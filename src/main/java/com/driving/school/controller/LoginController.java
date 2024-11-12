@@ -73,7 +73,6 @@ public class LoginController {
     @PostMapping(value = "/registerUser")
     public String registerUser(@Valid @ModelAttribute("registerUser") SchoolUser user, Errors errors, RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
-            System.out.println(errors);
             redirectAttributes.addFlashAttribute("registerUser", user);
             return "redirect:/register?validation=false#login";
         }

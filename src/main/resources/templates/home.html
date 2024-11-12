@@ -384,14 +384,11 @@
                         <div class="input-field">
                             <i class="fas fa-unlock"></i>
                             <input type="password" th:field="*{confirmPassword}" placeholder="Powtórz Haslo"/>
-                            <th:block th:if="${#fields.hasErrors('confirmPassword')}">
+                            <th:block th:if="${#fields.hasErrors('confirmPassword')} or ${!#fields.globalErrors().isEmpty()}">
                                 <i class="fa-solid fa-circle-info"></i>
-                                <span class="valid-info danger-text" th:errors="*{confirmPassword}"></span>
+                                <span class="valid-info danger-text"><th:block th:errors="*{confirmPassword}"></th:block> <th:block th:each="err : ${#fields.globalErrors()}" th:text="${err}"></th:block></span>
                             </th:block>
                         </div>
-<!--                        <div th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="alert alert-danger"-->
-<!--                             role="alert">-->
-<!--                        </div>-->
                         <input type="submit" class="btn" value="Zarejestruj sie"/>
 <!--                        <p class="social-text">Zarejestruj sie za pomoca platform</p>-->
 <!--                        <div class="social-media">-->
