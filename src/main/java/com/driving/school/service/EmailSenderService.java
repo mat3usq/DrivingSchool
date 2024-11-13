@@ -4,8 +4,10 @@ import com.driving.school.model.SchoolUser;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -21,7 +23,8 @@ public class EmailSenderService {
         this.templateEngine = templateEngine;
     }
 
-    public void sendWelcomeMail(SchoolUser user) throws  MessagingException {
+    @Async
+    public void sendWelcomeMail(SchoolUser user) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -34,6 +37,9 @@ public class EmailSenderService {
 
         String htmlContent = templateEngine.process("welcome-email.html", context);
         helper.setText(htmlContent, true);
+
+        ClassPathResource image = new ClassPathResource("static/assets/img/logo.png");
+        helper.addInline("logoImage", image);
 
         mailSender.send(message);
     }

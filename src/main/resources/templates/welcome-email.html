@@ -29,7 +29,6 @@
         .header {
             background-color: #ef476f;
             color: #ffffff;
-            padding: 20px;
             text-align: center;
         }
 
@@ -38,14 +37,20 @@
             font-size: 24px;
         }
 
+        .header img {
+            margin-top: 12px;
+            width: 60px;
+            height: 60px;
+        }
+
         .body {
-            padding: 20px;
+            padding: 10px 20px 0;
             color: #373c4f;
             text-align: left;
         }
 
         .body h2 {
-            color: #ffd166; /* Zmieniono na kolor nagłówka dla lepszej spójności */
+            color: #ffd166;
         }
 
         .box {
@@ -59,7 +64,7 @@
         .button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #ffd166;
+            background-color: #ef476f;
             color: #ffffff;
             text-decoration: none;
             border-radius: 5px;
@@ -68,13 +73,16 @@
         }
 
         .button:hover {
-            background-color: #c48e19;
+            background-color: #de0d37;
         }
 
         .centered-content {
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .centered-content a {
+            color: #f1f1f1;
         }
 
         .footer {
@@ -94,8 +102,17 @@
 <body>
 <div class="container">
     <div class="email-content">
-        <div class="header">
-            <h1>Witamy w Driving School!</h1>
+        <div class="header" align="center">
+            <table align="center" border="0" cellpadding="0" cellspacing="0">
+                <tr valign="middle">
+                    <td>
+                        <img src="cid:logoImage" alt="Logo Driving School" />
+                    </td>
+                    <td style="padding-left:10px;">
+                        <h1>Witamy w Driving School!</h1>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="body">
             <h2>Drogi <span th:text="${user.name}">Imię</span> <span th:text="${user.surname}">Nazwisko</span>,</h2>
@@ -104,16 +121,18 @@
             <div class="box">
                 <h3>Twoje Dane:</h3>
                 <p><strong>Email:</strong> <span th:text="${user.email}">email@example.com</span></p>
-                <p><strong>Data Rejestracji:</strong> <span th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}">2024-04-27 14:35</span></p>
+                <p><strong>Rola:</strong> <span th:text="${user.roleName}">Student</span></p>
+                <p><strong>Data Rejestracji:</strong> <span
+                        th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}">2024-04-27 14:35</span></p>
             </div>
 
             <div class="centered-content">
-                <p>Aby przejść do logowania, kliknij przycisk poniżej:</p>
                 <a href="http://localhost:8080/register?register=true#login" class="button">Zaloguj się</a>
             </div>
         </div>
         <div class="footer">
-            &copy; <span th:text="${#temporals.format(user.createdAt, 'yyyy')}"></span> Driving School. Wszelkie prawa zastrzeżone.
+            &copy; <span th:text="${#temporals.format(user.createdAt, 'yyyy')}"></span> Driving School. Wszelkie prawa
+            zastrzeżone.
         </div>
     </div>
 </div>

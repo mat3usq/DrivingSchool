@@ -635,7 +635,7 @@ header {
   .input-field {
     max-width: 400px;
     width: 100%;
-    background-color: $input-color;
+    background-color: $input-color !important;
     margin: 10px 0;
     height: 55px;
     border-radius: 55px;
@@ -643,6 +643,7 @@ header {
     grid-template-columns: 15% 85%;
     padding: 0 0.4rem;
     position: relative;
+    overflow: hidden;
 
     .valid-info{
       display: none;
@@ -677,7 +678,7 @@ header {
     line-height: 1;
     font-weight: 600;
     font-size: 1.1rem;
-    color: $text-color;
+    color: $text-color !important;
     padding-left: 10px;
     padding-right: 30px;
   }
