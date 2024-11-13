@@ -117,21 +117,18 @@
         <div class="body">
             <h2>Drogi <span th:text="${user.name}">Imię</span> <span th:text="${user.surname}">Nazwisko</span>,</h2>
             <p>Otrzymaliśmy prośbę o zresetowanie Twojego hasła w naszym systemie. Jeśli to Ty, kliknij poniższy
-                przycisk, aby zresetować hasło. Jeśli nie wysyłałeś takiej prośby, zignoruj ten e-mail.</p>
+                przycisk, aby zresetować hasło.</p>
 
             <div class="box">
                 <h3>Link do Resetowania Hasła:</h3>
                 <p>Kliknij poniższy przycisk, aby zresetować swoje hasło:</p>
                 <div class="centered-content">
-
-                    <a th:href="'http://localhost:8080/login?resetToken=' + ${token} + 'userId=' + ${user.id}" class="button">Zresetuj Hasło</a>
+                    <a th:href="'http://localhost:8080/resetPwd/infoFromMail?resetToken=' + ${token} + '&userId=' + ${user.id} + '#login'" class="button">Zresetuj Hasło</a>
                 </div>
-                <p>Jeśli przycisk nie działa, skopiuj i wklej poniższy link w przeglądarce:</p>
-                <p><a th:href="'http://localhost:8080/login?resetToken=' + ${token} + '&userId=' + ${user.id}">Link do zresetowania hasla</a>
-                </p>
+                <p>Jeśli to nie ty wysyłałeś taką prośbę, zignoruj ten e-mail.</p>
             </div>
 
-            <p>Jeśli masz jakiekolwiek pytania, skontaktuj się z nami.</p>
+            <p>W razie jakichkolwiek pytań, skontaktuj się z nami.</p>
         </div>
         <div class="footer">
             &copy; <span th:text="${#temporals.format(user.createdAt, 'yyyy')}"></span> Driving School. Wszelkie prawa

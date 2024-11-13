@@ -65,6 +65,7 @@ html {
 }
 
 .success-text, .warning-text, .danger-text, .info-text {
+  max-width: 400px;
   font-weight: bold;
   background-color: #3333332a;
   border-radius: 10px;

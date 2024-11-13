@@ -73,6 +73,7 @@ public class SecurityConfig {
                         .requestMatchers("/registerUser").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
+                        .requestMatchers("/resetPwd/**").permitAll()
                         .requestMatchers("/logout").authenticated()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/error").authenticated())
