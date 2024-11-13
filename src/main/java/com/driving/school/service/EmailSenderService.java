@@ -43,4 +43,26 @@ public class EmailSenderService {
 
         mailSender.send(message);
     }
+
+    @Async
+    public void sendResetPwdMail(SchoolUser user, String token) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        helper.setFrom("drivingschool.servicesystem@gmail.com");
+        helper.setTo(user.getEmail());
+        helper.setSubject("Resetowanie Hasła - Driving School");
+
+        Context context = new Context();
+        context.setVariable("user", user);
+        context.setVariable("token", token);
+
+        String htmlContent = templateEngine.process("resetPwd-email.html", context);
+        helper.setText(htmlContent, true);
+
+        ClassPathResource image = new ClassPathResource("static/assets/img/logo.png");
+        helper.addInline("logoImage", image);
+
+        mailSender.send(message);
+    }
 }

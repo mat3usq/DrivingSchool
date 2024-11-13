@@ -103,6 +103,12 @@ public class SchoolUser {
 
     private String selectedTypeQuestions = "remainingQuestions";
 
+    @Column(name = "TOKEN_FOR_RESET_PASSWORD")
+    private String tokenForResettingPassword;
+
+    @Column(name = "TOKEN_EXPIRY")
+    private LocalDateTime tokenExpiry;
+
     @CreatedDate
     @Column(name = "CREATEDAT")
     private LocalDateTime createdAt;
