@@ -29,7 +29,7 @@
 <body data-bs-spy="scroll" data-bs-target="#navbar" class="bg-dark">
 <nav id="navbar" class="navbar navbar-expand-xl position-fixed left-0 w-100">
     <div class="container">
-        <a class="navbar-brand" href="#"
+        <a class="navbar-brand" href="/home"
         ><img src="/assets/img/logo.png" class="logo" alt="Logo L"/>
             <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
             <span class="orange-text">Driving</span> <span class="gold-text">School</span></a
@@ -279,13 +279,13 @@
                         <input type="submit" value="Resetuj Haslo" class="btn solid"/>
                         <p class="back-login">Chcesz sie zalogowac? <a href="#login" class="link">Kliknij tutaj!</a></p>
                     </form>
-                    <form th:if="${resetPwdTokenCorrectMessage}" th:action="@{/resetUsersPwd}" method="post"
+                    <form th:if="${resetPwdMessage}" th:action="@{/resetPwd}" method="post"
                           th:object="${registerUser}" class="sign-up-form">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <h2 class="title">Zresetuj Haslo</h2>
                         <div class="underline"></div>
-                        <p class="warning-text" th:if="${resetPwdTokenCorrectMessage}"
-                           th:text="${resetPwdTokenCorrectMessage}"></p>
+                        <p class="warning-text" th:if="${resetPwdMessage}"
+                           th:text="${resetPwdMessage}"></p>
 
                         <input hidden="hidden" type="text" name="resetToken" th:value="${resetToken}" placeholder="resetToken"/>
                         <input hidden="hidden" type="text" th:field="*{id}" th:value="${userId}" placeholder="userId"/>
@@ -322,7 +322,9 @@
                         <p class="info-text" th:if="${logoutMessage}" th:text="${logoutMessage}"></p>
                         <p class="warning-text" th:if="${loginErrorMessage}" th:text="${loginErrorMessage}"></p>
                         <p class="info-text" th:if="${sessionExpiredMessage}" th:text="${sessionExpiredMessage}"></p>
-                        <p class="info-text" th:if="${resetPwdMessage}" th:text="${resetPwdMessage}"></p>
+                        <p class="info-text" th:if="${changingPwdMessage}" th:text="${changingPwdMessage}"></p>
+                        <p class="info-text" th:if="${pwdChangingMessage}" th:text="${pwdChangingMessage}"></p>
+
                         <div class="input-field">
                             <i class="fas fa-user"></i>
                             <input type="text" placeholder="Email" name="username" id="username"/>
@@ -340,14 +342,14 @@
                         <input type="submit" value="Zaloguj Się" class="btn solid"/>
                         <p class="reset-text">Nie pamiętasz hasła? <a href="#login" class="link">Kliknij tutaj!</a></p>
                     </form>
-                    <form th:unless="${resetPwdTokenCorrectMessage}" th:action="@{/registerUser}" method="post"
+                    <form th:unless="${resetPwdMessage}" th:action="@{/registerUser}" method="post"
                           th:object="${registerUser}" class="sign-up-form">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <h2 class="title">Zarejestruj Sie</h2>
                         <div class="underline"></div>
                         <p class="warning-text" th:if="${registerErrorMessage != null}" th:text="${registerErrorMessage}"></p>
                         <p class="danger-text" th:if="${validationMessage != null}" th:text="${validationMessage}"></p>
-                        <p class="warning-text" th:if="${resetPwdTokenWrongMessage}" th:text="${resetPwdTokenWrongMessage}"></p>
+                        <p class="warning-text" th:if="${resetPwdMessage}" th:text="${resetPwdMessage}"></p>
 
                         <div class="input-field">
                             <i class="fas fa-user"></i>

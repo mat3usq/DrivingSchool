@@ -26,7 +26,10 @@ document.addEventListener("DOMContentLoaded", function () {
             signUpBtn.click();
     } else if (url.pathname === '/resetPwd/infoFromMail' &&
         (new URLSearchParams(url.search).get('resetToken') ||
-        new URLSearchParams(url.search).get('userId'))) {
+            new URLSearchParams(url.search).get('userId'))) {
+        if (signUpBtn)
+            signUpBtn.click();
+    } else if (url.pathname === '/resetPwd' && new URLSearchParams(url.search).get('validation') === 'false') {
         if (signUpBtn)
             signUpBtn.click();
     } else if (url.pathname === '/login' && new URLSearchParams(url.search).get('error') === 'true') {

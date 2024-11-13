@@ -640,7 +640,6 @@ header .fa-chevron-down:hover {
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   position: relative;
-  overflow: hidden;
 }
 .login .input-field .valid-info {
   display: none;
