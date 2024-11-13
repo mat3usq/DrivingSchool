@@ -56,22 +56,31 @@
 
 ## TODO must have
 - Dashboard:
-  - Jakies podstawowe statysstyki do ucznia (wykresy w js)
+- Jakies podstawowe statysstyki do ucznia (wykresy w js)
 - Dodanie strony error...
 - Statystyki rozwiązanych testów
-- Powiadomienia
+
+[//]: # (- Powiadomienia oraz Przypomnienia)
 - Walidacja przy rejestracji (dodanie pola confirm pwd, email)
 - Walidacja przy logowaniu (email, pwd)
 - Poprawka frontu + aktualnosci w dashboard
 - Walidacja do dodawania wykladu/podwykladu/rozdzialu
 - Przeniesienie formularzy w wykladach do sekcji nizej
 - Poprawienie responsywnosci w wykladzie
-- Zamiana footera i ostatniej sekcji na th:fragment
+
+[//]: # (- Zamiana footera i ostatniej sekcji na th:fragment)
 - Dodanie zdjec do instrukcji z rozwiązywania pytan specjalistycznych oraz podstawowych
-- Ogarniecie main.html
+
+[//]: # (- Ogarniecie main.html&#40;wyszarzenie cennika, dodanie bloga, aktualizacja kategori oraz osiagniec&#41;)
 - Resetowanie hasel
-- Tworzenie instruktora/admina poprzez tokeny
-- Zmienianie role usera w admin view
+- Remember me 
+- Dodanie info o nie zmachowanych haslach
+
+[//]: # (- W kursie przekierowanie skrolowalo do dolu &#40;ogolnie sprawdzic wszedzie&#41; )
+- Wyswietlanie ile ma sie nieprzeczytanych wiadomosci w nawigacji
+- Dodac gdy sesja jest expired
+- Nawigacja nie dziala gdy sie wejdzie w info o wiadomosci
+- Zmienianie role usera w admin view (Tworzenie instruktora/admina poprzez tokeny)
 
 ## TODO optional
 - Podział na różne permisje dla kursu
