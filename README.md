@@ -60,30 +60,33 @@
 - Dodanie strony error...
 - Statystyki rozwiązanych testów
 
-[//]: # (- Powiadomienia oraz Przypomnienia)
-- 
+1. W kursie przekierowanie skrolowalo do dolu (ogolnie sprawdzic wszedzie czy sie zjedza na dol)
+2. ogolnie front uporzadkowac, posprawdzac i pododawac walidacje
+3. Powiadomienia oraz Przypomnienia:
+   - promote goscia do wyzszej ragni powiadomienie
+   - dodanie oplat 
+   - zaakceptowanie/dodanie/usuniecie/zakonczenie/wznowienie mentorshiping
+   - zrobienie kursu przez instruktora
+   - zakonczenie kursu
+   - dodanie komentarz do kursu
+   - dodanie godzin jazdy do kursu
+   - dodanie wynikow testow do kursu
+   - dodanie materiałow w wykladzie przez instruktora
+   - dodanie spotkania przez instruktora
+   - przypomnienie o spotkaniu w kalendarzu(trzeba wziac pod uwage ze moze edytowac)
+
 - Walidacja przy rejestracji (dodanie pola confirm pwd, email)
 - Walidacja przy logowaniu (email, pwd)
 - Poprawka frontu + aktualnosci w dashboard
 - Walidacja do dodawania wykladu/podwykladu/rozdzialu
 - Przeniesienie formularzy w wykladach do sekcji nizej
 - Poprawienie responsywnosci w wykladzie
-
-[//]: # (- Zamiana footera i ostatniej sekcji na th:fragment)
-- 
+- Zamiana footera i ostatniej sekcji na th:fragment
 - Dodanie zdjec do instrukcji z rozwiązywania pytan specjalistycznych oraz podstawowych
-
-[//]: # (- Ogarniecie main.html&#40;wyszarzenie cennika, dodanie bloga, aktualizacja kategori oraz osiagniec&#41;)
-- 
+- Ogarniecie main.html(wyszarzenie cennika, dodanie bloga, aktualizacja kategori oraz osiagniec)
 - Resetowanie hasel
 - Remember me 
 - Dodanie info o nie zmachowanych haslach
-
-[//]: # (- W kursie przekierowanie skrolowalo do dolu &#40;ogolnie sprawdzic wszedzie&#41; )
--
-[//]: # (- ogolnie front uporzadkowac, posprawdzac i pododawac walidacje )
--
-
 - Wyswietlanie ile ma sie nieprzeczytanych wiadomosci w nawigacji
 - Dodac gdy sesja jest expired
 - Nawigacja nie dziala gdy sie wejdzie w info o wiadomosci
