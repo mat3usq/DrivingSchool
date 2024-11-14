@@ -92,7 +92,8 @@ public class LoginController {
     @GetMapping(value = "/resetPwd/infoFromMail")
     public ModelAndView catchResetUsersPwdFromMailInfo(@RequestParam(required = false) String resetToken,
                                                        @RequestParam(required = false) Long userId) {
-        String resetPwdMessage;
+        String resetPwdMessage = null;
+        String invalidTokenMessage = null;
         SchoolUser user = new SchoolUser();
         ModelAndView m = new ModelAndView();
         m.setViewName("home");
@@ -105,28 +106,29 @@ public class LoginController {
                 m.addObject("userId", userId);
                 m.addObject("resetToken", resetToken);
             } else
-                resetPwdMessage = "Nie znaleziono użytkownika powiązanego z tym tokenem lub token wygasł.";
-        } else resetPwdMessage = "Token resetowania hasła jest nieprawidłowy lub nie znaleziono uzytkownika.";
+                invalidTokenMessage = "Nie znaleziono użytkownika powiązanego z tym tokenem.";
+        } else invalidTokenMessage = "Niepoprawny token lub uzytkownik.";
 
         m.addObject("resetPwdMessage", resetPwdMessage);
+        m.addObject("invalidTokenMessage", invalidTokenMessage);
         m.addObject("registerUser", user);
         return m;
     }
 
     @GetMapping(value = "/resetPwd/infoToMail")
     public ModelAndView catchResetUsersPwdToMailInfo(@RequestParam(required = false) String resetPwd) {
-        String changingPwdMessage = null;
+        String initiatePwdResetMessage = null;
         ModelAndView m = new ModelAndView();
         m.setViewName("home");
 
         if (resetPwd != null) {
             if (resetPwd.equals("true"))
-                changingPwdMessage = "Instrukcje resetowania hasła zostały wysłane na Twój email.";
+                initiatePwdResetMessage = "Instrukcje resetowania hasła zostały wysłane na Twój email.";
             else if (resetPwd.equals("false"))
-                changingPwdMessage = "Nie znaleziono użytkownika z podanym adresem email.";
+                initiatePwdResetMessage = "Nie znaleziono użytkownika z podanym adresem email.";
         }
 
-        m.addObject("changingPwdMessage", changingPwdMessage);
+        m.addObject("initiatePwdResetMessage", initiatePwdResetMessage);
         m.addObject("registerUser", new SchoolUser());
         return m;
     }
@@ -161,17 +163,20 @@ public class LoginController {
             resetPwdMessage = "Hasła nie spełniaja wymagan!";
             schoolUser = user;
             m.addObject("userId", schoolUser.getId());
+            m.addObject("userToken", resetToken);
         }
 
         m.addObject("resetPwdMessage", resetPwdMessage);
         m.addObject("pwdChangingMessage", pwdChangingMessage);
-        m.addObject("userToken", resetToken);
         m.addObject("registerUser", schoolUser);
         return m;
     }
 
     @PostMapping("/resetPwd")
     public String resetPassword(@Valid @ModelAttribute("registerUser") SchoolUser user, Errors errors, @RequestParam(required = false) String resetToken, RedirectAttributes redirectAttributes) {
+        if (tokenService.validatePasswordResetToken(resetToken, user.getId()) == null)
+            return "redirect:/resetPwd/infoFromMail?resetToken=" + resetToken + "&userId=" + user.getId() + "#login";
+
         if (errors.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerUser", user);
             redirectAttributes.addFlashAttribute("resetToken", resetToken);

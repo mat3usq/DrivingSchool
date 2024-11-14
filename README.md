@@ -61,6 +61,7 @@
 - Statystyki rozwiązanych testów
 
 [//]: # (- Powiadomienia oraz Przypomnienia)
+- 
 - Walidacja przy rejestracji (dodanie pola confirm pwd, email)
 - Walidacja przy logowaniu (email, pwd)
 - Poprawka frontu + aktualnosci w dashboard
@@ -69,14 +70,20 @@
 - Poprawienie responsywnosci w wykladzie
 
 [//]: # (- Zamiana footera i ostatniej sekcji na th:fragment)
+- 
 - Dodanie zdjec do instrukcji z rozwiązywania pytan specjalistycznych oraz podstawowych
 
 [//]: # (- Ogarniecie main.html&#40;wyszarzenie cennika, dodanie bloga, aktualizacja kategori oraz osiagniec&#41;)
+- 
 - Resetowanie hasel
 - Remember me 
 - Dodanie info o nie zmachowanych haslach
 
 [//]: # (- W kursie przekierowanie skrolowalo do dolu &#40;ogolnie sprawdzic wszedzie&#41; )
+-
+[//]: # (- ogolnie front uporzadkowac, posprawdzac i pododawac walidacje )
+-
+
 - Wyswietlanie ile ma sie nieprzeczytanych wiadomosci w nawigacji
 - Dodac gdy sesja jest expired
 - Nawigacja nie dziala gdy sie wejdzie w info o wiadomosci

@@ -322,7 +322,7 @@
                         <p class="info-text" th:if="${logoutMessage}" th:text="${logoutMessage}"></p>
                         <p class="warning-text" th:if="${loginErrorMessage}" th:text="${loginErrorMessage}"></p>
                         <p class="info-text" th:if="${sessionExpiredMessage}" th:text="${sessionExpiredMessage}"></p>
-                        <p class="info-text" th:if="${changingPwdMessage}" th:text="${changingPwdMessage}"></p>
+                        <p class="info-text" th:if="${initiatePwdResetMessage}" th:text="${initiatePwdResetMessage}"></p>
                         <p class="info-text" th:if="${pwdChangingMessage}" th:text="${pwdChangingMessage}"></p>
 
                         <div class="input-field">
@@ -349,7 +349,7 @@
                         <div class="underline"></div>
                         <p class="warning-text" th:if="${registerErrorMessage != null}" th:text="${registerErrorMessage}"></p>
                         <p class="danger-text" th:if="${validationMessage != null}" th:text="${validationMessage}"></p>
-                        <p class="warning-text" th:if="${resetPwdMessage}" th:text="${resetPwdMessage}"></p>
+                        <p class="danger-text" th:if="${invalidTokenMessage != null}" th:text="${invalidTokenMessage}"></p>
 
                         <div class="input-field">
                             <i class="fas fa-user"></i>
