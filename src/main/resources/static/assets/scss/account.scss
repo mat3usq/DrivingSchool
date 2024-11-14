@@ -193,64 +193,6 @@ h2 {
 	}
 }
 
-.contact {
-	padding: 20px;
-	position: relative;
-	background-image: url('../img/contact.jpg');
-	background-position: center;
-	background-size: cover;
-	background-attachment: fixed;
-	z-index: 200;
-
-	i {
-		padding: 10px;
-		font-size: 24px;
-		color: $icon-color;
-		transition: 0.3s;
-	}
-
-	i:hover {
-		color: $secondary-color;
-	}
-
-	h2 {
-		font-size: 32px;
-		font-weight: bold;
-	}
-
-	.contact-shadow {
-		z-index: -5;
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		background: rgba(0, 0, 0, 0.6);
-		top: 0;
-		left: 0;
-	}
-
-	.contact-us {
-		display: flex;
-		align-items: center;
-
-		.contact-item {
-			margin: 30px 0px;
-
-			h3 {
-				margin-bottom: 20px;
-				color: $nav-color;
-				text-transform: uppercase;
-				font-weight: bold;
-				letter-spacing: 2px;
-			}
-
-			p {
-				font-size: 18px;
-				color: antiquewhite;
-			}
-		}
-	}
-}
-
 @media (max-width: 950px) {
 	.account {
 		.hero-img {
@@ -277,16 +219,16 @@ h2 {
 						.schoolUser-payments {
 							margin: 7px 0;
 							padding: 7px 7px;
-	
+
 							.payment {
 								padding: 7px 12px;
-	
+
 								.box {
 									.title-header {
 										padding-left: 0px;
 										font-size: 13px;
 									}
-	
+
 									.content {
 										font-size: 13px;
 									}
