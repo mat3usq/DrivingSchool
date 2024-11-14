@@ -13,4 +13,5 @@ public interface SchoolUserRepository extends JpaRepository<SchoolUser, Long> {
     SchoolUser findByEmail(String email);
     @NonNull
     Page<SchoolUser> findAll(@NonNull Pageable pageable);
+    int countAllByRoleName(String roleName);
 }
