@@ -15,11 +15,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LoginController {
     private final SchoolUserService schoolUserService;
     private final TokenService tokenService;
+    private final HomeController homeController;
 
     @Autowired
-    public LoginController(SchoolUserService schoolUserService, TokenService tokenService) {
+    public LoginController(SchoolUserService schoolUserService, TokenService tokenService, HomeController homeController) {
         this.schoolUserService = schoolUserService;
         this.tokenService = tokenService;
+        this.homeController = homeController;
     }
 
     @GetMapping(value = "/login")
@@ -29,8 +31,7 @@ public class LoginController {
         String loginErrorMessage = null;
         String logoutMessage = null;
         String sessionExpiredMessage = null;
-        ModelAndView m = new ModelAndView();
-        m.setViewName("home");
+        ModelAndView m = homeController.displayHomePage();
 
         if (error != null)
             loginErrorMessage = "Email lub Hasło jest niepoprawne!";
@@ -56,8 +57,7 @@ public class LoginController {
         String registerErrorMessage = null;
         String registerPositiveMessage = null;
         String validationMessage = null;
-        ModelAndView m = new ModelAndView();
-        m.setViewName("home");
+        ModelAndView m = homeController.displayHomePage();
 
         if (register != null && register.equals("true"))
             registerPositiveMessage = "Rejestracja przebiegła pomyślnie!";
@@ -95,8 +95,7 @@ public class LoginController {
         String resetPwdMessage = null;
         String invalidTokenMessage = null;
         SchoolUser user = new SchoolUser();
-        ModelAndView m = new ModelAndView();
-        m.setViewName("home");
+        ModelAndView m = homeController.displayHomePage();
 
         if (resetToken != null && userId != null) {
             SchoolUser resetPwdUser = tokenService.validatePasswordResetToken(resetToken, userId);
@@ -118,8 +117,7 @@ public class LoginController {
     @GetMapping(value = "/resetPwd/infoToMail")
     public ModelAndView catchResetUsersPwdToMailInfo(@RequestParam(required = false) String resetPwd) {
         String initiatePwdResetMessage = null;
-        ModelAndView m = new ModelAndView();
-        m.setViewName("home");
+        ModelAndView m = homeController.displayHomePage();
 
         if (resetPwd != null) {
             if (resetPwd.equals("true"))
@@ -151,9 +149,8 @@ public class LoginController {
                                            @RequestParam(required = false) String resetToken) {
         String resetPwdMessage = null;
         String pwdChangingMessage = null;
-        ModelAndView m = new ModelAndView();
+        ModelAndView m = homeController.displayHomePage();
         SchoolUser schoolUser = new SchoolUser();
-        m.setViewName("home");
 
         if (resetPwd != null && resetPwd.equals("true"))
             pwdChangingMessage = "Zmiana hasła przebiegła pomyślnie";
