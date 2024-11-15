@@ -74,6 +74,10 @@ public class SchoolUser {
     @OneToMany(mappedBy = "schoolUser")
     private Set<Payment> payments = new LinkedHashSet<>();
 
+    @OrderBy("createdAt ASC")
+    @OneToMany(mappedBy = "schoolUser")
+    private List<Notification> notifications = new LinkedList<>();
+
     @OneToOne(mappedBy = "schoolUser")
     private SensitiveData sensitiveData;
 
