@@ -27,4 +27,15 @@ public class AccountController {
         }
         return new ModelAndView("redirect:/dashboard");
     }
+
+    @GetMapping("/notifications")
+    public ModelAndView displayNotifications(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("notifications");
+        SchoolUser user = schoolUserRepository.findByEmail(((SchoolUser) session.getAttribute("loggedInUser")).getEmail());
+        if (user != null) {
+            modelAndView.addObject("user", user);
+            return modelAndView;
+        }
+        return new ModelAndView("redirect:/dashboard");
+    }
 }

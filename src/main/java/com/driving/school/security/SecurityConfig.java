@@ -64,6 +64,8 @@ public class SecurityConfig {
                         .requestMatchers("/mailBox/**").authenticated()
                         // account
                         .requestMatchers("/account").authenticated()
+                        // account
+                        .requestMatchers("/notifications").authenticated()
                         // tests
                         .requestMatchers("/tests/**").authenticated()
                         // exam
@@ -141,6 +143,8 @@ public class SecurityConfig {
                     response.sendRedirect("/mailBox");
                 else if (request.getRequestURI().startsWith("/account"))
                     response.sendRedirect("/account");
+                else if (request.getRequestURI().startsWith("/notifications"))
+                    response.sendRedirect("/notifications");
                 else if (request.getRequestURI().startsWith("/tests"))
                     response.sendRedirect("/tests");
                 else if (request.getRequestURI().startsWith("/exam"))
