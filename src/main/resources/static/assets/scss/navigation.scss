@@ -25,11 +25,16 @@ nav {
 
 	.fa-arrow-right-to-bracket {
 		color: $icon-color;
-		font-size: 1.2em;
+		font-size: 1.3em;
 	}
 
 	.fa-arrow-right-to-bracket:hover {
 		color: $primary-color;
+	}
+
+	.fa-bell {
+		color: $category-icon;
+		font-size: 1.3em;
 	}
 
 	.navbar-nav .nav-link.active {
@@ -95,10 +100,15 @@ nav {
 			align-items: center;
 		}
 
-		.logout {
+		.logout,
+		.notification {
 			display: none;
 			.fa-arrow-right-to-bracket {
 				color: $icon-color;
+			}
+
+			.countNotifications {
+				left: 38px;
 			}
 		}
 
@@ -167,18 +177,6 @@ nav {
 				}
 			}
 		}
-
-		.countMails {
-			position: absolute;
-			top: 12px;
-			left: 40px;
-			background-color: #ef476f;
-			color: aliceblue;
-			font-weight: bold;
-			font-size: 9.3px;
-			border-radius: 100%;
-			padding: 1.5px 5px;
-		}
 	}
 
 	i {
@@ -215,6 +213,15 @@ nav {
 		flex-wrap: nowrap;
 		justify-content: space-between;
 		align-items: center;
+
+		.countNotifications {
+			top: 29px;
+			left: 38px;
+		}
+
+		.fa-bell:hover {
+			color: $secondary-color;
+		}
 	}
 }
 
@@ -234,12 +241,26 @@ nav {
 	}
 }
 
+.countMails,
+.countNotifications {
+	position: absolute;
+	top: 12px;
+	left: 40px;
+	background-color: #ef476f;
+	color: aliceblue;
+	font-weight: bold;
+	font-size: 9.3px;
+	border-radius: 100%;
+	padding: 1.5px 5px;
+}
+
 @media (max-width: 720px) {
 	.navbar-left {
 		display: none;
 
 		.navbar-nav {
-			.logout {
+			.logout,
+			.notification {
 				display: block;
 			}
 		}

@@ -75,7 +75,7 @@ public class SchoolUser {
     private Set<Payment> payments = new LinkedHashSet<>();
 
     @OrderBy("createdAt ASC")
-    @OneToMany(mappedBy = "schoolUser")
+    @OneToMany(mappedBy = "schoolUser", fetch = FetchType.EAGER)
     private List<Notification> notifications = new LinkedList<>();
 
     @OneToOne(mappedBy = "schoolUser")

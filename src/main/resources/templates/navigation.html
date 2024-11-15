@@ -4,10 +4,16 @@
         <span class="orange-text">Driving <span class="gold-text">School</span></span></a
     >
     <div data-aos="fade-right" data-aos-delay="150" class="box-account">
+        <a href="javascript:document.getElementById('notificationFrom').submit()">
+            <i class="fa-solid fa-bell"></i><span th:if="${session.loggedInUser.notifications.size() > 0}" class="countNotifications" th:text="${session.loggedInUser.notifications.size()}"></span>
+        </a>
         <div class="user-box">
             <span th:text="'Witaj ' + ${session.loggedInUser.name}"></span>
             <span class="user_role" th:text="'['+${session.loggedInUser.roleName}+']'"></span>
         </div>
+        <form id="notificationFrom" th:action="@{/notification}" method="post">
+            <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
+        </form>
         <form id="logoutForm" th:action="@{/logout}" method="post">
             <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
         </form>
@@ -59,10 +65,13 @@
         <a data-aos="fade-right" data-aos-delay="450" class="nav-link" th:href="@{/exam}"
         ><i class="fa-solid fa-file-pen"></i>Egzamin</a
         >
-        <a data-aos="fade-right" data-aos-delay="500" class="nav-link" th:href="@{/account}"
+        <a data-aos="fade-right" data-aos-delay="500" class="nav-link notification"
+           href="javascript:document.getElementById('notificationFrom').submit()"
+        ><i class="fa-solid fa-bell"></i>Powiadomienia<span th:if="${session.loggedInUser.notifications.size() > 0}" class="countNotifications" th:text="${session.loggedInUser.notifications.size()}"></span></a>
+        <a data-aos="fade-right" data-aos-delay="550" class="nav-link" th:href="@{/account}"
         ><i class="fa-solid fa-user"></i>Moje Konto</a
         >
-        <a data-aos="fade-right" data-aos-delay="550" class="nav-link logout"
+        <a data-aos="fade-right" data-aos-delay="600" class="nav-link logout"
            href="javascript:document.getElementById('logoutForm').submit()"
         ><i class="fa-solid fa-arrow-right-to-bracket"></i>Wyloguj Sie</a
         >

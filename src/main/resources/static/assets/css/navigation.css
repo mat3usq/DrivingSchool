@@ -100,10 +100,14 @@ nav .nav-link {
 }
 nav .fa-arrow-right-to-bracket {
   color: springgreen;
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 nav .fa-arrow-right-to-bracket:hover {
   color: #ef476f;
+}
+nav .fa-bell {
+  color: #4cc9f0;
+  font-size: 1.3em;
 }
 nav .navbar-nav .nav-link.active {
   border-left: 5px solid #e0ff72;
@@ -158,11 +162,17 @@ nav .fa-bars:hover {
   display: flex;
   align-items: center;
 }
-.navbar-left .navbar-nav .logout {
+.navbar-left .navbar-nav .logout,
+.navbar-left .navbar-nav .notification {
   display: none;
 }
-.navbar-left .navbar-nav .logout .fa-arrow-right-to-bracket {
+.navbar-left .navbar-nav .logout .fa-arrow-right-to-bracket,
+.navbar-left .navbar-nav .notification .fa-arrow-right-to-bracket {
   color: springgreen;
+}
+.navbar-left .navbar-nav .logout .countNotifications,
+.navbar-left .navbar-nav .notification .countNotifications {
+  left: 38px;
 }
 .navbar-left .navbar-nav .mail-nav {
   display: none;
@@ -218,17 +228,6 @@ nav .fa-bars:hover {
 .navbar-left .navbar-nav .mail-nav .nav-link:last-child::before {
   bottom: 50%;
 }
-.navbar-left .navbar-nav .countMails {
-  position: absolute;
-  top: 12px;
-  left: 40px;
-  background-color: #ef476f;
-  color: aliceblue;
-  font-weight: bold;
-  font-size: 9.3px;
-  border-radius: 100%;
-  padding: 1.5px 5px;
-}
 .navbar-left i {
   font-size: 23px;
   margin-right: 13px;
@@ -262,6 +261,15 @@ nav .fa-bars:hover {
   justify-content: space-between;
   align-items: center;
 }
+.navbar-top .navbar-brand .countNotifications,
+.navbar-top .box-account .countNotifications {
+  top: 29px;
+  left: 38px;
+}
+.navbar-top .navbar-brand .fa-bell:hover,
+.navbar-top .box-account .fa-bell:hover {
+  color: #ffd166;
+}
 
 .user-box {
   margin: 10px;
@@ -278,11 +286,25 @@ nav .fa-bars:hover {
   font-style: italic;
 }
 
+.countMails,
+.countNotifications {
+  position: absolute;
+  top: 12px;
+  left: 40px;
+  background-color: #ef476f;
+  color: aliceblue;
+  font-weight: bold;
+  font-size: 9.3px;
+  border-radius: 100%;
+  padding: 1.5px 5px;
+}
+
 @media (max-width: 720px) {
   .navbar-left {
     display: none;
   }
-  .navbar-left .navbar-nav .logout {
+  .navbar-left .navbar-nav .logout,
+  .navbar-left .navbar-nav .notification {
     display: block;
   }
   .navbar-top button {
