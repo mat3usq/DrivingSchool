@@ -27,15 +27,17 @@ public class SchoolUserService {
     private final PaymentRepository paymentRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailSenderService emailSenderService;
+    private final NotificationService notificationService;
 
     @Autowired
-    public SchoolUserService(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, UserLikedQuestionRepository userLikedQuestionRepository, PaymentRepository paymentRepository, PasswordEncoder passwordEncoder, EmailSenderService emailSenderService) {
+    public SchoolUserService(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, UserLikedQuestionRepository userLikedQuestionRepository, PaymentRepository paymentRepository, PasswordEncoder passwordEncoder, EmailSenderService emailSenderService, NotificationService notificationService) {
         this.schoolUserRepository = schoolUserRepository;
         this.categoryRepository = categoryRepository;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
         this.paymentRepository = paymentRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailSenderService = emailSenderService;
+        this.notificationService = notificationService;
     }
 
     public boolean createNewUser(SchoolUser user) {
@@ -174,11 +176,13 @@ public class SchoolUserService {
             case Constants.INSTRUCTOR_ROLE:
                 user.setRoleName(Constants.ADMIN_ROLE);
                 schoolUserRepository.save(user);
+                notificationService.sendNotificationWhenUserReceiveNewRole(user);
                 break;
 
             case Constants.STUDENT_ROLE:
                 user.setRoleName(Constants.INSTRUCTOR_ROLE);
                 schoolUserRepository.save(user);
+                notificationService.sendNotificationWhenUserReceiveNewRole(user);
                 break;
         }
     }
@@ -188,11 +192,13 @@ public class SchoolUserService {
             case Constants.ADMIN_ROLE:
                 user.setRoleName(Constants.INSTRUCTOR_ROLE);
                 schoolUserRepository.save(user);
+                notificationService.sendNotificationWhenUserReceiveNewRole(user);
                 break;
 
             case Constants.INSTRUCTOR_ROLE:
                 user.setRoleName(Constants.STUDENT_ROLE);
                 schoolUserRepository.save(user);
+                notificationService.sendNotificationWhenUserReceiveNewRole(user);
                 break;
         }
     }

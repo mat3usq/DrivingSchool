@@ -80,4 +80,8 @@ public interface Constants {
     String COURSE_TEST_THEORETICAL = "Test Teoretyczny";
     String COURSE_TEST_PRACTICAL = "Test Praktyczny";
     String COURSE_TEST_GENERAL = "Test Ogólny";
+
+    // Notification Status
+    String NOTIFICATION_NOT_SEEN = "NOT_SEEN";
+    String NOTIFICATION_SEEN = "SEEN";
 }

@@ -213,6 +213,7 @@ h2 {
 .notifications .hero-img .box-notifications .box-container .container-notifications .notification .box .content {
   font-size: 15px;
   color: aliceblue;
+  white-space: pre-line;
 }
 .notifications .hero-img .box-notifications .box-container .container-notifications .notification .box .time {
   font-weight: bold;
