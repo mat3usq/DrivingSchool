@@ -37,4 +37,10 @@ public class Notification {
     @CreatedDate
     @Column(name = "CREATEDAT")
     private LocalDateTime createdAt;
+
+    public Notification(String content, String status, LocalDateTime createdAt) {
+        this.content = content;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
 }

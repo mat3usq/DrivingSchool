@@ -2,6 +2,7 @@ package com.driving.school.controller;
 
 import com.driving.school.model.SchoolUser;
 import com.driving.school.repository.SchoolUserRepository;
+import com.driving.school.service.NotificationService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,10 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AccountController {
     private final SchoolUserRepository schoolUserRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public AccountController(SchoolUserRepository schoolUserRepository) {
+    public AccountController(SchoolUserRepository schoolUserRepository, NotificationService notificationService) {
         this.schoolUserRepository = schoolUserRepository;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/account")
@@ -33,7 +36,7 @@ public class AccountController {
         ModelAndView modelAndView = new ModelAndView("notifications");
         SchoolUser user = schoolUserRepository.findByEmail(((SchoolUser) session.getAttribute("loggedInUser")).getEmail());
         if (user != null) {
-            modelAndView.addObject("user", user);
+            modelAndView.addObject("notifications", notificationService.getNotificationsByUser(user));
             return modelAndView;
         }
         return new ModelAndView("redirect:/dashboard");

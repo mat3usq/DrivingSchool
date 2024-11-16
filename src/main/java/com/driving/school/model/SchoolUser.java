@@ -74,6 +74,9 @@ public class SchoolUser {
     @OneToMany(mappedBy = "schoolUser")
     private Set<Payment> payments = new LinkedHashSet<>();
 
+    @Column(name = "NUMBEROFNOTIFICATIONS")
+    private int numberOfNotifications = 0;
+
     @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "schoolUser", fetch = FetchType.EAGER)
     private List<Notification> notifications = new LinkedList<>();

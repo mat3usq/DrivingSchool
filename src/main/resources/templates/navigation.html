@@ -5,7 +5,7 @@
     >
     <div data-aos="fade-right" data-aos-delay="150" class="box-account">
         <a href="javascript:document.getElementById('notificationFrom').submit()">
-            <i class="fa-solid fa-bell"></i><span th:if="${session.loggedInUser.notifications.size() > 0}" class="countNotifications" th:text="${session.loggedInUser.notifications.size()}"></span>
+            <i class="fa-solid fa-bell"></i><span th:if="${session.loggedInUser.numberOfNotifications > 0}" class="countNotifications" th:text="${session.loggedInUser.numberOfNotifications}"></span>
         </a>
         <div class="user-box">
             <span th:text="'Witaj ' + ${session.loggedInUser.name}"></span>
@@ -67,7 +67,7 @@
         >
         <a data-aos="fade-right" data-aos-delay="500" class="nav-link notification"
            href="javascript:document.getElementById('notificationFrom').submit()"
-        ><i class="fa-solid fa-bell"></i>Powiadomienia<span th:if="${session.loggedInUser.notifications.size() > 0}" class="countNotifications" th:text="${session.loggedInUser.notifications.size()}"></span></a>
+        ><i class="fa-solid fa-bell"></i>Powiadomienia<span th:if="${session.loggedInUser.numberOfNotifications  > 0}" class="countNotifications" th:text="${session.loggedInUser.numberOfNotifications }"></span></a>
         <a data-aos="fade-right" data-aos-delay="550" class="nav-link" th:href="@{/account}"
         ><i class="fa-solid fa-user"></i>Moje Konto</a
         >

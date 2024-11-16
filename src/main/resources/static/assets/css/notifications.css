@@ -193,12 +193,18 @@ h2 {
   align-items: center;
   flex-direction: column;
   margin-bottom: 15px;
-  background: linear-gradient(135deg, rgba(77, 42, 111, 0.82), rgba(3, 68, 90, 0.9));
   padding: 20px 25px;
   border-radius: 15px;
   gap: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification.seen {
+  background: linear-gradient(135deg, rgba(77, 42, 111, 0.82), rgba(3, 68, 90, 0.9));
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification.notSeen {
+  background: linear-gradient(135deg, rgba(233, 30, 98, 0.775), rgba(16, 82, 104, 0.9));
+  border: 1px solid rgb(192, 192, 219);
 }
 .notifications .hero-img .box-notifications .box-container .container-notifications .notification:hover {
   transform: translateY(-5px);

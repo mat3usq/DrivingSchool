@@ -39,8 +39,9 @@
                 <div class="box-container">
                     <p class="title" data-aos="fade-down" data-aos-delay="100">Powiadomienia</p>
                     <div data-aos="zoom-in" data-aos-delay="150" class="container-notifications">
-                        <p th:if="${user.notifications.isEmpty()}" class="mini-title">Brak Powiadomień</p>
-                        <div class="notification" th:each="notification : ${user.notifications}">
+                        <p th:if="${notifications.isEmpty()}" class="mini-title">Brak Powiadomień</p>
+                        <div class="notification" th:each="notification : ${notifications}"
+                             th:classappend="${notification.status == T(com.driving.school.model.Constants).NOTIFICATION_NOT_SEEN} ? 'notSeen' : 'seen'">
                             <div class="box">
                                 <span class="content" th:text="${notification.content}">komentarz</span>
                                 <span class="time"
