@@ -4,6 +4,7 @@ import com.driving.school.model.*;
 import com.driving.school.repository.InstructionEventRepository;
 import com.driving.school.service.InstructorEventService;
 import com.driving.school.service.MentorShipService;
+import com.driving.school.service.NotificationService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,13 +26,15 @@ public class CalendarController {
     private final InstructionEventRepository instructionEventRepository;
     private final InstructorEventService instructorEventService;
     private final MentorShipService mentorShipService;
+    private final NotificationService notificationService;
 
     @Autowired
     public CalendarController(InstructionEventRepository instructionEventRepository, InstructorEventService instructorEventService,
-                              MentorShipService mentorShipService) {
+                              MentorShipService mentorShipService, NotificationService notificationService) {
         this.instructionEventRepository = instructionEventRepository;
         this.instructorEventService = instructorEventService;
         this.mentorShipService = mentorShipService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("")
@@ -130,6 +133,7 @@ public class CalendarController {
             event.setEventCapacity(0);
         event.setAvailableEventSlots(event.getEventCapacity());
         instructionEventRepository.save(event);
+        notificationService.sendNotificationWhenInstructorCreateNewEvent(event);
         YearMonth yearMonth = YearMonth.from(event.getStartTime());
         return getCalendarModelAndView(yearMonth, event.getStartTime(), session, authentication);
     }

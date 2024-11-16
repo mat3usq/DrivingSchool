@@ -51,7 +51,7 @@ public class LectureController {
                 }
             });
         });
-        lectureService.save(lecture, ((SchoolUser) session.getAttribute("loggedInUser")).getCurrentCategory());
+        lectureService.save(lecture, (SchoolUser) session.getAttribute("loggedInUser"));
         return "redirect:/lecture";
     }
 

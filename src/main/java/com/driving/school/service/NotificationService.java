@@ -1,12 +1,15 @@
 package com.driving.school.service;
 
 import com.driving.school.model.*;
+import com.driving.school.repository.MentorShipRepository;
 import com.driving.school.repository.NotificationRepository;
 import com.driving.school.repository.SchoolUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,12 +17,14 @@ import java.util.stream.Collectors;
 public class NotificationService {
     private final SchoolUserRepository schoolUserRepository;
     private final NotificationRepository notificationRepository;
+    private final MentorShipRepository mentorShipRepository;
 
     @Autowired
     public NotificationService(SchoolUserRepository schoolUserRepository,
-                               NotificationRepository notificationRepository) {
+                               NotificationRepository notificationRepository, MentorShipRepository mentorShipRepository) {
         this.schoolUserRepository = schoolUserRepository;
         this.notificationRepository = notificationRepository;
+        this.mentorShipRepository = mentorShipRepository;
     }
 
     private void createNotification(SchoolUser schoolUser, String content) {
@@ -241,7 +246,6 @@ public class NotificationService {
                         **Szczegóły Kursu:*
                         - Opis: %s
                         - Kategoria: %s
-                        - Data rozpoczęcia: %s
                         - Czas trwania: %.2f godzin
 
                         Możesz rowniez zarządzać sesjami jazdy, testami oraz komentarzami związanymi z tym kursem.
@@ -250,7 +254,6 @@ public class NotificationService {
                 instructor.getName(),
                 course.getDescription(),
                 course.getCategory(),
-                course.getStartedAt(),
                 course.getDuration()
         );
 
@@ -263,7 +266,6 @@ public class NotificationService {
                         **Szczegóły Kursu:**
                         - Opis: %s
                         - Kategoria: %s
-                        - Data rozpoczęcia: %s
                         - Czas trwania: %.2f godzin
 
                         Możesz teraz uczestniczyć w sesjach jazdy, testach oraz dodawać komentarze związane z tym kursem.
@@ -274,7 +276,6 @@ public class NotificationService {
                 instructor.getEmail(),
                 course.getDescription(),
                 course.getCategory(),
-                course.getStartedAt(),
                 course.getDuration()
         );
 
@@ -295,7 +296,6 @@ public class NotificationService {
                         Utworzyłeś nową sesję jazdy do kursu o komenatrzu: "%s" dla studenta %s <%s>.
 
                         **Szczegóły Sesji Jazdy:**
-                        - Data i godzina: %s
                         - Czas trwania: %.2f godzin
                         - Komentarz: "%s"
 
@@ -306,7 +306,6 @@ public class NotificationService {
                 course.getDescription(),
                 student.getName(),
                 student.getEmail(),
-                drivingSession.getSessionDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm")),
                 drivingSession.getDurationHours(),
                 drivingSession.getInstructorComment()
         );
@@ -318,7 +317,6 @@ public class NotificationService {
                         Instruktor %s <%s> dodal nową sesję jazdy przypisaną do Twojego kursu o komentarzu: "%s".
 
                         **Szczegóły Sesji Jazdy:**
-                        - Data i godzina: %s
                         - Czas trwania: %.2f godzin
                         - Komentarz Instruktora: "%s"
 
@@ -327,7 +325,6 @@ public class NotificationService {
                 instructor.getName(),
                 instructor.getEmail(),
                 course.getDescription(),
-                drivingSession.getSessionDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm")),
                 drivingSession.getDurationHours(),
                 drivingSession.getInstructorComment()
         );
@@ -337,21 +334,18 @@ public class NotificationService {
     }
 
     public void sendNotificationWhenInstructorCreateTestCourse(TestCourse testCourse) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm");
         Course course = testCourse.getCourse();
         MentorShip mentorShip = course.getMentorShip();
         SchoolUser instructor = mentorShip.getInstructor();
         SchoolUser student = mentorShip.getStudent();
-        String formattedTestDate = testCourse.getTestDate().format(formatter);
 
         String contentForInstructor = String.format(
                 """
                         📩 Witaj, %s!
-                        
+                                                
                         Utworzyłeś nowy wyniki testu w kursie o komenatrzu: "%s" dla studenta %s <%s>.
 
                         **Szczegóły Testu:**
-                        - Data i godzina: %s
                         - Typ Testu: %s
                         - Wynik Testu: %.2f
                         - Komentarz: "%s"
@@ -363,7 +357,6 @@ public class NotificationService {
                 course.getDescription(),
                 student.getName(),
                 student.getEmail(),
-                formattedTestDate,
                 testCourse.getTestType(),
                 testCourse.getTestResult(),
                 testCourse.getInstructorComment()
@@ -376,17 +369,15 @@ public class NotificationService {
                         Instruktor %s <%s> dodał nowy wynik testu przypisany do Twojego kursu o komenatrzu: "%s".
                             
                         **Szczegóły Testu:**
-                        - Data i godzina: %s
                         - Typ Testu: %s
                         - Wynik Testu: %.2f
                         - Komentarz Instruktora: "%s"
-                       
+                                               
                         Życzymy powodzenia!""",
                 student.getName(),
                 instructor.getName(),
                 instructor.getEmail(),
                 course.getDescription(),
-                formattedTestDate,
                 testCourse.getTestType(),
                 testCourse.getTestResult(),
                 testCourse.getInstructorComment()
@@ -395,4 +386,67 @@ public class NotificationService {
 //        createNotification(instructor, contentForInstructor);
         createNotification(student, contentForStudent);
     }
+
+    public void sendNotificationWhenInstructorCreateNewLecture(SchoolUser user) {
+        List<SchoolUser> usersToNotify = schoolUserRepository.findUsersByCategoryName(user.getCurrentCategory());
+
+        String content = String.format(
+                """
+                        📩 Witaj!
+                                
+                        Instruktor %s <%s> dodał nowy dział o kategorii "%s". Możesz teraz przeglądać nowy materiał w sekcji wykładów.
+                                
+                        Życzymy owocnej Nauki!
+                        """,
+                user.getName(),
+                user.getEmail(),
+                user.getCurrentCategory()
+        );
+
+        for (SchoolUser notifyUser : usersToNotify)
+            createNotification(notifyUser, content);
+    }
+
+    public void sendNotificationWhenInstructorCreateNewEvent(InstructionEvent event) {
+        List<MentorShip> mentorShips = mentorShipRepository.findAllByInstructorAndStatus(event.getInstructor(), Constants.ACTIVE);
+        SchoolUser instructor = event.getInstructor();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm");
+        String formattedStartTime = event.getStartTime().format(formatter);
+        String formattedEndTime = event.getEndTime().format(formatter);
+
+        for (MentorShip mentorShip : mentorShips) {
+            SchoolUser student = mentorShip.getStudent();
+
+            String contentForStudent = String.format(
+                    """
+                            📩 Witaj, %s!
+    
+                            Instruktor %s <%s> dodał nowe spotkanie.
+    
+                            **Szczegóły Wydarzenia:**
+                            - Temat: "%s"
+                            - Typ Wydarzenia: "%s"
+                            - Rozpoczęcie: %s
+                            - Zakończenie: %s
+                            - Dostępne miejsca: %d
+    
+                            Zachęcamy do udziału w wydarzeniu. Prosimy o zapisanie się i punktualne stawienie się na umówione miejsce.
+    
+                            Życzymy powodzenia!
+                            """,
+                    student.getName(),
+                    instructor.getName(),
+                    instructor.getEmail(),
+                    event.getSubject(),
+                    event.getEventType(),
+                    formattedStartTime,
+                    formattedEndTime,
+                    event.getAvailableEventSlots()
+            );
+
+
+            createNotification(student, contentForStudent);
+        }
+    }
+
 }

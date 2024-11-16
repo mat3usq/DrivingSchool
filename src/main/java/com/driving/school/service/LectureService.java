@@ -1,8 +1,6 @@
 package com.driving.school.service;
 
-import com.driving.school.model.Lecture;
-import com.driving.school.model.Subject;
-import com.driving.school.model.Sublecture;
+import com.driving.school.model.*;
 import com.driving.school.repository.LectureRepository;
 import com.driving.school.repository.SubjectRepository;
 import com.driving.school.repository.SublectureRepository;
@@ -17,12 +15,14 @@ public class LectureService {
     private final LectureRepository lectureRepository;
     private final SublectureRepository sublectureRepository;
     private final SubjectRepository subjectRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public LectureService(LectureRepository lectureRepository, SublectureRepository sublectureRepository, SubjectRepository subjectRepository) {
+    public LectureService(LectureRepository lectureRepository, SublectureRepository sublectureRepository, SubjectRepository subjectRepository, NotificationService notificationService) {
         this.lectureRepository = lectureRepository;
         this.sublectureRepository = sublectureRepository;
         this.subjectRepository = subjectRepository;
+        this.notificationService = notificationService;
     }
 
     public List<Lecture> findAllByCategory(String category) {
@@ -35,7 +35,8 @@ public class LectureService {
         return lectures;
     }
 
-    public void save(Lecture lecture, String category) {
+    public void save(Lecture lecture, SchoolUser user) {
+        String category = user.getCurrentCategory();
         lecture.setCategory(category);
         renumberLecture(lecture);
         lecture.getSublectures().forEach(sl -> {
@@ -49,6 +50,9 @@ public class LectureService {
                 subjectRepository.save(s);
             });
         });
+
+        if (user.getRoleName().equals(Constants.INSTRUCTOR_ROLE))
+            notificationService.sendNotificationWhenInstructorCreateNewLecture(user);
     }
 
     public void update(Lecture lecture) {
