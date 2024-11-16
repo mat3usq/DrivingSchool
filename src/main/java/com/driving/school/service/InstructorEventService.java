@@ -1,6 +1,7 @@
 package com.driving.school.service;
 
 
+import com.driving.school.model.Constants;
 import com.driving.school.model.InstructionEvent;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.repository.InstructionEventRepository;
@@ -20,6 +21,8 @@ public class InstructorEventService {
 
     @Autowired
     SchoolUserRepository schoolUserRepository;
+    @Autowired
+    private NotificationService notificationService;
 
     public InstructorEventService(InstructionEventRepository instructionEventRepository, SchoolUserRepository schoolUserRepository) {
         this.instructionEventRepository = instructionEventRepository;
@@ -38,7 +41,7 @@ public class InstructorEventService {
         return instructionEventRepository.findAll();
     }
 
-    public InstructionEvent updateInstructionEvent(Long id, InstructionEvent instructionEventDetails) {
+    public InstructionEvent updateInstructionEvent(Long id, InstructionEvent instructionEventDetails, SchoolUser user) {
         Optional<InstructionEvent> optionalInstructionEvent = instructionEventRepository.findById(id);
 
         if (optionalInstructionEvent.isPresent()) {
@@ -61,6 +64,9 @@ public class InstructorEventService {
                 instructionEvent.setEventCapacity(instructionEventDetails.getEventCapacity());
                 instructionEvent.setAvailableEventSlots(instructionEvent.getAvailableEventSlots() + diffSlots);
             }
+
+            if (user.getRoleName().equals(Constants.INSTRUCTOR_ROLE))
+                notificationService.sendNotificationToUsersAreAssignedWhenInstructorUpdateEvent(instructionEvent);
 
             return instructionEventRepository.save(instructionEvent);
         } else {

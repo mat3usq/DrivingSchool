@@ -119,7 +119,6 @@ public class CalendarController {
         if (mentorShipService.existsByStudentAndInstructor(user, event.getInstructor()))
             if (event.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId()))) {
                 instructorEventService.removeStudentFromInstructionEvent(eventId, user.getId());
-                event.setAvailableEventSlots(event.getAvailableEventSlots() + 1);
                 instructionEventRepository.save(event);
             }
 
@@ -171,8 +170,8 @@ public class CalendarController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         InstructionEvent event = (InstructionEvent) session.getAttribute("eventToEdit");
 
-        if ((event != null && user.getId().equals(event.getInstructor().getId())) || user.getRoleName().equals(Constants.ADMIN_ROLE))
-            instructorEventService.updateInstructionEvent(event.getId(), editedEvent);
+        if (event != null && (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)))
+            instructorEventService.updateInstructionEvent(event.getId(), editedEvent, user);
 
         return getCalendarModelAndView(YearMonth.from(editedEvent.getStartTime()), editedEvent.getStartTime(), session, authentication);
     }

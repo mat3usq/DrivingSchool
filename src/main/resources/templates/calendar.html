@@ -91,9 +91,8 @@
                         <div class="events">
                             <div th:each="event : ${events}" class="event" th:id="'event-'+${event.id}"
                                  onclick="toggleEvent(this)">
-                                <th:block sec:authorize="hasRole('ROLE_STUDENT')"
-                                          th:if="${event.getAvailableEventSlots != 0}">
-                                    <form th:if="${!event.isAssigned}" class="assign-form"
+                                <th:block sec:authorize="hasRole('ROLE_STUDENT')">
+                                    <form th:if="${!event.isAssigned and event.availableEventSlots != 0}" class="assign-form"
                                           th:action="@{/calendar/student/assignEvent}" method="post">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
                                         <button type="submit">

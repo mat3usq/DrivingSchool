@@ -413,40 +413,71 @@ public class NotificationService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm");
         String formattedStartTime = event.getStartTime().format(formatter);
         String formattedEndTime = event.getEndTime().format(formatter);
+        String contentForStudent = String.format(
+                """
+                        📩 Witaj!
 
-        for (MentorShip mentorShip : mentorShips) {
-            SchoolUser student = mentorShip.getStudent();
+                        Instruktor %s <%s> dodał nowe spotkanie.
 
-            String contentForStudent = String.format(
-                    """
-                            📩 Witaj, %s!
-    
-                            Instruktor %s <%s> dodał nowe spotkanie.
-    
-                            **Szczegóły Wydarzenia:**
-                            - Temat: "%s"
-                            - Typ Wydarzenia: "%s"
-                            - Rozpoczęcie: %s
-                            - Zakończenie: %s
-                            - Dostępne miejsca: %d
-    
-                            Zachęcamy do udziału w wydarzeniu. Prosimy o zapisanie się i punktualne stawienie się na umówione miejsce.
-    
-                            Życzymy powodzenia!
-                            """,
-                    student.getName(),
-                    instructor.getName(),
-                    instructor.getEmail(),
-                    event.getSubject(),
-                    event.getEventType(),
-                    formattedStartTime,
-                    formattedEndTime,
-                    event.getAvailableEventSlots()
-            );
+                        **Szczegóły Wydarzenia:**
+                        - Temat: "%s"
+                        - Typ Wydarzenia: "%s"
+                        - Rozpoczęcie: %s
+                        - Zakończenie: %s
+                        - Dostępne miejsca: %d
 
+                        Zachęcamy do udziału w wydarzeniu. Prosimy o zapisanie się i punktualne stawienie się na umówione miejsce.
 
-            createNotification(student, contentForStudent);
-        }
+                        Życzymy powodzenia!
+                        """,
+                instructor.getName(),
+                instructor.getEmail(),
+                event.getSubject(),
+                event.getEventType(),
+                formattedStartTime,
+                formattedEndTime,
+                event.getAvailableEventSlots()
+        );
+
+        for (MentorShip mentorShip : mentorShips)
+            createNotification(mentorShip.getStudent(), contentForStudent);
     }
 
+    public void sendNotificationToUsersAreAssignedWhenInstructorUpdateEvent(InstructionEvent event){
+        List<SchoolUser> usersToNotify = event.getStudents();
+        SchoolUser instructor = event.getInstructor();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm");
+        String formattedStartTime = event.getStartTime().format(formatter);
+        String formattedEndTime = event.getEndTime().format(formatter);
+        String contentForStudent = String.format(
+                """
+                        📩 Witaj!
+
+                        Instruktor %s <%s> zaktualizowal spotkanie na które byles zapisany.
+
+                        **Szczegóły Zaktualizowanego Wydarzenia:**
+                        - Temat: "%s"
+                        - Typ Wydarzenia: "%s"
+                        - Rozpoczęcie: %s
+                        - Zakończenie: %s
+                        - Wszystkie miejsca: %d
+                        - Dostępne miejsca: %d
+
+                        Zachęcamy do udziału w wydarzeniu. Prosimy o zapisanie się i punktualne stawienie się na umówione miejsce.
+
+                        Życzymy powodzenia!
+                        """,
+                instructor.getName(),
+                instructor.getEmail(),
+                event.getSubject(),
+                event.getEventType(),
+                formattedStartTime,
+                formattedEndTime,
+                event.getEventCapacity(),
+                event.getAvailableEventSlots()
+        );
+
+        for (SchoolUser user : usersToNotify)
+            createNotification(user, contentForStudent);
+    }
 }
