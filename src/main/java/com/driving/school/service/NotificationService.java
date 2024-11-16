@@ -6,6 +6,7 @@ import com.driving.school.repository.SchoolUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -226,4 +227,172 @@ public class NotificationService {
         createNotification(student, contentForStudent);
     }
 
+    public void sendNotificationWhenInstructorCreateCourse(Course course) {
+        MentorShip mentorShip = course.getMentorShip();
+        SchoolUser instructor = mentorShip.getInstructor();
+        SchoolUser student = mentorShip.getStudent();
+
+        String contentForInstructor = String.format(
+                """
+                        📩 Witaj, %s!
+
+                        Pomyślnie utworzyłeś nowy kurs.
+
+                        **Szczegóły Kursu:*
+                        - Opis: %s
+                        - Kategoria: %s
+                        - Data rozpoczęcia: %s
+                        - Czas trwania: %.2f godzin
+
+                        Możesz rowniez zarządzać sesjami jazdy, testami oraz komentarzami związanymi z tym kursem.
+
+                        Dziękujemy za Twoje zaangażowanie!""",
+                instructor.getName(),
+                course.getDescription(),
+                course.getCategory(),
+                course.getStartedAt(),
+                course.getDuration()
+        );
+
+        String contentForStudent = String.format(
+                """
+                        📩 Witaj, %s!
+
+                        Instruktor %s <%s> własnie utworzył dla ciebie nowy kurs, który jest przypisany do waszej wspołpracy.
+
+                        **Szczegóły Kursu:**
+                        - Opis: %s
+                        - Kategoria: %s
+                        - Data rozpoczęcia: %s
+                        - Czas trwania: %.2f godzin
+
+                        Możesz teraz uczestniczyć w sesjach jazdy, testach oraz dodawać komentarze związane z tym kursem.
+
+                        Życzymy powodzenia!""",
+                student.getName(),
+                instructor.getName(),
+                instructor.getEmail(),
+                course.getDescription(),
+                course.getCategory(),
+                course.getStartedAt(),
+                course.getDuration()
+        );
+
+        createNotification(instructor, contentForInstructor);
+        createNotification(student, contentForStudent);
+    }
+
+    public void sendNotificationWhenInstructorCreateDrivingSession(DrivingSession drivingSession) {
+        Course course = drivingSession.getCourse();
+        MentorShip mentorShip = course.getMentorShip();
+        SchoolUser instructor = mentorShip.getInstructor();
+        SchoolUser student = mentorShip.getStudent();
+
+        String contentForInstructor = String.format(
+                """
+                        📩 Witaj, %s!
+
+                        Utworzyłeś nową sesję jazdy do kursu o komenatrzu: "%s" dla studenta %s <%s>.
+
+                        **Szczegóły Sesji Jazdy:**
+                        - Data i godzina: %s
+                        - Czas trwania: %.2f godzin
+                        - Komentarz: "%s"
+
+                        Możesz teraz zarządzać tą sesją jazdy oraz monitorować postępy studenta.
+
+                        Dziękujemy za Twoje zaangażowanie!""",
+                instructor.getName(),
+                course.getDescription(),
+                student.getName(),
+                student.getEmail(),
+                drivingSession.getSessionDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm")),
+                drivingSession.getDurationHours(),
+                drivingSession.getInstructorComment()
+        );
+
+        String contentForStudent = String.format(
+                """
+                        📩 Witaj, %s!
+
+                        Instruktor %s <%s> dodal nową sesję jazdy przypisaną do Twojego kursu o komentarzu: "%s".
+
+                        **Szczegóły Sesji Jazdy:**
+                        - Data i godzina: %s
+                        - Czas trwania: %.2f godzin
+                        - Komentarz Instruktora: "%s"
+
+                        Życzymy powodzenia!""",
+                student.getName(),
+                instructor.getName(),
+                instructor.getEmail(),
+                course.getDescription(),
+                drivingSession.getSessionDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm")),
+                drivingSession.getDurationHours(),
+                drivingSession.getInstructorComment()
+        );
+
+//        createNotification(instructor, contentForInstructor);
+        createNotification(student, contentForStudent);
+    }
+
+    public void sendNotificationWhenInstructorCreateTestCourse(TestCourse testCourse) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm");
+        Course course = testCourse.getCourse();
+        MentorShip mentorShip = course.getMentorShip();
+        SchoolUser instructor = mentorShip.getInstructor();
+        SchoolUser student = mentorShip.getStudent();
+        String formattedTestDate = testCourse.getTestDate().format(formatter);
+
+        String contentForInstructor = String.format(
+                """
+                        📩 Witaj, %s!
+                        
+                        Utworzyłeś nowy wyniki testu w kursie o komenatrzu: "%s" dla studenta %s <%s>.
+
+                        **Szczegóły Testu:**
+                        - Data i godzina: %s
+                        - Typ Testu: %s
+                        - Wynik Testu: %.2f
+                        - Komentarz: "%s"
+                            
+                        Możesz teraz zarządzać wynikami testów oraz monitorować postępy studenta.
+                            
+                        Dziękujemy za Twoje zaangażowanie!""",
+                instructor.getName(),
+                course.getDescription(),
+                student.getName(),
+                student.getEmail(),
+                formattedTestDate,
+                testCourse.getTestType(),
+                testCourse.getTestResult(),
+                testCourse.getInstructorComment()
+        );
+
+        String contentForStudent = String.format(
+                """
+                        📩 Witaj, %s!
+                            
+                        Instruktor %s <%s> dodał nowy wynik testu przypisany do Twojego kursu o komenatrzu: "%s".
+                            
+                        **Szczegóły Testu:**
+                        - Data i godzina: %s
+                        - Typ Testu: %s
+                        - Wynik Testu: %.2f
+                        - Komentarz Instruktora: "%s"
+                       
+                        Życzymy powodzenia!""",
+                student.getName(),
+                instructor.getName(),
+                instructor.getEmail(),
+                course.getDescription(),
+                formattedTestDate,
+                testCourse.getTestType(),
+                testCourse.getTestResult(),
+                testCourse.getInstructorComment()
+        );
+
+//        createNotification(instructor, contentForInstructor);
+        createNotification(student, contentForStudent);
+    }
 }

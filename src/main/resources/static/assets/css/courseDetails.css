@@ -575,6 +575,7 @@ h2 {
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time {
   display: inline-block;
   white-space: nowrap;
+  margin-left: auto;
 }
 .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time .hours {
   font-weight: bold;
@@ -844,6 +845,7 @@ h2 {
 .details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult {
   display: inline-block;
   white-space: nowrap;
+  margin-left: auto;
 }
 .details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult .percentages {
   font-weight: bold;

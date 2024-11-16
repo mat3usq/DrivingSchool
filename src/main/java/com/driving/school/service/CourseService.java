@@ -21,11 +21,13 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final CommentCourseRepository commentCourseRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, CommentCourseRepository commentCourseRepository) {
+    public CourseService(CourseRepository courseRepository, CommentCourseRepository commentCourseRepository, NotificationService notificationService) {
         this.courseRepository = courseRepository;
         this.commentCourseRepository = commentCourseRepository;
+        this.notificationService = notificationService;
     }
 
     public void createCourse(Course course) {
@@ -81,5 +83,10 @@ public class CourseService {
     public void deleteCourse(Long id) {
         Optional<Course> course = courseRepository.findById(id);
         course.ifPresent(courseRepository::delete);
+    }
+
+    public void instructorCreateNewCourse(Course course) {
+        createCourse(course);
+        notificationService.sendNotificationWhenInstructorCreateCourse(course);
     }
 }

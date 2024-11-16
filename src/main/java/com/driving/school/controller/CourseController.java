@@ -2,10 +2,7 @@ package com.driving.school.controller;
 
 import com.driving.school.model.*;
 import com.driving.school.repository.CommentCourseRepository;
-import com.driving.school.service.CourseService;
-import com.driving.school.service.DrivingSessionService;
-import com.driving.school.service.MentorShipService;
-import com.driving.school.service.TestCourseService;
+import com.driving.school.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,7 +62,7 @@ public class CourseController {
 
         if (optMs.isPresent() && optMs.get().getInstructor().equals(instructor)) {
             course.setMentorShip(optMs.get());
-            courseService.createCourse(course);
+            courseService.instructorCreateNewCourse(course);
         }
 
         return dashboardController.showStudentForInstructor(mentorShipId, session);
@@ -160,7 +157,10 @@ public class CourseController {
                 course.get().getMentorShip().getInstructor().equals(user) ||
                         user.getRoleName().equals(Constants.ADMIN_ROLE)
         )) {
-            drivingSessionService.createDrivingSession(newDrivingSession, course.get());
+            if (user.getRoleName().equals(Constants.ADMIN_ROLE))
+                drivingSessionService.createDrivingSession(newDrivingSession, course.get());
+            else
+                drivingSessionService.instructorCreateDrivingSession(newDrivingSession, course.get());
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
@@ -241,7 +241,10 @@ public class CourseController {
         if (course.isPresent() && (
                 course.get().getMentorShip().getInstructor().equals(user) ||
                         user.getRoleName().equals(Constants.ADMIN_ROLE))) {
-            testCourseService.createTestCourse(newTestCourse, course.get());
+            if (user.getRoleName().equals(Constants.ADMIN_ROLE))
+                testCourseService.createTestCourse(newTestCourse, course.get());
+            else
+                testCourseService.instructorCreateTestCourse(newTestCourse, course.get());
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());

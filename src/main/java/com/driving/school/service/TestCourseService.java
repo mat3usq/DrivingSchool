@@ -15,12 +15,14 @@ public class TestCourseService {
 
     private final TestCourseRepository testCourseRepository;
     private final CourseRepository courseRepository;
+    private final NotificationService notificationService;
 
     @Autowired
     public TestCourseService(TestCourseRepository testCourseRepository,
-                             CourseRepository courseRepository) {
+                             CourseRepository courseRepository, NotificationService notificationService) {
         this.testCourseRepository = testCourseRepository;
         this.courseRepository = courseRepository;
+        this.notificationService = notificationService;
     }
 
     public List<TestCourse> getAllTestCoursesByCourse(Course course) {
@@ -65,5 +67,10 @@ public class TestCourseService {
                 .average()
                 .orElse(0.0));
         courseRepository.save(course);
+    }
+
+    public void instructorCreateTestCourse(TestCourse newTestCourse, Course course) {
+        createTestCourse(newTestCourse, course);
+        notificationService.sendNotificationWhenInstructorCreateTestCourse(newTestCourse);
     }
 }

@@ -16,11 +16,13 @@ public class DrivingSessionService {
 
     private final DrivingSessionRepository drivingSessionRepository;
     private final CourseRepository courseRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public DrivingSessionService(DrivingSessionRepository drivingSessionRepository, CourseRepository courseRepository) {
+    public DrivingSessionService(DrivingSessionRepository drivingSessionRepository, CourseRepository courseRepository, NotificationService notificationService) {
         this.drivingSessionRepository = drivingSessionRepository;
         this.courseRepository = courseRepository;
+        this.notificationService = notificationService;
     }
 
     public void createDrivingSession(DrivingSession drivingSession, Course course) {
@@ -65,5 +67,10 @@ public class DrivingSessionService {
                 .mapToDouble(DrivingSession::getDurationHours)
                 .sum());
         courseRepository.save(course);
+    }
+
+    public void instructorCreateDrivingSession(DrivingSession newDrivingSession, Course course) {
+        createDrivingSession(newDrivingSession, course);
+        notificationService.sendNotificationWhenInstructorCreateDrivingSession(newDrivingSession);
     }
 }
