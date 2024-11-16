@@ -15,11 +15,13 @@ import java.util.Optional;
 
 @Service
 public class MentorShipService {
+    private final NotificationService notificationService;
     MentorShipRepository mentorShipRepository;
 
     @Autowired
-    public MentorShipService(MentorShipRepository mentorShipRepository) {
+    public MentorShipService(MentorShipRepository mentorShipRepository, NotificationService notificationService) {
         this.mentorShipRepository = mentorShipRepository;
+        this.notificationService = notificationService;
     }
 
     public List<MentorShip> findByStudentId(Long studentId) {
@@ -111,5 +113,42 @@ public class MentorShipService {
             mentorShip.setEndAt(null);
             mentorShipRepository.save(mentorShip);
         }
+    }
+
+    public void studentAssignsToInstructor(SchoolUser student, SchoolUser instructor) {
+        createMentorShipWithStatus(student, instructor, Constants.PENDING);
+        notificationService.sendNotificationWhenStudentAssignsToInstructor(student, instructor);
+    }
+
+    public void studentCancelMentorshipWithInstructor(MentorShip mentorShip) {
+        deleteMentorShipById(mentorShip.getId());
+        notificationService.sendNotificationWhenStudentCancelMentorship(mentorShip.getStudent(), mentorShip.getInstructor());
+    }
+
+    public boolean instructorCreateMentorshipWithStudent(SchoolUser student, SchoolUser instructor) {
+        boolean result = createMentorShipWithStatus(student, instructor, Constants.ACTIVE);
+        if (result)
+            notificationService.sendNotificationWhenInstructorCreateMentorshipWithStudent(student, instructor);
+        return result;
+    }
+
+    public void instructorAcceptMentorshipWithStudent(MentorShip mentorShip) {
+        acceptStudent(mentorShip.getId());
+        notificationService.sendNotificationWhenInstructorAcceptMentorshipWithStudent(mentorShip.getStudent(), mentorShip.getInstructor());
+    }
+
+    public void instructorCancelMentorshipWithStudent(MentorShip mentorShip) {
+        deleteMentorShipById(mentorShip.getId());
+        notificationService.sendNotificationWhenInstructorCancelMentorshipWithStudent(mentorShip.getStudent(), mentorShip.getInstructor());
+    }
+
+    public void instructorFinishMentorshipWithStudent(MentorShip mentorShip) {
+        finishMentorShip(mentorShip.getId());
+        notificationService.sendNotificationWhenInstructorFinishMentorshipWithStudent(mentorShip.getStudent(), mentorShip.getInstructor());
+    }
+
+    public void instructorBackToActiveMentorshipWithStudent(MentorShip mentorShip) {
+        backToActiveMentorShip(mentorShip.getId());
+        notificationService.sendNotificationWhenInstructorMakeMentorshipActiveAgainWithStudent(mentorShip.getStudent(), mentorShip.getInstructor());
     }
 }

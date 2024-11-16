@@ -156,6 +156,7 @@ public class SchoolUserService {
 
             payment.setSchoolUser(schoolUser);
             paymentRepository.save(payment);
+            notificationService.sendNotificationWhenUserReceivePayment(payment);
 
             Set<Long> existingCategoryIds = availableCategories.stream()
                     .map(Category::getId)

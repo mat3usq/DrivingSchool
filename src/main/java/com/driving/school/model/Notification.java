@@ -23,7 +23,7 @@ public class Notification {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", length = 1000)
     private String content;
 
     @Column(name = "STATUS")

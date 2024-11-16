@@ -3,6 +3,7 @@ package com.driving.school.controller;
 import com.driving.school.model.*;
 import com.driving.school.repository.CategoryRepository;
 import com.driving.school.repository.CourseRepository;
+import com.driving.school.service.NotificationService;
 import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.MentorShipService;
 import jakarta.servlet.http.HttpSession;
@@ -23,13 +24,15 @@ public class DashboardController {
     private final MentorShipService mentorShipService;
     private final CategoryRepository categoryRepository;
     private final CourseRepository courseRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService, CategoryRepository categoryRepository, CourseRepository courseRepository) {
+    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService, CategoryRepository categoryRepository, CourseRepository courseRepository, NotificationService notificationService) {
         this.schoolUserService = schoolUserService;
         this.mentorShipService = mentorShipService;
         this.categoryRepository = categoryRepository;
         this.courseRepository = courseRepository;
+        this.notificationService = notificationService;
     }
 
     // FOR ALL USERS
@@ -109,7 +112,10 @@ public class DashboardController {
     @PostMapping("/dashboard/student/assignInstructor")
     public ModelAndView assignInstructor(@RequestParam("selectedInstructor") Long instructorId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
-        mentorShipService.createMentorShipWithStatus((SchoolUser) session.getAttribute("loggedInUser"), schoolUserService.findUserById(instructorId), Constants.PENDING);
+        SchoolUser student = (SchoolUser) session.getAttribute("loggedInUser");
+        SchoolUser instructor = schoolUserService.findUserById(instructorId);
+        if (instructor != null)
+            mentorShipService.studentAssignsToInstructor(student, instructor);
         return modelAndView;
     }
 
@@ -119,7 +125,7 @@ public class DashboardController {
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getStudent().getId()))
-            mentorShipService.deleteMentorShipById(mentorShipId);
+            mentorShipService.studentCancelMentorshipWithInstructor(ms.get());
         return modelAndView;
     }
 
@@ -147,12 +153,13 @@ public class DashboardController {
     public ModelAndView assignStudent(@RequestParam("studentEmail") String studentEmail, HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         SchoolUser studentUser = schoolUserService.findUserByEmail(studentEmail);
-        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        SchoolUser instructorUser = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (studentUser != null && loggedInUser.getRoleName().equals(Constants.INSTRUCTOR_ROLE) && mentorShipService.createMentorShipWithStatus(studentUser, loggedInUser, Constants.ACTIVE))
-            redirectAttributes.addFlashAttribute("assignStudentInfo", "Pomyślnie dodano studenta!");
-        else
-            redirectAttributes.addFlashAttribute("assignStudentInfo", "Nie udało się dodać studenta.");
+        if (studentUser != null && instructorUser.getRoleName().equals(Constants.INSTRUCTOR_ROLE))
+            if (mentorShipService.instructorCreateMentorshipWithStudent(studentUser, instructorUser))
+                redirectAttributes.addFlashAttribute("assignStudentInfo", "Pomyślnie dodano studenta!");
+            else
+                redirectAttributes.addFlashAttribute("assignStudentInfo", "Nie udało się dodać studenta.");
 
         return modelAndView;
     }
@@ -163,7 +170,7 @@ public class DashboardController {
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId()))
-            mentorShipService.acceptStudent(mentorShipId);
+            mentorShipService.instructorAcceptMentorshipWithStudent(ms.get());
         return modelAndView;
     }
 
@@ -173,7 +180,7 @@ public class DashboardController {
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId()))
-            mentorShipService.deleteMentorShipById(mentorShipId);
+            mentorShipService.instructorCancelMentorshipWithStudent(ms.get());
         return modelAndView;
     }
 
@@ -183,7 +190,7 @@ public class DashboardController {
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId()))
-            mentorShipService.finishMentorShip(mentorShipId);
+            mentorShipService.instructorFinishMentorshipWithStudent(ms.get());
         return modelAndView;
     }
 
@@ -193,7 +200,7 @@ public class DashboardController {
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId()))
-            mentorShipService.backToActiveMentorShip(mentorShipId);
+            mentorShipService.instructorBackToActiveMentorshipWithStudent(ms.get());
         return modelAndView;
     }
 
