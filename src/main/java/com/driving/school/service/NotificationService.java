@@ -557,7 +557,7 @@ public class NotificationService {
             minutesLeft = Math.max(minutesLeft, 0);
 
             mainMessage = String.format(
-                    "Do spotkania, na które byłeś zapisany, z Instruktorem %s <%s> zostało jeszcze %d minut do rozpoczęcia! Mamy nadzieję, że pamiętałeś o nim.",
+                    "Do spotkania, na które byłeś zapisany z Instruktorem %s <%s> zostało jeszcze %d minut do rozpoczęcia! Mamy nadzieję, że pamiętałeś o nim.",
                     instructor.getName(),
                     instructor.getEmail(),
                     minutesLeft

@@ -61,20 +61,18 @@
 - Statystyki rozwiązanych testów
 
 1. W kursie przekierowanie skrolowalo do dolu (ogolnie sprawdzic wszedzie czy sie zjedza na dol)
-2. ogolnie front uporzadkowac, posprawdzac i pododawac walidacje
-3. Powiadomienia oraz Przypomnienia:
+2. ogolnie front uporzadkowac, posprawdzac i pododawac walidacje 
+
+- Powiadomienia oraz Przypomnienia:
    - promote goscia do wyzszej ragni powiadomienie
    - dodanie oplat 
    - zaakceptowanie/dodanie/usuniecie/zakonczenie/wznowienie mentorshiping
    - zrobienie kursu przez instruktora
-   - zakonczenie kursu
-   - dodanie komentarz do kursu
    - dodanie godzin jazdy do kursu
    - dodanie wynikow testow do kursu
    - dodanie materiałow w wykladzie przez instruktora
    - dodanie spotkania przez instruktora
    - przypomnienie o spotkaniu w kalendarzu(trzeba wziac pod uwage ze moze edytowac)
-
 - Walidacja przy rejestracji (dodanie pola confirm pwd, email)
 - Walidacja przy logowaniu (email, pwd)
 - Poprawka frontu + aktualnosci w dashboard

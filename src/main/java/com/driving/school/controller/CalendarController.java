@@ -149,8 +149,10 @@ public class CalendarController {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE))
+        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)) {
             instructionEventRepository.delete(event);
+            event.getStudents().forEach(s -> notificationService.cancelReminderForEvent(eventId, s.getId()));
+        }
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
@@ -188,8 +190,10 @@ public class CalendarController {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE))
+        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)) {
             instructorEventService.removeStudentFromInstructionEvent(eventId, studentId);
+            notificationService.cancelReminderForEvent(eventId, studentId);
+        }
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }

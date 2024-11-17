@@ -1,11 +1,11 @@
 package com.driving.school.service;
 
 
-import com.driving.school.model.Constants;
 import com.driving.school.model.InstructionEvent;
 import com.driving.school.model.SchoolUser;
 import com.driving.school.repository.InstructionEventRepository;
 import com.driving.school.repository.SchoolUserRepository;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +66,15 @@ public class InstructorEventService {
             }
 
             notificationService.sendNotificationToUsersAreAssignedWhenInstructorUpdateEvent(instructionEvent);
+
+            instructionEvent.getStudents().forEach(s -> {
+                notificationService.cancelReminderForEvent(instructionEvent.getId(), s.getId());
+                try {
+                    notificationService.scheduleReminderForEvent(instructionEvent, s);
+                } catch (SchedulerException e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
             return instructionEventRepository.save(instructionEvent);
         } else {

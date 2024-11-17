@@ -38,7 +38,7 @@ public class InstructionEvent {
     @JoinColumn(name = "INSTRUCTORID")
     private SchoolUser instructor;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "EVENTSTUDENTS",
             joinColumns = @JoinColumn(name = "EVENTID"),
