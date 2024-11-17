@@ -60,8 +60,20 @@
 - Dodanie strony error...
 - Statystyki rozwiązanych testów
 
-1. W kursie przekierowanie skrolowalo do dolu (ogolnie sprawdzic wszedzie czy sie zjedza na dol)
-2. ogolnie front uporzadkowac, posprawdzac i pododawac walidacje 
+1. Dodac walidacje oraz Przekierowanie skrolowalo do dolu (ogolnie sprawdzic wszedzie czy sie zjedza na dol):
+   - admin gdy wyszkuje kogos to powinien miec info czemu sie nie wyszukalo
+   - walidacja do dodawania platnosci
+   - dodanie info gdy admin/instruktor(ma info jak wpisze tylko poprwanie email) dodaje kogos do instrukra/studenta zeby bylo info czy sie dodalo czy nie kogos
+   - walidacja do dodawania edycji kursow
+   - walidacja do tworzenia edycji sesji jazd, wynikow testow
+   - walidacja do dodawania edycji wydarzen
+   - walidacja do nowej wiadomosci w mailach
+   - walidacja do odpowiadania pisania na maile
+   - dodanie usuwania powiadomien
+   - dodanie info gdy sie nie ma wybranej kategorii a chce sie rozwiazac test albo egzamin 
+   - zrobic zeby student nie mogl dodawac tych samych instruktow jak ma dodane(zeby poprostu ich nie widzial)
+
+2. ogolnie front uporzadkowac, posprawdzac 
 
 - Powiadomienia oraz Przypomnienia:
    - promote goscia do wyzszej ragni powiadomienie

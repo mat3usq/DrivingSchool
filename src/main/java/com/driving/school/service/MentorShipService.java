@@ -116,8 +116,8 @@ public class MentorShipService {
     }
 
     public void studentAssignsToInstructor(SchoolUser student, SchoolUser instructor) {
-        createMentorShipWithStatus(student, instructor, Constants.PENDING);
-        notificationService.sendNotificationWhenStudentAssignsToInstructor(student, instructor);
+        if (createMentorShipWithStatus(student, instructor, Constants.PENDING))
+            notificationService.sendNotificationWhenStudentAssignsToInstructor(student, instructor);
     }
 
     public void studentCancelMentorshipWithInstructor(MentorShip mentorShip) {
