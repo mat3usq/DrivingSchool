@@ -41,7 +41,7 @@ public class InstructorEventService {
         return instructionEventRepository.findAll();
     }
 
-    public InstructionEvent updateInstructionEvent(Long id, InstructionEvent instructionEventDetails, SchoolUser user) {
+    public InstructionEvent updateInstructionEvent(Long id, InstructionEvent instructionEventDetails) {
         Optional<InstructionEvent> optionalInstructionEvent = instructionEventRepository.findById(id);
 
         if (optionalInstructionEvent.isPresent()) {
@@ -65,8 +65,7 @@ public class InstructorEventService {
                 instructionEvent.setAvailableEventSlots(instructionEvent.getAvailableEventSlots() + diffSlots);
             }
 
-            if (user.getRoleName().equals(Constants.INSTRUCTOR_ROLE))
-                notificationService.sendNotificationToUsersAreAssignedWhenInstructorUpdateEvent(instructionEvent);
+            notificationService.sendNotificationToUsersAreAssignedWhenInstructorUpdateEvent(instructionEvent);
 
             return instructionEventRepository.save(instructionEvent);
         } else {

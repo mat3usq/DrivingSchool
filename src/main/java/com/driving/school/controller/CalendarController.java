@@ -6,6 +6,7 @@ import com.driving.school.service.InstructorEventService;
 import com.driving.school.service.MentorShipService;
 import com.driving.school.service.NotificationService;
 import jakarta.servlet.http.HttpSession;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -106,6 +107,11 @@ public class CalendarController {
                     instructorEventService.addStudentToInstructionEvent(eventId, user.getId());
                     event.setAvailableEventSlots(event.getAvailableEventSlots() - 1);
                     instructionEventRepository.save(event);
+                    try {
+                        notificationService.scheduleReminderForEvent(event, user);
+                    } catch (SchedulerException e) {
+                        System.out.println("Scheduler Exception" + e.getMessage());
+                    }
                 }
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
@@ -120,6 +126,7 @@ public class CalendarController {
             if (event.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId()))) {
                 instructorEventService.removeStudentFromInstructionEvent(eventId, user.getId());
                 instructionEventRepository.save(event);
+                notificationService.cancelReminderForEvent(eventId, user.getId());
             }
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
@@ -171,7 +178,7 @@ public class CalendarController {
         InstructionEvent event = (InstructionEvent) session.getAttribute("eventToEdit");
 
         if (event != null && (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)))
-            instructorEventService.updateInstructionEvent(event.getId(), editedEvent, user);
+            instructorEventService.updateInstructionEvent(event.getId(), editedEvent);
 
         return getCalendarModelAndView(YearMonth.from(editedEvent.getStartTime()), editedEvent.getStartTime(), session, authentication);
     }

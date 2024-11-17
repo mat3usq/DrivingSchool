@@ -20,9 +20,9 @@ public class StatisticsScheduler {
         this.examStatisticsService = examStatisticsService;
     }
 
-    @Scheduled(cron = "0 * * * * *") // co pelna minute
+//    @Scheduled(cron = "0 * * * * *") // co pelna minute
 //    @Scheduled(cron = "0 0 * * * *") // co pełną godzinę
-//    @Scheduled(cron = "0 0 0 * * *", zone = "Europe/Warsaw") // Harmonogram: codziennie o północy (00:00)
+    @Scheduled(cron = "0 0 0 * * *", zone = "Europe/Warsaw") // Harmonogram: codziennie o północy (00:00)
     public void updateTestStatisticsDaily() {
         logger.info("Starting test statistics update.");
         long startTime = System.currentTimeMillis();
@@ -40,9 +40,9 @@ public class StatisticsScheduler {
         }
     }
 
-    @Scheduled(cron = "0 * * * * *") // co pelna minute
+//    @Scheduled(cron = "0 * * * * *") // co pelna minute
 //    @Scheduled(cron = "0 0 * * * *") // co pełną godzinę
-//    @Scheduled(cron = "0 0 0 * * *", zone = "Europe/Warsaw") // Harmonogram: codziennie o północy (00:00)
+    @Scheduled(cron = "0 0 0 * * *", zone = "Europe/Warsaw") // Harmonogram: codziennie o północy (00:00)
     public void updateExamStatisticsDaily() {
         logger.info("Starting exam statistics update.");
         long startTime = System.currentTimeMillis();

@@ -33,7 +33,7 @@ public class InstructionEvent {
     @Column(name = "ENDTIME")
     private LocalDateTime endTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "INSTRUCTORID")
     private SchoolUser instructor;
@@ -66,5 +66,22 @@ public class InstructionEvent {
         this.instructor = instructor;
         this.eventCapacity = eventCapacity;
         this.availableEventSlots = eventCapacity;
+    }
+
+    @Override
+    public String toString() {
+        return "InstructionEvent{" +
+                "id=" + id +
+                ", subject='" + subject + '\'' +
+                ", eventType='" + eventType + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", instructor=" + instructor +
+                ", students=" + students +
+                ", status='" + status + '\'' +
+                ", eventCapacity=" + eventCapacity +
+                ", availableEventSlots=" + availableEventSlots +
+                ", isAssigned=" + isAssigned +
+                '}';
     }
 }

@@ -393,10 +393,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         SchoolUser schoolUser = schoolUserRepository.findByEmail("instructor");
         SchoolUser schoolUser2 = schoolUserRepository.findByEmail("instructor2");
         SchoolUser schoolUser3 = schoolUserRepository.findByEmail("instructor3");
-        SchoolUser student = schoolUserRepository.findByEmail("student");
-        InstructionEvent ie = new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.of(2024, 10, 1, 10, 0), LocalDateTime.of(2024, 10, 1, 12, 0), schoolUser, 12);
-        ie.setStudents(Arrays.asList(student));
-        ie.setAvailableEventSlots(11);
+        InstructionEvent ie = new InstructionEvent("Podstawowe zasady jazdy i wprowadzenie do ruchu drogowego", Constants.PRACTICAL_DRIVING_ON_ROADS, LocalDateTime.now().plusHours(1).plusSeconds(30), LocalDateTime.now().plusHours(2).plusMinutes(2), schoolUser, 12);
 
         List<InstructionEvent> events = Arrays.asList(
                 ie,

@@ -1,30 +1,39 @@
 package com.driving.school.service;
 
+import com.driving.school.components.ReminderEventJob;
 import com.driving.school.model.*;
 import com.driving.school.repository.MentorShipRepository;
 import com.driving.school.repository.NotificationRepository;
 import com.driving.school.repository.SchoolUserRepository;
+import org.quartz.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class NotificationService {
+    private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
     private final SchoolUserRepository schoolUserRepository;
     private final NotificationRepository notificationRepository;
     private final MentorShipRepository mentorShipRepository;
+    private final Scheduler scheduler;
 
     @Autowired
     public NotificationService(SchoolUserRepository schoolUserRepository,
-                               NotificationRepository notificationRepository, MentorShipRepository mentorShipRepository) {
+                               NotificationRepository notificationRepository, MentorShipRepository mentorShipRepository, Scheduler scheduler) {
         this.schoolUserRepository = schoolUserRepository;
         this.notificationRepository = notificationRepository;
         this.mentorShipRepository = mentorShipRepository;
+        this.scheduler = scheduler;
     }
 
     private void createNotification(SchoolUser schoolUser, String content) {
@@ -56,6 +65,53 @@ public class NotificationService {
         }
 
         return notificationsToReturn;
+    }
+
+    public void scheduleReminderForEvent(InstructionEvent event, SchoolUser user) throws SchedulerException {
+        LocalDateTime eventStartTime = event.getStartTime();
+        LocalDateTime reminderTime = eventStartTime.minusHours(1);
+
+        if (reminderTime.isAfter(LocalDateTime.now())) {
+            JobDetail jobDetail = JobBuilder.newJob(ReminderEventJob.class)
+                    .withIdentity("reminder-" + event.getId() + "-" + user.getId(), "reminder-event-jobs")
+                    .usingJobData("eventId", event.getId())
+                    .usingJobData("userId", user.getId())
+                    .build();
+
+            ZoneId zoneId = ZoneId.systemDefault();
+            Date triggerTime = Date.from(reminderTime.atZone(zoneId).toInstant());
+
+            Trigger trigger = TriggerBuilder.newTrigger()
+                    .forJob(jobDetail)
+                    .withIdentity("trigger-" + event.getId() + "-" + user.getId(), "reminder-triggers")
+                    .startAt(triggerTime)
+                    .withSchedule(SimpleScheduleBuilder.simpleSchedule()
+                            .withMisfireHandlingInstructionFireNow())
+                    .build();
+
+            scheduler.scheduleJob(jobDetail, trigger);
+            logger.info("Scheduled reminder for event ID: {} and user ID: {} at {}", event.getId(), user.getId(), triggerTime);
+        } else {
+            sendNotificationWhenStudentAssignedToMeetingButHourBefore(event, user);
+            logger.info("Reminder time already passed. Sent notification immediately for event ID: {} and user ID: {}", event.getId(), user.getId());
+        }
+    }
+
+    public void cancelReminderForEvent(Long eventId, Long userId) {
+        String jobKeyName = "reminder-" + eventId + "-" + userId;
+        String jobKeyGroup = "reminder-event-jobs";
+        JobKey jobKey = new JobKey(jobKeyName, jobKeyGroup);
+
+        try {
+            boolean deleted = scheduler.deleteJob(jobKey);
+            if (deleted) {
+                logger.info("Successfully canceled reminder for event ID: {} and user ID: {}", eventId, userId);
+            } else {
+                logger.warn("No reminder found to cancel for event ID: {} and user ID: {}", eventId, userId);
+            }
+        } catch (SchedulerException e) {
+            logger.error("Failed to cancel reminder for event ID: {} and user ID: {}", eventId, userId, e);
+        }
     }
 
     public void sendNotificationWhenUserReceiveNewRole(SchoolUser schoolUser) {
@@ -443,7 +499,7 @@ public class NotificationService {
             createNotification(mentorShip.getStudent(), contentForStudent);
     }
 
-    public void sendNotificationToUsersAreAssignedWhenInstructorUpdateEvent(InstructionEvent event){
+    public void sendNotificationToUsersAreAssignedWhenInstructorUpdateEvent(InstructionEvent event) {
         List<SchoolUser> usersToNotify = event.getStudents();
         SchoolUser instructor = event.getInstructor();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm");
@@ -479,5 +535,62 @@ public class NotificationService {
 
         for (SchoolUser user : usersToNotify)
             createNotification(user, contentForStudent);
+    }
+
+    public void sendNotificationWhenStudentAssignedToMeetingButHourBefore(InstructionEvent event, SchoolUser user) {
+        SchoolUser instructor = event.getInstructor();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm");
+        String formattedStartTime = event.getStartTime().format(formatter);
+        String formattedEndTime = event.getEndTime().format(formatter);
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(now, event.getStartTime());
+        String mainMessage;
+
+        if (duration.isNegative()) {
+            mainMessage = String.format(
+                    "Niestety, przegapiłeś spotkanie z Instruktorem %s <%s>.",
+                    instructor.getName(),
+                    instructor.getEmail()
+            );
+        } else {
+            long minutesLeft = duration.toMinutes();
+            minutesLeft = Math.max(minutesLeft, 0);
+
+            mainMessage = String.format(
+                    "Do spotkania, na które byłeś zapisany, z Instruktorem %s <%s> zostało jeszcze %d minut do rozpoczęcia! Mamy nadzieję, że pamiętałeś o nim.",
+                    instructor.getName(),
+                    instructor.getEmail(),
+                    minutesLeft
+            );
+        }
+
+        String contentForStudent = String.format(
+                """
+                        📩 Witaj!
+                            
+                        %s
+                            
+                        **Szczegóły Wydarzenia:**
+                        - Temat: "%s"
+                        - Typ Wydarzenia: "%s"
+                        - Rozpoczęcie: %s
+                        - Zakończenie: %s
+                        - Wszystkie miejsca: %d
+                        - Dostępne miejsca: %d
+                            
+                        Zachęcamy do udziału w wydarzeniu. Prosimy o zapisanie się i punktualne stawienie się na umówione miejsce.
+                            
+                        Życzymy powodzenia!
+                        """,
+                mainMessage,
+                event.getSubject(),
+                event.getEventType(),
+                formattedStartTime,
+                formattedEndTime,
+                event.getEventCapacity(),
+                event.getAvailableEventSlots()
+        );
+
+        createNotification(user, contentForStudent);
     }
 }
