@@ -65,7 +65,7 @@ public class SecurityConfig {
                         // account
                         .requestMatchers("/account").authenticated()
                         // account
-                        .requestMatchers("/notifications").authenticated()
+                        .requestMatchers("/notifications/**").authenticated()
                         // tests
                         .requestMatchers("/tests/**").authenticated()
                         // exam

@@ -47,6 +47,12 @@
                                 <span class="time"
                                       th:text="${#temporals.format(notification.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
                             </div>
+
+                            <form class="operations" th:action="@{/notifications/deleteNotification}" method="post">
+                                <input type="hidden" name="notificationId" th:value="${notification.id}"/>
+                                <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

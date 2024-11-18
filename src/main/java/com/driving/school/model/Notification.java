@@ -29,7 +29,7 @@ public class Notification {
     @Column(name = "STATUS")
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SchoolUser schoolUser;
@@ -38,7 +38,8 @@ public class Notification {
     @Column(name = "CREATEDAT")
     private LocalDateTime createdAt;
 
-    public Notification(String content, String status, LocalDateTime createdAt) {
+    public Notification(Long id, String content, String status, LocalDateTime createdAt) {
+        this.id = id;
         this.content = content;
         this.status = status;
         this.createdAt = createdAt;

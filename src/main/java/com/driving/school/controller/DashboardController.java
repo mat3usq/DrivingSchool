@@ -24,15 +24,13 @@ public class DashboardController {
     private final MentorShipService mentorShipService;
     private final CategoryRepository categoryRepository;
     private final CourseRepository courseRepository;
-    private final NotificationService notificationService;
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService, CategoryRepository categoryRepository, CourseRepository courseRepository, NotificationService notificationService) {
+    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService, CategoryRepository categoryRepository, CourseRepository courseRepository) {
         this.schoolUserService = schoolUserService;
         this.mentorShipService = mentorShipService;
         this.categoryRepository = categoryRepository;
         this.courseRepository = courseRepository;
-        this.notificationService = notificationService;
     }
 
     // FOR ALL USERS

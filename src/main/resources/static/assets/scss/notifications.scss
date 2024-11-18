@@ -161,6 +161,37 @@ h2 {
 								align-self: flex-end;
 							}
 						}
+
+						.operations {
+							position: absolute;
+							top: 11px;
+							right: 11px;
+
+							.delete-btn {
+								font-size: 18px;
+								height: 35px;
+								padding: 0px 10px;
+								border: none;
+								border-radius: 10px;
+								color: white;
+								font-weight: bold;
+								text-transform: uppercase;
+								text-align: center;
+								cursor: pointer;
+								transition: 0.3s ease;
+
+								&:hover {
+									transform: scale(1.05);
+								}
+							}
+
+							button.delete-btn {
+								background-color: $primary-color;
+								&:hover {
+									background-color: darken($primary-color, 10%);
+								}
+							}
+						}
 					}
 				}
 			}

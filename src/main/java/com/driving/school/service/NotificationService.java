@@ -50,6 +50,7 @@ public class NotificationService {
         List<Notification> originalNotifications = user.getNotifications();
         List<Notification> notificationsToReturn = originalNotifications.stream()
                 .map(notification -> new Notification(
+                        notification.getId(),
                         notification.getContent(),
                         notification.getStatus(),
                         notification.getCreatedAt()

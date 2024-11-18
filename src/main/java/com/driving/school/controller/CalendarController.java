@@ -101,18 +101,19 @@ public class CalendarController {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (mentorShipService.existsByStudentAndInstructor(user, event.getInstructor()))
-            if (event.getAvailableEventSlots() != 0)
-                if (event.getStudents().stream().noneMatch(s -> Objects.equals(s.getId(), user.getId()))) {
-                    instructorEventService.addStudentToInstructionEvent(eventId, user.getId());
-                    event.setAvailableEventSlots(event.getAvailableEventSlots() - 1);
-                    instructionEventRepository.save(event);
-                    try {
-                        notificationService.scheduleReminderForEvent(event, user);
-                    } catch (SchedulerException e) {
-                        System.out.println("Scheduler Exception" + e.getMessage());
+        if (event != null)
+            if (mentorShipService.existsByStudentAndInstructor(user, event.getInstructor()))
+                if (event.getAvailableEventSlots() != 0)
+                    if (event.getStudents().stream().noneMatch(s -> Objects.equals(s.getId(), user.getId()))) {
+                        instructorEventService.addStudentToInstructionEvent(eventId, user.getId());
+                        event.setAvailableEventSlots(event.getAvailableEventSlots() - 1);
+                        instructionEventRepository.save(event);
+                        try {
+                            notificationService.scheduleReminderForEvent(event, user);
+                        } catch (SchedulerException e) {
+                            System.out.println("Scheduler Exception" + e.getMessage());
+                        }
                     }
-                }
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
@@ -122,12 +123,13 @@ public class CalendarController {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (mentorShipService.existsByStudentAndInstructor(user, event.getInstructor()))
-            if (event.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId()))) {
-                instructorEventService.removeStudentFromInstructionEvent(eventId, user.getId());
-                instructionEventRepository.save(event);
-                notificationService.cancelReminderForEvent(eventId, user.getId());
-            }
+        if (event != null)
+            if (mentorShipService.existsByStudentAndInstructor(user, event.getInstructor()))
+                if (event.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId()))) {
+                    instructorEventService.removeStudentFromInstructionEvent(eventId, user.getId());
+                    instructionEventRepository.save(event);
+                    notificationService.cancelReminderForEvent(eventId, user.getId());
+                }
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
@@ -149,10 +151,11 @@ public class CalendarController {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)) {
-            instructionEventRepository.delete(event);
-            event.getStudents().forEach(s -> notificationService.cancelReminderForEvent(eventId, s.getId()));
-        }
+        if (event != null)
+            if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)) {
+                instructionEventRepository.delete(event);
+                event.getStudents().forEach(s -> notificationService.cancelReminderForEvent(eventId, s.getId()));
+            }
 
         return getCalendarModelAndView(YearMonth.from(event.getStartTime()), event.getStartTime(), session, authentication);
     }
@@ -190,7 +193,7 @@ public class CalendarController {
         InstructionEvent event = instructorEventService.findById(eventId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)) {
+        if (event != null && user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)) {
             instructorEventService.removeStudentFromInstructionEvent(eventId, studentId);
             notificationService.cancelReminderForEvent(eventId, studentId);
         }
