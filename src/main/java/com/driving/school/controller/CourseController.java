@@ -2,10 +2,14 @@ package com.driving.school.controller;
 
 import com.driving.school.model.*;
 import com.driving.school.repository.CommentCourseRepository;
+import com.driving.school.repository.CourseRepository;
 import com.driving.school.service.*;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,15 +26,19 @@ public class CourseController {
     private final CourseService courseService;
     private final TestCourseService testCourseService;
     private final CommentCourseRepository commentCourseRepository;
+    private final CourseRepository courseRepository;
+    private final SchoolUserService schoolUserService;
 
     @Autowired
-    public CourseController(MentorShipService mentorShipService, DashboardController dashboardController, DrivingSessionService drivingSessionService, CourseService courseService, TestCourseService testCourseService, CommentCourseRepository commentCourseRepository) {
+    public CourseController(MentorShipService mentorShipService, DashboardController dashboardController, DrivingSessionService drivingSessionService, CourseService courseService, TestCourseService testCourseService, CommentCourseRepository commentCourseRepository, CourseRepository courseRepository, SchoolUserService schoolUserService) {
         this.mentorShipService = mentorShipService;
         this.dashboardController = dashboardController;
         this.drivingSessionService = drivingSessionService;
         this.courseService = courseService;
         this.testCourseService = testCourseService;
         this.commentCourseRepository = commentCourseRepository;
+        this.courseRepository = courseRepository;
+        this.schoolUserService = schoolUserService;
     }
 
     // Course Mappings
@@ -56,18 +64,45 @@ public class CourseController {
         return dashboardController.displayDashboard(0, 10, session);
     }
 
+    @GetMapping(value = "/course/instructor/courseCreateValidation")
+    public ModelAndView catchCreateCourseValidation(@RequestParam Long mentorShipId, @Valid @ModelAttribute("newCourse") Course course, Errors errors, HttpSession session) {
+        Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId())) {
+            SchoolUser user = schoolUserService.findUserById(ms.get().getStudent().getId());
+            if (user != null) {
+                ModelAndView model = dashboardController.getUserDetails(user, new ModelAndView("schoolUserDetails"));
+                model.addObject("courses", courseRepository.findByMentorShipId(mentorShipId));
+                model.addObject("mentorShip", ms.get());
+                model.addObject("newCourse", course);
+                model.addObject("createCourseValidationInfo", "Wprowadź poprawne dane, aby dodać kurs!");
+                return model;
+            }
+        }
+
+        return new ModelAndView("redirect:/dashboard#studentsDetails");
+    }
+
+
     @PostMapping("/course/instructor/addCourse")
-    public ModelAndView addCourse(@RequestParam("mentorShipId") Long mentorShipId, @ModelAttribute("newCourse") Course course, HttpSession session) {
+    public ModelAndView addCourse(@RequestParam("mentorShipId") Long mentorShipId, @Valid @ModelAttribute("newCourse") Course course, Errors errors, HttpSession session, RedirectAttributes redirectAttributes) {
         SchoolUser instructor = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<MentorShip> optMs = mentorShipService.getMentorShipById(mentorShipId);
 
         if (optMs.isPresent() && optMs.get().getInstructor().equals(instructor)) {
+            if (errors.hasErrors()) {
+                redirectAttributes.addAttribute("mentorShipId", mentorShipId);
+                redirectAttributes.addFlashAttribute("newCourse", course);
+                return new ModelAndView("redirect:/course/instructor/courseCreateValidation#createCourse");
+            }
             course.setMentorShip(optMs.get());
             courseService.instructorCreateNewCourse(course);
         }
 
         return dashboardController.showStudentForInstructor(mentorShipId, session);
     }
+
 
     @PostMapping("/course/instructor/editCourse")
     public ModelAndView editCourse(@RequestParam("courseId") Long courseId, HttpSession session) {

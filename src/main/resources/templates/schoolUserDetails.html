@@ -67,14 +67,16 @@
                             <div class="detail" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <span class="title-header">Uprawnienia</span>
                                 <div class="roleName">
-                                    <form th:if="${user.roleName != T(com.driving.school.model.Constants).STUDENT_ROLE}" class="operations"
+                                    <form th:if="${user.roleName != T(com.driving.school.model.Constants).STUDENT_ROLE}"
+                                          class="operations"
                                           th:action="@{/dashboard/admin/demoteUser}" method="post">
                                         <input type="hidden" name="userId" th:value="${user.id}"/>
                                         <button type="submit" class="delete-btn"><i class="fa-solid fa-angles-down"></i>
                                         </button>
                                     </form>
                                     <span class="content" th:text="${user.roleName}"></span>
-                                    <form th:if="${user.roleName != T(com.driving.school.model.Constants).ADMIN_ROLE}" class="operations"
+                                    <form th:if="${user.roleName != T(com.driving.school.model.Constants).ADMIN_ROLE}"
+                                          class="operations"
                                           th:action="@{/dashboard/admin/promoteUser}" method="post">
                                         <input type="hidden" name="userId" th:value="${user.id}"/>
                                         <button type="submit" class="correct-btn"><i class="fa-solid fa-angles-up"></i>
@@ -378,22 +380,36 @@
                                 </form>
                             </th:block>
                         </div>
-                        <div class="newCourse" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
-                            <p class="mini-title">Dodawanie Kursu</p>
+                        <div class="newCourse" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')"
+                             id="createCourse">
+                            <p class="mini-title" th:unless="${createCourseValidationInfo}">Dodawanie Kursu</p>
+                            <p class="mini-title-warning" th:if="${createCourseValidationInfo}"
+                               th:text="${createCourseValidationInfo}"></p>
+
                             <th:block sec:authorize="hasRole('ROLE_INSTRUCTOR')">
-                                <form method="post" th:action="@{/course/instructor/addCourse}" th:object="${newCourse}">
+                                <form method="post" th:action="@{/course/instructor/addCourse}"
+                                      th:object="${newCourse}">
                                     <input type="hidden" name="mentorShipId" th:value="${mentorShip.id}"/>
                                     <div class="form-box">
                                         <div class="course-input">
+                                            <th:block th:if="${#fields.hasErrors('description')}">
+                                                <span class="warning-text" th:errors="*{description}"></span>
+                                            </th:block>
                                             <p>Krótki Opis</p>
                                             <input th:field="*{description}" type="text" placeholder="Krótki Opis"/>
                                         </div>
                                         <div class="course-input">
+                                            <th:block th:if="${#fields.hasErrors('duration')}">
+                                                <span class="warning-text" th:errors="*{duration}"></span>
+                                            </th:block>
                                             <p>Czas Trwania Kursu</p>
                                             <input th:field="*{duration}" type="number" step="0.1"
                                                    placeholder="Czas Trwania Kursu (w godzinach)"/>
                                         </div>
                                         <div class="course-input-category">
+                                            <th:block th:if="${#fields.hasErrors('category')}">
+                                                <span class="warning-text" th:errors="*{category}"></span>
+                                            </th:block>
                                             <p>Wybierz Kategorie</p>
                                             <div class="box-category">
                                                 <div th:each="category : ${user.availableCategories}"

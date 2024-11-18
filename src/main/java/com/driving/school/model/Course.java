@@ -1,6 +1,10 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
@@ -25,9 +29,12 @@ public class Course {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+    @NotBlank(message = "Opis nie może być pusty")
+    @Size(min = 10, max = 500, message = "Opis musi mieć od 10 do 500 znaków")
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @NotNull(message = "Kategoria nie może być pusta")
     @ManyToOne
     @JoinColumn(name = "CATEGORY")
     private Category category;
@@ -42,6 +49,8 @@ public class Course {
     @Column(name = "ENDAT")
     private LocalDate endAt;
 
+    @NotNull(message = "Czas trwania nie może być pusty")
+    @Positive(message = "Czas trwania musi być wartością dodatnią")
     @Column(name = "DURATION")
     private Double duration;
 
@@ -67,4 +76,13 @@ public class Course {
     @OrderBy("commentDate DESC")
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentCourse> commentCourses = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "description='" + description + '\'' +
+                ", category=" + category +
+                ", duration=" + duration +
+                '}';
+    }
 }

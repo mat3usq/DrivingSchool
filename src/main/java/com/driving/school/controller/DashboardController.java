@@ -75,7 +75,7 @@ public class DashboardController {
         return new ModelAndView("redirect:/dashboard");
     }
 
-    private ModelAndView getUserDetails(SchoolUser user, ModelAndView modelAndView) {
+    public ModelAndView getUserDetails(SchoolUser user, ModelAndView modelAndView) {
         modelAndView.addObject("user", user);
         modelAndView.addObject("newPayment", new Payment());
         modelAndView.addObject("allCategories", categoryRepository.findAll());
