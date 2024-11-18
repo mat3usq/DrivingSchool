@@ -36,7 +36,8 @@
         <div class="hero-img">
             <div class="box-container">
                 <div class="box-category">
-                    <p class="title">Dostepne Kategorie</p>
+                    <p class="title" th:unless="${notChoosenCategoryInfo}">Dostepne Kategorie</p>
+                    <p class="mini-title-warning" th:if="${notChoosenCategoryInfo}" th:text="${notChoosenCategoryInfo}"></p>
                     <div class="container-category">
                         <form th:if="${!session.loggedInUser.getAvailableCategories().isEmpty()}"
                               th:each="category : ${session.loggedInUser.getAvailableCategories()}"

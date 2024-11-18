@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -40,12 +41,14 @@ public class TestController {
     }
 
     @GetMapping(value = {"/tests"})
-    public ModelAndView displayTestsPage(HttpSession session) {
+    public ModelAndView displayTestsPage(HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView("tests");
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
-        if (user.getCurrentCategory().isEmpty())
+        if (user.getCurrentCategory().isEmpty()) {
+            redirectAttributes.addFlashAttribute("notChoosenCategoryInfo", "Prosze wybierz kategorie, aby rozwiazac test lub egzamin!");
             return new ModelAndView("redirect:/dashboard");
+        }
 
         List<Test> tests = testService.getAllTestsByCategory(user.getCurrentCategory());
         studentAnswersTestService.setStatisticForTest(tests, user.getId());
@@ -54,14 +57,14 @@ public class TestController {
     }
 
     @PostMapping(value = {"/tests/selectQuestions"})
-    public ModelAndView selectQuestions(@RequestParam("testId") Long testId, HttpSession session) {
+    public ModelAndView selectQuestions(@RequestParam("testId") Long testId, HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView("selectedQuestionsInTest");
         SchoolUser schoolUser = (SchoolUser) session.getAttribute("loggedInUser");
         Long userId = schoolUser.getId();
         List<Test> tests = Collections.singletonList(testService.getTestById(testId));
 
         if (tests.getFirst() == null || !tests.getFirst().getDrivingCategory().equals(schoolUser.getCurrentCategory()))
-            return displayTestsPage(session);
+            return displayTestsPage(session, redirectAttributes);
 
         studentAnswersTestService.setStatisticForTest(tests, ((SchoolUser) session.getAttribute("loggedInUser")).getId());
         modelAndView.addObject("test", tests.getFirst());
@@ -104,14 +107,14 @@ public class TestController {
     }
 
     @PostMapping(value = {"/tests/solveTest"})
-    public ModelAndView getTestToSolve(@RequestParam("testId") Long testId, @RequestParam("selectedTypeQuestions") String selectedTypeQuestions, HttpSession session) {
+    public ModelAndView getTestToSolve(@RequestParam("testId") Long testId, @RequestParam("selectedTypeQuestions") String selectedTypeQuestions, HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView("solveTest");
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Question question = questionService.getNextQuestion(testId, user, selectedTypeQuestions);
         Test test = testService.getTestById(testId);
 
         if (test == null || !test.getDrivingCategory().equals(user.getCurrentCategory()))
-            return displayTestsPage(session);
+            return displayTestsPage(session, redirectAttributes);
 
         modelAndView.addObject("question", question);
         modelAndView.addObject("test", test);
@@ -122,14 +125,14 @@ public class TestController {
     }
 
     @PostMapping(value = {"/tests/action"})
-    public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam(value = "questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session) {
+    public ModelAndView getActionFromTest(@RequestParam("testId") Long testId, @RequestParam(value = "questionId") Long questionId, @RequestParam("action") String action, @RequestParam(value = "isLiked", required = false, defaultValue = "false") Boolean isLiked, HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView;
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Test test = testService.getTestById(testId);
         LocalDateTime timeStartAnswer = (LocalDateTime) session.getAttribute("timeStartAnswer");
 
         if (test == null || !test.getDrivingCategory().equals(user.getCurrentCategory()))
-            return displayTestsPage(session);
+            return displayTestsPage(session, redirectAttributes);
 
         switch (action) {
             case "A":
@@ -137,7 +140,7 @@ public class TestController {
             case "C":
             case "TAK":
             case "NIE":
-                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
+                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session, redirectAttributes);
                 modelAndView.setViewName("answerResultTest");
                 modelAndView.addObject("answer", studentAnswersTestService.save(user, testId, questionId, action, isLiked, timeStartAnswer));
                 modelAndView.addObject("isLiked", isLiked);
@@ -145,11 +148,11 @@ public class TestController {
 
             case "SKIP":
                 studentAnswersTestService.save(user, testId, questionId, action, isLiked, timeStartAnswer);
-                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
+                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session, redirectAttributes);
                 break;
 
             default:
-                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session);
+                modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session, redirectAttributes);
                 break;
         }
 
@@ -159,20 +162,20 @@ public class TestController {
             schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
 
         if (action.equals("BACK"))
-            modelAndView = selectQuestions(testId, session);
+            modelAndView = selectQuestions(testId, session, redirectAttributes);
 
         return modelAndView;
     }
 
     @PostMapping(value = {"/tests/resetTest"})
-    public ModelAndView resetTest(@RequestParam("testId") Long testId, HttpSession session) {
+    public ModelAndView resetTest(@RequestParam("testId") Long testId, HttpSession session, RedirectAttributes redirectAttributes) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Test test = testService.getTestById(testId);
         if (test == null || !test.getDrivingCategory().equals(user.getCurrentCategory()))
-            return displayTestsPage(session);
+            return displayTestsPage(session, redirectAttributes);
         List<StudentAnswersTest> answers = studentAnswersTestService.findAllBySchoolUserAndTest(user, test);
         if (answers.size() == test.getNumberQuestions())
             studentAnswersTestService.deleteAllStudentAnswersTest(answers);
-        return selectQuestions(testId, session);
+        return selectQuestions(testId, session, redirectAttributes);
     }
 }

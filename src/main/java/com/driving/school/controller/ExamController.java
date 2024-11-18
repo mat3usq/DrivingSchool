@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,11 +42,13 @@ public class ExamController {
     }
 
     @PostMapping("/exam/generate")
-    public ModelAndView generateExam(HttpSession session) {
+    public ModelAndView generateExam(HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("exam") == null) {
             SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-            if (user.getCurrentCategory().isEmpty())
+            if (user.getCurrentCategory().isEmpty()) {
+                redirectAttributes.addFlashAttribute("notChoosenCategoryInfo", "Prosze wybierz kategorie, aby rozwiazac test lub egzamin!");
                 return new ModelAndView("redirect:/dashboard");
+            }
             String category = user.getCurrentCategory();
             List<Question> questionSet = studentExamService.generateQuestionSet(category);
 
