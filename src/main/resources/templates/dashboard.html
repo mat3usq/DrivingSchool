@@ -73,16 +73,16 @@
                 </div>
                 <div class="box-users">
                     <th:block sec:authorize="hasRole('ROLE_STUDENT')">
-                        <div class="account-student">
+                        <div class="account-student" id="instructorsDetails">
                             <p class="title">Twoi Instruktorzy</p>
 
                             <p class="mini-title" th:if="${mentorShips.size() == 0}">
                                 Brak instruktorów. Zaaplikuj do któregoś z poniższych!
                             </p>
 
-                            <p class="info-text" th:if="${assignStudentInfo}" th:text="${assignStudentInfo}"></p>
+                            <p class="info-text" th:if="${assignInstructorInfo}" th:text="${assignInstructorInfo}"></p>
 
-                            <form class="select-instructor" th:action="@{/dashboard/student/assignInstructor}"
+                            <form th:if="${!instructors.isEmpty()}" class="select-instructor" th:action="@{/dashboard/student/assignInstructor}"
                                   method="post">
                                 <select name="selectedInstructor">
                                     <option value="" disabled selected>Wybierz Instruktora</option>
@@ -182,7 +182,7 @@
                         </div>
                     </th:block>
                     <th:block sec:authorize="hasRole('ROLE_INSTRUCTOR')">
-                        <div class="account-instructor">
+                        <div class="account-instructor" id="studentsDetails">
                             <p class="title">Twoi Studenci</p>
 
                             <p class="mini-title" th:if="${mentorShips.size() == 0}">
@@ -326,8 +326,10 @@
                         </div>
                     </th:block>
                     <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                        <div class="account-instructor">
+                        <div class="account-instructor" id="usersDetails">
                             <p class="title">Użytkownicy Szkoły Jazdy</p>
+
+                            <p class="info-text" th:if="${assignUserInfo}" th:text="${assignUserInfo}"></p>
 
                             <form class="select-instructor" th:action="@{/dashboard/admin/searchUser}" method="post">
                                 <input type="text" name="userEmail" placeholder="Wpisz email uzytkownika"/>

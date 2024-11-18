@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -122,7 +123,7 @@ public class CourseController {
     }
 
     @PostMapping("/course/admin/addCourse")
-    public ModelAndView addCourse(@RequestParam("mentorShipId") Long mentorShipId, @ModelAttribute("newCourse") Course course, @RequestParam("parentUserMail") String parentUserMail) {
+    public ModelAndView addCourse(@RequestParam("mentorShipId") Long mentorShipId, @ModelAttribute("newCourse") Course course, @RequestParam("parentUserMail") String parentUserMail, RedirectAttributes redirectAttributes) {
         Optional<MentorShip> optMs = mentorShipService.getMentorShipById(mentorShipId);
 
         if (optMs.isPresent()) {
@@ -130,16 +131,16 @@ public class CourseController {
             courseService.createCourse(course);
         }
 
-        return dashboardController.showUserCourseDetails(mentorShipId, parentUserMail);
+        return dashboardController.showUserCourseDetails(mentorShipId, parentUserMail, redirectAttributes);
     }
 
     @PostMapping("/course/admin/deleteCourse")
-    public ModelAndView deleteCourseByAdmin(@RequestParam("courseId") Long courseId, HttpSession session) {
+    public ModelAndView deleteCourseByAdmin(@RequestParam("courseId") Long courseId, HttpSession session, RedirectAttributes redirectAttributes) {
         Optional<Course> optionalCourse = courseService.getCourseById(courseId);
 
         if (optionalCourse.isPresent()) {
             courseService.deleteCourse(optionalCourse.get().getId());
-            return dashboardController.showUserCourseDetails(optionalCourse.get().getMentorShip().getId(), optionalCourse.get().getMentorShip().getInstructor().getEmail());
+            return dashboardController.showUserCourseDetails(optionalCourse.get().getMentorShip().getId(), optionalCourse.get().getMentorShip().getInstructor().getEmail(), redirectAttributes);
         }
 
         return dashboardController.displayDashboard(0, 10, session);

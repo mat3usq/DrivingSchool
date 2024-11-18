@@ -115,9 +115,11 @@ public class MentorShipService {
         }
     }
 
-    public void studentAssignsToInstructor(SchoolUser student, SchoolUser instructor) {
-        if (createMentorShipWithStatus(student, instructor, Constants.PENDING))
+    public boolean studentAssignsToInstructor(SchoolUser student, SchoolUser instructor) {
+        boolean result = createMentorShipWithStatus(student, instructor, Constants.PENDING);
+        if (result)
             notificationService.sendNotificationWhenStudentAssignsToInstructor(student, instructor);
+        return result;
     }
 
     public void studentCancelMentorshipWithInstructor(MentorShip mentorShip) {
