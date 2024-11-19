@@ -126,18 +126,33 @@ public class CourseController {
     }
 
     @PostMapping("/course/instructor/updateCourse")
-    public ModelAndView updateCourse(@ModelAttribute("course") Course editedCourse, @RequestParam("courseId") Long courseId, @ModelAttribute("newCommentCourse") CommentCourse newCommentCourse, HttpSession session) {
+    public ModelAndView updateCourse(@Valid @ModelAttribute("course") Course editedCourse, Errors errors, @RequestParam("courseId") Long courseId, @ModelAttribute("newCommentCourse") CommentCourse newCommentCourse, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<Course> optionalCourse = courseService.getCourseById(courseId);
 
         if (optionalCourse.isPresent() &&
                 (optionalCourse.get().getMentorShip().getInstructor().equals(user) ||
                         user.getRoleName().equals(Constants.ADMIN_ROLE))) {
-            courseService.updateCourse(courseId, editedCourse, newCommentCourse);
+
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", optionalCourse.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             modelAndView.addObject("newTestCourse", new TestCourse());
+
+            if (errors.hasErrors() && user.getRoleName().equals(Constants.INSTRUCTOR_ROLE)) {
+                editedCourse.setId(optionalCourse.get().getId());
+                editedCourse.setCommentCourses(optionalCourse.get().getCommentCourses());
+                editedCourse.setTestCourses(optionalCourse.get().getTestCourses());
+                editedCourse.setDrivingSessions(optionalCourse.get().getDrivingSessions());
+                modelAndView.addObject("isEditCourse", true);
+                modelAndView.addObject("course", editedCourse);
+                modelAndView.addObject("availableCategories", optionalCourse.get().getMentorShip().getStudent().getAvailableCategories());
+                modelAndView.addObject("newCommentCourse", new CommentCourse());
+                modelAndView.addObject("editCourseValidationInfo", "Wprowadź poprawne dane, aby zaktualizowac kurs!");
+                return modelAndView;
+            }
+
+            courseService.updateCourse(courseId, editedCourse, newCommentCourse);
             return modelAndView;
         }
 

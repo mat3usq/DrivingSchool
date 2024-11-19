@@ -131,11 +131,15 @@
                     </div>
                     <div class="editCourse-schoolUser" th:if="${isEditCourse}">
                         <p class="title">Edycja Kursu</p>
+                        <p class="mini-title-warning" th:if="${editCourseValidationInfo}" th:text="${editCourseValidationInfo}"></p>
                         <form class="course-details" th:action="@{/course/instructor/updateCourse}"
                               method="post" th:object="${course}" id="editCourseForm">
                             <input type="hidden" name="courseId" th:value="${course.id}"/>
 
                             <div class="detail-title">
+                                <th:block th:if="${#fields.hasErrors('description')}">
+                                    <span class="warning-text" th:errors="*{description}"></span>
+                                </th:block>
                                 <span class="title-header">Opis</span>
                                 <input class="content" th:field="*{description}"/>
                             </div>
@@ -143,6 +147,9 @@
                             <div class="detail">
                                 <span class="title-header">Kategoria Kursu</span>
                                 <div class="category-container">
+                                    <th:block th:if="${#fields.hasErrors('category')}">
+                                        <span class="warning-text" th:errors="*{category}"></span>
+                                    </th:block>
                                     <div class="category-box" th:each="category : ${availableCategories}">
                                         <input type="radio"
                                                th:field="*{category}"
@@ -155,6 +162,9 @@
                             </div>
 
                             <div class="detail">
+                                <th:block th:if="${#fields.hasErrors('duration')}">
+                                    <span class="warning-text" th:errors="*{duration}"></span>
+                                </th:block>
                                 <span class="title-header">Czas Trwania</span>
                                 <span class="time">
                                     <input type="number" step="0.1" th:field="*{duration}"/>
