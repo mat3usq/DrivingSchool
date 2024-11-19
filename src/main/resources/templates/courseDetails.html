@@ -46,12 +46,15 @@
                             <div class="detail">
                                 <span class="title-header">Kategoria Kursu</span>
                                 <span class="content">
-                                    <span th:text="${course.category.nameCategory}"></span>
+                                    <span th:if="${course.category}" th:text="${course.category.nameCategory}"></span>
+                                    <span th:unless="${course.category}">Brak</span>
                                 </span>
                             </div>
                             <div class="detail">
                                 <span class="title-header">Czas Trwania</span>
-                                <span class="content"><th:block th:text="${course.duration}"></th:block><span
+                                <span th:if="${course.duration}" class="content"><th:block th:text="${course.duration}"></th:block><span
+                                        class="hours">h</span></span>
+                                <span th:unless="${course.duration}" class="content">0<span
                                         class="hours">h</span></span>
                             </div>
                             <div class="detail-comment" th:unless="${course.commentCourses.isEmpty()}">

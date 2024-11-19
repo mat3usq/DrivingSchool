@@ -361,13 +361,20 @@
                                 <div class="course"
                                      th:onclick="'document.getElementById(\'form-' + ${course.id} + '\').submit();'"
                                      th:classappend="${course.passed == T(com.driving.school.model.Constants).COURSE_PASSED ? 'passed' : (course.passed == T(com.driving.school.model.Constants).COURSE_FAILED ? 'failed' : '')}">
-                                    <img th:src="'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'"
-                                         th:alt="${course.category.nameCategory}">
-                                    <p class="title-category">Kategoria <span
-                                            th:text="${course.category.nameCategory}">A</span></p>
+                                    <th:block th:unless="${course.category}">
+                                        <img th:src="'/assets/img/category/svg/gasStation.svg'" alt="stacja paliw">
+                                        <p class="title-category">Kategoria <span>Brak</span></p>
+                                    </th:block>
+                                    <th:block th:if="${course.category}">
+                                        <img th:src="'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'"
+                                             th:alt="${course.category.nameCategory}">
+                                        <p class="title-category">Kategoria <span
+                                                th:text="${course.category.nameCategory}">A</span></p>
+                                    </th:block>
                                     <p class="name" th:text="${course.description}">Kurs prawo jazdy</p>
                                     <p>
-                                        <th:block th:text="${course.duration}"></th:block>
+                                        <th:block th:if="${course.duration}" th:text="${course.duration}"></th:block>
+                                        <th:block th:unless="${course.duration}">0</th:block>
                                         <span class="hours">h</span></p>
                                     <span class="time"><th:block
                                             th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></th:block><th:block
