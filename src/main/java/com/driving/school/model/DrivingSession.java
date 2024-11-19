@@ -37,8 +37,8 @@ public class DrivingSession {
     @Column(name = "DURATION_HOURS")
     private Double durationHours;
 
-    @NotBlank(message = "Opis nie może być pusty")
-    @Size(min = 10, max = 500, message = "Opis musi mieć od 10 do 100 znaków")
+    @NotBlank(message = "Komentarz nie może być pusty")
+    @Size(min = 10, max = 100, message = "Komentarz musi mieć od 10 do 100 znaków")
     @Column(name = "INSTRUCTOR_COMMENT")
     private String instructorComment;
 

@@ -1,6 +1,7 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,12 +29,18 @@ public class TestCourse {
     @Column(name = "TEST_DATE")
     private LocalDateTime testDate;
 
+    @NotBlank(message = "Komentarz nie może być pusty")
+    @Size(min = 10, max = 100, message = "Komentarz musi mieć od 10 do 100 znaków")
     @Column(name = "INSTRUCTOR_COMMENT")
     private String instructorComment;
 
+    @NotNull(message = "Typ testu nie może być pusty")
     @Column(name = "TEST_TYPE")
     private String testType = Constants.COURSE_TEST_GENERAL;
 
+    @NotNull(message = "Wynik testu jest wymagany")
+    @DecimalMin(value = "0.0", message = "Wynik testu musi być co najmniej 0%")
+    @DecimalMax(value = "100.0", message = "Wynik testu nie może przekraczać 100%")
     @Column(name = "TEST_RESULT")
     private Double testResult;
 

@@ -52,7 +52,8 @@
                             </div>
                             <div class="detail">
                                 <span class="title-header">Czas Trwania</span>
-                                <span th:if="${course.duration}" class="content"><th:block th:text="${course.duration}"></th:block><span
+                                <span th:if="${course.duration}" class="content"><th:block
+                                        th:text="${course.duration}"></th:block><span
                                         class="hours">h</span></span>
                                 <span th:unless="${course.duration}" class="content">0<span
                                         class="hours">h</span></span>
@@ -61,7 +62,8 @@
                                 <span class="title-header">Uwagi dla Studenta</span>
                                 <ul class="comment-box">
                                     <li th:each="comment : ${course.commentCourses}">
-                                        [<span class="date-time" th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]
+                                        [<span class="date-time"
+                                               th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]
                                         <span th:text="${comment.instructorComment}"></span>
                                     </li>
                                 </ul>
@@ -90,28 +92,35 @@
                             </div>
                         </div>
                         <div class="btn-box" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
-                            <form sec:authorize="hasRole('ROLE_INSTRUCTOR')" th:action="@{/course/instructor/deleteCourse}" method="post">
+                            <form sec:authorize="hasRole('ROLE_INSTRUCTOR')"
+                                  th:action="@{/course/instructor/deleteCourse}" method="post">
                                 <input type="hidden" name="courseId"
                                        th:value="${course.id}"/>
                                 <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs
                                 </button>
                             </form>
-                            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/course/admin/deleteCourse}" method="post">
+                            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/course/admin/deleteCourse}"
+                                  method="post">
                                 <input type="hidden" name="courseId"
                                        th:value="${course.id}"/>
                                 <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs
                                 </button>
                             </form>
 
-                            <form sec:authorize="hasRole('ROLE_INSTRUCTOR')" th:action="@{/dashboard/instructor/studentDetails}" method="post">
+                            <form sec:authorize="hasRole('ROLE_INSTRUCTOR')"
+                                  th:action="@{/dashboard/instructor/studentDetails}" method="post">
                                 <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
-                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i> Powrót
+                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i>
+                                    Powrót
                                 </button>
                             </form>
-                            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/dashboard/admin/userCourseDetails}" method="post">
-                                <input hidden="hidden" type="text" name="parentUserMail" th:value="${course.mentorShip.instructor.email}"/>
+                            <form sec:authorize="hasRole('ROLE_ADMIN')"
+                                  th:action="@{/dashboard/admin/userCourseDetails}" method="post">
+                                <input hidden="hidden" type="text" name="parentUserMail"
+                                       th:value="${course.mentorShip.instructor.email}"/>
                                 <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
-                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i> Powrót
+                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i>
+                                    Powrót
                                 </button>
                             </form>
 
@@ -125,16 +134,18 @@
                             </form>
                         </div>
                         <div class="btn-box" sec:authorize="hasRole('ROLE_STUDENT')">
-                            <form  th:action="@{/dashboard/student/instructorDetails}" method="post">
+                            <form th:action="@{/dashboard/student/instructorDetails}" method="post">
                                 <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
-                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i> Powrót
+                                <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i>
+                                    Powrót
                                 </button>
                             </form>
                         </div>
                     </div>
                     <div class="editCourse-schoolUser" th:if="${isEditCourse}">
                         <p class="title">Edycja Kursu</p>
-                        <p class="mini-title-warning" th:if="${editCourseValidationInfo}" th:text="${editCourseValidationInfo}"></p>
+                        <p class="mini-title-warning" th:if="${editCourseValidationInfo}"
+                           th:text="${editCourseValidationInfo}"></p>
                         <form class="course-details" th:action="@{/course/instructor/updateCourse}"
                               method="post" th:object="${course}" id="editCourseForm">
                             <input type="hidden" name="courseId" th:value="${course.id}"/>
@@ -180,10 +191,14 @@
                                 <ul class="comment-box">
                                     <li th:each="comment, iterStat : ${course.commentCourses}">
                                         <input type="hidden" th:field="*{commentCourses[__${iterStat.index}__].id}"/>
-                                        <p>[<span class="date-time" th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]</p>
+                                        <p>[<span class="date-time"
+                                                  th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]
+                                        </p>
                                         <div class="comment-actions">
-                                            <input type="text" th:field="*{commentCourses[__${iterStat.index}__].instructorComment}"/>
-                                            <button type="button" class="delete-btn" th:onclick="'deleteComment(' + ${comment.id} + ')'">
+                                            <input type="text"
+                                                   th:field="*{commentCourses[__${iterStat.index}__].instructorComment}"/>
+                                            <button type="button" class="delete-btn"
+                                                    th:onclick="'deleteComment(' + ${comment.id} + ')'">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
                                         </div>
@@ -191,7 +206,8 @@
                                     <li th:object="${newCommentCourse}">
                                         <p>[<span class="date-time">Dodawanie Uwagi</span>]</p>
                                         <div class="comment-actions">
-                                            <input type="text" th:field="*{instructorComment}" placeholder="Treść Nowej Uwagi"/>
+                                            <input type="text" th:field="*{instructorComment}"
+                                                   placeholder="Treść Nowej Uwagi"/>
                                         </div>
                                     </li>
                                 </ul>
@@ -238,7 +254,8 @@
                                 <span class="content" th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></span>
                             </div>
                         </form>
-                        <form id="deleteCommentCourse" th:action="@{/course/instructor/deleteCommentCourse}" method="post">
+                        <form id="deleteCommentCourse" th:action="@{/course/instructor/deleteCommentCourse}"
+                              method="post">
                             <input type="hidden" name="commentCourseId" id="commentCourseId"/>
                         </form>
                         <div class="btn-box">
@@ -281,8 +298,10 @@
                                     </div>
                                     <div class="box">
                                         <span class="content">
-                                        <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}" th:alt="'ikona'+${course.category.nameCategory}">
-                                            <span class="title-header" th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                        <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}"
+                                             th:alt="'ikona'+${course.category.nameCategory}">
+                                            <span class="title-header"
+                                                  th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
                                                 th:text="${drivingSession.instructorComment}"></th:block></span>
                                         <span class="time"><th:block
                                                 th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block><span
@@ -294,7 +313,8 @@
                                 <th:block th:each="drivingSession : ${course.drivingSessions}">
                                     <div class="editDrivingSession"
                                          th:if="${drivingSession.id == editDrivingSession.id}">
-                                        <p class="mini-title-warning" th:if="${editDrivingSessionValidationInfo}" th:text="${editDrivingSessionValidationInfo}"></p>
+                                        <p class="mini-title-warning" th:if="${editDrivingSessionValidationInfo}"
+                                           th:text="${editDrivingSessionValidationInfo}"></p>
                                         <form class="box-edit" method="post"
                                               th:action="@{/course/instructor/updateDrivingSession}"
                                               th:object="${editDrivingSession}">
@@ -305,8 +325,10 @@
                                             </th:block>
                                             <div class="rowSession top-row">
                                                 <span class="title-header">
-                                                    <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}" th:alt="'ikona'+${course.category.nameCategory}">
-                                                    <th:block th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></th:block>
+                                                    <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}"
+                                                         th:alt="'ikona'+${course.category.nameCategory}">
+                                                    <th:block
+                                                            th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></th:block>
                                                 </span>
                                                 <span class="time">
                                                     <input type="number" step="0.1" th:field="*{durationHours}"/>
@@ -322,7 +344,8 @@
                                             </div>
                                             <div class="button-group">
                                                 <button type="button" class="cancel-btn"
-                                                        onclick="document.getElementById('backCourseForm').submit();">Anuluj
+                                                        onclick="document.getElementById('backCourseForm').submit();">
+                                                    Anuluj
                                                 </button>
                                                 <button type="submit" class="add-btn">Zapisz</button>
                                             </div>
@@ -350,8 +373,10 @@
                                         </div>
                                         <div class="box">
                                             <span class="content">
-                                                <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}" th:alt="'ikona'+${course.category.nameCategory}">
-                                                <span class="title-header" th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                                <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}"
+                                                     th:alt="'ikona'+${course.category.nameCategory}">
+                                                <span class="title-header"
+                                                      th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
                                                     th:text="${drivingSession.instructorComment}"></th:block></span>
                                             <span class="time"><th:block
                                                     th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block><span
@@ -363,15 +388,18 @@
                             <div class="drivingSession" th:if="${course.drivingSessions.isEmpty()}">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Nie dodano jeszcze żadnych sesji jazdy.</span></span>
-                                    <span sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')" class="time">Dodaj pierwszą<span class="hours">sesję</span>!</span>
-                                    <span sec:authorize="hasRole('ROLE_STUDENT')" class="time">Poczekaj na pierwsza<span class="hours">sesję</span>!</span>
+                                    <span sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')" class="time">Dodaj pierwszą<span
+                                            class="hours">sesję</span>!</span>
+                                    <span sec:authorize="hasRole('ROLE_STUDENT')" class="time">Poczekaj na pierwsza<span
+                                            class="hours">sesję</span>!</span>
                                 </div>
                             </div>
                             <div class="drivingSummary">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Podsumowanie</span> Łączna ilość przejechanych godzin</span>
                                     <span class="time">
-                                        <th:block th:text="${course.summaryDurationHours == 0 ? '0' : #numbers.formatDecimal(course.summaryDurationHours, 0, 1)}"></th:block>
+                                        <th:block
+                                                th:text="${course.summaryDurationHours == 0 ? '0' : #numbers.formatDecimal(course.summaryDurationHours, 0, 1)}"></th:block>
                                         <span class="hours">h</span>
                                     </span>
                                 </div>
@@ -385,7 +413,8 @@
                                         <p>Dodawanie Sesji Jazdy</p>
                                         <hr>
                                     </div>
-                                    <p class="mini-title-warning" th:if="${createDrivingSessionValidationInfo}" th:text="${createDrivingSessionValidationInfo}"></p>
+                                    <p class="mini-title-warning" th:if="${createDrivingSessionValidationInfo}"
+                                       th:text="${createDrivingSessionValidationInfo}"></p>
                                     <div class="rowSession comment-row">
                                         <th:block th:if="${#fields.hasErrors('instructorComment')}">
                                             <span class="warning-text" th:errors="*{instructorComment}"></span>
@@ -394,9 +423,9 @@
                                         <input type="text" th:field="*{instructorComment}"
                                                placeholder="Wprowadź komentarz"/>
                                     </div>
-                                        <th:block th:if="${#fields.hasErrors('durationHours')}">
-                                            <span class="warning-text" th:errors="*{durationHours}"></span>
-                                        </th:block>
+                                    <th:block th:if="${#fields.hasErrors('durationHours')}">
+                                        <span class="warning-text" th:errors="*{durationHours}"></span>
+                                    </th:block>
                                     <div class="rowSession bottom-row">
                                         <span class="title-header">Odbyte Godziny Jazdy</span>
                                         <input type="number" placeholder="Godz" step="0.1" th:field="*{durationHours}"/>
@@ -414,7 +443,8 @@
                     <div class="account-testCourses">
                         <p class="title" th:unless="${course.testCourses.isEmpty()}">Wyniki Testów</p>
                         <p class="title" th:if="${course.testCourses.isEmpty()}">Brak Wyników Testów</p>
-                        <div class="schoolUser-testCourses" th:with="Constants=${T(com.driving.school.model.Constants)}">
+                        <div class="schoolUser-testCourses"
+                             th:with="Constants=${T(com.driving.school.model.Constants)}">
                             <th:block th:unless="${isEditTestCourse}">
                                 <div class="testCourse" th:each="testCourse : ${course.testCourses}">
                                     <div class="operations" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
@@ -436,42 +466,59 @@
                                     </div>
                                     <div class="box">
                                         <span class="content">
-                                            <th:block th:if="${testCourse.testType.equals(Constants.COURSE_TEST_GENERAL)}">
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_GENERAL)}">
                                                 <img src="/assets/img/generalTest.svg" alt="ikona testu ogolnego">
                                             </th:block>
-                                            <th:block th:if="${testCourse.testType.equals(Constants.COURSE_TEST_PRACTICAL)}">
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_PRACTICAL)}">
                                                 <img src="/assets/img/practicalTest.svg" alt="ikona testu praktycznego">
                                             </th:block>
-                                            <th:block th:if="${testCourse.testType.equals(Constants.COURSE_TEST_THEORETICAL)}">
-                                                <img src="/assets/img/theoreticalTest.svg" alt="ikona testu teoretycznego">
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_THEORETICAL)}">
+                                                <img src="/assets/img/theoreticalTest.svg"
+                                                     alt="ikona testu teoretycznego">
                                             </th:block>
-                                            <span class="title-header" th:text="${#temporals.format(testCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                            <span class="title-header"
+                                                  th:text="${#temporals.format(testCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
                                                 th:text="${testCourse.instructorComment}"></th:block>
                                         </span>
                                         <span class="percentagesResult">
-                                            <th:block th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block
+                                                    th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
                                             <span class="percentages">%</span></span>
                                     </div>
                                 </div>
                             </th:block>
                             <th:block th:if="${isEditTestCourse}">
-                                <th:block th:each="testCourse : ${course.testCourses}" th:with="Constants=${T(com.driving.school.model.Constants)}">
-                                    <div class="editTestCourse"
-                                         th:if="${testCourse.id == editTestCourse.id}">
+                                <th:block th:each="testCourse : ${course.testCourses}"
+                                          th:with="Constants=${T(com.driving.school.model.Constants)}">
+                                    <div class="editTestCourse" th:if="${testCourse.id == editTestCourse.id}">
+                                        <p class="mini-title-warning" th:if="${editDrivingSessionValidationInfo}"
+                                           th:text="${editDrivingSessionValidationInfo}"></p>
+
                                         <form class="box-edit" method="post"
                                               th:action="@{/course/instructor/updateTestCourse}"
                                               th:object="${editTestCourse}">
                                             <input type="hidden" name="editTestCourseId"
                                                    th:value="${editTestCourse.id}"/>
+
+                                            <th:block th:if="${#fields.hasErrors('testResult')}">
+                                                <span class="warning-text" th:errors="*{testResult}"></span>
+                                            </th:block>
                                             <div class="rowTestCourse top-row">
                                                 <span class="title-header"
                                                       th:text="${#temporals.format(editTestCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span>
                                                 <span class="percentagesResult">
-                                                    <input type="number" step="0.01" max="100" th:field="*{testResult}"/>
+                                                    <input type="number" step="0.01" max="100"
+                                                           th:field="*{testResult}"/>
                                                     <span class="percentages">%</span>
                                                 </span>
                                             </div>
 
+                                            <th:block th:if="${#fields.hasErrors('testType')}">
+                                                <span class="warning-text" th:errors="*{testType}"></span>
+                                            </th:block>
                                             <div class="rowTestCourse type-row">
                                                 <span class="title-header">Rodzaj Testu</span>
                                                 <div class="testType">
@@ -479,32 +526,45 @@
                                                         <input type="radio" id="typeGeneral"
                                                                th:field="*{testType}"
                                                                th:value="${Constants.COURSE_TEST_GENERAL}"/>
-                                                        <label for="typeGeneral" title="Jest to ogolny rodzaj testu (teoria+praktyka)."><img src="/assets/img/generalTest.svg" alt="ikona testu ogolnego"></label>
+                                                        <label for="typeGeneral"
+                                                               title="Jest to ogolny rodzaj testu (teoria+praktyka)."><img
+                                                                src="/assets/img/generalTest.svg"
+                                                                alt="ikona testu ogolnego"></label>
                                                     </div>
 
                                                     <div class="type">
                                                         <input type="radio" id="typePractical"
                                                                th:field="*{testType}"
                                                                th:value="${Constants.COURSE_TEST_PRACTICAL}"/>
-                                                        <label for="typePractical" title="Jest to praktyczny rodzaj testu."><img src="/assets/img/practicalTest.svg" alt="ikona testu praktycznego"></label>
+                                                        <label for="typePractical"
+                                                               title="Jest to praktyczny rodzaj testu."><img
+                                                                src="/assets/img/practicalTest.svg"
+                                                                alt="ikona testu praktycznego"></label>
                                                     </div>
 
                                                     <div class="type">
                                                         <input type="radio" id="typeTheoretical"
                                                                th:field="*{testType}"
                                                                th:value="${Constants.COURSE_TEST_THEORETICAL}"/>
-                                                        <label for="typeTheoretical" title="Jest to teoratyczny rodzaj testu."><img src="/assets/img/theoreticalTest.svg" alt="ikona testu teoretycznego"></label>
+                                                        <label for="typeTheoretical"
+                                                               title="Jest to teoratyczny rodzaj testu."><img
+                                                                src="/assets/img/theoreticalTest.svg"
+                                                                alt="ikona testu teoretycznego"></label>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <th:block th:if="${#fields.hasErrors('instructorComment')}">
+                                                <span class="warning-text" th:errors="*{instructorComment}"></span>
+                                            </th:block>
                                             <div class="rowTestCourse comment-row">
                                                 <input type="text" th:field="*{instructorComment}"
                                                        placeholder="Wprowadź komentarz"/>
                                             </div>
                                             <div class="button-group">
                                                 <button type="button" class="cancel-btn"
-                                                        onclick="document.getElementById('backCourseForm').submit();">Anuluj
+                                                        onclick="document.getElementById('backCourseForm').submit();">
+                                                    Anuluj
                                                 </button>
                                                 <button type="submit" class="add-btn">Zapisz</button>
                                             </div>
@@ -531,20 +591,31 @@
                                         </div>
                                         <div class="box">
                                         <span class="content">
-                                            <th:block th:if="${testCourse.testType.equals(Constants.COURSE_TEST_GENERAL)}">
-                                                <img src="/assets/img/generalTest.svg" title="Jest to ogolny rodzaj testu (teoria+praktyka)." alt="ikona testu ogolnego">
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_GENERAL)}">
+                                                <img src="/assets/img/generalTest.svg"
+                                                     title="Jest to ogolny rodzaj testu (teoria+praktyka)."
+                                                     alt="ikona testu ogolnego">
                                             </th:block>
-                                            <th:block th:if="${testCourse.testType.equals(Constants.COURSE_TEST_PRACTICAL)}">
-                                                <img src="/assets/img/practicalTest.svg" title="Jest to praktyczny rodzaj testu." alt="ikona testu praktycznego">
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_PRACTICAL)}">
+                                                <img src="/assets/img/practicalTest.svg"
+                                                     title="Jest to praktyczny rodzaj testu."
+                                                     alt="ikona testu praktycznego">
                                             </th:block>
-                                            <th:block th:if="${testCourse.testType.equals(Constants.COURSE_TEST_THEORETICAL)}">
-                                                <img src="/assets/img/theoreticalTest.svg" title="Jest to teoratyczny rodzaj testu." alt="ikona testu teoretycznego">
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_THEORETICAL)}">
+                                                <img src="/assets/img/theoreticalTest.svg"
+                                                     title="Jest to teoratyczny rodzaj testu."
+                                                     alt="ikona testu teoretycznego">
                                             </th:block>
-                                            <span class="title-header" th:text="${#temporals.format(testCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                            <span class="title-header"
+                                                  th:text="${#temporals.format(testCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
                                                 th:text="${testCourse.instructorComment}"></th:block>
                                         </span>
                                             <span class="percentagesResult">
-                                            <th:block th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block
+                                                    th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
                                             <span class="percentages">%</span></span>
                                         </div>
                                     </div>
@@ -552,16 +623,21 @@
                             </th:block>
                             <div class="testCourse" th:if="${course.testCourses.isEmpty()}">
                                 <div class="box">
-                                    <span class="content"><span class="title-header">Nie dodano żadnych wyników testów.</span></span>
-                                    <span class="percentagesResult" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">Dodaj pierwszy<span class="percentages">Test</span>!</span>
-                                    <span class="percentagesResult" sec:authorize="hasRole('ROLE_STUDENT')" >Poczekaj na wynik<span class="percentages">testów</span>!</span>
+                                    <span class="content"><span
+                                            class="title-header">Nie dodano żadnych wyników testów.</span></span>
+                                    <span class="percentagesResult"
+                                          sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">Dodaj pierwszy<span
+                                            class="percentages">Test</span>!</span>
+                                    <span class="percentagesResult" sec:authorize="hasRole('ROLE_STUDENT')">Poczekaj na wynik<span
+                                            class="percentages">testów</span>!</span>
                                 </div>
                             </div>
                             <div class="testCourseSummary">
                                 <div class="box">
                                     <span class="content"><span class="title-header">Podsumowanie</span> Średnia wyników wszystkich testów</span>
                                     <span class="percentagesResult">
-                                      <th:block th:text="${course.summaryAverageResultTest == 0 ? '0' : #numbers.formatDecimal(course.summaryAverageResultTest, 0, 2)}"></th:block>
+                                      <th:block
+                                              th:text="${course.summaryAverageResultTest == 0 ? '0' : #numbers.formatDecimal(course.summaryAverageResultTest, 0, 2)}"></th:block>
                                         <span class="percentages">%</span>
                                     </span>
                                 </div>
@@ -576,41 +652,61 @@
                                         <hr>
                                     </div>
 
+                                    <p class="mini-title-warning" th:if="${createTestCourseValidationInfo}"
+                                       th:text="${createTestCourseValidationInfo}"></p>
                                     <div class="rowTestCourse type-row">
+                                        <th:block th:if="${#fields.hasErrors('testType')}">
+                                            <span class="warning-text" th:errors="*{testType}"></span>
+                                        </th:block>
                                         <span class="title-header">Rodzaj Testu</span>
                                         <div class="testType">
                                             <div class="type">
                                                 <input type="radio" id="typeGeneralTest"
                                                        th:field="*{testType}"
                                                        th:value="${Constants.COURSE_TEST_GENERAL}"/>
-                                                <label for="typeGeneralTest" title="Jest to ogolny rodzaj testu (teoria+praktyka)."><img src="/assets/img/generalTest.svg" alt="ikona testu ogolnego"></label>
+                                                <label for="typeGeneralTest"
+                                                       title="Jest to ogolny rodzaj testu (teoria+praktyka)."><img
+                                                        src="/assets/img/generalTest.svg"
+                                                        alt="ikona testu ogolnego"></label>
                                             </div>
 
                                             <div class="type">
                                                 <input type="radio" id="typePracticalTest"
                                                        th:field="*{testType}"
                                                        th:value="${Constants.COURSE_TEST_PRACTICAL}"/>
-                                                <label for="typePracticalTest" title="Jest to praktyczny rodzaj testu."><img src="/assets/img/practicalTest.svg" alt="ikona testu praktycznego"></label>
+                                                <label for="typePracticalTest" title="Jest to praktyczny rodzaj testu."><img
+                                                        src="/assets/img/practicalTest.svg"
+                                                        alt="ikona testu praktycznego"></label>
                                             </div>
 
                                             <div class="type">
                                                 <input type="radio" id="typeTheoreticalTest"
                                                        th:field="*{testType}"
                                                        th:value="${Constants.COURSE_TEST_THEORETICAL}"/>
-                                                <label for="typeTheoreticalTest" title="Jest to teoratyczny rodzaj testu."><img src="/assets/img/theoreticalTest.svg" alt="ikona testu teoretycznego"></label>
+                                                <label for="typeTheoreticalTest"
+                                                       title="Jest to teoratyczny rodzaj testu."><img
+                                                        src="/assets/img/theoreticalTest.svg"
+                                                        alt="ikona testu teoretycznego"></label>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <th:block th:if="${#fields.hasErrors('instructorComment')}">
+                                        <span class="warning-text" th:errors="*{instructorComment}"></span>
+                                    </th:block>
                                     <div class="rowTestCourse comment-row">
                                         <span class="title-header">Uwagi oraz Komentarze do Testu</span>
                                         <input type="text" th:field="*{instructorComment}"
                                                placeholder="Wprowadź komentarz"/>
                                     </div>
 
+                                    <th:block th:if="${#fields.hasErrors('testResult')}">
+                                        <span class="warning-text" th:errors="*{testResult}"></span>
+                                    </th:block>
                                     <div class="rowTestCourse bottom-row">
                                         <span class="title-header">Wynik Testu</span>
-                                        <input type="number" placeholder="Proc." step="0.01" max="100" th:field="*{testResult}"/>
+                                        <input type="number" placeholder="Proc." step="0.01" max="100"
+                                               th:field="*{testResult}"/>
                                         <span class="percentages">%</span>
                                     </div>
 

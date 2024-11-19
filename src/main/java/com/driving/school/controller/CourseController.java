@@ -266,6 +266,7 @@ public class CourseController {
             if (errors.hasErrors() && user.getRoleName().equals(Constants.INSTRUCTOR_ROLE)) {
                 modelAndView.addObject("isEditDrivingSession", true);
                 editDrivingSession.setId(editDrivingSessionId);
+                editDrivingSession.setSessionDate(ds.get().getSessionDate());
                 modelAndView.addObject("editDrivingSession", editDrivingSession);
                 modelAndView.addObject("editDrivingSessionValidationInfo", "Wprowadź poprawne dane, aby zaktualizowac sesje jazdy!");
                 return modelAndView;
@@ -301,7 +302,7 @@ public class CourseController {
     // Results Test in Course mappings
 
     @PostMapping("/course/instructor/addTestCourse")
-    public ModelAndView addTestCourse(@ModelAttribute("newTestCourse") TestCourse newTestCourse,
+    public ModelAndView addTestCourse(@Valid @ModelAttribute("newTestCourse") TestCourse newTestCourse, Errors errors,
                                       @RequestParam("courseId") Long courseId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<Course> course = courseService.getCourseById(courseId);
@@ -309,14 +310,21 @@ public class CourseController {
         if (course.isPresent() && (
                 course.get().getMentorShip().getInstructor().equals(user) ||
                         user.getRoleName().equals(Constants.ADMIN_ROLE))) {
-            if (user.getRoleName().equals(Constants.ADMIN_ROLE))
-                testCourseService.createTestCourse(newTestCourse, course.get());
-            else
-                testCourseService.instructorCreateTestCourse(newTestCourse, course.get());
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             modelAndView.addObject("newTestCourse", new TestCourse());
+
+            if (user.getRoleName().equals(Constants.ADMIN_ROLE))
+                testCourseService.createTestCourse(newTestCourse, course.get());
+            else {
+                if (errors.hasErrors()) {
+                    modelAndView.addObject("newTestCourse", newTestCourse);
+                    modelAndView.addObject("createTestCourseValidationInfo", "Wprowadź poprawne dane, aby dodać wynik testu!");
+                    return modelAndView;
+                }
+                testCourseService.instructorCreateTestCourse(newTestCourse, course.get());
+            }
             return modelAndView;
         }
 
@@ -344,18 +352,28 @@ public class CourseController {
     }
 
     @PostMapping("/course/instructor/updateTestCourse")
-    public ModelAndView updateTestCourse(@ModelAttribute("editTestCourse") TestCourse editTestCourse,
+    public ModelAndView updateTestCourse(@Valid @ModelAttribute("editTestCourse") TestCourse editTestCourse, Errors errors,
                                          @RequestParam("editTestCourseId") Long editTestCourseId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<TestCourse> tc = testCourseService.getTestCourseById(editTestCourseId);
 
         if (tc.isPresent() && (tc.get().getCourse().getMentorShip().getInstructor().equals(user)
                 || user.getRoleName().equals(Constants.ADMIN_ROLE))) {
-            testCourseService.updateTestCourse(editTestCourseId, editTestCourse);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", tc.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             modelAndView.addObject("newTestCourse", new TestCourse());
+
+            if (errors.hasErrors() && user.getRoleName().equals(Constants.INSTRUCTOR_ROLE)) {
+                modelAndView.addObject("isEditTestCourse", true);
+                editTestCourse.setId(editTestCourseId);
+                editTestCourse.setTestDate(tc.get().getTestDate());
+                modelAndView.addObject("editTestCourse", editTestCourse);
+                modelAndView.addObject("editDrivingSessionValidationInfo", "Wprowadź poprawne dane, aby zaktualizowac wynik testu!");
+                return modelAndView;
+            }
+
+            testCourseService.updateTestCourse(editTestCourseId, editTestCourse);
             return modelAndView;
         }
 
