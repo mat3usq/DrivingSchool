@@ -199,7 +199,7 @@ public class CourseController {
     // Driving Sessions mappings
 
     @PostMapping("/course/instructor/addDrivingSession")
-    public ModelAndView addDrivingSession(@ModelAttribute("newDrivingSession") DrivingSession newDrivingSession,
+    public ModelAndView addDrivingSession(@Valid @ModelAttribute("newDrivingSession") DrivingSession newDrivingSession, Errors errors,
                                           @RequestParam("courseId") Long courseId, HttpSession session) {
         Optional<Course> course = courseService.getCourseById(courseId);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
@@ -208,14 +208,21 @@ public class CourseController {
                 course.get().getMentorShip().getInstructor().equals(user) ||
                         user.getRoleName().equals(Constants.ADMIN_ROLE)
         )) {
-            if (user.getRoleName().equals(Constants.ADMIN_ROLE))
-                drivingSessionService.createDrivingSession(newDrivingSession, course.get());
-            else
-                drivingSessionService.instructorCreateDrivingSession(newDrivingSession, course.get());
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", course.get());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             modelAndView.addObject("newTestCourse", new TestCourse());
+
+            if (user.getRoleName().equals(Constants.ADMIN_ROLE))
+                drivingSessionService.createDrivingSession(newDrivingSession, course.get());
+            else {
+                if (errors.hasErrors()) {
+                    modelAndView.addObject("newDrivingSession", newDrivingSession);
+                    modelAndView.addObject("createDrivingSessionValidationInfo", "Wprowadź poprawne dane, aby dodać sesje jazdy!");
+                    return modelAndView;
+                }
+                drivingSessionService.instructorCreateDrivingSession(newDrivingSession, course.get());
+            }
             return modelAndView;
         }
 
@@ -243,7 +250,7 @@ public class CourseController {
     }
 
     @PostMapping("/course/instructor/updateDrivingSession")
-    public ModelAndView updateDrivingSession(@ModelAttribute("editDrivingSession") DrivingSession editDrivingSession,
+    public ModelAndView updateDrivingSession(@Valid @ModelAttribute("editDrivingSession") DrivingSession editDrivingSession, Errors errors,
                                              @RequestParam("editDrivingSessionId") Long editDrivingSessionId, HttpSession session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<DrivingSession> ds = drivingSessionService.getDrivingSessionById(editDrivingSessionId);
@@ -251,11 +258,20 @@ public class CourseController {
         if (ds.isPresent() && (
                 ds.get().getCourse().getMentorShip().getInstructor().equals(user) ||
                         user.getRoleName().equals(Constants.ADMIN_ROLE))) {
-            drivingSessionService.updateDrivingSession(editDrivingSessionId, editDrivingSession);
             ModelAndView modelAndView = new ModelAndView("courseDetails");
             modelAndView.addObject("course", ds.get().getCourse());
             modelAndView.addObject("newDrivingSession", new DrivingSession());
             modelAndView.addObject("newTestCourse", new TestCourse());
+
+            if (errors.hasErrors() && user.getRoleName().equals(Constants.INSTRUCTOR_ROLE)) {
+                modelAndView.addObject("isEditDrivingSession", true);
+                editDrivingSession.setId(editDrivingSessionId);
+                modelAndView.addObject("editDrivingSession", editDrivingSession);
+                modelAndView.addObject("editDrivingSessionValidationInfo", "Wprowadź poprawne dane, aby zaktualizowac sesje jazdy!");
+                return modelAndView;
+            }
+
+            drivingSessionService.updateDrivingSession(editDrivingSessionId, editDrivingSession);
             return modelAndView;
         }
 
@@ -263,7 +279,8 @@ public class CourseController {
     }
 
     @PostMapping("/course/instructor/deleteDrivingSession")
-    public ModelAndView deleteDrivingSession(@RequestParam("drivingSessionId") Long drivingSessionId, HttpSession session) {
+    public ModelAndView deleteDrivingSession(@RequestParam("drivingSessionId") Long drivingSessionId, HttpSession
+            session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<DrivingSession> ds = drivingSessionService.getDrivingSessionById(drivingSessionId);
 
@@ -365,7 +382,8 @@ public class CourseController {
     }
 
     @PostMapping("/course/instructor/deleteCommentCourse")
-    public ModelAndView deleteCommentCourse(@RequestParam("commentCourseId") Long commentCourseId, HttpSession session) {
+    public ModelAndView deleteCommentCourse(@RequestParam("commentCourseId") Long commentCourseId, HttpSession
+            session) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         Optional<CommentCourse> commentCourse = commentCourseRepository.findById(commentCourseId);
 

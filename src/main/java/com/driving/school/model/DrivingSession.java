@@ -1,6 +1,10 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,9 +32,13 @@ public class DrivingSession {
     @Column(name = "SESSION_DATE")
     private LocalDateTime sessionDate;
 
+    @NotNull(message = "Czas sesji jazdy nie może być pusty")
+    @Positive(message = "Czas sesji jazdy musi być wartością dodatnią")
     @Column(name = "DURATION_HOURS")
     private Double durationHours;
 
+    @NotBlank(message = "Opis nie może być pusty")
+    @Size(min = 10, max = 500, message = "Opis musi mieć od 10 do 100 znaków")
     @Column(name = "INSTRUCTOR_COMMENT")
     private String instructorComment;
 

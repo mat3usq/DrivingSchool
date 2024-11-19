@@ -294,11 +294,15 @@
                                 <th:block th:each="drivingSession : ${course.drivingSessions}">
                                     <div class="editDrivingSession"
                                          th:if="${drivingSession.id == editDrivingSession.id}">
+                                        <p class="mini-title-warning" th:if="${editDrivingSessionValidationInfo}" th:text="${editDrivingSessionValidationInfo}"></p>
                                         <form class="box-edit" method="post"
                                               th:action="@{/course/instructor/updateDrivingSession}"
                                               th:object="${editDrivingSession}">
                                             <input type="hidden" name="editDrivingSessionId"
                                                    th:value="${editDrivingSession.id}"/>
+                                            <th:block th:if="${#fields.hasErrors('durationHours')}">
+                                                <span class="warning-text" th:errors="*{durationHours}"></span>
+                                            </th:block>
                                             <div class="rowSession top-row">
                                                 <span class="title-header">
                                                     <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}" th:alt="'ikona'+${course.category.nameCategory}">
@@ -309,6 +313,9 @@
                                                     <span class="hours">h</span>
                                                 </span>
                                             </div>
+                                            <th:block th:if="${#fields.hasErrors('instructorComment')}">
+                                                <span class="warning-text" th:errors="*{instructorComment}"></span>
+                                            </th:block>
                                             <div class="rowSession comment-row">
                                                 <input type="text" th:field="*{instructorComment}"
                                                        placeholder="Wprowadź komentarz"/>
@@ -378,12 +385,18 @@
                                         <p>Dodawanie Sesji Jazdy</p>
                                         <hr>
                                     </div>
+                                    <p class="mini-title-warning" th:if="${createDrivingSessionValidationInfo}" th:text="${createDrivingSessionValidationInfo}"></p>
                                     <div class="rowSession comment-row">
+                                        <th:block th:if="${#fields.hasErrors('instructorComment')}">
+                                            <span class="warning-text" th:errors="*{instructorComment}"></span>
+                                        </th:block>
                                         <span class="title-header">Uwagi oraz Komentarze do Jazdy</span>
                                         <input type="text" th:field="*{instructorComment}"
                                                placeholder="Wprowadź komentarz"/>
                                     </div>
-
+                                        <th:block th:if="${#fields.hasErrors('durationHours')}">
+                                            <span class="warning-text" th:errors="*{durationHours}"></span>
+                                        </th:block>
                                     <div class="rowSession bottom-row">
                                         <span class="title-header">Odbyte Godziny Jazdy</span>
                                         <input type="number" placeholder="Godz" step="0.1" th:field="*{durationHours}"/>
