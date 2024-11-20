@@ -1,6 +1,7 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,26 +17,33 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "INSTRUCTIONEVENTS")
 public class InstructionEvent {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "SUBJECT", length = 128)
+    @NotBlank(message = "Temat jest wymagany")
+    @Size(max = 100, message = "Temat może mieć maksymalnie 100 znaków")
+    @Column(name = "SUBJECT", length = 100, nullable = false)
     private String subject;
 
-    @Column(name = "EVENTTYPE", length = 128)
+    @NotBlank(message = "Typ wydarzenia jest wymagany")
+    @Size(max = 100, message = "Typ wydarzenia może mieć maksymalnie 100 znaków")
+    @Column(name = "EVENTTYPE", length = 100, nullable = false)
     private String eventType;
 
-    @Column(name = "STARTTIME")
+    @NotNull(message = "Czas rozpoczęcia jest wymagany")
+    @Column(name = "STARTTIME", nullable = false)
     private LocalDateTime startTime;
 
-    @Column(name = "ENDTIME")
+    @NotNull(message = "Czas zakończenia jest wymagany")
+    @Column(name = "ENDTIME", nullable = false)
     private LocalDateTime endTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "INSTRUCTORID")
+    @JoinColumn(name = "INSTRUCTORID", nullable = false)
     private SchoolUser instructor;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -49,14 +57,24 @@ public class InstructionEvent {
     @Column(name = "STATUS", length = 64)
     private String status;
 
-    @Column(name = "EVENTCAPACITY")
+    @NotNull(message = "Liczba miejsc na wydarzenie jest wymagane")
+    @Min(value = 1, message = "Liczba miejsc na wydarzenie musi byc co najmniej 1")
+    @Column(name = "EVENTCAPACITY", nullable = false)
     private Integer eventCapacity;
 
-    @Column(name = "AVAILABLEEVENTSLOTS")
+    @Column(name = "AVAILABLEEVENTSLOTS", nullable = false)
     private Integer availableEventSlots;
 
     @Transient
     private Boolean isAssigned;
+
+    @AssertTrue(message = "Czas rozpoczęcia musi być przed czasem zakończenia")
+    public boolean isStartTimeBeforeEndTime() {
+        if (startTime == null || endTime == null) {
+            return true;
+        }
+        return !startTime.isAfter(endTime);
+    }
 
     public InstructionEvent(String subject, String eventType, LocalDateTime startTime, LocalDateTime endTime, SchoolUser instructor, Integer eventCapacity) {
         this.subject = subject;

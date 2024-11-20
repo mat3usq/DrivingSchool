@@ -70,6 +70,44 @@ h2 {
 			z-index: -5;
 		}
 
+		.mini-title-warning {
+			margin: 20px auto;
+			padding: 20px 15px;
+			background-color: rgba(0, 0, 0, 0.8);
+			border-radius: 20px;
+			font-size: 16px;
+			font-style: italic;
+			letter-spacing: 1px;
+			text-align: center;
+			border: 5px dotted $primary-color;
+		}
+
+		.warning-text {
+			text-align: center;
+			margin: 10px auto;
+			max-width: 400px;
+			font-weight: bold;
+			background-color: #3333337a;
+			border-radius: 10px;
+			padding: 10px;
+			padding-left: 35px;
+			position: relative;
+			color: $secondary-color;
+			border-left: 4px solid $secondary-color;
+			border-right: 4px solid $secondary-color;
+
+			&::before {
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				color: inherit;
+				position: absolute;
+				left: 10px;
+				top: 50%;
+				transform: translateY(-50%);
+				content: '\f071';
+			}
+		}
+
 		.box-calendar {
 			position: absolute;
 			top: 30px;
@@ -640,7 +678,8 @@ h2 {
 
 						.add-event-body {
 							width: 100%;
-							height: 100%;
+							height: 400px;
+							overflow: scroll;
 							display: flex;
 							flex-direction: column;
 							gap: 5px;
@@ -657,7 +696,7 @@ h2 {
 								input,
 								select {
 									width: 100%;
-									height: 100%;
+									height: 40px;
 									outline: none;
 									border: none;
 									border: 2px solid #f5f5f5;

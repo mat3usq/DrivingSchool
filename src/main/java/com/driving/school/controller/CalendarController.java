@@ -6,10 +6,12 @@ import com.driving.school.service.InstructorEventService;
 import com.driving.school.service.MentorShipService;
 import com.driving.school.service.NotificationService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -58,29 +60,8 @@ public class CalendarController {
 
     private ModelAndView getCalendarModelAndView(YearMonth yearMonth, LocalDateTime localDateTime, HttpSession session, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView("calendar");
-        LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
-        LocalDateTime endOfMonth = yearMonth.atEndOfMonth().atTime(23, 59, 59);
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-
-        List<InstructionEvent> events = new ArrayList<>();
-        if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_STUDENT")) {
-            List<MentorShip> mentorShips = mentorShipService.findByStudentId(user.getId());
-            for (MentorShip ms : mentorShips) {
-                if (ms.getStatus().equals(Constants.ACTIVE)) {
-                    List<InstructionEvent> eventsByInstructor = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, ms.getInstructor().getId());
-                    events.addAll(eventsByInstructor);
-                }
-            }
-        } else if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_INSTRUCTOR")) {
-            events = instructorEventService.findInstructionEventsByTimeRangeAndInstructor(startOfMonth, endOfMonth, user.getId());
-        } else if (authentication.getAuthorities().toArray()[0].toString().equals("ROLE_ADMIN"))
-            events = instructorEventService.findInstructionEventsByTimeRange(startOfMonth, endOfMonth);
-
-        events.forEach(e -> {
-            if (e.getStudents() != null)
-                e.setIsAssigned(e.getStudents().stream().anyMatch(s -> Objects.equals(s.getId(), user.getId())));
-        });
-
+        List<InstructionEvent> events = instructorEventService.getEvents(user, yearMonth, authentication);
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEE", new Locale("pl"));
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", new Locale("pl"));
         String formattedDay = localDateTime.format(dayFormatter);
@@ -135,15 +116,25 @@ public class CalendarController {
     }
 
     @PostMapping("/operation/addEvent")
-    public ModelAndView addEvent(@ModelAttribute InstructionEvent event, HttpSession session, Authentication authentication) {
-        event.setInstructor((SchoolUser) session.getAttribute("loggedInUser"));
-        if (event.getEventCapacity() < 0)
-            event.setEventCapacity(0);
-        event.setAvailableEventSlots(event.getEventCapacity());
-        instructionEventRepository.save(event);
-        notificationService.sendNotificationWhenInstructorCreateNewEvent(event);
-        YearMonth yearMonth = YearMonth.from(event.getStartTime());
-        return getCalendarModelAndView(yearMonth, event.getStartTime(), session, authentication);
+    public ModelAndView addEvent(@Valid @ModelAttribute InstructionEvent newEvent, Errors errors, HttpSession session, Authentication authentication) {
+        if (newEvent.getStartTime() == null)
+            return displayCalendar(YearMonth.now().getMonth().getValue(), YearMonth.now().getYear(), session, authentication);
+
+        YearMonth yearMonth = YearMonth.from(newEvent.getStartTime());
+        newEvent.setInstructor((SchoolUser) session.getAttribute("loggedInUser"));
+        newEvent.setAvailableEventSlots(newEvent.getEventCapacity());
+
+        if (errors.hasErrors() && ((SchoolUser) session.getAttribute("loggedInUser")).getRoleName().equals(Constants.INSTRUCTOR_ROLE)) {
+            ModelAndView modelAndView = getCalendarModelAndView(yearMonth, newEvent.getStartTime(), session, authentication);
+            modelAndView.addObject("newEvent", newEvent);
+            modelAndView.addObject("org.springframework.validation.BindingResult.newEvent", errors);
+            modelAndView.addObject("createEventValidationInfo", "Wprowadź poprawne dane, aby dodac wydarzenie!");
+            return modelAndView;
+        }
+
+        instructionEventRepository.save(newEvent);
+        notificationService.sendNotificationWhenInstructorCreateNewEvent(newEvent);
+        return getCalendarModelAndView(yearMonth, newEvent.getStartTime(), session, authentication);
     }
 
     @PostMapping("/operation/deleteEvent")
@@ -178,12 +169,23 @@ public class CalendarController {
     }
 
     @PostMapping("/operation/editEvent")
-    public ModelAndView editEvent(@ModelAttribute("editedEvent") InstructionEvent editedEvent, HttpSession session, Authentication authentication) {
+    public ModelAndView editEvent(@Valid @ModelAttribute("editedEvent") InstructionEvent editedEvent, Errors errors, HttpSession session, Authentication authentication) {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
         InstructionEvent event = (InstructionEvent) session.getAttribute("eventToEdit");
 
-        if (event != null && (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE)))
+        if (event != null && (user.getId().equals(event.getInstructor().getId()) || user.getRoleName().equals(Constants.ADMIN_ROLE))) {
+            if (errors.hasErrors() && user.getRoleName().equals(Constants.INSTRUCTOR_ROLE)) {
+                editedEvent.setEventCapacity(event.getEventCapacity());
+                editedEvent.setAvailableEventSlots(event.getAvailableEventSlots());
+                editedEvent.setStudents(event.getStudents());
+                ModelAndView modelAndView = displayEditEvent(event.getId(), session, authentication);
+                modelAndView.addObject("editedEvent", editedEvent);
+                modelAndView.addObject("editEventValidationInfo", "Wprowadź poprawne dane, aby zaktualizowac wydarzenie!");
+                return modelAndView;
+            }
+
             instructorEventService.updateInstructionEvent(event.getId(), editedEvent);
+        }
 
         return getCalendarModelAndView(YearMonth.from(editedEvent.getStartTime()), editedEvent.getStartTime(), session, authentication);
     }

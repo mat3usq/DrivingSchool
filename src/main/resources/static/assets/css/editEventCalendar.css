@@ -147,6 +147,41 @@ h2 {
   background-color: rgba(0, 0, 0, 0.4);
   z-index: -5;
 }
+.edit-event-section .hero-img .mini-title-warning {
+  margin: 20px auto;
+  padding: 20px 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  font-size: 16px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+  border: 5px dotted #ef476f;
+}
+.edit-event-section .hero-img .warning-text {
+  text-align: center;
+  margin: 10px auto;
+  max-width: 400px;
+  font-weight: bold;
+  background-color: rgba(51, 51, 51, 0.4784313725);
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 35px;
+  position: relative;
+  color: #ffd166;
+  border-left: 4px solid #ffd166;
+  border-right: 4px solid #ffd166;
+}
+.edit-event-section .hero-img .warning-text::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: inherit;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  content: "\f071";
+}
 .edit-event-section .hero-img .box-event {
   position: absolute;
   top: 30px;
@@ -178,7 +213,9 @@ h2 {
   flex-direction: column;
 }
 .edit-event-section .hero-img .box-event .container .left .edit-event-wrapper {
-  overflow: hidden;
+  max-height: 550px;
+  height: 100%;
+  overflow-y: auto;
   border-radius: 5px;
   background: #e0eafc;
   background: linear-gradient(to left, #cfdef3, rgb(252, 240, 221));
@@ -186,7 +223,7 @@ h2 {
 }
 .edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-header {
   width: 100%;
-  height: 50px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -228,7 +265,7 @@ h2 {
   color: #373c4f;
   text-align: left;
   margin: 0;
-  margin-left: 50px;
+  margin-left: 30px;
   margin-bottom: -10px;
 }
 .edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body .edit-event-input input,

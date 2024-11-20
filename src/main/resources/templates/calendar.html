@@ -92,7 +92,8 @@
                             <div th:each="event : ${events}" class="event" th:id="'event-'+${event.id}"
                                  onclick="toggleEvent(this)">
                                 <th:block sec:authorize="hasRole('ROLE_STUDENT')">
-                                    <form th:if="${!event.isAssigned and event.availableEventSlots != 0}" class="assign-form"
+                                    <form th:if="${!event.isAssigned and event.availableEventSlots != 0}"
+                                          class="assign-form"
                                           th:action="@{/calendar/student/assignEvent}" method="post">
                                         <input type="hidden" name="eventId" th:value="${event.id}">
                                         <button type="submit">
@@ -176,6 +177,9 @@
                             </div>
                             <form class="add-event-body" th:action="@{/calendar/operation/addEvent}" method="post"
                                   th:object="${newEvent}">
+
+                                <p class="mini-title-warning" th:if="${createEventValidationInfo}"
+                                   th:text="${createEventValidationInfo}"></p>
                                 <div class="add-event-input">
                                     <select class="event-name" th:field="*{eventType}">
                                         <option value="" disabled selected>Wybierz Typ Wydarzenia</option>
@@ -183,20 +187,36 @@
                                                 th:text="${eventType}"></option>
                                     </select>
                                 </div>
+                                <th:block th:if="${#fields.hasErrors('subject')}">
+                                    <span class="warning-text" th:errors="*{subject}"></span>
+                                </th:block>
                                 <div class="add-event-input">
                                     <input type="text" placeholder="Nazwa Wydarzenia" class="event-name"
                                            th:field="*{subject}"/>
                                 </div>
+
+                                <th:block th:if="${#fields.hasErrors('startTimeBeforeEndTime')}">
+                                    <span class="warning-text" th:errors="*{startTimeBeforeEndTime}"></span>
+                                </th:block>
+                                <th:block th:if="${#fields.hasErrors('startTime')}">
+                                    <span class="warning-text" th:errors="*{startTime}"></span>
+                                </th:block>
                                 <div class="add-event-input">
                                     <input type="hidden" id="startTime" th:field="*{startTime}"/>
                                     <input type="text" placeholder="Początek Wydarzenia" class="event-time-from"
                                            id="start-Time"/>
                                 </div>
+                                <th:block th:if="${#fields.hasErrors('endTime')}">
+                                    <span class="warning-text" th:errors="*{endTime}"></span>
+                                </th:block>
                                 <div class="add-event-input">
                                     <input type="hidden" id="endTime" th:field="*{endTime}"/>
                                     <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"
                                            id="end-Time"/>
                                 </div>
+                                <th:block th:if="${#fields.hasErrors('eventCapacity')}">
+                                    <span class="warning-text" th:errors="*{eventCapacity}"></span>
+                                </th:block>
                                 <div class="add-event-input">
                                     <input type="number" placeholder="Liczba Miejsc na Wydarzenie"
                                            class="event-capacity" th:field="*{eventCapacity}" min="0"/>

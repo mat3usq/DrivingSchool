@@ -34,8 +34,30 @@ function editEvent() {
     const startTimeSave = document.getElementById('startTime');
     const endTimeSave = document.getElementById('endTime');
 
-    const startTimeValue = startTimeInput.value;
-    const endTimeValue = endTimeInput.value;
+    let startTimeValue = startTimeInput.value;
+    let endTimeValue = endTimeInput.value;
+
+    function isValidTime(time) {
+        const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+        return timePattern.test(time);
+    }
+
+    function getCurrentTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    if (!isValidTime(startTimeValue)) {
+        startTimeValue = getCurrentTime();
+        startTimeInput.value = startTimeValue;
+    }
+
+    if (!isValidTime(endTimeValue)) {
+        endTimeValue = getCurrentTime();
+        endTimeInput.value = endTimeValue;
+    }
 
     function updateDateTime(dateTimeStr, newTime) {
         const [date, time] = dateTimeStr.split(', ');
@@ -50,4 +72,3 @@ function editEvent() {
 
     document.querySelector('.edit-event-body').submit();
 }
-

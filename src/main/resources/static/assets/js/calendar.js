@@ -247,14 +247,38 @@ function addEvent() {
     const startTimeInput = document.getElementById('start-Time');
     const endTimeInput = document.getElementById('end-Time');
 
-    const startTimeValue = startTimeInput.value;
-    const endTimeValue = endTimeInput.value;
+    let startTimeValue = startTimeInput.value;
+    let endTimeValue = endTimeInput.value;
+
+    function isValidTime(time) {
+        const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+        return timePattern.test(time);
+    }
+
+    function getCurrentTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    if (!isValidTime(startTimeValue)) {
+        startTimeValue = getCurrentTime();
+        startTimeInput.value = startTimeValue;
+    }
+
+    if (!isValidTime(endTimeValue)) {
+        endTimeValue = getCurrentTime();
+        endTimeInput.value = endTimeValue;
+    }
 
     const startDateTime = `${year}-${String(month + 1).padStart(2, '0')}-${String(activeDay).padStart(2, '0')}T${startTimeValue}:00`;
     const endDateTime = `${year}-${String(month + 1).padStart(2, '0')}-${String(activeDay).padStart(2, '0')}T${endTimeValue}:00`;
+
     document.getElementById('startTime').value = startDateTime;
     document.getElementById('endTime').value = endDateTime;
 }
+
 
 dateInput.addEventListener('input', e => {
     let value = dateInput.value.replace(/[^0-9]/g, '');
@@ -295,3 +319,71 @@ if (addEventBtn && addEventCloseBtn && addEventWrapper) {
             addEventWrapper.classList.remove('active');
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const hiddenStartTime = document.getElementById('startTime');
+    const hiddenEndTime = document.getElementById('endTime');
+
+    function extractTime(value) {
+        const parts = value.split(', ');
+        if (parts.length === 2) {
+            return parts[1];
+        }
+        return null;
+    }
+
+    function extractDay(value) {
+        const parts = value.split(', ');
+        if (parts.length === 2) {
+            const datePart = parts[0];
+            const dateParts = datePart.split('.');
+            if (dateParts.length === 3) {
+                return parseInt(dateParts[0], 10);
+            }
+        }
+        return null;
+    }
+
+    if (hiddenStartTime && hiddenStartTime.value) {
+        const startTime = extractTime(hiddenStartTime.value);
+        if (startTime) {
+            const startTimeInput = document.getElementById('start-Time');
+            if (startTimeInput) {
+                startTimeInput.value = startTime;
+            }
+        }
+    }
+
+    if (hiddenEndTime && hiddenEndTime.value) {
+        const endTime = extractTime(hiddenEndTime.value);
+        if (endTime) {
+            const endTimeInput = document.getElementById('end-Time');
+            if (endTimeInput) {
+                endTimeInput.value = endTime;
+            }
+        }
+    }
+
+    let day = null;
+    if (hiddenStartTime && hiddenStartTime.value) {
+        day = extractDay(hiddenStartTime.value);
+    } else if (hiddenEndTime && hiddenEndTime.value) {
+        day = extractDay(hiddenEndTime.value);
+    }
+
+    if (day !== null) {
+        const dayElement = document.getElementById(`day-${day}`);
+        if (dayElement) {
+            dayElement.click();
+        }
+    }
+
+    const warningElement = document.querySelector('.mini-title-warning');
+    if (warningElement) {
+        const addButton = document.querySelector('.add-event');
+        if (addButton) {
+            addButton.click();
+        }
+    }
+});
+

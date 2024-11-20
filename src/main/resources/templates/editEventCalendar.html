@@ -46,6 +46,9 @@
                             </div>
                             <form class="edit-event-body" th:action="@{/calendar/operation/editEvent}" method="post"
                                   th:object="${editedEvent}">
+
+                                <p class="mini-title-warning" th:if="${editEventValidationInfo}"
+                                   th:text="${editEventValidationInfo}"></p>
                                 <div class="edit-event-input">
                                     <p>Typ Wydarzenia</p>
                                     <select class="event-name" th:field="*{eventType}">
@@ -57,11 +60,20 @@
                                         </option>
                                     </select>
                                 </div>
+                                <th:block th:if="${#fields.hasErrors('subject')}">
+                                    <span class="warning-text" th:errors="*{subject}"></span>
+                                </th:block>
                                 <div class="edit-event-input">
                                     <p>Nazwa Wydarzenia</p>
                                     <input type="text" placeholder="Nazwa Wydarzenia" class="event-name"
                                            th:field="*{subject}"/>
                                 </div>
+                                <th:block th:if="${#fields.hasErrors('startTimeBeforeEndTime')}">
+                                    <span class="warning-text" th:errors="*{startTimeBeforeEndTime}"></span>
+                                </th:block>
+                                <th:block th:if="${#fields.hasErrors('startTime')}">
+                                    <span class="warning-text" th:errors="*{startTime}"></span>
+                                </th:block>
                                 <div class="edit-event-input">
                                     <p>Początek Wydarzenia</p>
                                     <input type="hidden" id="startTime" th:field="*{startTime}"/>
@@ -69,12 +81,18 @@
                                            id="start-Time"
                                            th:value="${#temporals.format(editedEvent.startTime, 'HH:mm')}"/>
                                 </div>
+                                <th:block th:if="${#fields.hasErrors('endTime')}">
+                                    <span class="warning-text" th:errors="*{endTime}"></span>
+                                </th:block>
                                 <div class="edit-event-input">
                                     <p>Koniec Wydarzenia</p>
                                     <input type="hidden" id="endTime" th:field="*{endTime}"/>
                                     <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"
                                            id="end-Time" th:value="${#temporals.format(editedEvent.endTime, 'HH:mm')}"/>
                                 </div>
+                                <th:block th:if="${#fields.hasErrors('eventCapacity')}">
+                                    <span class="warning-text" th:errors="*{eventCapacity}"></span>
+                                </th:block>
                                 <div class="edit-event-input">
                                     <p>Liczba Miejsc na Wydarzenie</p>
                                     <input type="number" placeholder="Liczba Miejsc na Wydarzenie"
