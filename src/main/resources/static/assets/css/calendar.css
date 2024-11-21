@@ -455,7 +455,6 @@ h2 {
 .calendar-section .hero-img .box-calendar .container .right .events .event {
   position: relative;
   width: 100%;
-  min-height: 100px;
   display: flex;
   justify-content: center;
   flex-direction: column;
