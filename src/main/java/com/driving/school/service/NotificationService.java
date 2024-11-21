@@ -148,7 +148,7 @@ public class NotificationService {
                 "💰 Gratulacje, %s!\n\nOtrzymałeś nową płatność o komenatrzu \"%s\".\nKwota: %.2f PLN\nKategorie: %s\nID Płatności: %d\n\nDziękujemy za korzystanie z naszego systemu!",
                 user.getName(),
                 payment.getComment(),
-                payment.getSum(),
+                payment.getSum() != null ? payment.getSum() : 0.0,
                 categoryNames,
                 payment.getId()
         );
@@ -310,7 +310,7 @@ public class NotificationService {
                         Dziękujemy za Twoje zaangażowanie!""",
                 instructor.getName(),
                 course.getDescription(),
-                course.getCategory(),
+                course.getCategory().getNameCategory(),
                 course.getDuration()
         );
 
@@ -332,7 +332,7 @@ public class NotificationService {
                 instructor.getName(),
                 instructor.getEmail(),
                 course.getDescription(),
-                course.getCategory(),
+                course.getCategory().getNameCategory(),
                 course.getDuration()
         );
 
