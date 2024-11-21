@@ -8,6 +8,7 @@ import com.driving.school.repository.DrivingSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,11 +64,19 @@ public class DrivingSessionService {
     }
 
     private void updateSummaryHoursInCourse(Course course) {
-        course.setSummaryDurationHours(course.getDrivingSessions().stream()
-                .mapToDouble(DrivingSession::getDurationHours)
-                .sum());
+        double totalDuration = Optional.ofNullable(course.getDrivingSessions())
+                .orElse(Collections.emptyList())
+                .stream()
+                .mapToDouble(session -> {
+                    Double duration = session.getDurationHours();
+                    return duration != null ? duration : 0.0;
+                })
+                .sum();
+
+        course.setSummaryDurationHours(totalDuration);
         courseRepository.save(course);
     }
+
 
     public void instructorCreateDrivingSession(DrivingSession newDrivingSession, Course course) {
         createDrivingSession(newDrivingSession, course);

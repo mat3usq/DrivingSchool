@@ -58,6 +58,16 @@ public class InstructorEventService {
             instructionEvent.setEventType(instructionEventDetails.getEventType());
             instructionEvent.setStartTime(instructionEventDetails.getStartTime());
             instructionEvent.setEndTime(instructionEventDetails.getEndTime());
+            if (instructionEventDetails.getEventCapacity() == null) {
+                instructionEventDetails.setEventCapacity(0);
+                instructionEventDetails.setAvailableEventSlots(0);
+            }
+
+            if (instructionEvent.getEventCapacity() == null) {
+                instructionEvent.setEventCapacity(0);
+                instructionEvent.setAvailableEventSlots(0);
+            }
+
             Integer diffSlots = instructionEvent.getEventCapacity() - instructionEvent.getAvailableEventSlots();
             if (instructionEvent.getEventCapacity() > instructionEventDetails.getEventCapacity())
                 if (diffSlots > instructionEventDetails.getEventCapacity()) {

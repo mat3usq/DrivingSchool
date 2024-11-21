@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
             option.classList.toggle('clicked');
         });
     });
+
+    const element = document.querySelector('.mini-title-warning');
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 });
 
 function deleteComment(commentId) {

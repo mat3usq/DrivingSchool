@@ -162,7 +162,7 @@ h2 {
   width: -moz-fit-content;
   width: fit-content;
 }
-.details .hero-img .box-container .mini-title-warning {
+.details .hero-img .box-container .mini-title-warning, .details .hero-img .box-container .mini-title-course-warning {
   margin: 20px auto;
   padding: 20px 15px;
   background-color: rgba(0, 0, 0, 0.8);

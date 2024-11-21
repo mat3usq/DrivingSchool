@@ -7,6 +7,7 @@ import com.driving.school.repository.TestCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,12 +63,20 @@ public class TestCourseService {
     }
 
     private void updateAverageInCourse(Course course) {
-        course.setSummaryAverageResultTest(course.getTestCourses().stream()
-                .mapToDouble(TestCourse::getTestResult)
+        double averageResult = Optional.ofNullable(course.getTestCourses())
+                .orElse(Collections.emptyList())
+                .stream()
+                .mapToDouble(testCourse -> {
+                    Double result = testCourse.getTestResult();
+                    return result != null ? result : 0.0;
+                })
                 .average()
-                .orElse(0.0));
+                .orElse(0.0);
+
+        course.setSummaryAverageResultTest(averageResult);
         courseRepository.save(course);
     }
+
 
     public void instructorCreateTestCourse(TestCourse newTestCourse, Course course) {
         createTestCourse(newTestCourse, course);

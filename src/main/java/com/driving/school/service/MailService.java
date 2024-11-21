@@ -57,6 +57,10 @@ public class MailService {
     @Transactional
     public boolean replyOnMail(Mail replyMail, long parentMailId, SchoolUser loggedInUser) {
         Optional<Mail> optionalMail = mailRepository.findById(parentMailId);
+
+        if (replyMail == null || replyMail.getBody() == null || replyMail.getBody().trim().isEmpty())
+            return false;
+
         if (optionalMail.isPresent()) {
             Mail parentMail = optionalMail.get();
             if (Objects.equals(parentMail.getSender(), loggedInUser) ||

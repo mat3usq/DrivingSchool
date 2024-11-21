@@ -120,16 +120,19 @@
                                     </button>
                                 </form>
                                 <div class="box">
-                                    <span class="title-header" th:text="${payment.comment}">komentarz</span>
-                                    <span class="content" th:text="${payment.sum} + 'zł'"></span>
+                                    <span class="title-header" th:unless="${payment.comment.isEmpty()}" th:text="${payment.comment}">komentarz</span>
+                                    <span class="title-header" th:if="${payment.comment.isEmpty()}">Brak Komentarza</span>
+                                    <span class="content" th:if="${payment.sum}" th:text="${payment.sum} + 'zł'"></span>
+                                    <span class="content" th:unless="${payment.sum}">0 zł</span>
                                 </div>
                                 <div class="box">
                                     <span class="content"
                                           th:text="${#temporals.format(payment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
                                     <span class="title-header">
-                                        <th:block th:each="category : ${payment.categories}">
+                                        <th:block th:unless="${payment.categories.isEmpty()}" th:each="category : ${payment.categories}">
                                             <th:block th:text="${category.nameCategory} + ' '"></th:block>
                                         </th:block>
+                                        <th:block th:if="${payment.categories.isEmpty()}">Brak</th:block>
                                     </span>
                                 </div>
                             </div>

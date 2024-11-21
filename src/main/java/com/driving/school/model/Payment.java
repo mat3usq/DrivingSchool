@@ -22,10 +22,10 @@ public class Payment {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "SUM", nullable = false)
+    @Column(name = "SUM")
     private Double sum;
 
-    @Column(name = "COMMENT", nullable = false)
+    @Column(name = "COMMENT")
     private String comment;
 
     @ManyToMany

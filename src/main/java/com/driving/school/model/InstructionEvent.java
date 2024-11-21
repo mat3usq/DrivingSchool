@@ -25,25 +25,25 @@ public class InstructionEvent {
 
     @NotBlank(message = "Temat jest wymagany")
     @Size(max = 100, message = "Temat może mieć maksymalnie 100 znaków")
-    @Column(name = "SUBJECT", length = 100, nullable = false)
+    @Column(name = "SUBJECT", length = 100)
     private String subject;
 
     @NotBlank(message = "Typ wydarzenia jest wymagany")
     @Size(max = 100, message = "Typ wydarzenia może mieć maksymalnie 100 znaków")
-    @Column(name = "EVENTTYPE", length = 100, nullable = false)
+    @Column(name = "EVENTTYPE", length = 100)
     private String eventType;
 
     @NotNull(message = "Czas rozpoczęcia jest wymagany")
-    @Column(name = "STARTTIME", nullable = false)
+    @Column(name = "STARTTIME")
     private LocalDateTime startTime;
 
     @NotNull(message = "Czas zakończenia jest wymagany")
-    @Column(name = "ENDTIME", nullable = false)
+    @Column(name = "ENDTIME")
     private LocalDateTime endTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "INSTRUCTORID", nullable = false)
+    @JoinColumn(name = "INSTRUCTORID")
     private SchoolUser instructor;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -59,10 +59,10 @@ public class InstructionEvent {
 
     @NotNull(message = "Liczba miejsc na wydarzenie jest wymagane")
     @Min(value = 1, message = "Liczba miejsc na wydarzenie musi byc co najmniej 1")
-    @Column(name = "EVENTCAPACITY", nullable = false)
+    @Column(name = "EVENTCAPACITY")
     private Integer eventCapacity;
 
-    @Column(name = "AVAILABLEEVENTSLOTS", nullable = false)
+    @Column(name = "AVAILABLEEVENTSLOTS")
     private Integer availableEventSlots;
 
     @Transient

@@ -144,7 +144,7 @@
                     </div>
                     <div class="editCourse-schoolUser" th:if="${isEditCourse}">
                         <p class="title">Edycja Kursu</p>
-                        <p class="mini-title-warning" th:if="${editCourseValidationInfo}"
+                        <p class="mini-title-course-warning" th:if="${editCourseValidationInfo}"
                            th:text="${editCourseValidationInfo}"></p>
                         <form class="course-details" th:action="@{/course/instructor/updateCourse}"
                               method="post" th:object="${course}" id="editCourseForm">
@@ -302,10 +302,11 @@
                                              th:alt="'ikona'+${course.category.nameCategory}">
                                             <span class="title-header"
                                                   th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
-                                                th:text="${drivingSession.instructorComment}"></th:block></span>
-                                        <span class="time"><th:block
-                                                th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block><span
-                                                class="hours">h</span></span>
+                                                th:unless="${drivingSession.instructorComment.isEmpty()}" th:text="${drivingSession.instructorComment}"></th:block><th:block
+                                                th:if="${drivingSession.instructorComment.isEmpty()}">Brak Komentarza</th:block></span>
+                                        <span class="time"><th:block th:if="${drivingSession.durationHours}" th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block>
+                                                <th:block th:unless="${drivingSession.durationHours}">0</th:block><span
+                                                    class="hours">h</span></span>
                                     </div>
                                 </div>
                             </th:block>
@@ -377,9 +378,10 @@
                                                      th:alt="'ikona'+${course.category.nameCategory}">
                                                 <span class="title-header"
                                                       th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
-                                                    th:text="${drivingSession.instructorComment}"></th:block></span>
-                                            <span class="time"><th:block
-                                                    th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block><span
+                                                    th:unless="${drivingSession.instructorComment.isEmpty()}" th:text="${drivingSession.instructorComment}"></th:block><th:block
+                                                    th:if="${drivingSession.instructorComment.isEmpty()}">Brak Komentarza</th:block></span>
+                                            <span class="time"><th:block th:if="${drivingSession.durationHours}" th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block>
+                                                <th:block th:unless="${drivingSession.durationHours}">0</th:block><span
                                                     class="hours">h</span></span>
                                         </div>
                                     </div>
@@ -481,11 +483,12 @@
                                             </th:block>
                                             <span class="title-header"
                                                   th:text="${#temporals.format(testCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
-                                                th:text="${testCourse.instructorComment}"></th:block>
+                                                th:unless="${testCourse.instructorComment.isEmpty()}" th:text="${testCourse.instructorComment}"></th:block><th:block
+                                                th:if="${testCourse.instructorComment.isEmpty()}">Brak Komentarza</th:block>
                                         </span>
                                         <span class="percentagesResult">
-                                            <th:block
-                                                    th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block th:if="${testCourse.testResult}" th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block th:unless="${testCourse.testResult}">0</th:block>
                                             <span class="percentages">%</span></span>
                                     </div>
                                 </div>
@@ -611,11 +614,12 @@
                                             </th:block>
                                             <span class="title-header"
                                                   th:text="${#temporals.format(testCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
-                                                th:text="${testCourse.instructorComment}"></th:block>
+                                                th:unless="${testCourse.instructorComment.isEmpty()}" th:text="${testCourse.instructorComment}"></th:block><th:block
+                                                th:if="${testCourse.instructorComment.isEmpty()}">Brak Komentarza</th:block>
                                         </span>
                                             <span class="percentagesResult">
-                                            <th:block
-                                                    th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block th:if="${testCourse.testResult}" th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block th:unless="${testCourse.testResult}">0</th:block>
                                             <span class="percentages">%</span></span>
                                         </div>
                                     </div>
