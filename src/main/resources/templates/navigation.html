@@ -95,7 +95,8 @@
                         document.querySelector('.mailBox').classList.remove('active')
 
                     if (currentPath.includes('/mailBox/showMail') ||
-                        currentPath.includes('/mailBox/getMailToReply'))
+                        currentPath.includes('/mailBox/getMailToReply') ||
+                        currentPath.includes('/mailBox/sendMail') )
                         document.querySelector('.mailBox').classList.add('active')
                 } else {
                     if (mailNav) {

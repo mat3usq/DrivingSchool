@@ -148,14 +148,24 @@
                         </div>
                         <form class="write-mail-body" th:action="@{/mailBox/sendMail}" method="post"
                               th:object="${mail}">
+                            <p class="mini-title-warning" th:if="${createMailValidationInfo}"
+                               th:text="${createMailValidationInfo}"></p>
+                            <p class="warning-text" th:if="${adressMailValidationInfo}"
+                               th:text="${adressMailValidationInfo}"></p>
                             <div class="write-mail-input">
                                 <i class="fa-regular fa-address-book"></i>
                                 <input th:field="*{recipient.email}" type="text" placeholder="E-mail Odbiorcy"/>
                             </div>
+                            <th:block th:if="${#fields.hasErrors('subject')}">
+                                <span class="warning-text" th:errors="*{subject}"></span>
+                            </th:block>
                             <div class="write-mail-input">
                                 <i class="fa-solid fa-heading"></i>
                                 <input th:field="*{subject}" type="text" placeholder="Temat Wiadomości"/>
                             </div>
+                            <th:block th:if="${#fields.hasErrors('body')}">
+                                <span class="warning-text" th:errors="*{body}"></span>
+                            </th:block>
                             <div class="write-mail-input">
                                 <i class="fa-solid fa-font"></i>
                                 <textarea th:field="*{body}" id="messageInput"

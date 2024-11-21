@@ -47,3 +47,14 @@ switch (window.location.pathname) {
 		titleElement.textContent = 'Skrzynka Pocztowa'
 		break
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+	let warningElement = document.querySelector('.mini-title-warning');
+	if (warningElement) {
+		let writeMailButton = document.querySelector('.write-mail');
+		if (writeMailButton) {
+			writeMailButton.click();
+		}
+	}
+});
+

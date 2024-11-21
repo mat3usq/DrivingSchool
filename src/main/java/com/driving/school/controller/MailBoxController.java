@@ -1,11 +1,15 @@
 package com.driving.school.controller;
 
+import com.driving.school.model.Constants;
 import com.driving.school.model.Mail;
 import com.driving.school.model.SchoolUser;
+import com.driving.school.repository.SchoolUserRepository;
 import com.driving.school.service.MailService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +24,13 @@ import java.util.Optional;
 @Controller
 public class MailBoxController {
     private final MailService mailService;
+    private final SchoolUserRepository schoolUserRepository;
 
     @Autowired
-    public MailBoxController(MailService mailService) {
+    public MailBoxController(MailService mailService,
+                             SchoolUserRepository schoolUserRepository) {
         this.mailService = mailService;
+        this.schoolUserRepository = schoolUserRepository;
     }
 
     @GetMapping("/mailBox")
@@ -64,10 +71,27 @@ public class MailBoxController {
     }
 
     @PostMapping("/mailBox/sendMail")
-    public String sendMail(@ModelAttribute Mail mail, HttpSession session, RedirectAttributes redirectAttributes) {
-        boolean isSent = mailService.sendMail((SchoolUser) session.getAttribute("loggedInUser"), mail);
+    public ModelAndView sendMail(@Valid @ModelAttribute Mail mail, Errors errors, HttpSession session, RedirectAttributes redirectAttributes) {
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        SchoolUser recipent = schoolUserRepository.findByEmail(mail.getRecipient().getEmail());
+
+        if ((errors.hasErrors() || recipent == null || recipent.equals(loggedInUser)) && !loggedInUser.getRoleName().equals(Constants.ADMIN_ROLE)) {
+            ModelAndView modelAndView = new ModelAndView("mailBox");
+            List<Mail> mails = mailService.getSentMailsForUser(loggedInUser);
+            modelAndView.addObject("mails", mails);
+            modelAndView.addObject("mail", mail);
+            modelAndView.addObject("createMailValidationInfo", "Wprowadź poprawne dane, aby wysłac wiadomosc!");
+            if (recipent == null)
+                modelAndView.addObject("adressMailValidationInfo", "Nie znaleziono uzytkownika o podanym adresie e-mail!");
+            if (recipent != null && recipent.equals(loggedInUser))
+                modelAndView.addObject("adressMailValidationInfo", "Nie mozesz byc odbiorca wiadomosci!");
+
+            return modelAndView;
+        }
+
+        boolean isSent = mailService.sendMail(loggedInUser, mail);
         redirectAttributes.addFlashAttribute("isSend", isSent);
-        return "redirect:/mailBox/sent";
+        return new ModelAndView("redirect:/mailBox/sent");
     }
 
     @GetMapping("/mailBox/trash")

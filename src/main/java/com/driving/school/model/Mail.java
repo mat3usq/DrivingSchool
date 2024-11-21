@@ -1,6 +1,8 @@
 package com.driving.school.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,9 +29,12 @@ public class Mail {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "SUBJECT", nullable = false)
+    @NotBlank(message = "Temat jest wymagany")
+    @Size(max = 100, message = "Temat może mieć maksymalnie 100 znaków")
+    @Column(name = "SUBJECT", length = 100, nullable = false)
     private String subject;
 
+    @NotBlank(message = "Treść wiadomosci jest wymagana")
     @Column(name = "BODY", columnDefinition = "TEXT", nullable = false)
     private String body;
 
