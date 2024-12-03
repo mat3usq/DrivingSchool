@@ -221,6 +221,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void mapQuestionsToDb() {
         List<Test> tests = testService.getAllTests();
+        System.out.print("alalal");
 
         Map<String, List<Test>> testMapByNameAndType = tests.stream()
                 .collect(Collectors.groupingBy(

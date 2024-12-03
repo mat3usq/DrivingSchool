@@ -10,7 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Entity
 @Table(name = "USERSTATISTIC", indexes = {
-        @Index(name = "USERSTATISTIC__IDX", columnList = "SCHOOLUSERID", unique = true)
+        @Index(name = "USERSTATISTIC__IDX", columnList = "SCHOOLUSERID, CATEGORY_ID", unique = true)
 })
 public class UserStatistic {
     @Id
@@ -30,9 +30,11 @@ public class UserStatistic {
     @Column(name = "HOURSBUYED", length = 9)
     private String hoursBuyed;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
     private SchoolUser schoolUser;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    private Category category;
 }

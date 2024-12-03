@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -45,6 +47,9 @@ public class Category {
         this.authorization = authorizations;
         this.minimumAge = minimumAge;
     }
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserStatistic> userStatistics = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

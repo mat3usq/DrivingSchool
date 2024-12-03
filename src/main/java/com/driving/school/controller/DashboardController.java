@@ -39,6 +39,24 @@ public class DashboardController {
     public ModelAndView displayDashboard(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+        
+        
+        
+        String examStatisticsMessage;
+        String testStatisticsMessage;
+
+        String currentCategory = user.getCurrentCategory(); // Zakładam, że taka metoda istnieje
+
+        if (currentCategory != null) {
+            examStatisticsMessage = "Wybrana kategoria: " + currentCategory + " - statystyki egzaminów.";
+            testStatisticsMessage = "Wybrana kategoria: " + currentCategory + " - statystyki testów.";
+        } else {
+            examStatisticsMessage = "Domyślna wiadomość dla statystyk egzaminów.";
+            testStatisticsMessage = "Domyślna wiadomość dla statystyk testów.";
+        }
+
+        modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
+        modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
 
         switch (user.getRoleName()) {
             case Constants.STUDENT_ROLE -> {
