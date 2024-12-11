@@ -5,6 +5,7 @@ import com.driving.school.repository.*;
 import com.driving.school.service.MailService;
 import com.driving.school.service.QuestionService;
 import com.driving.school.service.TestService;
+import com.driving.school.service.UserStatisticService;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -43,6 +44,9 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final TestRepository testRepository;
     private final PaymentRepository paymentRepository;
     private final CourseRepository courseRepository;
+    private final UserStatisticService userStatisticService;
+    private final UserStatisticRepository userStatisticRepository;
+
 
     @Autowired
     public DatabaseSeeder(QuestionService questionService, SchoolUserRepository
@@ -50,7 +54,8 @@ public class DatabaseSeeder implements CommandLineRunner {
                           SubjectRepository subjectRepository, TestService testService, InstructionEventRepository eventRepository,
                           MentorShipRepository mentorShipRepository, CategoryRepository categoryRepository,
                           MailService mailService, QuestionRepository questionRepository, TestRepository testRepository, PaymentRepository paymentRepository,
-                          CourseRepository courseRepository) {
+                          CourseRepository courseRepository,UserStatisticService userStatisticService,
+                          UserStatisticRepository userStatisticRepository) {
         this.questionService = questionService;
         this.schoolUserRepository = schoolUserRepository;
         this.lectureRepository = lectureRepository;
@@ -65,6 +70,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.testRepository = testRepository;
         this.paymentRepository = paymentRepository;
         this.courseRepository = courseRepository;
+        this.userStatisticRepository = userStatisticRepository;
+        this.userStatisticService = userStatisticService;
     }
 
 
@@ -75,11 +82,45 @@ public class DatabaseSeeder implements CommandLineRunner {
             return;
         }
         createUsersAndCategoriesAndTests();
+        createUserStatistics();
         createLectures();
         mapQuestionsToDb();
         createEvents();
         createMails();
     }
+
+
+    private void createUserStatistics() { // Dodane
+        logger.info("Tworzenie przykładowych UserStatistic dla użytkownika 'student2'...");
+
+        // Pobierz użytkownika 'student2'
+        SchoolUser student2 = schoolUserRepository.findByEmail("student2");
+
+
+        // Pobierz kategorie A, B, D
+        List<Category> categories = categoryRepository.findAll().stream()
+                .filter(c -> Arrays.asList("A", "B").contains(c.getNameCategory()))
+                .collect(Collectors.toList());
+
+
+        // Tworzenie przykładowych UserStatistic
+        List<UserStatistic> userStatistics = new ArrayList<>();
+
+        for (Category category : categories) {
+            UserStatistic us = new UserStatistic();
+            us.setDeposits(100L); // Przykładowa wartość
+            us.setIsExamPassed("No"); // Przykładowa wartość
+            us.setHoursed("10"); // Przykładowa wartość
+            us.setHoursBuyed("5"); // Przykładowa wartość
+            us.setSchoolUser(student2);
+            us.setCategory(category);
+            userStatistics.add(us);
+        }
+
+        userStatisticRepository.saveAll(userStatistics);
+        logger.info("Przykładowe UserStatistic zostały utworzone dla użytkownika 'student2'.");
+    }
+
 
     private void createUsersAndCategoriesAndTests() {
         // haslo: admin

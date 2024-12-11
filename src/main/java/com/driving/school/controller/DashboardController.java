@@ -1,8 +1,8 @@
 package com.driving.school.controller;
 
 import com.driving.school.model.*;
-import com.driving.school.repository.CategoryRepository;
-import com.driving.school.repository.CourseRepository;
+import com.driving.school.repository.*;
+import com.driving.school.service.ExamStatisticsService;
 import com.driving.school.service.NotificationService;
 import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.MentorShipService;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class DashboardController {
@@ -24,13 +24,26 @@ public class DashboardController {
     private final MentorShipService mentorShipService;
     private final CategoryRepository categoryRepository;
     private final CourseRepository courseRepository;
+    private final ExamStatisticsService examStatisticsService;
+    private final StudentExamStatisticsRepository studentExamStatisticsRepository;
+    private final StudentTestStatisticsRepository studentTestStatisticsRepository;
+
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService, CategoryRepository categoryRepository, CourseRepository courseRepository) {
+    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService,
+                               CategoryRepository categoryRepository,
+                               CourseRepository courseRepository,
+                               ExamStatisticsService examStatisticsService,
+                               StudentExamStatisticsRepository studentExamStatisticsRepository,
+                               StudentTestStatisticsRepository sudentExamStatisticsRepository,
+                               StudentTestStatisticsRepository studentTestStatisticsRepository) {
         this.schoolUserService = schoolUserService;
         this.mentorShipService = mentorShipService;
         this.categoryRepository = categoryRepository;
         this.courseRepository = courseRepository;
+        this.examStatisticsService = examStatisticsService;
+        this.studentExamStatisticsRepository = studentExamStatisticsRepository;
+        this.studentTestStatisticsRepository = studentTestStatisticsRepository;
     }
 
     // FOR ALL USERS
@@ -45,7 +58,7 @@ public class DashboardController {
         String examStatisticsMessage;
         String testStatisticsMessage;
 
-        String currentCategory = user.getCurrentCategory(); // Zakładam, że taka metoda istnieje
+        String currentCategory = user.getCurrentCategory();
 
         if (currentCategory != null) {
             examStatisticsMessage = "Wybrana kategoria: " + currentCategory + " - statystyki egzaminów.";
@@ -57,6 +70,39 @@ public class DashboardController {
 
         modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
         modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
+
+
+        examStatisticsService.updateAllExamStatistics();
+
+        if (currentCategory != null) {
+            StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, currentCategory);
+
+            if(examStatistics != null) {
+                modelAndView.addObject("examStatistics", examStatistics);
+            }
+        } else {
+            modelAndView.addObject("examStatistics", null);
+            modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
+        }
+
+        if(currentCategory != null) {
+
+            List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(currentCategory,user);
+            Object[] tStats = null;
+            if(testStats != null && testStats.size() > 0){
+                tStats = testStats.get(0);
+                System.out.println(testStats.size() + "");
+                System.out.println("dzialaj prosze" + Arrays.toString(tStats));
+            }
+            if(testStats != null ) {
+                modelAndView.addObject("testStatistics", tStats);
+            } else {
+                modelAndView.addObject("testStatistics", new Object[]{0, 0, 0, 0, 0});
+            }
+        }
+        
+        
+
 
         switch (user.getRoleName()) {
             case Constants.STUDENT_ROLE -> {
@@ -102,6 +148,57 @@ public class DashboardController {
             modelAndView.addObject("mentorShips", mentorShipService.findByInstructorId(user.getId()));
         if (Objects.equals(user.getRoleName(), Constants.STUDENT_ROLE))
             modelAndView.addObject("mentorShips", mentorShipService.findByStudentId(user.getId()));
+
+
+        String examStatisticsMessage;
+        String testStatisticsMessage;
+
+        String currentCategory = user.getCurrentCategory();
+
+        if (currentCategory != null) {
+            examStatisticsMessage = "Wybrana kategoria: " + currentCategory + " - statystyki egzaminów.";
+            testStatisticsMessage = "Wybrana kategoria: " + currentCategory + " - statystyki testów.";
+        } else {
+            examStatisticsMessage = "Domyślna wiadomość dla statystyk egzaminów.";
+            testStatisticsMessage = "Domyślna wiadomość dla statystyk testów.";
+        }
+
+        modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
+        modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
+
+
+        examStatisticsService.updateAllExamStatistics();
+
+        if (currentCategory != null) {
+            StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, currentCategory);
+
+            if(examStatistics != null) {
+                modelAndView.addObject("examStatistics", examStatistics);
+            }
+        } else {
+            modelAndView.addObject("examStatistics", null);
+            modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
+        }
+
+        if(currentCategory != null) {
+
+            List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(currentCategory,user);
+            Object[] tStats = null;
+            if(testStats != null && testStats.size() > 0){
+                tStats = testStats.get(0);
+                System.out.println(testStats.size() + "");
+                System.out.println("dzialaj prosze" + Arrays.toString(tStats));
+            }
+            if(testStats != null ) {
+                modelAndView.addObject("testStatistics", tStats);
+            } else {
+                modelAndView.addObject("testStatistics", new Object[]{0, 0, 0, 0, 0});
+            }
+        }
+
+
+
+
 
         return modelAndView;
     }
@@ -241,47 +338,77 @@ public class DashboardController {
     }
 
     @PostMapping("/dashboard/admin/userDetails")
-    public ModelAndView userDetailsByUserId(@RequestParam("userId") Long userId) {
+    public ModelAndView userDetailsByUserId(@RequestParam("userId") Long userId, HttpSession session) {
+
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
         SchoolUser user = schoolUserService.findUserById(userId);
-        if (user != null)
-            return getUserDetails(user, new ModelAndView("schoolUserDetails"));
+        String category = loggedInUser.getCurrentCategory();
+        Boolean isUserHaveCategory = schoolUserService.hasUserCategory(user.getId(),category);
+        ModelAndView modelAndView;
+        if (user != null) {
+            modelAndView = getUserDetails(user, new ModelAndView("schoolUserDetails"));
+
+            if (isUserHaveCategory && category != null && !category.trim().isEmpty()) {
+                // Pobierz statystyki egzaminów
+                StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, category);
+                modelAndView.addObject("examStatistics", examStatistics);
+
+                // Pobierz statystyki testów
+                List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(category, user);
+                Object[] tStats = (testStats != null && !testStats.isEmpty()) ? testStats.get(0) : new Object[]{0, 0, 0, 0, 0};
+                modelAndView.addObject("testStatistics", tStats);
+
+                // Dodaj wiadomości o statystykach
+                String examStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki egzaminów.";
+                String testStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki testów.";
+                modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
+                modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
+            } else {
+                // Jeśli użytkownik nie ma przypisanej kategorii
+                modelAndView.addObject("examStatistics", null);
+                modelAndView.addObject("testStatistics", null);
+                modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
+            }
+
+            return modelAndView;
+        }
         return new ModelAndView("redirect:/dashboard#usersDetails");
     }
 
     @PostMapping("/dashboard/admin/addPayment")
-    public ModelAndView addPayment(@RequestParam("userId") Long userId, @ModelAttribute("newPayment") Payment payment) {
+    public ModelAndView addPayment(@RequestParam("userId") Long userId, @ModelAttribute("newPayment") Payment payment, HttpSession session) {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
             schoolUserService.addPayment(userId, payment);
 
-        return userDetailsByUserId(userId);
+        return userDetailsByUserId(userId, session);
     }
 
     @PostMapping("/dashboard/admin/deletePayment")
-    public ModelAndView deletePayment(@RequestParam("userId") Long userId, @RequestParam("paymentId") Long paymentId) {
+    public ModelAndView deletePayment(@RequestParam("userId") Long userId, @RequestParam("paymentId") Long paymentId, HttpSession session) {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
             schoolUserService.deletePayment(paymentId);
 
-        return userDetailsByUserId(userId);
+        return userDetailsByUserId(userId, session);
     }
 
     @PostMapping("/dashboard/admin/promoteUser")
-    public ModelAndView promoteUser(@RequestParam("userId") Long userId) {
+    public ModelAndView promoteUser(@RequestParam("userId") Long userId, HttpSession session) {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
             schoolUserService.promoteUser(user);
 
-        return userDetailsByUserId(userId);
+        return userDetailsByUserId(userId, session);
     }
 
     @PostMapping("/dashboard/admin/demoteUser")
-    public ModelAndView demoteUser(@RequestParam("userId") Long userId) {
+    public ModelAndView demoteUser(@RequestParam("userId") Long userId, HttpSession session) {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
             schoolUserService.demoteUser(user);
 
-        return userDetailsByUserId(userId);
+        return userDetailsByUserId(userId, session);
     }
 
     @PostMapping("/dashboard/admin/assignSchoolUser")
@@ -341,6 +468,7 @@ public class DashboardController {
     public ModelAndView showUserCourseDetails(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail, RedirectAttributes redirectAttributes) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         SchoolUser user = schoolUserService.findUserByEmail(parentUserMail);
+
 
         if (ms.isPresent() && user != null) {
             ModelAndView model = getUserDetails(user, new ModelAndView("schoolUserDetails"));

@@ -22,4 +22,16 @@ public interface StudentTestStatisticsRepository extends JpaRepository<StudentTe
             "FROM StudentTestStatistics sts " +
             "GROUP BY sts.test.id")
     List<Object[]> aggregateTestStatistics();
+
+
+    @Query("SELECT SUM(sts.numberOfQuestionsSolved), " +
+            "SUM(sts.numberOfQuestionsAnsweredCorrectly), " +
+            "SUM(sts.numberOfQuestionsAnsweredInCorrectly), " +
+            "SUM(sts.numberOfQuestionsSkipped), " +
+            "AVG(sts.averageDurationOfAnswers) " +
+            "FROM StudentTestStatistics sts " +
+            "JOIN sts.test t " +
+            "WHERE t.drivingCategory = :category AND sts.schoolUser = :schoolUser " +
+            "GROUP BY t.drivingCategory")
+    List<Object[]> aggregateCategoryTestStatisticsByUser(String category, SchoolUser schoolUser);
 }

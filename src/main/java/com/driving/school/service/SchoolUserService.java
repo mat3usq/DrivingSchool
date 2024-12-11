@@ -62,6 +62,13 @@ public class SchoolUserService {
         return isSaved;
     }
 
+    public boolean hasUserCategory(Long userId, String nameCategory) {
+        if (userId == null || nameCategory == null || nameCategory.trim().isEmpty()) {
+            return false;
+        }
+        return schoolUserRepository.existsByIdAndAvailableCategories_NameCategory(userId, nameCategory);
+    }
+
 
     public void saveUser(SchoolUser user) {
         schoolUserRepository.save(user);

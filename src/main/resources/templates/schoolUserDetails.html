@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/assets/css/navigation.css"/>
     <link rel="stylesheet" href="/assets/css/schoolUserDetails.css"/>
     <link rel="stylesheet" href="/assets/css/contact.css"/>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
 
@@ -36,14 +37,17 @@
         <div class="hero-img">
             <div class="box-container">
                 <div class="box-user">
+                    <!-- Sekcja Informacji o Użytkowniku -->
                     <div class="account-schoolUser">
                         <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).ADMIN_ROLE}">
-                            Dane Administratora</p>
-                        <p class="title"
-                           th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Dane
-                            Instruktora</p>
+                            Dane Administratora
+                        </p>
+                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                            Dane Instruktora
+                        </p>
                         <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
-                            Dane Studenta</p>
+                            Dane Studenta
+                        </p>
                         <div class="account-details">
                             <div class="detail">
                                 <span class="title-header">Imię oraz Nazwisko</span>
@@ -71,7 +75,8 @@
                                           class="operations"
                                           th:action="@{/dashboard/admin/demoteUser}" method="post">
                                         <input type="hidden" name="userId" th:value="${user.id}"/>
-                                        <button type="submit" class="delete-btn"><i class="fa-solid fa-angles-down"></i>
+                                        <button type="submit" class="delete-btn">
+                                            <i class="fa-solid fa-angles-down"></i>
                                         </button>
                                     </form>
                                     <span class="content" th:text="${user.roleName}"></span>
@@ -79,7 +84,8 @@
                                           class="operations"
                                           th:action="@{/dashboard/admin/promoteUser}" method="post">
                                         <input type="hidden" name="userId" th:value="${user.id}"/>
-                                        <button type="submit" class="correct-btn"><i class="fa-solid fa-angles-up"></i>
+                                        <button type="submit" class="correct-btn">
+                                            <i class="fa-solid fa-angles-up"></i>
                                         </button>
                                     </form>
                                 </div>
@@ -92,20 +98,78 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Sekcja Statystyk Egzaminów -->
                 <div class="box-statistics-exam" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                     <p class="title">Statystyki - Egzamin</p>
                     <div class="container-statistics">
-                        <p>Sobotka i beda robione statystyki do egzaminow byczku 🚔</p>
-                        <br>
+                        <div th:if="${examStatistics != null}">
+                            <div class="row mt-4" style="background: transparent;">
+                                <div class="col-md-4">
+                                    <div class="stat-box text-center p-3" style="background: transparent;">
+                                        <i class="fa-solid fa-star fa-2x text-warning mb-2"></i>
+                                        <div class="stat-value h3" th:text="${#numbers.formatDecimal(examStatistics.averagePoints, 1, 2)}">0</div>
+                                        <div class="stat-label" style="color: black;">Średnie Punkty</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-box text-center p-3" style="background: transparent;">
+                                        <i class="fa-solid fa-clock fa-2x text-primary mb-2"></i>
+                                        <div class="stat-value h3" th:text="${#numbers.formatDecimal(examStatistics.averageExamsDuration / 60, 1, 2)}">0</div>
+                                        <div class="stat-label" style="color: black;">Średni Czas Trwania Egzaminu (min)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-box text-center p-3" style="background: transparent;">
+                                        <i class="fa-solid fa-hourglass-half fa-2x text-info mb-2"></i>
+                                        <div class="stat-value h3" th:text="${#numbers.formatDecimal(examStatistics.averageTimePerQuestions, 1, 2)}">0</div>
+                                        <div class="stat-label" style="color: black;">Średni Czas na Pytanie (s)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="charts-container">
+                                <div id="exam-chart"></div>
+                                <div id="answer-chart"></div>
+                            </div>
+                        </div>
+                        <div th:if="${examStatistics == null}">
+                            <p>Brak dostępnych statystyk egzaminów dla wybranej kategorii.</p>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Sekcja Statystyk Testów -->
                 <div class="box-statistics-test" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                     <p class="title">Statystyki - Testy</p>
                     <div class="container-statistics">
-                        <p>Sobotka i beda robione statystyki do testow byczku 🚔</p>
-                        <br>
+                        <div th:if="${testStatistics != null}">
+                            <div class="row mt-4" style="background: transparent;">
+                                <div class="col-md-6">
+                                    <div class="stat-box text-center p-3" style="background: transparent;">
+                                        <i class="fa-solid fa-question fa-2x text-info mb-2"></i>
+                                        <div class="stat-value h3" th:text="${testStatistics.numberOfQuestionsSolved}">0</div>
+                                        <div class="stat-label" style="color: black;">Liczba Rozwiązanych Pytań</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="stat-box text-center p-3" style="background: transparent;">
+                                        <i class="fa-solid fa-hourglass-half fa-2x text-info mb-2"></i>
+                                        <div class="stat-value h3" th:text="${#numbers.formatDecimal(testStatistics.averageDurationOfAnswers, 1, 2)}">0</div>
+                                        <div class="stat-label" style="color: black;">Średni Czas Odpowiedzi (s)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="charts-container">
+                                <div id="test-answer-chart"></div>
+                            </div>
+                        </div>
+                        <div th:if="${testStatistics == null}">
+                            <p>Brak dostępnych statystyk testów dla wybranej kategorii.</p>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Sekcja Płatności -->
                 <div class="box-payments" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
                     <div class="account-payments">
                         <p class="title" th:unless="${user.payments.isEmpty()}">Płatności</p>
@@ -116,7 +180,8 @@
                                       th:action="@{/dashboard/admin/deletePayment}" method="post">
                                     <input type="hidden" name="paymentId" th:value="${payment.id}"/>
                                     <input type="hidden" name="userId" th:value="${payment.schoolUser.id}"/>
-                                    <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i>
+                                    <button type="submit" class="delete-btn">
+                                        <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </form>
                                 <div class="box">
@@ -172,13 +237,16 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Sekcja Użytkowników Szkoły Jazdy -->
                 <div class="box-users" th:if="${mentorShips}" sec:authorize="hasRole('ROLE_ADMIN')">
                     <div class="account-schoolUser">
-                        <p class="title"
-                           th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">Studenci
-                            Instruktora</p>
+                        <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                            Studenci Instruktora
+                        </p>
                         <p class="title" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
-                            Instruktorzy Studenta</p>
+                            Instruktorzy Studenta
+                        </p>
 
                         <p class="mini-title" th:if="${mentorShips.size() == 0}">
                             <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
@@ -190,7 +258,7 @@
                         </p>
 
                         <form class="select-schoolUser" th:action="@{/dashboard/admin/assignSchoolUser}" method="post">
-                            <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                            <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
                             <input type="text" name="userMail" placeholder="Wpisz email użytkownika"/>
                             <button type="submit" class="info-btn">Dodaj</button>
                         </form>
@@ -210,135 +278,110 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <th:block
-                                            th:each="element : ${mentorShips}"
-                                            th:with="Constants=${T(com.driving.school.model.Constants)}">
-                                        <tr th:if="${element.status.equals(Constants.PENDING)}"
-                                            class="table-two-options">
-                                            <th:block
-                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+                                    <th:block th:each="element : ${mentorShips}"
+                                              th:with="Constants=${T(com.driving.school.model.Constants)}">
+                                        <!-- Status: PENDING -->
+                                        <tr th:if="${element.status.equals(Constants.PENDING)}" class="table-two-options">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
                                                 <td th:text="${element.student.name}"></td>
                                                 <td th:text="${element.student.surname}"></td>
                                                 <td th:text="${element.student.email}"></td>
                                             </th:block>
-                                            <th:block
-                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
                                                 <td th:text="${element.instructor.name}"></td>
                                                 <td th:text="${element.instructor.surname}"></td>
                                                 <td th:text="${element.instructor.email}"></td>
                                             </th:block>
                                             <td th:text="${element.status}"></td>
-                                            <td
-                                                    th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                            <td
-                                                    th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                             <td class="operations">
-                                                <form th:action="@{/dashboard/admin/cancelMentorShip}"
-                                                      method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail"
-                                                           th:value="${user.email}"/>
-                                                    <input type="hidden" name="mentorShipId"
-                                                           th:value="${element.id}"/>
-                                                    <button type="submit" class="delete-btn"><i
-                                                            class="fa-solid fa-trash-can"></i></button>
+                                                <form th:action="@{/dashboard/admin/cancelMentorShip}" method="post">
+                                                    <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input type="hidden" name="mentorShipId" th:value="${element.id}"/>
+                                                    <button type="submit" class="delete-btn">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
                                                 </form>
-                                                <form th:action="@{/dashboard/admin/acceptMentorShip}"
-                                                      method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail"
-                                                           th:value="${user.email}"/>
-                                                    <input type="hidden" name="mentorShipId"
-                                                           th:value="${element.id}"/>
-                                                    <button type="submit" class="correct-btn"><i
-                                                            class="fa-regular fa-square-check"></i></button>
+                                                <form th:action="@{/dashboard/admin/acceptMentorShip}" method="post">
+                                                    <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input type="hidden" name="mentorShipId" th:value="${element.id}"/>
+                                                    <button type="submit" class="correct-btn">
+                                                        <i class="fa-regular fa-square-check"></i>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
-                                        <tr th:if="${element.status.equals(Constants.ACTIVE)}"
-                                            class="table-three-options">
-                                            <th:block
-                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+
+                                        <!-- Status: ACTIVE -->
+                                        <tr th:if="${element.status.equals(Constants.ACTIVE)}" class="table-three-options">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
                                                 <td th:text="${element.student.name}"></td>
                                                 <td th:text="${element.student.surname}"></td>
                                                 <td th:text="${element.student.email}"></td>
                                             </th:block>
-                                            <th:block
-                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
                                                 <td th:text="${element.instructor.name}"></td>
                                                 <td th:text="${element.instructor.surname}"></td>
                                                 <td th:text="${element.instructor.email}"></td>
                                             </th:block>
                                             <td th:text="${element.status}"></td>
-                                            <td
-                                                    th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                            <td
-                                                    th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                             <td class="operations">
-                                                <form th:action="@{/dashboard/admin/cancelMentorShip}"
-                                                      method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail"
-                                                           th:value="${user.email}"/>
-                                                    <input type="hidden" name="mentorShipId"
-                                                           th:value="${element.id}"/>
-                                                    <button type="submit" class="delete-btn"><i
-                                                            class="fa-solid fa-trash-can"></i></button>
+                                                <form th:action="@{/dashboard/admin/cancelMentorShip}" method="post">
+                                                    <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input type="hidden" name="mentorShipId" th:value="${element.id}"/>
+                                                    <button type="submit" class="delete-btn">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
                                                 </form>
-                                                <form th:action="@{/dashboard/admin/userCourseDetails}"
-                                                      method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail"
-                                                           th:value="${user.email}"/>
-                                                    <input type="hidden" name="mentorShipId"
-                                                           th:value="${element.id}"/>
-                                                    <button type="submit" class="info-btn"><i
-                                                            class="fa-solid fa-eye"></i></button>
+                                                <form th:action="@{/dashboard/admin/userCourseDetails}" method="post">
+                                                    <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input type="hidden" name="mentorShipId" th:value="${element.id}"/>
+                                                    <button type="submit" class="info-btn">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
                                                 </form>
-                                                <form th:action="@{/dashboard/admin/finishMentorShip}"
-                                                      method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail"
-                                                           th:value="${user.email}"/>
-                                                    <input type="hidden" name="mentorShipId"
-                                                           th:value="${element.id}"/>
-                                                    <button type="submit" class="correct-btn"><i
-                                                            class="fa-solid fa-flag-checkered"></i></button>
+                                                <form th:action="@{/dashboard/admin/finishMentorShip}" method="post">
+                                                    <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input type="hidden" name="mentorShipId" th:value="${element.id}"/>
+                                                    <button type="submit" class="correct-btn">
+                                                        <i class="fa-solid fa-flag-checkered"></i>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
-                                        <tr th:if="${element.status.equals(Constants.COMPLETED)}"
-                                            class="table-two-options">
-                                            <th:block
-                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
+
+                                        <!-- Status: COMPLETED -->
+                                        <tr th:if="${element.status.equals(Constants.COMPLETED)}" class="table-two-options">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).INSTRUCTOR_ROLE}">
                                                 <td th:text="${element.student.name}"></td>
                                                 <td th:text="${element.student.surname}"></td>
                                                 <td th:text="${element.student.email}"></td>
                                             </th:block>
-                                            <th:block
-                                                    th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                                            <th:block th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
                                                 <td th:text="${element.instructor.name}"></td>
                                                 <td th:text="${element.instructor.surname}"></td>
                                                 <td th:text="${element.instructor.email}"></td>
                                             </th:block>
                                             <td th:text="${element.status}"></td>
-                                            <td
-                                                    th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                            <td
-                                                    th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td th:text="${element.startedAt == null} ? '---' : ${#temporals.format(element.startedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td th:text="${element.endAt == null} ? '---' : ${#temporals.format(element.endAt, 'yyyy-MM-dd HH:mm')}"></td>
                                             <td class="operations">
-                                                <form th:action="@{/dashboard/admin/backToActiveMentorShip}"
-                                                      method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail"
-                                                           th:value="${user.email}"/>
-                                                    <input type="hidden" name="mentorShipId"
-                                                           th:value="${element.id}"/>
-                                                    <button type="submit" class="delete-btn"><i
-                                                            class="fa-solid fa-rotate-left"></i></button>
+                                                <form th:action="@{/dashboard/admin/backToActiveMentorShip}" method="post">
+                                                    <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input type="hidden" name="mentorShipId" th:value="${element.id}"/>
+                                                    <button type="submit" class="delete-btn">
+                                                        <i class="fa-solid fa-rotate-left"></i>
+                                                    </button>
                                                 </form>
-                                                <form th:action="@{/dashboard/admin/userCourseDetails}"
-                                                      method="post">
-                                                    <input hidden="hidden" type="text" name="parentUserMail"
-                                                           th:value="${user.email}"/>
-                                                    <input type="hidden" name="mentorShipId"
-                                                           th:value="${element.id}"/>
-                                                    <button type="submit" class="info-btn"><i
-                                                            class="fa-solid fa-eye"></i></button>
+                                                <form th:action="@{/dashboard/admin/userCourseDetails}" method="post">
+                                                    <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
+                                                    <input type="hidden" name="mentorShipId" th:value="${element.id}"/>
+                                                    <button type="submit" class="info-btn">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -349,6 +392,8 @@
                         </th:block>
                     </div>
                 </div>
+
+                <!-- Sekcja Kursów -->
                 <div class="box-courses" th:if="${courses}">
                     <div class="container-courses">
                         <th:block th:unless="${seeWhoseCourseIs}">
@@ -379,10 +424,12 @@
                                         <th:block th:if="${course.duration}" th:text="${course.duration}"></th:block>
                                         <th:block th:unless="${course.duration}">0</th:block>
                                         <span class="hours">h</span></p>
-                                    <span class="time"><th:block
-                                            th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></th:block><th:block
-                                            th:if="${course.endAt}"> / <th:block
-                                            th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></th:block></th:block></span>
+                                    <span class="time">
+                                        <th:block th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></th:block>
+                                        <th:block th:if="${course.endAt}"> / 
+                                            <th:block th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></th:block>
+                                        </th:block>
+                                    </span>
                                 </div>
                                 <form th:id="'form-' + ${course.id}" hidden="hidden" method="post"
                                       th:action="@{/course/showCourse}">
@@ -441,7 +488,7 @@
                             <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                 <form method="post" th:action="@{/course/admin/addCourse}" th:object="${newCourse}">
                                     <input type="hidden" name="mentorShipId" th:value="${mentorShip.id}"/>
-                                    <input hidden="hidden" type="text" name="parentUserMail" th:value="${user.email}"/>
+                                    <input type="hidden" name="parentUserMail" th:value="${user.email}"/>
                                     <div class="form-box">
                                         <div class="course-input">
                                             <p>Krótki Opis</p>
@@ -473,22 +520,33 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </div> 
+        </section>
 
-    <br/>
-    <br/>
+        <br/>
+        <br/>
 
-    <div th:replace="~{contact_footer :: contact}"></div>
-</main>
+        <div th:replace="~{contact_footer :: contact}"></div>
+    </main>
 
-<div th:replace="~{contact_footer :: footer}"></div>
+    <div th:replace="~{contact_footer :: footer}"></div>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="/assets/js/aosSettings.js"></script>
-<script src="/assets/js/navigation.js"></script>
-<script src="/assets/js/userDetails.js"></script>
-<script src="/assets/js/dashboard.js"></script>
+    <!-- Przekazanie zmiennych Thymeleaf do JavaScript -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.appData = {
+            examStatistics: /*[[${examStatistics}]]*/,
+            testStatistics: /*[[${testStatistics}]]*/
+        };
+        /*]]>*/
+    </script>
+
+    <!-- Skrypty JavaScript -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/assets/js/aosSettings.js"></script>
+    <script src="/assets/js/navigation.js"></script>
+    <script src="/assets/js/userDetails.js"></script>
+    <script src="/assets/js/dashboard.js"></script>
 </body>
 </html>
+

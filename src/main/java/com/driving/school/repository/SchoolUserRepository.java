@@ -24,4 +24,7 @@ public interface SchoolUserRepository extends JpaRepository<SchoolUser, Long> {
 
     @Query("SELECT u FROM SchoolUser u JOIN u.availableCategories c WHERE c.nameCategory = :nameCategory")
     List<SchoolUser> findUsersByCategoryName(@Param("nameCategory") String nameCategory);
+
+    boolean existsByIdAndAvailableCategories_NameCategory(Long userId, String nameCategory);
+
 }

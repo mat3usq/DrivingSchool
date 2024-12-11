@@ -41,4 +41,18 @@ public class StudentTestStatistics {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "TESTID", nullable = false)
     private Test test;
+
+    @Override
+    public String toString() {
+        return "StudentTestStatistics{" +
+                "id=" + id +
+                ", numberOfQuestionsSolved=" + numberOfQuestionsSolved +
+                ", numberOfQuestionsAnsweredCorrectly=" + numberOfQuestionsAnsweredCorrectly +
+                ", numberOfQuestionsAnsweredInCorrectly=" + numberOfQuestionsAnsweredInCorrectly +
+                ", numberOfQuestionsSkipped=" + numberOfQuestionsSkipped +
+                ", averageDurationOfAnswers=" + averageDurationOfAnswers +
+                ", schoolUser=" + schoolUser +
+                ", test=" + test +
+                '}';
+    }
 }

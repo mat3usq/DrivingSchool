@@ -50,6 +50,23 @@ public class ExamStatistics {
     @Column(name = "NUMBEROFQUESTIONSSKIPPED", nullable = false)
     private Integer numberOfQuestionsSkipped;
 
+    @Override
+    public String toString() {
+        return "ExamStatistics{" +
+                "id=" + id +
+                ", category='" + category + '\'' +
+                ", averagePoints=" + averagePoints +
+                ", numberOfSolvedExams=" + numberOfSolvedExams +
+                ", numberOfPassedExams=" + numberOfPassedExams +
+                ", averageExamsDuration=" + averageExamsDuration +
+                ", averageTimePerQuestions=" + averageTimePerQuestions +
+                ", numberOfQuestionsAnsweredCorrectly=" + numberOfQuestionsAnsweredCorrectly +
+                ", numberOfQuestionsAnsweredInCorrectly=" + numberOfQuestionsAnsweredInCorrectly +
+                ", numberOfQuestionsSkipped=" + numberOfQuestionsSkipped +
+                ", createdAt=" + createdAt +
+                '}';
+    }
+
     @CreatedDate
     @Column(name = "CREATEDAT")
     private LocalDateTime createdAt;
