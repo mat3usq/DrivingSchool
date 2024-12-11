@@ -186,8 +186,6 @@ public class DashboardController {
             Object[] tStats = null;
             if(testStats != null && testStats.size() > 0){
                 tStats = testStats.get(0);
-                System.out.println(testStats.size() + "");
-                System.out.println("dzialaj prosze" + Arrays.toString(tStats));
             }
             if(testStats != null ) {
                 modelAndView.addObject("testStatistics", tStats);
@@ -255,14 +253,36 @@ public class DashboardController {
     public ModelAndView showStudentForInstructor(@RequestParam("mentorShipId") Long mentorShipId, HttpSession session) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        String category = loggedInUser.getCurrentCategory();
+
 
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId())) {
             SchoolUser user = schoolUserService.findUserById(ms.get().getStudent().getId());
+            Boolean isUserHaveCategory = schoolUserService.hasUserCategory(user.getId(),category);
             if (user != null) {
-                ModelAndView model = getUserDetails(user, new ModelAndView("schoolUserDetails"));
-                model.addObject("courses", courseRepository.findByMentorShipId(mentorShipId));
-                model.addObject("mentorShip", ms.get());
-                return model;
+                ModelAndView modelAndView = getUserDetails(user, new ModelAndView("schoolUserDetails"));
+            if (isUserHaveCategory && category != null && !category.trim().isEmpty()) {
+                StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, category);
+                modelAndView.addObject("examStatistics", examStatistics);
+
+                List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(category, user);
+                Object[] tStats = (testStats != null && !testStats.isEmpty()) ? testStats.get(0) : new Object[]{0, 0, 0, 0, 0};
+                modelAndView.addObject("testStatistics", tStats);
+
+                String examStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki egzaminów.";
+                String testStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki testów.";
+                modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
+                modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
+            } else {
+
+                modelAndView.addObject("examStatistics", null);
+                modelAndView.addObject("testStatistics", null);
+                modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
+            }
+                modelAndView.addObject("courses", courseRepository.findByMentorShipId(mentorShipId));
+                modelAndView.addObject("mentorShip", ms.get());
+
+                return modelAndView;
             }
         }
 
@@ -349,22 +369,18 @@ public class DashboardController {
             modelAndView = getUserDetails(user, new ModelAndView("schoolUserDetails"));
 
             if (isUserHaveCategory && category != null && !category.trim().isEmpty()) {
-                // Pobierz statystyki egzaminów
                 StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, category);
                 modelAndView.addObject("examStatistics", examStatistics);
 
-                // Pobierz statystyki testów
                 List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(category, user);
                 Object[] tStats = (testStats != null && !testStats.isEmpty()) ? testStats.get(0) : new Object[]{0, 0, 0, 0, 0};
                 modelAndView.addObject("testStatistics", tStats);
 
-                // Dodaj wiadomości o statystykach
                 String examStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki egzaminów.";
                 String testStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki testów.";
                 modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
                 modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
             } else {
-                // Jeśli użytkownik nie ma przypisanej kategorii
                 modelAndView.addObject("examStatistics", null);
                 modelAndView.addObject("testStatistics", null);
                 modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");

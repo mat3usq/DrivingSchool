@@ -124,7 +124,7 @@ h2 {
 .dashboard .hero-img {
   position: relative;
   height: 110vh;
-  background-image: url("../img/backgroundPaneldashboard.png");
+  background-image: url("../img/backgroundPanelDashboard.png");
   background-position: center;
   background-size: cover;
   overflow: hidden;
