@@ -1,8 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const threeOptions = document.querySelectorAll('.table-three-options');
+    threeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            option.classList.toggle('clicked');
+        });
+    });
+
+    const twoOptions = document.querySelectorAll('.table-two-options');
+    twoOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            option.classList.toggle('clicked');
+        });
+    });
+
+    const oneOption = document.querySelectorAll('.table-one-option');
+    oneOption.forEach(option => {
+        option.addEventListener('click', () => {
+            option.classList.toggle('clicked');
+        });
+    });
+
     function createPieChart(data, elementId, title) {
         const width = 400;
         const height = 400;
         const radius = height / 4;
+
+
+          if (!Array.isArray(data) || data.length === 0) {
+            return;
+        }
+
+        const allZero = data.every(d => d.value === 0);
+        if (allZero) {
+            return;
+        }
 
         const color = d3.scaleOrdinal()
             .domain(data.map(d => d.label))

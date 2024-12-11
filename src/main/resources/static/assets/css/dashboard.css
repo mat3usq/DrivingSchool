@@ -693,14 +693,14 @@ h2 {
 
 .charts-container {
     display: flex;
-    justify-content: space-around; /* Opcjonalnie: aby dodać odstępy wokół wykresów */
-    flex-wrap: wrap; /* Pozwala na zawijanie na mniejszych ekranach */
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .charts-container > div {
-    flex: 1; /* Pozwala wykresom zajmować równą przestrzeń */
-    min-width: 300px; /* Dostosuj do szerokości Twoich wykresów */
-    max-width: 400px; /* Dostosuj w razie potrzeby */
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
 }
 
 @media (max-width: 720px) {
