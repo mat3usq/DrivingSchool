@@ -149,13 +149,13 @@
 
                     <div class="input-field">
                         <i class="fa-solid fa-arrow-down-a-z"></i>
-                        <select name="orderIndex" th:field="*{orderIndex}" required>
+                        <select name="orderIndex" th:field="*{orderIndex}">
                             <option th:value="-1" selected>Wybierz miejsce dodania wykładu</option>
                             <option th:value="1">Jako Pierwszy Wykład</option>
                             <option th:each="lecture, iterStat : ${lectureList}"
                                     th:value="${lecture.orderIndex + 1}"
                                     th:if="${iterStat.index + 1 < lectureList.size()}"
-                                    th:text="'Między Wykład: &quot;' + ${lecture.name.length() > 25 ? lecture.name.substring(0, 22) + '...' : lecture.name} + '&quot; - Wykład: &quot;' +${lectureList[iterStat.index + 1].name.length() > 25 ? lectureList[iterStat.index + 1].name.substring(0, 22) + '...' : lectureList[iterStat.index + 1].name} + '&quot;'">
+                                    th:text="'Pomiędzy Wykłady: nr.'+${iterStat.index+1}+' &quot;' + ${lecture.name.length() > 25 ? lecture.name.substring(0, 22) + '...' : lecture.name} + '&quot; - nr.'+${iterStat.index+2}+' &quot;' +${lectureList[iterStat.index + 1].name.length() > 25 ? lectureList[iterStat.index + 1].name.substring(0, 22) + '...' : lectureList[iterStat.index + 1].name} + '&quot;'">
                             </option>
                             <option th:value="-1">Jako Ostatni Wykład</option>
                         </select>
@@ -187,8 +187,7 @@
                     <div class="input-field">
                         <i class="fas fa-book"></i>
                         <input type="text" name="sublectureTitle" placeholder="Nazwa PodWykładu"
-                               th:field="*{title}"
-                               required/>
+                               th:field="*{title}"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-align-left"></i>
@@ -200,27 +199,26 @@
 
                     <div class="input-field">
                         <i class="fa-solid fa-arrow-down-a-z"></i>
-                        <select id="sublecture-lectureSelect" name="lecture" th:field="*{lecture}" required
+                        <select id="sublecture-lectureSelect" name="lecture" th:field="*{lecture}"
                                 onchange="filterSublectures()">
                             <option value="1" selected>Wybierz wykład do którego chcesz dodac PodWykład</option>
-                            <option th:each="lecture: ${lectureList}"
+                            <option th:each="lecture, iter: ${lectureList}"
                                     th:value="${lecture.id}"
-                                    th:text="'Do Wykładu: &quot;' + ${lecture.name.length() > 50 ? lecture.name.substring(0, 47) + '...' : lecture.name} + '&quot;'">
+                                    th:text="'Do Wykładu nr. '+${iter.index+1}+': &quot;' + ${lecture.name.length() > 50 ? lecture.name.substring(0, 47) + '...' : lecture.name} + '&quot;'">
                             </option>
                         </select>
                     </div>
 
                     <div class="input-field">
                         <i class="fa-solid fa-arrow-down-wide-short"></i>
-                        <select id="sublecture-sublectureSelect" name="orderIndex" th:field="*{orderIndex}"
-                                required>
+                        <select id="sublecture-sublectureSelect" name="orderIndex" th:field="*{orderIndex}">
                             <option th:value="-1" selected>Wybierz miejsce dodania PodWykładu</option>
                             <option th:value="1">Jako Pierwszy PodWykład</option>
                             <th:block th:each="lecture : ${lectureList}">
                                 <th:block th:each="sublecture, subIterStat : ${lecture.sublectures}">
                                     <option th:value="${sublecture.orderIndex + 1}"
                                             th:if="${subIterStat.index + 1 < lecture.sublectures.size()}"
-                                            th:text="'Między PodWykład: &quot;' + (${sublecture.title.length() > 25 ? sublecture.title.substring(0, 22) + '...' : sublecture.title}) + '&quot; - PodWykład: &quot;' + (${lecture.sublectures[subIterStat.index + 1].title.length() > 25 ? lecture.sublectures[subIterStat.index + 1].title.substring(0, 22) + '...' : lecture.sublectures[subIterStat.index + 1].title}) + '&quot;'"
+                                            th:text="'Pomiędzy PodWykłady: nr.'+${subIterStat.index+1}+' &quot;' + (${sublecture.title.length() > 25 ? sublecture.title.substring(0, 22) + '...' : sublecture.title}) + '&quot; - nr.'+${subIterStat.index+2}+' &quot;' + (${lecture.sublectures[subIterStat.index + 1].title.length() > 25 ? lecture.sublectures[subIterStat.index + 1].title.substring(0, 22) + '...' : lecture.sublectures[subIterStat.index + 1].title}) + '&quot;'"
                                             th:sublecture-data-lecture-id="${lecture.id}">
                                     </option>
                                 </th:block>
@@ -254,8 +252,7 @@
                 <div class="collapsible-content">
                     <div class="input-field">
                         <i class="fas fa-bookmark"></i>
-                        <input type="text" name="subjectTitle" placeholder="Nazwa Rozdziału" th:field="*{title}"
-                               required/>
+                        <input type="text" name="subjectTitle" placeholder="Nazwa Rozdziału" th:field="*{title}"/>
                     </div>
 
                     <div class="input-file" id="subject-file-form">
@@ -280,14 +277,13 @@
                     <div class="input-field">
                         <i class="fa-solid fa-arrow-down-a-z"></i>
                         <select id="subject-sublectureSelect" name="sublecture" th:field="*{sublecture}"
-                                required
                                 onchange="filterSubjects()">
-                            <option value="1" selected>Wybierz podWykład do którego chcesz dodać Rozdział
+                            <option value="1" selected>Wybierz PodWykład do którego chcesz dodać Rozdział
                             </option>
                             <th:block th:each="lecture : ${lectureList}">
-                                <th:block th:each="sublecture : ${lecture.sublectures}">
+                                <th:block th:each="sublecture, iter : ${lecture.sublectures}">
                                     <option th:value="${sublecture.id}"
-                                            th:text="'Do PodWykładu: &quot;' + ${sublecture.title.length() > 50 ? sublecture.title.substring(0, 47) + '...' : sublecture.title} + '&quot;'">
+                                            th:text="'Do PodWykładu nr. '+${iter.index+1}+': : &quot;' + ${sublecture.title.length() > 50 ? sublecture.title.substring(0, 47) + '...' : sublecture.title} + '&quot;'">
                                     </option>
                                 </th:block>
                             </th:block>
@@ -296,7 +292,7 @@
 
                     <div class="input-field">
                         <i class="fa-solid fa-arrow-down-wide-short"></i>
-                        <select id="subject-subjectSelect" name="orderIndex" th:field="*{orderIndex}" required>
+                        <select id="subject-subjectSelect" name="orderIndex" th:field="*{orderIndex}">
                             <option th:value="-1" selected>Wybierz miejsce dodania Rozdziału</option>
                             <option th:value="1">Jako Pierwszy Rozdział</option>
                             <th:block th:each="lecture : ${lectureList}">
@@ -304,7 +300,7 @@
                                     <th:block th:each="subject, subIterStat : ${sublecture.subjects}">
                                         <option th:value="${subject.orderIndex + 1}"
                                                 th:if="${subIterStat.index + 1 < sublecture.subjects.size()}"
-                                                th:text="'Między Rozdział: &quot;' + (${subject.title != null ? (subject.title.length() > 25 ? subject.title.substring(0, 22) + '...' : subject.title) : 'Rozdział nr. ' + subIterStat.index + 1}) + '&quot; - Rozdział:&quot;' + (${sublecture.subjects[subIterStat.index + 1].title != null ? (sublecture.subjects[subIterStat.index + 1].title.length() > 25 ? sublecture.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sublecture.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + subIterStat.index + 2}) + '&quot;'"
+                                                th:text="'Pomiędzy Rozdziały: nr.'+${subIterStat.index+1}+'  &quot;' + (${subject.title != null ? (subject.title.length() > 25 ? subject.title.substring(0, 22) + '...' : subject.title) : 'Rozdział nr. ' + subIterStat.index + 1}) + '&quot; - nr.'+${subIterStat.index+2}+' &quot;' + (${sublecture.subjects[subIterStat.index + 1].title != null ? (sublecture.subjects[subIterStat.index + 1].title.length() > 25 ? sublecture.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sublecture.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + subIterStat.index + 2}) + '&quot;'"
                                                 th:data-sublecture-id="${sublecture.id}">
                                         </option>
                                     </th:block>

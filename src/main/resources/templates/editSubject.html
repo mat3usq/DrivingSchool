@@ -88,8 +88,7 @@
                                                     type="text"
                                                     name="subjectTitle"
                                                     placeholder="Nazwa Rozdziału"
-                                                    th:field="*{title}"
-                                                    required/>
+                                                    th:field="*{title}"/>
                                         </div>
                                         <div class="input-file" th:data-sublecture="${sublecture.id}" th:data-subject="${subject.id}">
                                             <h3 class="title-file">Zamień swój plik na nowy poprzez:</h3>
@@ -117,12 +116,12 @@
                                         <p>Zmien miejsce Rozdziału</p>
                                         <div class="input-field">
                                             <i class="fa-solid fa-arrow-down-a-z"></i>
-                                            <select id="subject-sublectureSelect" name="sublecture" th:field="*{sublecture}" required
+                                            <select id="subject-sublectureSelect" name="sublecture" th:field="*{sublecture}"
                                                     onchange="filterSubjects()">
                                                 <th:block th:each="l : ${lectureList}">
-                                                    <th:block th:each="sl : ${lecture.sublectures}">
+                                                    <th:block th:each="sl, iter: ${l.sublectures}">
                                                         <option th:value="${sl.id}"
-                                                                th:text="'Do PodWykładu: &quot;' + ${sl.title.length() > 50 ? sl.title.substring(0, 47) + '...' : sl.title} + '&quot;'">
+                                                                th:text="'Do PodWykładu nr. '+${iter.index+1}+': &quot;' + ${sl.title.length() > 50 ? sl.title.substring(0, 47) + '...' : sl.title} + '&quot;'">
                                                         </option>
                                                     </th:block>
                                                 </th:block>
@@ -131,20 +130,30 @@
 
                                         <div class="input-field">
                                             <i class="fa-solid fa-arrow-down-wide-short"></i>
-                                            <select id="subject-subjectSelect" name="orderIndex" th:field="*{orderIndex}" required>
+                                            <select id="subject-subjectSelect" name="orderIndex" th:field="*{orderIndex}">
                                                 <option th:value="1">Jako Pierwszy Rozdział</option>
                                                 <th:block th:each="l : ${lectureList}">
                                                     <th:block th:each="sl : ${l.sublectures}">
                                                         <th:block th:each="sb, subIterStat : ${sl.subjects}">
-                                                            <option th:value="${sb.orderIndex + 1}"
-                                                                    th:if="${subIterStat.index + 1 < sl.subjects.size() && sb.id != newSubject.id && sl.subjects[subIterStat.index + 1].id != newSubject.id}"
-                                                                    th:text="'Między Rozdział: &quot;' + (${sb.title != null ? (sb.title.length() > 25 ? sb.title.substring(0, 22) + '...' : sb.title) : 'Rozdział nr. ' + subIterStat.index + 1}) + '&quot; - Rozdział:&quot;' + (${sl.subjects[subIterStat.index + 1].title != null ? (sl.subjects[subIterStat.index + 1].title.length() > 25 ? sl.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sl.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + subIterStat.index + 2}) + '&quot;'"
-                                                                    th:data-sublecture-id="${sl.id}">
+                                                            <option th:value="${sb.orderIndex}"
+                                                                    th:if="${sb.id == newSubject.id}"
+                                                                    th:text="'Aktualna Pozycja Rozdziału'">
                                                             </option>
                                                         </th:block>
                                                     </th:block>
                                                 </th:block>
                                                 <option th:value="-1">Jako Ostatni Rozdział</option>
+                                                <th:block th:each="l : ${lectureList}">
+                                                    <th:block th:each="sl : ${l.sublectures}">
+                                                        <th:block th:each="sb, subIterStat : ${sl.subjects}">
+                                                            <option th:value="${sb.orderIndex + 1}"
+                                                                    th:if="${subIterStat.index + 1 < sl.subjects.size() && sb.id != newSubject.id && sl.subjects[subIterStat.index + 1].id != newSubject.id}"
+                                                                    th:text="'Pomiędzy Rozdziały: nr.'+${subIterStat.index+1}+' &quot;' + (${sb.title != null ? (sb.title.length() > 25 ? sb.title.substring(0, 22) + '...' : sb.title) : 'Rozdział nr. ' + subIterStat.index + 1}) + '&quot; - nr.'+${subIterStat.index+2}+' &quot;' + (${sl.subjects[subIterStat.index + 1].title != null ? (sl.subjects[subIterStat.index + 1].title.length() > 25 ? sl.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sl.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + subIterStat.index + 2}) + '&quot;'"
+                                                                    th:data-sublecture-id="${sl.id}">
+                                                            </option>
+                                                        </th:block>
+                                                    </th:block>
+                                                </th:block>
                                             </select>
                                         </div>
                                         <div class="box-btn">

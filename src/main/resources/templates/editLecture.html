@@ -77,14 +77,19 @@
                                 <p>Zmien Miejsce Wykładu</p>
                                 <div class="input-field">
                                     <i class="fa-solid fa-arrow-down-a-z"></i>
-                                    <select name="orderIndex" th:field="*{orderIndex}" required>
-                                        <option th:value="1">Jako Pierwszy</option>
+                                    <select name="orderIndex" th:field="*{orderIndex}">
+                                        <option th:value="1">Jako Pierwszy Wykłąd</option>
+                                        <option th:each="l, iterStat : ${lectureList}"
+                                                th:value="${l.orderIndex}"
+                                                th:if="${l.id == newLecture.id}"
+                                                th:text="'Aktualna Pozycja Wykładu'">
+                                        </option>
+                                        <option th:value="-1">Jako Ostatni Wykład</option>
                                         <option th:each="l, iterStat : ${lectureList}"
                                                 th:value="${l.orderIndex + 1}"
                                                 th:if="${iterStat.index + 1 < lectureList.size() && l.id != newLecture.id && lectureList[iterStat.index + 1].id != newLecture.id}"
-                                                th:text="'Między Wykład: &quot;' + ${l.name.length() > 25 ? l.name.substring(0, 22) + '...' : l.name} + '&quot; - Wykład: &quot;' +${lectureList[iterStat.index + 1].name.length() > 25 ? lectureList[iterStat.index + 1].name.substring(0, 22) + '...' : lectureList[iterStat.index + 1].name} + '&quot;'">
+                                                th:text="'Pomiędzy Wykłady: nr.'+${iterStat.index+1}+' &quot;' + ${l.name.length() > 25 ? l.name.substring(0, 22) + '...' : l.name} + '&quot; - nr.'+${iterStat.index+2}+' &quot;' +${lectureList[iterStat.index + 1].name.length() > 25 ? lectureList[iterStat.index + 1].name.substring(0, 22) + '...' : lectureList[iterStat.index + 1].name} + '&quot;'">
                                         </option>
-                                        <option th:value="-1">Jako Ostatni</option>
                                     </select>
                                 </div>
                                 <div class="box-btn">
@@ -99,7 +104,8 @@
                         </div>
 
                         <div class="container-sublecture">
-                            <div class="box-sublecture" th:each="sublecture, sublectureIterStat : ${lecture.getSublectures()}">
+                            <div class="box-sublecture"
+                                 th:each="sublecture, sublectureIterStat : ${lecture.getSublectures()}">
                                 <div class="sublecture-details">
                                     <h4 th:text="'PodWykład nr. ' + ${sublectureIterStat.index + 1}"></h4>
                                     <h4
@@ -109,7 +115,8 @@
                                             th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
                                             th:text="${sublecture.content}"></p>
                                 </div>
-                                <div class="subject-details" th:each="subject, subjectIterStat : ${sublecture.getSubjects()}">
+                                <div class="subject-details"
+                                     th:each="subject, subjectIterStat : ${sublecture.getSubjects()}">
                                     <p th:text="'Rozdział nr. ' + ${subjectIterStat.index + 1}"></p>
                                     <p th:unless="${subject.title == null or subject.title.isEmpty()}"
                                        th:text="${subject.title}"></p>
