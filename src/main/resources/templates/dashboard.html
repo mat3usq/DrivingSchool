@@ -270,8 +270,7 @@
                             </p>
 
                             <p class="info-text" th:if="${assignStudentInfo}" th:text="${assignStudentInfo}"></p>
-                            <form class="select-instructor" th:action="@{/dashboard/instructor/assignStudent}"/>
-                                  method="post">
+                            <form class="select-instructor" th:action="@{/dashboard/instructor/assignStudent}" method="post">
                                 <input type="text" name="studentEmail" placeholder="Wpisz email studenta"/>
                                 <button type="submit" class="info-btn">Dodaj</button>
                             </form>

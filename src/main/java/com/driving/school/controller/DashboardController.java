@@ -35,7 +35,6 @@ public class DashboardController {
                                CourseRepository courseRepository,
                                ExamStatisticsService examStatisticsService,
                                StudentExamStatisticsRepository studentExamStatisticsRepository,
-                               StudentTestStatisticsRepository sudentExamStatisticsRepository,
                                StudentTestStatisticsRepository studentTestStatisticsRepository) {
         this.schoolUserService = schoolUserService;
         this.mentorShipService = mentorShipService;
@@ -52,9 +51,9 @@ public class DashboardController {
     public ModelAndView displayDashboard(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-        
-        
-        
+
+
+
         String examStatisticsMessage;
         String testStatisticsMessage;
 
@@ -91,8 +90,6 @@ public class DashboardController {
             Object[] tStats = null;
             if(testStats != null && testStats.size() > 0){
                 tStats = testStats.get(0);
-                System.out.println(testStats.size() + "");
-                System.out.println("dzialaj prosze" + Arrays.toString(tStats));
             }
             if(testStats != null ) {
                 modelAndView.addObject("testStatistics", tStats);
@@ -100,8 +97,8 @@ public class DashboardController {
                 modelAndView.addObject("testStatistics", new Object[]{0, 0, 0, 0, 0});
             }
         }
-        
-        
+
+
 
 
         switch (user.getRoleName()) {

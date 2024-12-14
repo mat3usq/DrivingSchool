@@ -37,45 +37,47 @@
             <div class="hero-shadow"></div>
             <div class="box-tests">
                 <div class="box-container">
-                    <p class="title" data-aos="fade-down" data-aos-delay="100">
-                        Testy na prawo jazdy <span>Kategorii <th:block th:text="${tests.getFirst().drivingCategory}"></th:block></span>
-                    </p>
-                    <div data-aos="zoom-in" data-aos-delay="150" class="container-tests">
-                        <p class="side-title">Pytania Podstawowe</p>
-                        <form th:each="test : ${tests}" th:if="${!test.testType}" th:action="@{/tests/selectQuestions}"
-                              method="post" class="tests-details">
-                            <input type="hidden" name="testId" th:value="${test.id}"/>
-                            <div class="container-info">
-                                <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
-                                <p th:text="${test.name}"></p>
-                                <p th:text="${test.numberQuestions} + ' pytań'"></p>
-                            </div>
-                            <div class="container-stats">
-                                <span class="progres-span"> <th:block th:text="${test.counter}"></th:block>%</span>
-                                <div class="progres-box">
-                                    <div class="progres-bar"></div>
+                        <p class="title" data-aos="fade-down" data-aos-delay="100">
+                            Testy na prawo jazdy <span>Kategorii <th:block th:text="${session.loggedInUser.getCurrentCategory()}"></th:block></span>
+                        </p>
+                        <div data-aos="zoom-in" data-aos-delay="150" class="container-tests">
+                            <p class="side-title">Pytania Podstawowe</p>
+                            <th:block th:unless="${hasNoSpecificTests}">Brak Testów Podstawowych</th:block>
+                            <form th:each="test : ${tests}" th:if="${!test.testType}" th:action="@{/tests/selectQuestions}"
+                                  method="post" class="tests-details">
+                                <input type="hidden" name="testId" th:value="${test.id}"/>
+                                <div class="container-info">
+                                    <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
+                                    <p th:text="${test.name}"></p>
+                                    <p th:text="${test.numberQuestions} + ' pytań'"></p>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="container-tests">
-                        <p class="side-title">Pytania Specjalistyczne</p>
-                        <form th:each="test : ${tests}" th:if="${test.testType}" th:action="@{/tests/selectQuestions}"
-                              method="post" class="tests-details">
-                            <input type="hidden" name="testId" th:value="${test.id}"/>
-                            <div class="container-info">
-                                <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
-                                <p th:text="${test.name}"></p>
-                                <p th:text="${test.numberQuestions} + ' pytań'"></p>
-                            </div>
-                            <div class="container-stats">
-                                <span class="progres-span"> <th:block th:text="${test.counter}"></th:block>%</span>
-                                <div class="progres-box">
-                                    <div class="progres-bar"></div>
+                                <div class="container-stats">
+                                    <span class="progres-span"> <th:block th:text="${test.counter}"></th:block>%</span>
+                                    <div class="progres-box">
+                                        <div class="progres-bar"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                        <div class="container-tests">
+                            <p class="side-title">Pytania Specjalistyczne</p>
+                            <th:block th:unless="${hasSpecificTests}">Brak Testów Specjalistycznych</th:block>
+                            <form th:each="test : ${tests}" th:if="${test.testType}" th:action="@{/tests/selectQuestions}"
+                                  method="post" class="tests-details">
+                                <input type="hidden" name="testId" th:value="${test.id}"/>
+                                <div class="container-info">
+                                    <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
+                                    <p th:text="${test.name}"></p>
+                                    <p th:text="${test.numberQuestions} + ' pytań'"></p>
+                                </div>
+                                <div class="container-stats">
+                                    <span class="progres-span"> <th:block th:text="${test.counter}"></th:block>%</span>
+                                    <div class="progres-box">
+                                        <div class="progres-bar"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                 </div>
             </div>
         </div>

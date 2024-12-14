@@ -40,6 +40,9 @@
                 <div class="box-container">
                     <p class="title" data-aos="fade-down" data-aos-delay="100">Instrukcja Egzaminu</p>
                     <div class="container-instruction">
+                        <div class="instruction" th:if="${notEnoughQuestionsForExam}">
+                            <span th:text="${notEnoughQuestionsForExam}"></span>
+                        </div>
                         <div class="instruction">
                             <h2>Zdjęcie poglądowe egzaminu</h2>
                             <img

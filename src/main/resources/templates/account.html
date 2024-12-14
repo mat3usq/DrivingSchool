@@ -74,7 +74,7 @@
                                 marzec</p>
                         </div>
                         <hr/>
-                        <div class="schoolUser-payments" th:if="${user.roleName == T(com.driving.school.model.Constants).STUDENT_ROLE}">
+                        <div class="schoolUser-payments">
                             <p th:unless="${user.payments.isEmpty()}" class="mini-title">Płatności</p>
                             <p th:if="${user.payments.isEmpty()}" class="mini-title">Brak Płatności</p>
                             <div class="payment" th:each="payment : ${user.payments}">
