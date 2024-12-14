@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -22,6 +23,7 @@ import java.util.Set;
 @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
 @Table(name = "COURSE")
 public class Course {
     @Id
@@ -84,5 +86,15 @@ public class Course {
                 ", category=" + category +
                 ", duration=" + duration +
                 '}';
+    }
+
+    public Course(String description, Category category, Double duration, Double summaryDurationHours, Double summaryAverageResultTest, MentorShip mentorShip, String passed) {
+        this.description = description;
+        this.category = category;
+        this.duration = duration;
+        this.summaryDurationHours = summaryDurationHours;
+        this.summaryAverageResultTest = summaryAverageResultTest;
+        this.mentorShip = mentorShip;
+        this.passed = passed;
     }
 }

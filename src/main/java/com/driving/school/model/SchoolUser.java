@@ -90,7 +90,7 @@ public class SchoolUser {
     @OneToMany(mappedBy = "schoolUser")
     private Set<StudentExam> studentExams = new LinkedHashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "USER_ID")
     private Set<UserLikedQuestion> likedQuestions = new LinkedHashSet<>();
 

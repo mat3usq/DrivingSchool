@@ -41,9 +41,8 @@ public class Category {
     @Column(name = "MINIMUM_AGE", nullable = false)
     private String minimumAge;
 
-    public Category(String nameCategory, List<SchoolUser> schoolUsers, String minimumAge, List<String> authorizations) {
+    public Category(String nameCategory, String minimumAge, List<String> authorizations) {
         this.nameCategory = nameCategory;
-        this.schoolUsers = schoolUsers;
         this.authorization = authorizations;
         this.minimumAge = minimumAge;
     }

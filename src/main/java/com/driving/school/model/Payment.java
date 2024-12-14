@@ -2,6 +2,7 @@ package com.driving.school.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -15,6 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
 @Table(name = "PAYMENT")
 public class Payment {
     @Id
@@ -44,4 +46,11 @@ public class Payment {
     @CreatedDate
     @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt;
+
+    public Payment(Double sum, String comment, List<Category> categories, SchoolUser schoolUser) {
+        this.sum = sum;
+        this.comment = comment;
+        this.categories = categories;
+        this.schoolUser = schoolUser;
+    }
 }
