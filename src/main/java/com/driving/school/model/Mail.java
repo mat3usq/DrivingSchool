@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -17,6 +18,7 @@ import java.util.List;
 @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
 @Table(name = "MAIL", indexes = {
         @Index(name = "idx_sender", columnList = "SENDERID"),
         @Index(name = "idx_recipient", columnList = "RECIPIENTID"),
@@ -67,4 +69,8 @@ public class Mail {
     @OneToMany(mappedBy = "parentMail", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("createdAt ASC")
     private List<Mail> replies = new ArrayList<>();
+
+    public Mail(String body) {
+        this.body = body;
+    }
 }

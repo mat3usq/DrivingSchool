@@ -103,7 +103,7 @@ public class SchoolUser {
             joinColumns = @JoinColumn(name = "SCHOOLUSERID"),
             inverseJoinColumns = @JoinColumn(name = "CATEGORYID")
     )
-    private List<Category> availableCategories;
+    private List<Category> availableCategories = new ArrayList<>();
 
     @Column(name = "CURRENTCATEGORY")
     private String currentCategory;

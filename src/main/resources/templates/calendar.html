@@ -142,6 +142,15 @@
                                     <span class="event-time"
                                           th:text="${#temporals.format(event.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(event.endTime, 'HH:mm')}">Event Time</span>
                                 </div>
+                                <div class="createdBy">
+                                    <i class="fa-regular fa-user"></i>
+                                    <span>Stworzone przez </span>
+                                    <h6>
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                        <th:block th:text="${event.getInstructor().getEmail()}">CreatedBy</th:block>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </h6>
+                                </div>
                                 <div class="capacity" sec:authorize="!hasRole('ROLE_STUDENT')">
                                     <i class="fa-solid fa-people-arrows"></i>
                                     <span th:if="${event.getAvailableEventSlots != 0}" class="event-capacity">Wolne Miejsca: <span
