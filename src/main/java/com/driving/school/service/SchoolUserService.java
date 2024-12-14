@@ -105,7 +105,8 @@ public class SchoolUserService {
     @Transactional
     public void deleteLikedQuestionFromUser(Long questionId, Long testId, SchoolUser user) {
         if (user != null) {
-            userLikedQuestionRepository.deleteBySchoolUserAndQuestionIdAndTestId(user, questionId, testId);
+            user.getLikedQuestions().removeIf(lq -> lq.getQuestionId().equals(questionId) && lq.getTestId().equals(testId));
+            saveUser(user);
         }
     }
 

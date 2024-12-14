@@ -52,6 +52,9 @@ public class ExamController {
             String category = user.getCurrentCategory();
             List<Question> questionSet = studentExamService.generateQuestionSet(category);
 
+            if (questionSet.size() < 32)
+                return getInstructionExam(session).addObject("notEnoughQuestionsForExam", "W bazie znajduje się mniej niż 32 pytania, dlatego nie możesz rozwiązać egzaminu!");
+
             StudentExam studentExam = new StudentExam();
             studentExam.setSchoolUser(user);
             studentExam.setCategory(category);

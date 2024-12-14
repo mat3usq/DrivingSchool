@@ -53,6 +53,8 @@ public class TestController {
         List<Test> tests = testService.getAllTestsByCategory(user.getCurrentCategory());
         studentAnswersTestService.setStatisticForTest(tests, user.getId());
         modelAndView.addObject("tests", tests);
+        modelAndView.addObject("hasSpecificTests", tests.stream().anyMatch(test -> test.getTestType()));
+        modelAndView.addObject("hasNoSpecificTests", tests.stream().anyMatch(test -> !test.getTestType()));
         return modelAndView;
     }
 
@@ -134,6 +136,11 @@ public class TestController {
         if (test == null || !test.getDrivingCategory().equals(user.getCurrentCategory()))
             return displayTestsPage(session, redirectAttributes);
 
+        if (isLiked)
+            schoolUserService.addLikedQuestionToUser(questionId, testId, user);
+        else if (!user.getSelectedTypeQuestions().equals("likedQuestions"))
+            schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
+
         switch (action) {
             case "A":
             case "B":
@@ -142,27 +149,36 @@ public class TestController {
             case "NIE":
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session, redirectAttributes);
                 modelAndView.setViewName("answerResultTest");
-                modelAndView.addObject("answer", studentAnswersTestService.save(user, testId, questionId, action, isLiked, timeStartAnswer));
+                modelAndView.addObject("answer", studentAnswersTestService.save(user, testId, questionId, action, timeStartAnswer));
                 modelAndView.addObject("isLiked", isLiked);
+
+                if (user.getSelectedTypeQuestions().equals("likedQuestions") && !isLiked)
+                    schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
                 break;
 
             case "SKIP":
-                studentAnswersTestService.save(user, testId, questionId, action, isLiked, timeStartAnswer);
+                if (user.getSelectedTypeQuestions().equals("likedQuestions"))
+                    schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
+
+                studentAnswersTestService.save(user, testId, questionId, action, timeStartAnswer);
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session, redirectAttributes);
+
+                if (user.getSelectedTypeQuestions().equals("likedQuestions") && isLiked)
+                    schoolUserService.addLikedQuestionToUser(questionId, testId, user);
+                break;
+
+            case "BACK":
+                if (user.getSelectedTypeQuestions().equals("likedQuestions") && !isLiked)
+                    schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
+                modelAndView = selectQuestions(testId, session, redirectAttributes);
                 break;
 
             default:
+                if (user.getSelectedTypeQuestions().equals("likedQuestions") && !isLiked)
+                    schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session, redirectAttributes);
                 break;
         }
-
-        if (isLiked)
-            schoolUserService.addLikedQuestionToUser(questionId, testId, user);
-        else
-            schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
-
-        if (action.equals("BACK"))
-            modelAndView = selectQuestions(testId, session, redirectAttributes);
 
         return modelAndView;
     }

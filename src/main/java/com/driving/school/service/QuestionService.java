@@ -20,12 +20,14 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final StudentAnswersTestService studentAnswersTestService;
     private final UserLikedQuestionRepository userLikedQuestionRepository;
+    private final SchoolUserService schoolUserService;
 
     @Autowired
-    public QuestionService(QuestionRepository questionRepository, StudentAnswersTestService studentAnswersTestService, UserLikedQuestionRepository userLikedQuestionRepository) {
+    public QuestionService(QuestionRepository questionRepository, StudentAnswersTestService studentAnswersTestService, UserLikedQuestionRepository userLikedQuestionRepository, SchoolUserService schoolUserService) {
         this.questionRepository = questionRepository;
         this.studentAnswersTestService = studentAnswersTestService;
         this.userLikedQuestionRepository = userLikedQuestionRepository;
+        this.schoolUserService = schoolUserService;
     }
 
     public Question save(Question question) {
@@ -94,6 +96,12 @@ public class QuestionService {
                 break;
         }
 
+        SchoolUser userdb = schoolUserService.findUserById(user.getId());
+        if (userdb != null) {
+            userdb.setSelectedTypeQuestions(user.getSelectedTypeQuestions());
+            schoolUserService.saveUser(userdb);
+        }
+
         return nextQuestion;
     }
 
@@ -129,9 +137,8 @@ public class QuestionService {
 
         int size = filteredQuestions.size();
 
-        if (numberOfQuestions > size) {
-            throw new IllegalArgumentException("Requested number of quantity access questions.");
-        }
+        if (numberOfQuestions > size)
+            return filteredQuestions;
 
         Random rand = new Random();
         Set<Integer> indices = new HashSet<>();

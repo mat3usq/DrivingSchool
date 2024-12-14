@@ -39,4 +39,16 @@ public class StudentAnswersTest {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "TESTID", nullable = false)
     private Test test;
+
+    @Override
+    public String toString() {
+        return "StudentAnswersTest{" +
+                "id=" + id +
+                ", correctness=" + correctness +
+                ", skipped=" + skipped +
+                ", durationOfAnswer=" + durationOfAnswer +
+                ", question=" + question.getId() +
+                ", test=" + test.getId() +
+                '}';
+    }
 }

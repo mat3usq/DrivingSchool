@@ -16,16 +16,14 @@ public class StudentAnswersTestService {
     private final TestRepository testRepository;
     private final QuestionRepository questionRepository;
     private final SchoolUserService schoolUserService;
-    private final UserLikedQuestionRepository userLikedQuestionRepository;
     private final TestStatisticsService testStatisticsService;
 
     @Autowired
-    public StudentAnswersTestService(StudentAnswersTestRepository studentAnswersTestRepository, TestRepository testRepository, QuestionRepository questionRepository, SchoolUserService schoolUserService, UserLikedQuestionRepository userLikedQuestionRepository, TestStatisticsService testStatisticsService) {
+    public StudentAnswersTestService(StudentAnswersTestRepository studentAnswersTestRepository, TestRepository testRepository, QuestionRepository questionRepository, SchoolUserService schoolUserService, TestStatisticsService testStatisticsService) {
         this.studentAnswersTestRepository = studentAnswersTestRepository;
         this.testRepository = testRepository;
         this.questionRepository = questionRepository;
         this.schoolUserService = schoolUserService;
-        this.userLikedQuestionRepository = userLikedQuestionRepository;
         this.testStatisticsService = testStatisticsService;
     }
 
@@ -33,7 +31,7 @@ public class StudentAnswersTestService {
         studentAnswersTestRepository.deleteAll(studentAnswersTestList);
     }
 
-    public StudentAnswersTest save(SchoolUser loggedUser, Long testId, Long questionId, String answer, Boolean isLiked, LocalDateTime timeStartAnswer) {
+    public StudentAnswersTest save(SchoolUser loggedUser, Long testId, Long questionId, String answer,  LocalDateTime timeStartAnswer) {
         Question q = questionRepository.findById(questionId).orElse(null);
         Test t = testRepository.findById(testId).orElse(null);
         StudentAnswersTest studentAnswersTest = new StudentAnswersTest();
@@ -42,24 +40,8 @@ public class StudentAnswersTestService {
             case "correctAnswers":
             case "incorrectAnswers":
             case "skippedQuestions":
-                studentAnswersTest = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(loggedUser, t, q);
-                if (q != null && !answer.equals("SKIP")) {
-                    studentAnswersTest.setCorrectness(q.getCorrectAnswer().equals(answer));
-                    studentAnswersTest.setSkipped(false);
-                } else {
-                    studentAnswersTest.setCorrectness(false);
-                    studentAnswersTest.setSkipped(true);
-                }
-                saveToDb(studentAnswersTest, timeStartAnswer);
-                break;
             case "likedQuestions":
                 studentAnswersTest = studentAnswersTestRepository.findBySchoolUserAndTestAndQuestion(loggedUser, t, q);
-                UserLikedQuestion userLikedQuestion = userLikedQuestionRepository.findBySchoolUserAndQuestionIdAndTestId(loggedUser, questionId, testId);
-                if (userLikedQuestion != null)
-                    userLikedQuestionRepository.delete(userLikedQuestion);
-
-                if (userLikedQuestion != null && isLiked)
-                    userLikedQuestionRepository.save(userLikedQuestion);
 
                 if (studentAnswersTest == null) {
                     studentAnswersTest = new StudentAnswersTest();
@@ -75,7 +57,6 @@ public class StudentAnswersTestService {
                     studentAnswersTest.setCorrectness(false);
                     studentAnswersTest.setSkipped(true);
                 }
-
                 saveToDb(studentAnswersTest, timeStartAnswer);
                 break;
             case "remainingQuestions":
