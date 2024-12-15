@@ -2,9 +2,7 @@ package com.driving.school.utils;
 
 import com.driving.school.model.*;
 import com.driving.school.repository.*;
-import com.driving.school.service.MailService;
-import com.driving.school.service.SchoolUserService;
-import com.driving.school.service.TestService;
+import com.driving.school.service.*;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -22,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,6 +40,8 @@ public class DataLoader implements CommandLineRunner {
     private final List<Subject> subjects = new LinkedList<>();
     private final List<InstructionEvent> instructionEvents = new LinkedList<>();
     private final List<Mail> mails = new LinkedList<>();
+    private final Set<StudentAnswersTest> studentAnswersTests = new HashSet<>();
+    private final List<StudentExam> studentExams = new LinkedList<>();
 
     private final SchoolUserRepository schoolUserRepository;
     private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
@@ -54,9 +55,17 @@ public class DataLoader implements CommandLineRunner {
     private final SubjectRepository subjectRepository;
     private final InstructionEventRepository instructionEventRepository;
     private final MailService mailService;
+    private final TestService testService;
+    private final StudentAnswersTestService studentAnswersTestService;
+    private final StudentAnswersTestRepository studentAnswersTestRepository;
+    private final TestStatisticsService testStatisticsService;
+    private final StudentExamService studentExamService;
+    private final StudentExamAnswerRepository studentExamAnswerRepository;
+    private final StudentExamRepository studentExamRepository;
+    private final StudentExamAnswerService studentExamAnswerService;
 
     @Autowired
-    public DataLoader(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, MentorShipRepository mentorShipRepository, TestRepository testRepository, SchoolUserService schoolUserService, CourseRepository courseRepository, QuestionRepository questionRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository, SubjectRepository subjectRepository, InstructionEventRepository instructionEventRepository, MailService mailService) {
+    public DataLoader(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, MentorShipRepository mentorShipRepository, TestRepository testRepository, SchoolUserService schoolUserService, CourseRepository courseRepository, QuestionRepository questionRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository, SubjectRepository subjectRepository, InstructionEventRepository instructionEventRepository, MailService mailService, TestService testService, StudentAnswersTestService studentAnswersTestService, StudentAnswersTestRepository studentAnswersTestRepository, TestStatisticsService testStatisticsService, StudentExamService studentExamService, StudentExamAnswerRepository studentExamAnswerRepository, StudentExamRepository studentExamRepository, StudentExamAnswerService studentExamAnswerService) {
         this.schoolUserRepository = schoolUserRepository;
         this.categoryRepository = categoryRepository;
         this.mentorShipRepository = mentorShipRepository;
@@ -69,15 +78,24 @@ public class DataLoader implements CommandLineRunner {
         this.subjectRepository = subjectRepository;
         this.instructionEventRepository = instructionEventRepository;
         this.mailService = mailService;
+        this.testService = testService;
+        this.studentAnswersTestService = studentAnswersTestService;
+        this.studentAnswersTestRepository = studentAnswersTestRepository;
+        this.testStatisticsService = testStatisticsService;
+        this.studentExamService = studentExamService;
+        this.studentExamAnswerRepository = studentExamAnswerRepository;
+        this.studentExamRepository = studentExamRepository;
+        this.studentExamAnswerService = studentExamAnswerService;
     }
 
     @Override
     public void run(String... args) {
-
         if (schoolUserRepository.findByEmail("admin") != null) {
-            logger.info("Dane zostały zasadzone, pomijam.");
+            logger.info("Data was loaded in past - skipped.");
             return;
         }
+
+        long startTime = System.nanoTime();
         loadUsers();
         loadCategories();
         loadPayments();
@@ -85,10 +103,13 @@ public class DataLoader implements CommandLineRunner {
         loadTests();
         loadQuestions();
         loadCourses();
-        // zapytac czy mozna brac z innych stron dane itp.
+//         zapytac czy mozna brac z innych stron dane itp.
         loadLectures();
         loadInstructionEvents();
         loadMails();
+        loadDoneQuestionsInTestsByUser();
+        loadDoneExamsByUser();
+        logger.info("\u001B[1mAll \u001B[1;34mdata\u001B[1;39m loaded in \u001B[1;33m{}\u001B[1;39m to database.\u001B[0m", formatDuration(System.nanoTime() - startTime));
     }
 
     private void loadUsers() {
@@ -329,6 +350,10 @@ public class DataLoader implements CommandLineRunner {
                 question.setMediaName(record[1]);
                 question.setDrivingCategory(record[2]);
                 question.setSubjectArea(record[3]);
+
+                if (TestNames.getNames().stream().noneMatch(name -> name.equalsIgnoreCase(question.getSubjectArea())))
+                    question.setSubjectArea("Inne");
+
                 question.setExplanation(record[4]);
                 question.setAnswerA(record[5]);
                 question.setAnswerB(record[6]);
@@ -607,6 +632,153 @@ public class DataLoader implements CommandLineRunner {
         logger.info("Loaded {} mails sent to Users in {} to database.", mails.size(), formatDuration(System.nanoTime() - startTime));
     }
 
+    private void loadDoneQuestionsInTestsByUser() {
+        long startTime = System.nanoTime();
+        Random random = new Random();
+        List<SchoolUser> allUsers = schoolUserRepository.findAll();
+        Map<String, double[]> distributionMap = new HashMap<>();
+
+        for (SchoolUser schoolUser : allUsers) {
+            List<Category> userCategories = schoolUser.getAvailableCategories();
+
+            for (Category category : userCategories) {
+                String key = schoolUser.getId() + "_" + category.getNameCategory();
+                double d1 = random.nextDouble();
+                double d2 = random.nextDouble();
+                double sum = d1 + d2 + 1.0;
+
+                double oldCorrect = d1 / sum;
+                double oldWrong = d2 / sum;
+                double oldSkip = 1.0 / sum;
+
+                distributionMap.put(key, new double[]{oldSkip, oldWrong, oldCorrect});
+            }
+        }
+
+        for (SchoolUser schoolUser : allUsers) {
+            List<Test> availableTests = new ArrayList<>();
+            schoolUser.getAvailableCategories().forEach(category -> {
+                availableTests.addAll(testService.getAllTestsByCategory(category.getNameCategory()));
+            });
+
+            for (Test test : availableTests) {
+                List<Question> questions = test.getQuestions();
+                if (questions.isEmpty()) continue;
+
+                double fraction = random.nextDouble();
+                int howManyQuestionsToAnswer = (int) Math.round(fraction * questions.size());
+
+                Collections.shuffle(questions);
+                List<Question> answeredQuestions = questions.subList(0, howManyQuestionsToAnswer);
+
+                String testCategory = test.getDrivingCategory();
+                if (testCategory == null) continue;
+
+                String key = schoolUser.getId() + "_" + testCategory;
+                double[] probs = distributionMap.get(key);
+                if (probs == null) continue;
+                double pCorrect = probs[0];
+                double pWrong = probs[1];
+
+                for (Question question : answeredQuestions) {
+                    StudentAnswersTest sat = new StudentAnswersTest();
+                    sat.setSchoolUser(schoolUser);
+                    sat.setTest(test);
+                    sat.setQuestion(question);
+
+                    long randomSeconds = random.nextInt(36) + 5;
+                    sat.setDurationOfAnswer(randomSeconds);
+
+                    double val = random.nextDouble();
+                    if (val < pCorrect) {
+                        sat.setCorrectness(true);
+                        sat.setSkipped(false);
+                    } else if (val < pCorrect + pWrong) {
+                        sat.setCorrectness(false);
+                        sat.setSkipped(false);
+                    } else {
+                        sat.setCorrectness(false);
+                        sat.setSkipped(true);
+                    }
+
+                    studentAnswersTests.add(sat);
+                }
+            }
+        }
+
+        studentAnswersTestRepository.saveAll(studentAnswersTests);
+        studentAnswersTests.stream().toList().forEach(testStatisticsService::updateStatisticsAnswersForUser);
+
+        logger.info("Loaded {} done questions by {} users in {} to database.", studentAnswersTests.size(), allUsers.size(), formatDuration(System.nanoTime() - startTime));
+    }
+
+    private void loadDoneExamsByUser() {
+        long startTime = System.nanoTime();
+        Random random = new Random();
+        List<SchoolUser> allUsers = schoolUserRepository.findAll();
+
+        List<StudentExam> examsToSave = new ArrayList<>();
+        List<StudentExamAnswer> answersToSave = new ArrayList<>();
+
+        for (SchoolUser schoolUser : allUsers) {
+            List<Category> userCategories = schoolUser.getAvailableCategories();
+
+            for (Category category : userCategories) {
+                List<Question> questionSet = studentExamService.generateQuestionSet(category.getNameCategory());
+                if (questionSet.size() < 32) continue;
+
+                long randomMinutes = 5 + random.nextInt(21);
+
+                double pCorrect = 0.6 + (random.nextDouble() * 0.4);
+                double pNotCorrect = 1.0 - pCorrect;
+
+                double fractionSkip = 0.3 + (0.3 * random.nextDouble());
+                double pSkip = pNotCorrect * fractionSkip;
+                double pWrong = pNotCorrect - pSkip;
+
+                StudentExam studentExam = new StudentExam();
+                studentExam.setSchoolUser(schoolUser);
+                studentExam.setCategory(category.getNameCategory());
+                studentExam.setPoints(0L);
+                studentExam.setStartTime(LocalDateTime.now().minusMinutes(randomMinutes));
+                examsToSave.add(studentExam);
+
+                for (Question question : questionSet) {
+                    StudentExamAnswer studentExamAnswer = new StudentExamAnswer();
+                    studentExamAnswer.setStudentExam(studentExam);
+                    studentExamAnswer.setQuestion(question);
+
+                    double val = random.nextDouble();
+                    if (val < pCorrect) {
+                        studentExamAnswer.setCorrectness(true);
+                        studentExamAnswer.setAnswer("correct answer");
+                        studentExam.setPoints(studentExam.getPoints() + question.getPoints());
+                    } else {
+                        double val2 = random.nextDouble();
+                        double ratioWrong = pWrong / pNotCorrect;
+                        studentExamAnswer.setCorrectness(false);
+                        if (val2 < ratioWrong) {
+                            studentExamAnswer.setAnswer("wrong answer");
+                        } else {
+                            studentExamAnswer.setAnswer("");
+                        }
+                    }
+                    answersToSave.add(studentExamAnswer);
+                }
+            }
+        }
+
+        studentExamRepository.saveAll(examsToSave);
+        studentExamAnswerRepository.saveAll(answersToSave);
+
+        for (StudentExam exam : examsToSave) {
+            studentExamService.setSummaryOfExam(studentExamService.getStudentExamById(exam.getId()));
+            studentExams.add(exam);
+        }
+
+        logger.info("Loaded {} done exams by {} users in {} to database.", studentExams.size(), allUsers.size(), formatDuration(System.nanoTime() - startTime));
+    }
+
     public Test addTestToDb(String name, Boolean isSpecialistic, String category) {
         Test test = new Test();
         test.setName(name);
@@ -656,6 +828,6 @@ public class DataLoader implements CommandLineRunner {
 
         long minutes = durationSeconds / 60;
         long seconds = durationSeconds % 60;
-        return minutes + "minutes " + seconds + "seconds";
+        return minutes + "m " + seconds + "s";
     }
 }

@@ -75,7 +75,7 @@ public class Question {
     @Transient
     private Integer questionNumber;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinTable(
             name = "QUESTIONTEST",

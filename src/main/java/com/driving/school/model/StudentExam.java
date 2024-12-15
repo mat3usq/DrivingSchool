@@ -33,12 +33,12 @@ public class StudentExam {
     @Column(name = "PASSED")
     private Boolean passed;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "SCHOOLUSERID", nullable = false)
     private SchoolUser schoolUser;
 
-    @OneToMany(mappedBy = "studentExam")
+    @OneToMany(mappedBy = "studentExam", fetch = FetchType.EAGER)
     private Set<StudentExamAnswer> studentExamAnswers = new LinkedHashSet<>();
 
     @Column(name = "START_TIME")

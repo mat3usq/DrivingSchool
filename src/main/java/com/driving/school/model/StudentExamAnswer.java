@@ -17,11 +17,11 @@ public class StudentExamAnswer {
     @Column(name = "ANSWER_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "STUDENTEXAMID", nullable = false)
     private StudentExam studentExam;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "QUESTIONID", nullable = false)
     private Question question;
 

@@ -34,7 +34,7 @@ public class Test {
     @Transient
     private Integer counter;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "QUESTIONTEST",
             joinColumns = @JoinColumn(name = "TESTID"),
