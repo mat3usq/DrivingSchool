@@ -152,7 +152,7 @@
           </script>
                 <p class="title">Statystyki - Testy</p>
                 <div class="container-statistics">
-                    <div th:if="${testStatistics != null && #arrays.length(testStatistics) >= 5}">
+                    <div th:if="${testStatistics != null}">
                         <div class="charts-container">
                             <div id="test-answer-chart"></div>
                         </div>
@@ -174,7 +174,7 @@
                             </div>
                         </div>
                     </div>
-                    <div th:if="${testStatistics == null || #arrays.length(testStatistics) < 5}">
+                    <div th:if="${testStatistics == null}">
                         <p>Brak dostępnych statystyk testów dla wybranej kategorii.</p>
                     </div>
                 </div>

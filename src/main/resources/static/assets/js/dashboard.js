@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .innerRadius(0)
             .outerRadius(radius);
 
+
+        const total = d3.sum(data, d => d.value);
+
+
         svg.selectAll('slices')
             .data(data_ready)
             .enter()
@@ -93,7 +97,25 @@ document.addEventListener('DOMContentLoaded', () => {
             .text(d => `${d.label} (${d.value})`)
             .style('font-size', '12px')
             .attr('alignment-baseline', 'middle');
+
+      svg.selectAll('labels')
+          .data(data_ready)
+          .enter()
+          .append('text')
+          .filter(d => {
+              const percent = (d.data.value / total) * 100;
+              return percent >= 5;
+          })
+          .text(d => {
+              const percent = (d.data.value / total) * 100;
+              return percent.toFixed(1) + '%';
+          })
+          .attr("transform", d => `translate(${arc.centroid(d)})`)
+          .style("text-anchor", "middle")
+          .style("font-size", "12px")
+          .style("fill", "white");
     }
+   
 
     if (typeof examStatistics !== 'undefined' && examStatistics != null) {
         const examData = [

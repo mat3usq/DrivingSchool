@@ -73,6 +73,11 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
+        if (schoolUserRepository.findByEmail("admin") != null) {
+            logger.info("Dane zostały zasadzone, pomijam.");
+            return;
+        }
         loadUsers();
         loadCategories();
         loadPayments();

@@ -96,6 +96,7 @@ class UserStatisticServiceTest {
         assertTrue(result.isPresent());
         assertEquals("Yes", result.get().getIsExamPassed());
         verify(userStatisticRepository, times(1)).findBySchoolUserAndCategory(schoolUser, category);
+
     }
 
     @Test

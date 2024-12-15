@@ -3,20 +3,20 @@ package com.driving.school.controller;
 import com.driving.school.model.*;
 import com.driving.school.repository.*;
 import com.driving.school.service.ExamStatisticsService;
-import com.driving.school.service.NotificationService;
-import com.driving.school.service.SchoolUserService;
 import com.driving.school.service.MentorShipService;
+import com.driving.school.service.PdfReportService;
+import com.driving.school.service.SchoolUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class DashboardController {
@@ -27,15 +27,17 @@ public class DashboardController {
     private final ExamStatisticsService examStatisticsService;
     private final StudentExamStatisticsRepository studentExamStatisticsRepository;
     private final StudentTestStatisticsRepository studentTestStatisticsRepository;
-
+    private final PdfReportService pdfReportService;
 
     @Autowired
-    public DashboardController(SchoolUserService schoolUserService, MentorShipService mentorShipService,
+    public DashboardController(SchoolUserService schoolUserService,
+                               MentorShipService mentorShipService,
                                CategoryRepository categoryRepository,
                                CourseRepository courseRepository,
                                ExamStatisticsService examStatisticsService,
                                StudentExamStatisticsRepository studentExamStatisticsRepository,
-                               StudentTestStatisticsRepository studentTestStatisticsRepository) {
+                               StudentTestStatisticsRepository studentTestStatisticsRepository,
+                               PdfReportService pdfReportService) {
         this.schoolUserService = schoolUserService;
         this.mentorShipService = mentorShipService;
         this.categoryRepository = categoryRepository;
@@ -43,20 +45,22 @@ public class DashboardController {
         this.examStatisticsService = examStatisticsService;
         this.studentExamStatisticsRepository = studentExamStatisticsRepository;
         this.studentTestStatisticsRepository = studentTestStatisticsRepository;
+        this.pdfReportService = pdfReportService;
     }
 
     // FOR ALL USERS
 
     @GetMapping("/dashboard")
-    public ModelAndView displayDashboard(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, HttpSession session) {
+    public ModelAndView displayDashboard(@RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size,
+                                         HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-
-
-
+        
+        
+        
         String examStatisticsMessage;
         String testStatisticsMessage;
-
         String currentCategory = user.getCurrentCategory();
 
         if (currentCategory != null) {
@@ -66,39 +70,32 @@ public class DashboardController {
             examStatisticsMessage = "Domyślna wiadomość dla statystyk egzaminów.";
             testStatisticsMessage = "Domyślna wiadomość dla statystyk testów.";
         }
-
         modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
         modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
-
-
         examStatisticsService.updateAllExamStatistics();
-
         if (currentCategory != null) {
             StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, currentCategory);
-
-            if(examStatistics != null) {
+            if (examStatistics != null) {
                 modelAndView.addObject("examStatistics", examStatistics);
             }
         } else {
             modelAndView.addObject("examStatistics", null);
             modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
         }
-
-        if(currentCategory != null) {
-
-            List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(currentCategory,user);
+        if (currentCategory != null) {
+            List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(currentCategory, user);
             Object[] tStats = null;
-            if(testStats != null && testStats.size() > 0){
+            if (testStats != null && testStats.size() > 0) {
                 tStats = testStats.get(0);
             }
-            if(testStats != null ) {
+            if (testStats != null) {
                 modelAndView.addObject("testStatistics", tStats);
             } else {
                 modelAndView.addObject("testStatistics", new Object[]{0, 0, 0, 0, 0});
             }
         }
-
-
+        
+        
 
 
         switch (user.getRoleName()) {
@@ -125,7 +122,6 @@ public class DashboardController {
                 modelAndView.addObject("totalPages", totalPages);
             }
         }
-
         return modelAndView;
     }
 
@@ -145,13 +141,9 @@ public class DashboardController {
             modelAndView.addObject("mentorShips", mentorShipService.findByInstructorId(user.getId()));
         if (Objects.equals(user.getRoleName(), Constants.STUDENT_ROLE))
             modelAndView.addObject("mentorShips", mentorShipService.findByStudentId(user.getId()));
-
-
+        String currentCategory = user.getCurrentCategory();
         String examStatisticsMessage;
         String testStatisticsMessage;
-
-        String currentCategory = user.getCurrentCategory();
-
         if (currentCategory != null) {
             examStatisticsMessage = "Wybrana kategoria: " + currentCategory + " - statystyki egzaminów.";
             testStatisticsMessage = "Wybrana kategoria: " + currentCategory + " - statystyki testów.";
@@ -159,52 +151,37 @@ public class DashboardController {
             examStatisticsMessage = "Domyślna wiadomość dla statystyk egzaminów.";
             testStatisticsMessage = "Domyślna wiadomość dla statystyk testów.";
         }
-
         modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
         modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
-
-
         examStatisticsService.updateAllExamStatistics();
-
         if (currentCategory != null) {
             StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, currentCategory);
-
-            if(examStatistics != null) {
+            if (examStatistics != null) {
                 modelAndView.addObject("examStatistics", examStatistics);
             }
         } else {
             modelAndView.addObject("examStatistics", null);
             modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
         }
-
-        if(currentCategory != null) {
-
-            List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(currentCategory,user);
+        if (currentCategory != null) {
+            List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(currentCategory, user);
             Object[] tStats = null;
-            if(testStats != null && testStats.size() > 0){
+            if (testStats != null && testStats.size() > 0) {
                 tStats = testStats.get(0);
             }
-            if(testStats != null ) {
+            if (tStats != null) {
                 modelAndView.addObject("testStatistics", tStats);
             } else {
-                modelAndView.addObject("testStatistics", new Object[]{0, 0, 0, 0, 0});
+                modelAndView.addObject("testStatistics", null);
             }
         }
-
-
-
-
-
         return modelAndView;
     }
-
-    // FOR STUDENTS
 
     @PostMapping("/dashboard/student/instructorDetails")
     public ModelAndView showInstructorForStudent(@RequestParam("mentorShipId") Long mentorShipId, HttpSession session) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
-
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getStudent().getId())) {
             SchoolUser user = schoolUserService.findUserById(ms.get().getInstructor().getId());
             if (user != null) {
@@ -214,12 +191,12 @@ public class DashboardController {
                 return model;
             }
         }
-
         return new ModelAndView("redirect:/dashboard");
     }
 
     @PostMapping("/dashboard/student/assignInstructor")
-    public ModelAndView assignInstructor(@RequestParam(value = "selectedInstructor", required = false) Long instructorId, HttpSession session, RedirectAttributes redirectAttributes) {
+    public ModelAndView assignInstructor(@RequestParam(value = "selectedInstructor", required = false) Long instructorId,
+                                         HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard#instructorsDetails");
         SchoolUser student = (SchoolUser) session.getAttribute("loggedInUser");
         if (instructorId != null) {
@@ -230,7 +207,6 @@ public class DashboardController {
                 redirectAttributes.addFlashAttribute("assignInstructorInfo", "Nie udało się zacząć wspołpracy z instruktorem!");
         } else
             redirectAttributes.addFlashAttribute("assignInstructorInfo", "Nie udało się zacząć wspołpracy z instruktorem!");
-
         return modelAndView;
     }
 
@@ -244,45 +220,36 @@ public class DashboardController {
         return modelAndView;
     }
 
-    // FOR INSTRUCTORS
-
     @PostMapping("/dashboard/instructor/studentDetails")
     public ModelAndView showStudentForInstructor(@RequestParam("mentorShipId") Long mentorShipId, HttpSession session) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
         String category = loggedInUser.getCurrentCategory();
-
-
         if (ms.isPresent() && loggedInUser.getId().equals(ms.get().getInstructor().getId())) {
             SchoolUser user = schoolUserService.findUserById(ms.get().getStudent().getId());
-            Boolean isUserHaveCategory = schoolUserService.hasUserCategory(user.getId(),category);
+            Boolean isUserHaveCategory = schoolUserService.hasUserCategory(user.getId(), category);
             if (user != null) {
                 ModelAndView modelAndView = getUserDetails(user, new ModelAndView("schoolUserDetails"));
-            if (isUserHaveCategory && category != null && !category.trim().isEmpty()) {
-                StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, category);
-                modelAndView.addObject("examStatistics", examStatistics);
-
-                List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(category, user);
-                Object[] tStats = (testStats != null && !testStats.isEmpty()) ? testStats.get(0) : new Object[]{0, 0, 0, 0, 0};
-                modelAndView.addObject("testStatistics", tStats);
-
-                String examStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki egzaminów.";
-                String testStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki testów.";
-                modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
-                modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
-            } else {
-
-                modelAndView.addObject("examStatistics", null);
-                modelAndView.addObject("testStatistics", null);
-                modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
-            }
+                if (isUserHaveCategory && category != null && !category.trim().isEmpty()) {
+                    StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, category);
+                    modelAndView.addObject("examStatistics", examStatistics);
+                    List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(category, user);
+                    Object[] tStats = (testStats != null && !testStats.isEmpty()) ? testStats.get(0) : new Object[]{0, 0, 0, 0, 0};
+                    modelAndView.addObject("testStatistics", tStats);
+                    String examStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki egzaminów.";
+                    String testStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki testów.";
+                    modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
+                    modelAndView.addObject("testStatisticsMessage", testStatisticsMessage);
+                } else {
+                    modelAndView.addObject("examStatistics", null);
+                    modelAndView.addObject("testStatistics", null);
+                    modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
+                }
                 modelAndView.addObject("courses", courseRepository.findByMentorShipId(mentorShipId));
                 modelAndView.addObject("mentorShip", ms.get());
-
                 return modelAndView;
             }
         }
-
         return new ModelAndView("redirect:/dashboard#studentsDetails");
     }
 
@@ -291,14 +258,12 @@ public class DashboardController {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard#studentsDetails");
         SchoolUser studentUser = schoolUserService.findUserByEmail(studentEmail);
         SchoolUser instructorUser = (SchoolUser) session.getAttribute("loggedInUser");
-
         if (studentUser != null && instructorUser.getRoleName().equals(Constants.INSTRUCTOR_ROLE))
             if (mentorShipService.instructorCreateMentorshipWithStudent(studentUser, instructorUser))
                 redirectAttributes.addFlashAttribute("assignStudentInfo", "Pomyślnie udało się zacząć wspołprace ze studentem!");
             else
                 redirectAttributes.addFlashAttribute("assignStudentInfo", "Nie udało się zacząć wspołpracy ze studentem!");
         else redirectAttributes.addFlashAttribute("assignStudentInfo", "Nie udało się zacząć wspołpracy ze studentem!");
-
         return modelAndView;
     }
 
@@ -342,37 +307,30 @@ public class DashboardController {
         return modelAndView;
     }
 
-    // FOR ADMIN
-
     @PostMapping("/dashboard/admin/searchUser")
     public ModelAndView userDetailsByEmail(@RequestParam("userEmail") String userEmail, RedirectAttributes redirectAttributes) {
         SchoolUser user = schoolUserService.findUserByEmail(userEmail);
         if (user != null)
             return getUserDetails(user, new ModelAndView("schoolUserDetails"));
-
         redirectAttributes.addFlashAttribute("assignUserInfo", "Nie znaleziono uzytkownika!");
         return new ModelAndView("redirect:/dashboard#usersDetails");
     }
 
     @PostMapping("/dashboard/admin/userDetails")
     public ModelAndView userDetailsByUserId(@RequestParam("userId") Long userId, HttpSession session) {
-
         SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
         SchoolUser user = schoolUserService.findUserById(userId);
         String category = loggedInUser.getCurrentCategory();
-        Boolean isUserHaveCategory = schoolUserService.hasUserCategory(user.getId(),category);
+        Boolean isUserHaveCategory = schoolUserService.hasUserCategory(user.getId(), category);
         ModelAndView modelAndView;
         if (user != null) {
             modelAndView = getUserDetails(user, new ModelAndView("schoolUserDetails"));
-
             if (isUserHaveCategory && category != null && !category.trim().isEmpty()) {
                 StudentExamStatistics examStatistics = studentExamStatisticsRepository.findBySchoolUserAndCategory(user, category);
                 modelAndView.addObject("examStatistics", examStatistics);
-
                 List<Object[]> testStats = studentTestStatisticsRepository.aggregateCategoryTestStatisticsByUser(category, user);
-                Object[] tStats = (testStats != null && !testStats.isEmpty()) ? testStats.get(0) : new Object[]{0, 0, 0, 0, 0};
+                Object[] tStats = (testStats != null && !testStats.isEmpty()) ? testStats.get(0) : null;
                 modelAndView.addObject("testStatistics", tStats);
-
                 String examStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki egzaminów.";
                 String testStatisticsMessage = "Wybrana kategoria: " + category + " - statystyki testów.";
                 modelAndView.addObject("examStatisticsMessage", examStatisticsMessage);
@@ -382,7 +340,6 @@ public class DashboardController {
                 modelAndView.addObject("testStatistics", null);
                 modelAndView.addObject("notChoosenCategoryInfo", "Nie wybrano kategorii. Wybierz kategorię, aby zobaczyć statystyki.");
             }
-
             return modelAndView;
         }
         return new ModelAndView("redirect:/dashboard#usersDetails");
@@ -393,7 +350,6 @@ public class DashboardController {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
             schoolUserService.addPayment(userId, payment);
-
         return userDetailsByUserId(userId, session);
     }
 
@@ -402,7 +358,6 @@ public class DashboardController {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
             schoolUserService.deletePayment(paymentId);
-
         return userDetailsByUserId(userId, session);
     }
 
@@ -411,7 +366,6 @@ public class DashboardController {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
             schoolUserService.promoteUser(user);
-
         return userDetailsByUserId(userId, session);
     }
 
@@ -420,7 +374,6 @@ public class DashboardController {
         SchoolUser user = schoolUserService.findUserById(userId);
         if (user != null)
             schoolUserService.demoteUser(user);
-
         return userDetailsByUserId(userId, session);
     }
 
@@ -428,16 +381,13 @@ public class DashboardController {
     public ModelAndView assignSchoolUser(@RequestParam("parentUserMail") String parentUserMail, @RequestParam("userMail") String userMail, RedirectAttributes redirectAttributes) {
         SchoolUser parentUser = schoolUserService.findUserByEmail(parentUserMail);
         SchoolUser user = schoolUserService.findUserByEmail(userMail);
-
         if (parentUser != null && user != null) {
             if (parentUser.getRoleName().equals(Constants.INSTRUCTOR_ROLE) && user.getRoleName().equals(Constants.STUDENT_ROLE))
                 mentorShipService.createMentorShipWithStatus(user, parentUser, Constants.ACTIVE);
             else if (user.getRoleName().equals(Constants.INSTRUCTOR_ROLE) && parentUser.getRoleName().equals(Constants.STUDENT_ROLE))
                 mentorShipService.createMentorShipWithStatus(parentUser, user, Constants.ACTIVE);
-
             redirectAttributes.addFlashAttribute("assignUserInfo", "Pomyslnie zawarto wspolprace miedzy uzytkownikami!");
         } else redirectAttributes.addFlashAttribute("assignUserInfo", "Nie znaleziono uzytkownika!");
-
         return userDetailsByEmail(parentUserMail, redirectAttributes);
     }
 
@@ -446,7 +396,6 @@ public class DashboardController {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent())
             mentorShipService.deleteMentorShipById(mentorShipId);
-
         return userDetailsByEmail(parentUserMail, redirectAttributes);
     }
 
@@ -455,7 +404,6 @@ public class DashboardController {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent())
             mentorShipService.acceptStudent(mentorShipId);
-
         return userDetailsByEmail(parentUserMail, redirectAttributes);
     }
 
@@ -464,7 +412,6 @@ public class DashboardController {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent())
             mentorShipService.finishMentorShip(mentorShipId);
-
         return userDetailsByEmail(parentUserMail, redirectAttributes);
     }
 
@@ -473,7 +420,6 @@ public class DashboardController {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         if (ms.isPresent())
             mentorShipService.backToActiveMentorShip(mentorShipId);
-
         return userDetailsByEmail(parentUserMail, redirectAttributes);
     }
 
@@ -481,8 +427,6 @@ public class DashboardController {
     public ModelAndView showUserCourseDetails(@RequestParam("mentorShipId") Long mentorShipId, @RequestParam("parentUserMail") String parentUserMail, RedirectAttributes redirectAttributes) {
         Optional<MentorShip> ms = mentorShipService.getMentorShipById(mentorShipId);
         SchoolUser user = schoolUserService.findUserByEmail(parentUserMail);
-
-
         if (ms.isPresent() && user != null) {
             ModelAndView model = getUserDetails(user, new ModelAndView("schoolUserDetails"));
             model.addObject("courses", courseRepository.findByMentorShipId(mentorShipId));
@@ -492,10 +436,8 @@ public class DashboardController {
                 model.addObject("descSeeWhoseCourseIs", "Kursy stworzone dla uzytkownika: " + ms.get().getStudent().getName());
             else if (user.getRoleName().equals(Constants.STUDENT_ROLE))
                 model.addObject("descSeeWhoseCourseIs", "Kursy stworzone przez uzytkownika: " + ms.get().getInstructor().getName());
-
             return model;
         }
-
         return userDetailsByEmail(parentUserMail, redirectAttributes);
     }
 }
