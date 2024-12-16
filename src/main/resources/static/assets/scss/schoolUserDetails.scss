@@ -881,6 +881,18 @@ h2 {
 					flex-wrap: wrap;
 					gap: 10px;
 					justify-content: center;
+
+					.charts-container {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						flex-wrap: wrap;
+						width: 100%;
+
+						div {
+							margin: 10px;
+						}
+					}
 				}
 			}
 

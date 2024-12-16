@@ -81,7 +81,7 @@ h2 {
 				letter-spacing: 1px;
 				text-align: center;
 				border: 5px dotted $secondary-color;
-				box-shadow: 0px 0px 15px 5px $secondary-color;  
+				box-shadow: 0px 0px 15px 5px $secondary-color;
 			}
 
 			.box-category {
@@ -148,6 +148,17 @@ h2 {
 					flex-wrap: wrap;
 					gap: 10px;
 					justify-content: center;
+
+					.charts-container {
+						display: flex;
+						justify-content: space-around;
+						flex-wrap: wrap;
+
+						div {
+							min-width: 400px;
+							max-width: 500px;
+						}
+					}
 				}
 			}
 

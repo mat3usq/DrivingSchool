@@ -56,16 +56,14 @@ public class DataLoader implements CommandLineRunner {
     private final InstructionEventRepository instructionEventRepository;
     private final MailService mailService;
     private final TestService testService;
-    private final StudentAnswersTestService studentAnswersTestService;
     private final StudentAnswersTestRepository studentAnswersTestRepository;
     private final TestStatisticsService testStatisticsService;
     private final StudentExamService studentExamService;
     private final StudentExamAnswerRepository studentExamAnswerRepository;
     private final StudentExamRepository studentExamRepository;
-    private final StudentExamAnswerService studentExamAnswerService;
 
     @Autowired
-    public DataLoader(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, MentorShipRepository mentorShipRepository, TestRepository testRepository, SchoolUserService schoolUserService, CourseRepository courseRepository, QuestionRepository questionRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository, SubjectRepository subjectRepository, InstructionEventRepository instructionEventRepository, MailService mailService, TestService testService, StudentAnswersTestService studentAnswersTestService, StudentAnswersTestRepository studentAnswersTestRepository, TestStatisticsService testStatisticsService, StudentExamService studentExamService, StudentExamAnswerRepository studentExamAnswerRepository, StudentExamRepository studentExamRepository, StudentExamAnswerService studentExamAnswerService) {
+    public DataLoader(SchoolUserRepository schoolUserRepository, CategoryRepository categoryRepository, MentorShipRepository mentorShipRepository, TestRepository testRepository, SchoolUserService schoolUserService, CourseRepository courseRepository, QuestionRepository questionRepository, LectureRepository lectureRepository, SublectureRepository sublectureRepository, SubjectRepository subjectRepository, InstructionEventRepository instructionEventRepository, MailService mailService, TestService testService, StudentAnswersTestRepository studentAnswersTestRepository, TestStatisticsService testStatisticsService, StudentExamService studentExamService, StudentExamAnswerRepository studentExamAnswerRepository, StudentExamRepository studentExamRepository) {
         this.schoolUserRepository = schoolUserRepository;
         this.categoryRepository = categoryRepository;
         this.mentorShipRepository = mentorShipRepository;
@@ -79,19 +77,17 @@ public class DataLoader implements CommandLineRunner {
         this.instructionEventRepository = instructionEventRepository;
         this.mailService = mailService;
         this.testService = testService;
-        this.studentAnswersTestService = studentAnswersTestService;
         this.studentAnswersTestRepository = studentAnswersTestRepository;
         this.testStatisticsService = testStatisticsService;
         this.studentExamService = studentExamService;
         this.studentExamAnswerRepository = studentExamAnswerRepository;
         this.studentExamRepository = studentExamRepository;
-        this.studentExamAnswerService = studentExamAnswerService;
     }
 
     @Override
     public void run(String... args) {
         if (schoolUserRepository.findByEmail("admin") != null) {
-            logger.info("Data was loaded in past - skipped.");
+            logger.info("\u001B[1mAll \u001B[1;34mdata\u001B[1;39m was loaded in \u001B[1;33mpast\u001B[1;39m to database.\u001B[0m");
             return;
         }
 

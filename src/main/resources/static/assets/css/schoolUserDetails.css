@@ -888,6 +888,18 @@ h2 {
   gap: 10px;
   justify-content: center;
 }
+.details .hero-img .box-container .box-statistics-exam .container-statistics .charts-container,
+.details .hero-img .box-container .box-statistics-test .container-statistics .charts-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.details .hero-img .box-container .box-statistics-exam .container-statistics .charts-container div,
+.details .hero-img .box-container .box-statistics-test .container-statistics .charts-container div {
+  margin: 10px;
+}
 .details .hero-img .box-container .box-user,
 .details .hero-img .box-container .box-payments,
 .details .hero-img .box-container .box-courses,
@@ -906,10 +918,10 @@ h2 {
   background: linear-gradient(-135deg, rgba(77, 42, 111, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 .details .hero-img .box-container .box-statistics-exam {
-  background: linear-gradient(-135deg, rgba(56, 111, 12, 0.65), rgba(3, 68, 90, 0.7098039216));
+  background: linear-gradient(-135deg, rgba(66, 12, 111, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 .details .hero-img .box-container .box-statistics-test {
-  background: linear-gradient(-135deg, rgba(174, 98, 4, 0.65), rgba(3, 68, 90, 0.7098039216));
+  background: linear-gradient(-135deg, rgba(76, 45, 6, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 .details .hero-img .box-container .box-payments {
   background: linear-gradient(-135deg, rgba(3, 76, 113, 0.65), rgba(3, 68, 90, 0.7098039216));
@@ -926,17 +938,4 @@ h2 {
     left: 0px;
     width: 100%;
   }
-
-}
-.charts-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.charts-container > div {
-    margin: 10px;
-}
-
+}/*# sourceMappingURL=schoolUserDetails.css.map */

@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function createPieChart(data, elementId, title) {
         const width = 400;
         const height = 400;
-        const radius = height / 4;
+        const radius = height / 3;
+        const labelColor = '#f0f8ff';
 
-
-          if (!Array.isArray(data) || data.length === 0) {
+        if (!Array.isArray(data) || data.length === 0) {
             return;
         }
 
@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const color = d3.scaleOrdinal()
             .domain(data.map(d => d.label))
-            .range(d3.schemeCategory10);
+            .range(['#1dc996', '#ff006e', '#3a86ff']);
 
         const svg = d3.select(`#${elementId}`)
             .append('svg')
             .attr('width', width)
-            .attr('height', height)
+            .attr('height', height + 100)
             .append('g')
             .attr('transform', `translate(${width / 2}, ${height / 2})`);
 
@@ -56,9 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .innerRadius(0)
             .outerRadius(radius);
 
-
         const total = d3.sum(data, d => d.value);
-
 
         svg.selectAll('slices')
             .data(data_ready)
@@ -71,51 +69,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
         svg.append("text")
             .attr("text-anchor", "middle")
-            .attr("y", -radius - 20)
-            .style("font-size", "14px")
+            .attr("y", -radius - 30)
+            .style("font-size", "18px")
+            .style("font-weight", "bold")
+            .style("fill", "aliceblue")
             .text(title);
 
         const legend = svg.append('g')
-            .attr('transform', `translate(${radius + 20}, -radius)`);
+            .attr('transform', `translate(0, ${radius + 40})`);
 
         legend.selectAll('rect')
             .data(data)
             .enter()
             .append('rect')
-            .attr('x', - (width / 4) )
-            .attr('y', (d, i) => i * 20 + 120)
-            .attr('width', 10)
-            .attr('height', 10)
+            .attr('x', -radius)
+            .attr('y', (d, i) => i * 25)
+            .attr('width', 15)
+            .attr('height', 15)
             .style('fill', d => color(d.label));
 
         legend.selectAll('legend-labels')
             .data(data)
             .enter()
             .append('text')
-            .attr('x', - (width / 4) + 20 )
-            .attr('y', (d, i) => i * 20 + 120 + 7)
-            .text(d => `${d.label} (${d.value})`)
-            .style('font-size', '12px')
-            .attr('alignment-baseline', 'middle');
+            .attr('x', -radius + 20)
+            .attr('y', (d, i) => i * 25 + 12)
+            .style('font-size', '16px')
+            .style('fill', 'aliceblue')
+            .attr('alignment-baseline', 'middle')
+            .each(function(d) {
+                const el = d3.select(this);
+                const label = `${d.label} (${d.value})`;
 
-      svg.selectAll('labels')
-          .data(data_ready)
-          .enter()
-          .append('text')
-          .filter(d => {
-              const percent = (d.data.value / total) * 100;
-              return percent >= 5;
-          })
-          .text(d => {
-              const percent = (d.data.value / total) * 100;
-              return percent.toFixed(1) + '%';
-          })
-          .attr("transform", d => `translate(${arc.centroid(d)})`)
-          .style("text-anchor", "middle")
-          .style("font-size", "12px")
-          .style("fill", "white");
+                const firstParenIndex = label.indexOf('(');
+
+                if (firstParenIndex !== -1) {
+                    const mainText = label.substring(0, firstParenIndex).trim();
+                    const boldText = label.substring(firstParenIndex);
+
+                    el.append('tspan')
+                        .text(mainText + ' ')
+                        .style('fill', 'aliceblue');
+
+                    el.append('tspan')
+                        .text(boldText)
+                        .style('fill', labelColor)
+                        .style('font-weight', 'bold');
+                } else {
+                    el.text(label)
+                        .style('fill', 'aliceblue')
+                        .style('font-weight', 'normal');
+                }
+            });
+
+        svg.selectAll('labels')
+            .data(data_ready)
+            .enter()
+            .append('text')
+            .filter(d => {
+                const percent = (d.data.value / total) * 100;
+                return percent >= 5;
+            })
+            .text(d => {
+                const percent = (d.data.value / total) * 100;
+                return percent.toFixed(1) + '%';
+            })
+            .attr("transform", d => `translate(${arc.centroid(d)})`)
+            .style("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("fill", labelColor)
+            .style("font-weight", "bold");
     }
-   
 
     if (typeof examStatistics !== 'undefined' && examStatistics != null) {
         const examData = [

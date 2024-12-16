@@ -79,26 +79,26 @@
                             <div id="exam-chart"></div>
                             <div id="answer-chart"></div>
                         </div>
-                        <div class="row mt-4" style="background: transparent;">
+                        <div class="row" style="background: transparent;">
                             <div class="col-md-4">
                                 <div class="stat-box text-center p-3" style="background: transparent;">
-                                    <i class="fa-solid fa-star fa-2x text-warning mb-2"></i>
-                                    <div class="stat-value h3" th:text="${#numbers.formatDecimal(examStatistics.averagePoints, 1, 2)}">0</div>
-                                    <div class="stat-label" style="color: black;">Średnie Punkty</div>
+                                    <i class="fa-solid fa-clock fa-2x mb-2" style="color: lawngreen;"></i>
+                                    <div class="stat-value h3" th:text="${#numbers.formatDecimal(examStatistics.averageExamsDuration / 60, 1, 2)}">0</div>
+                                    <div class="stat-label" style="font-style: italic; font-size: 13px;">Średni Czas Trwania Egzaminu (min)</div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="stat-box text-center p-3" style="background: transparent;">
-                                    <i class="fa-solid fa-clock fa-2x text-primary mb-2"></i>
-                                    <div class="stat-value h3" th:text="${#numbers.formatDecimal(examStatistics.averageExamsDuration / 60, 1, 2)}">0</div>
-                                    <div class="stat-label" style="color: black;">Średni Czas Trwania Egzaminu (min)</div>
+                                    <i class="fa-solid fa-star fa-2x text-warning mb-2"></i>
+                                    <div class="stat-value h3" th:text="${#numbers.formatDecimal(examStatistics.averagePoints, 1, 2)}">0</div>
+                                    <div class="stat-label" style="font-style: italic; font-size: 13px;">Średnie Punkty</div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="stat-box text-center p-3" style="background: transparent;">
                                     <i class="fa-solid fa-hourglass-half fa-2x text-info mb-2"></i>
                                     <div class="stat-value h3" th:text="${#numbers.formatDecimal(examStatistics.averageTimePerQuestions, 1, 2)}">0</div>
-                                    <div class="stat-label" style="color: black;">Średni Czas na Pytanie (s)</div>
+                                    <div class="stat-label" style="font-style: italic; font-size: 13px;">Średni Czas na Pytanie (s)</div>
                                 </div>
                             </div>
                         </div>
@@ -127,20 +127,20 @@
                         <div class="charts-container">
                             <div id="test-answer-chart"></div>
                         </div>
-                        <div class="row mt-4" style="background: transparent;">
+                        <div class="row" style="background: transparent;">
                             <div class="col-md-6">
                                 <div class="stat-box text-center p-3" style="background: transparent;">
-                                    <i class="fa-solid fa-question fa-2x text-info mb-2"></i>
+                                    <i class="fa-solid fa-question fa-2x text-warning mb-2"></i>
                                     <div class="stat-value h3" th:text="${testStatistics[0]}">0</div>
-                                    <div class="stat-label" style="color: black;">Liczba Rozwiązanych Pytań</div>
+                                    <div class="stat-label" style="font-style: italic; font-size: 13px;">Liczba Rozwiązanych Pytań</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="stat-box text-center p-3" style="background: transparent;">
                                     <i class="fa-solid fa-hourglass-half fa-2x text-info mb-2"></i>
-                                    <div class="stat-value h3" 
+                                    <div class="stat-value h3"
                                          th:text="${#numbers.formatDecimal(testStatistics[4], 1, 2)}">0</div>
-                                    <div class="stat-label" style="color: black;">Średni Czas Odpowiedzi (s)</div>
+                                    <div class="stat-label" style="font-style: italic;  font-size: 13px;">Średni Czas Odpowiedzi (s)</div>
                                 </div>
                             </div>
                         </div>
@@ -405,18 +405,17 @@
                     </th:block>
                     <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                         <div class="account-instructor" id="usersDetails">
-
-                             <form th:action="@{/dashboard/admin/generateReport}" method="get">
-                                <button type="submit" class="info-btn">Pobierz Raport PDF</button>
-                            </form>
-
                             <p class="title">Użytkownicy Szkoły Jazdy</p>
+
+                            <form th:action="@{/dashboard/admin/generateReport}" method="get">
+                                <button type="submit" class="cancel-btn">Generuj Raport <i class="fa-solid fa-file-pdf"></i></button>
+                            </form>
 
                             <p class="info-text" th:if="${assignUserInfo}" th:text="${assignUserInfo}"></p>
 
                             <form class="select-instructor" th:action="@{/dashboard/admin/searchUser}" method="post">
                                 <input type="text" name="userEmail" placeholder="Wpisz email uzytkownika"/>
-                                <button type="submit" class="info-btn">Szukaj</button>
+                                <button type="submit" class="info-btn">Szukaj <i class="fa-solid fa-magnifying-glass"></i></button>
                             </form>
 
                             <div class="students-list">
