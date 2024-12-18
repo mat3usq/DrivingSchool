@@ -406,12 +406,14 @@ nav {
   font-size: 16px;
   text-transform: uppercase;
 }
-nav i,
 nav .nav-link {
   padding: 6px;
 }
 nav .nav-link {
   color: #e0ff72;
+}
+nav i.fa-sharp {
+  font-size: 25px;
 }
 nav .navbar-nav {
   display: flex;
@@ -440,6 +442,10 @@ nav .navbar-brand {
   font-size: 17px;
   font-weight: bold;
   color: #ffd166;
+}
+nav .navbar-brand img {
+  width: 65px;
+  height: 65px;
 }
 nav .active {
   color: #ef476f;

@@ -131,7 +131,7 @@
             </div>
         </div>
         <div class="footer">
-            &copy; <span th:text="${#temporals.format(user.createdAt, 'yyyy')}"></span> Driving School. Wszelkie prawa
+            &copy; <span th:text="${T(java.time.Year).now()}"></span> Driving School. Wszelkie prawa
             zastrzeżone.
         </div>
     </div>

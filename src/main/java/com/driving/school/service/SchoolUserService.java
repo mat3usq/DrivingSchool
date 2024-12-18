@@ -48,8 +48,10 @@ public class SchoolUserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setCurrentCategory("");
             user = schoolUserRepository.save(user);
+
             if (user.getId() > 0) {
                 isSaved = true;
+                addPayment(user.getId(), new Payment(0.0, "Bezpłatny dostęp do wszystkich kategorii prawa jazdy.", categoryRepository.findAll(), user));
 
                 try {
                     emailSenderService.sendWelcomeMail(user);

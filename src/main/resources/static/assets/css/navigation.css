@@ -119,9 +119,13 @@ nav .nav-link:hover {
   color: #ffd166;
 }
 nav .navbar-brand {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
   color: #ffd166;
+}
+nav .navbar-brand img {
+  width: 65px;
+  height: 65px;
 }
 nav .active {
   color: #ef476f;
@@ -249,7 +253,7 @@ nav .fa-bars:hover {
   padding: 6px;
   background: transparent;
   border: none;
-  font-size: 30px;
+  font-size: 25px;
   display: none;
 }
 .navbar-top .navbar-brand,
@@ -312,10 +316,5 @@ nav .fa-bars:hover {
   }
   .navbar-top .box-account {
     display: none;
-  }
-}
-@media (max-width: 400px) {
-  .navbar-top .navbar-brand span {
-    font-size: 14px;
   }
 }/*# sourceMappingURL=navigation.css.map */

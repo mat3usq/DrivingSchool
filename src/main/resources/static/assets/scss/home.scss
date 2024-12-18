@@ -387,13 +387,16 @@ nav {
   font-size: 16px;
   text-transform: uppercase;
 
-  i,
   .nav-link {
     padding: 6px;
   }
 
   .nav-link {
     color: $nav-color;
+  }
+  
+  i.fa-sharp{
+    font-size: 25px;
   }
 
   .navbar-nav {
@@ -429,6 +432,10 @@ nav {
     font-size: 17px;
     font-weight: bold;
     color: $secondary-color;
+    img {
+      width: 65px;
+      height: 65px;
+    }
   }
 
   .active {

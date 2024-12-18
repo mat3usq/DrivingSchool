@@ -8,7 +8,7 @@
                 <h3>I Główna Siedziba</h3>
                 <p>ul. Wiejska 45A</p>
                 <p>15-351 Białystok</p>
-                <p>drivingschool.servicesystem@gmail.com</p>
+                <p style="word-break: break-word;">drivingschool.servicesystem@gmail.com</p>
             </div>
 
             <div class="order-0 order-lg-1 col-lg-4 contact-item">
@@ -24,7 +24,7 @@
                 <h3>II Główna Siedziba</h3>
                 <p>ul. Złota 44</p>
                 <p>12-432 Warszawa</p>
-                <p>drivingschool.servicesystem@gmail.com</p>
+                <p style="word-break: break-word;">drivingschool.servicesystem@gmail.com</p>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
 
 <footer th:fragment="footer" class="py-4 text-center">
     <p class="mb-0">
-        &copy 2024 | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+        &copy <span th:text="${T(java.time.Year).now()}"></span> | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
         <span class="orange-text">Driving</span> <span class="gold-text">School</span>
     </p>
 </footer>

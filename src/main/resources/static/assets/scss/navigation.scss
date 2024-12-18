@@ -49,9 +49,13 @@ nav {
 	}
 
 	.navbar-brand {
-		font-size: 18px;
+		font-size: 17px;
 		font-weight: bold;
 		color: $secondary-color;
+		img {
+			width: 65px;
+			height: 65px;
+		  }
 	}
 
 	.active {
@@ -201,7 +205,7 @@ nav {
 		padding: 6px;
 		background: transparent;
 		border: none;
-		font-size: 30px;
+		font-size: 25px;
 		display: none;
 	}
 
@@ -277,12 +281,3 @@ nav {
 	}
 }
 
-@media (max-width: 400px) {
-	.navbar-top {
-		.navbar-brand {
-			span {
-				font-size: 14px;
-			}
-		}
-	}
-}
