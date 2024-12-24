@@ -112,11 +112,16 @@ h2 {
 					width: 50vw;
 					max-width: 800px;
 
-					.title-header {
+					.title-header,
+					.title-header-right {
 						letter-spacing: 2px;
 						font-size: 14px;
 						margin-bottom: 3px;
 						padding-left: 20px;
+					}
+
+					.title-header-right {
+						text-align: right;
 					}
 
 					.content {
@@ -168,7 +173,8 @@ h2 {
 								flex-direction: row;
 								justify-content: space-between;
 
-								.title-header {
+								.title-header,
+								.title-header-right {
 									font-style: italic;
 									letter-spacing: 0px;
 									padding-right: 10px;
@@ -176,13 +182,19 @@ h2 {
 									color: $info-color;
 								}
 
-								.content {
+								.content,
+								.content-price {
 									font-size: 15px;
 									color: $text-color;
 
 									span {
 										margin-left: 4px;
 									}
+								}
+
+								.content-price {
+									display: inline-block;
+									white-space: nowrap;
 								}
 							}
 						}
@@ -224,12 +236,14 @@ h2 {
 								padding: 7px 12px;
 
 								.box {
-									.title-header {
+									.title-header,
+									.title-header-right {
 										padding-left: 0px;
 										font-size: 13px;
 									}
 
-									.content {
+									.content,
+									.content-price {
 										font-size: 13px;
 									}
 								}

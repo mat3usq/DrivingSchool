@@ -36,10 +36,11 @@
         <div class="hero-img">
             <div class="hero-shadow"></div>
             <div class="box-tests">
-                <div class="box-container">
+                <div class="container">
+                    <div class="box-container">
                         <p class="title" data-aos="fade-down" data-aos-delay="100">
-                            Testy na prawo jazdy <span>Kategorii <th:block th:text="${session.loggedInUser.getCurrentCategory()}"></th:block></span>
-                        </p>
+                                Testy na prawo jazdy <span>Kategorii <th:block th:text="${session.loggedInUser.getCurrentCategory()}"></th:block></span>
+                            </p>
                         <div data-aos="zoom-in" data-aos-delay="150" class="container-tests">
                             <p class="side-title">Pytania Podstawowe</p>
                             <th:block th:unless="${hasNoSpecificTests}">Brak Testów Podstawowych</th:block>
@@ -78,6 +79,7 @@
                                 </div>
                             </form>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>

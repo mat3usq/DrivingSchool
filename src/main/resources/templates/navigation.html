@@ -33,7 +33,7 @@
         <div class="underline"></div>
 
         <a data-aos="fade-right" data-aos-delay="100" class="nav-link dashboard" th:href="@{/dashboard}"
-        ><i class="fa-solid fa-car-side"></i>Akutalnosci</a
+        ><i class="fa-solid fa-car-side"></i>Akutalności</a
         >
         <a data-aos="fade-right" data-aos-delay="150" class="nav-link" th:href="@{/lecture}"
         ><i class="fa-solid fa-book-open"></i>Wykłady</a
@@ -109,6 +109,26 @@
             }
 
             updateActiveNavLink();
+
+            function adjustNavbarHeight() {
+                const navbar = document.querySelector('.navbar-left');
+                const heroImg = document.querySelector('.hero-img');
+
+                if (navbar && heroImg) {
+                    navbar.style.height = `${heroImg.offsetHeight - 90}px`;
+                }
+            }
+
+            const observer = new ResizeObserver(() => {
+                adjustNavbarHeight();
+            });
+
+            const heroImg = document.querySelector('.hero-img');
+            if (heroImg) {
+                observer.observe(heroImg);
+            }
+
+            adjustNavbarHeight();
         });
     </script>
 </nav>

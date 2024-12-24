@@ -34,7 +34,8 @@
         <div class="hero-img">
             <div class="hero-shadow"></div>
             <div class="box-test">
-                <div class="box-container">
+                <div class="container">
+                    <div class="box-container">
                     <div class="header-test">
                         <div class="box">
                             <img th:if="${test.image}" th:src="${test.getImageBase64()}" th:alt="${test.name}"/>
@@ -66,7 +67,7 @@
                                 </th:block>
 
                                 <th:block th:if="${#strings.endsWith(question.mediaName, '.mp4')}">
-                                    <video autoplay muted>
+                                    <video controls autoplay muted>
                                         <source th:src="@{'/assets/Visualization_Of_Questions/' + ${question.mediaName}}"
                                                 type="video/mp4">
                                         Twoja przeglądarka nie wspiera tagu filmu.
@@ -78,8 +79,8 @@
                                 <th:block th:replace="~{carAnimation :: driving-school-car}"></th:block>
                             </th:block>
                         </div>
-                        <p th:if="${answer.correctness}" id="correct">Prawidlowa odpowiedz</p>
-                        <p th:if="${!answer.correctness}" id="wrong">Zla odpowiedz</p>
+                        <p th:if="${answer.correctness}" id="correct">Prawidłowa odpowiedź</p>
+                        <p th:if="${!answer.correctness}" id="wrong">Zła odpowiedź</p>
 
                         <form hidden="hidden" th:action="@{/tests/action}" method="post" id="form">
                             <input type="hidden" name="testId" th:value="${test.id}"/>
@@ -103,7 +104,7 @@
                                 </div>
                                 <div class="separator-line"></div>
                                 <div class="explain">
-                                    <span>Wyjasnienie</span>
+                                    <span>Wyjaśnienie</span>
                                     <p class="content" th:text="${question.explanation}"></p>
                                 </div>
                                 <div class="separator-line"></div>
@@ -159,6 +160,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

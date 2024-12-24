@@ -30,6 +30,9 @@
         .lecture-details {
             border: none !important;
         }
+        .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture, .subject .hero-img .box-subject .box-container .container-lecture .box-sublecture {
+            padding: 0;
+        }
     </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar">
@@ -283,7 +286,7 @@
                             <th:block th:each="lecture : ${lectureList}">
                                 <th:block th:each="sublecture, iter : ${lecture.sublectures}">
                                     <option th:value="${sublecture.id}"
-                                            th:text="'Do PodWykładu nr. '+${iter.index+1}+': : &quot;' + ${sublecture.title.length() > 50 ? sublecture.title.substring(0, 47) + '...' : sublecture.title} + '&quot;'">
+                                            th:text="'Do PodWykładu nr. '+${iter.index+1}+': &quot;' + ${sublecture.title.length() > 50 ? sublecture.title.substring(0, 47) + '...' : sublecture.title} + '&quot;'">
                                     </option>
                                 </th:block>
                             </th:block>

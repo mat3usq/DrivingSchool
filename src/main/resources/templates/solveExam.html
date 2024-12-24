@@ -35,25 +35,26 @@
         <div class="hero-img">
             <div class="hero-shadow"></div>
             <div class="box-exam">
-                <div class="box-container">
+                <div class="container">
+                    <div class="box-container">
                     <div class="header-exam">
                         <p>Egzamin <span>Kategoria <th:block th:text="${category}"></th:block></span></p>
                         <p>Pytanie za <span><th:block th:text="${question.points}"></th:block> Punkty</span></p>
-                        <p>Czas do konca <span id="timeToEnd" th:text="${timeToEnd}">25m 0s</span></p>
+                        <p>Czas do końca <span id="timeToEnd" th:text="${timeToEnd}">25m 0s</span></p>
                     </div>
                     <div class="header-exam-info">
                         <div class="info-exam">
                             <div th:if="${!question.questionType}">
-                                <p class="info">Czesc Podstawowa <span class="counter"><span
+                                <p class="info">Część Podstawowa <span class="counter"><span
                                         th:text="${noSpecCounter}"></span> / 20</span></p>
                             </div>
                             <div th:if="${question.questionType}">
-                                <p class="info">Czesc Specjalistyczna <span class="counter"><span
+                                <p class="info">Część Specjalistyczna <span class="counter"><span
                                         th:text="${specCounter}"></span> / 12</span></p>
                             </div>
                             <div>
                                 <th:block th:if="${question.getQuestionType()}">
-                                    <p class="info">Czas na odpowiedz <span id="specificTimer"
+                                    <p class="info">Czas na odpowiedź <span id="specificTimer"
                                                                             th:text="${question.getAllTimeForQuestion()} + 's'">XX s</span>
                                     </p>
                                 </th:block>
@@ -63,7 +64,7 @@
                                             id="noSpecificTimerToPrepare"
                                             th:text="${question.getTimeForPrepare()} + 's'">XX s</span>
                                     </p>
-                                    <p class="info noSpecificTimerToThink">Czas na odpowiedz <span
+                                    <p class="info noSpecificTimerToThink">Czas na odpowiedź <span
                                             id="noSpecificTimerToThink"
                                             th:text="${question.getTimeForThink()} + 's'">XX s</span>
                                     </p>
@@ -133,7 +134,7 @@
                                             </svg>
                                         </div>
                                         <p>Kliknij w <strong>okienko</strong>, aby szybciej wyświetlić
-                                            <strong>ZDJECIE</strong></p>
+                                            <strong>ZDJĘCIE</strong></p>
                                     </th:block>
                                 </div>
                             </div>
@@ -205,6 +206,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

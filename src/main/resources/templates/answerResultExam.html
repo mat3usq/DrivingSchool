@@ -35,129 +35,130 @@
         <div class="hero-img">
             <div class="hero-shadow"></div>
             <div class="box-exam">
-                <div class="box-container">
-                    <div class="header-exam">
-                        <div class="header-info">
-                            <th:block th:if="${answer.studentExam.passed}">
-                                <p>Wynik Egzaminu</p>
-                                <span class="green">Pozytywny</span>
-                            </th:block>
-                            <th:block th:if="${!answer.studentExam.passed}">
-                                <p>Wynik egzaminu</p>
-                                <span class="red">Negatywny</span>
-                            </th:block>
-                        </div>
-
-                        <div class="header-info">
-                            <p>Czas Trwania Egzaminu</p>
-                            <span class="info" th:text="${answer.studentExam.examDurationString}"></span>
-                        </div>
-
-                        <div class="header-info">
-                            <p>Liczba Punktow</p>
-                            <th:block th:if="${answer.studentExam.passed}"><span class="green" th:text="${answer.studentExam.points}"></span> / 74pkt</th:block>
-                            <th:block th:if="${!answer.studentExam.passed}"><span class="red" th:text="${answer.studentExam.points}"></span> / 74pkt</th:block>
-                        </div>
-                    </div>
-
-                    <div class="container-exam">
-                        <div class="exam-info">
-                            <div class="media">
-                                <th:block th:if="${!answer.question.mediaName.isEmpty()}">
-                                    <th:block th:if="${#strings.endsWith(answer.question.mediaName, '.jpg')}">
-                                        <img th:src="'/assets/Visualization_Of_Questions/' + ${answer.question.mediaName}"
-                                             th:alt="${answer.question.mediaName}">
-                                    </th:block>
-
-                                    <th:block th:if="${#strings.endsWith(answer.question.mediaName, '.mp4')}">
-                                        <video autoplay muted>
-                                            <source th:src="@{'/assets/Visualization_Of_Questions/' + ${answer.question.mediaName}}"
-                                                    type="video/mp4">
-                                            Twoja przeglądarka nie wspiera tagu filmu.
-                                        </video>
-                                    </th:block>
+                <div class="container">
+                    <div class="box-container">
+                        <div class="header-exam">
+                            <div class="header-info">
+                                <th:block th:if="${answer.studentExam.passed}">
+                                    <p>Wynik Egzaminu</p>
+                                    <span class="green">Pozytywny</span>
                                 </th:block>
-
-                                <th:block th:if="${answer.question.mediaName.isEmpty()}">
-                                    <th:block th:replace="~{carAnimation :: driving-school-car}"></th:block>
+                                <th:block th:if="${!answer.studentExam.passed}">
+                                    <p>Wynik egzaminu</p>
+                                    <span class="red">Negatywny</span>
                                 </th:block>
                             </div>
+
+                            <div class="header-info">
+                                <p>Czas Trwania Egzaminu</p>
+                                <span class="info" th:text="${answer.studentExam.examDurationString}"></span>
+                            </div>
+
+                            <div class="header-info">
+                                <p>Liczba Punktów</p>
+                                <th:block th:if="${answer.studentExam.passed}"><span class="green" th:text="${answer.studentExam.points}"></span> / 74pkt</th:block>
+                                <th:block th:if="${!answer.studentExam.passed}"><span class="red" th:text="${answer.studentExam.points}"></span> / 74pkt</th:block>
+                            </div>
                         </div>
+                        <div class="container-exam">
+                            <div class="exam-info">
+                                <div class="media">
+                                    <th:block th:if="${!answer.question.mediaName.isEmpty()}">
+                                        <th:block th:if="${#strings.endsWith(answer.question.mediaName, '.jpg')}">
+                                            <img th:src="'/assets/Visualization_Of_Questions/' + ${answer.question.mediaName}"
+                                                 th:alt="${answer.question.mediaName}">
+                                        </th:block>
 
-                        <p th:if="${answer.correctness}" id="correct">Prawidlowa odpowiedz</p>
-                        <p th:if="${!answer.correctness}" id="wrong">Zla odpowiedz</p>
+                                        <th:block th:if="${#strings.endsWith(answer.question.mediaName, '.mp4')}">
+                                            <video controls autoplay muted>
+                                                <source th:src="@{'/assets/Visualization_Of_Questions/' + ${answer.question.mediaName}}"
+                                                        type="video/mp4">
+                                                Twoja przeglądarka nie wspiera tagu filmu.
+                                            </video>
+                                        </th:block>
+                                    </th:block>
 
-                        <div th:if="${answer.question.availableAnswers == 2}" class="normal-question">
-                            <div class="info-container">
-                                <div class="separator-line"></div>
-                                <div class="questionTitle">
-                                    <p class="content">
-                                        <th:block th:text="${answer.question.question}"></th:block> (<th:block th:text="${answer.question.points} + 'pkt'"></th:block>)
-                                    </p>
+                                    <th:block th:if="${answer.question.mediaName.isEmpty()}">
+                                        <th:block th:replace="~{carAnimation :: driving-school-car}"></th:block>
+                                    </th:block>
+                                </div>
+                            </div>
 
-                                    <div class="icon-container">
-                                        <div class="icon">i</div>
-                                        <p class="tooltip" th:text="${answer.question.source}"></p>
+                            <p th:if="${answer.correctness}" id="correct">Prawidłowa odpowiedź</p>
+                            <p th:if="${!answer.correctness}" id="wrong">Zła odpowiedź</p>
+
+                            <div th:if="${answer.question.availableAnswers == 2}" class="normal-question">
+                                <div class="info-container">
+                                    <div class="separator-line"></div>
+                                    <div class="questionTitle">
+                                        <p class="content">
+                                            <th:block th:text="${answer.question.question}"></th:block> (<th:block th:text="${answer.question.points} + 'pkt'"></th:block>)
+                                        </p>
+
+                                        <div class="icon-container">
+                                            <div class="icon">i</div>
+                                            <p class="tooltip" th:text="${answer.question.source}"></p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="separator-line"></div>
-                                <div class="explain">
-                                    <span>Wyjasnienie</span>
-                                    <p class="content" th:text="${answer.question.explanation}"></p>
-                                </div>
-                                <div class="separator-line"></div>
-                            </div>
-
-                            <div class="button-box">
-                                <button th:classappend="${answer.question.correctAnswer.equals('NIE')} ? 'correct' : ''">Nie
-                                </button>
-                                <button th:classappend="${answer.question.correctAnswer.equals('TAK')} ? 'correct' : ''">Tak
-                                </button>
-                            </div>
-                        </div>
-
-                        <div th:if="${answer.question.availableAnswers == 3}" class="specific-question">
-                            <div class="info-container">
-                                <div class="separator-line"></div>
-                                <div class="questionTitle">
-                                    <p class="content">
-                                        <th:block th:text="${answer.question.question}"></th:block> (<th:block th:text="${answer.question.points} + 'pkt'"></th:block>)
-                                    </p>
-                                    <div class="icon-container">
-                                        <div class="icon">i</div>
-                                        <p class="tooltip" th:text="${answer.question.source}"></p>
+                                    <div class="separator-line"></div>
+                                    <div class="explain">
+                                        <span>Wyjaśnienie</span>
+                                        <p class="content" th:text="${answer.question.explanation}"></p>
                                     </div>
+                                    <div class="separator-line"></div>
                                 </div>
 
-                                <div class="separator-line"></div>
-                                <div class="explain">
-                                    <span>Wyjasnienie</span>
-                                    <p class="content" th:text="${answer.question.explanation}"></p>
+                                <div class="button-box">
+                                    <button th:classappend="${answer.question.correctAnswer.equals('NIE')} ? 'correct' : ''">Nie
+                                    </button>
+                                    <button th:classappend="${answer.question.correctAnswer.equals('TAK')} ? 'correct' : ''">Tak
+                                    </button>
                                 </div>
-                                <div class="separator-line"></div>
                             </div>
 
-                            <div class="button-box">
-                                <button th:text="${answer.question.answerA}"
-                                        th:classappend="${answer.question.correctAnswer.equals('A')} ? 'correct' : ''"
-                                        class="answer">Bezpieczny, mniejszy niz 1 metr.
-                                </button
-                                >
-                                <button th:text="${answer.question.answerB}"
-                                        th:classappend="${answer.question.correctAnswer.equals('B')} ? 'correct' : ''"
-                                        class="answer">Kazdy odstep, ale bezpieczny.
-                                </button
-                                >
-                                <button th:text="${answer.question.answerC}"
-                                        th:classappend="${answer.question.correctAnswer.equals('C')} ? 'correct' : ''"
-                                        class="answer">Nie mniejszy niz 1 metr.
-                                </button>
+                            <div th:if="${answer.question.availableAnswers == 3}" class="specific-question">
+                                <div class="info-container">
+                                    <div class="separator-line"></div>
+                                    <div class="questionTitle">
+                                        <p class="content">
+                                            <th:block th:text="${answer.question.question}"></th:block> (<th:block th:text="${answer.question.points} + 'pkt'"></th:block>)
+                                        </p>
+                                        <div class="icon-container">
+                                            <div class="icon">i</div>
+                                            <p class="tooltip" th:text="${answer.question.source}"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="separator-line"></div>
+                                    <div class="explain">
+                                        <span>Wyjasnienie</span>
+                                        <p class="content" th:text="${answer.question.explanation}"></p>
+                                    </div>
+                                    <div class="separator-line"></div>
+                                </div>
+
+                                <div class="button-box">
+                                    <button th:text="${answer.question.answerA}"
+                                            th:classappend="${answer.question.correctAnswer.equals('A')} ? 'correct' : ''"
+                                            class="answer">Bezpieczny, mniejszy niz 1 metr.
+                                    </button
+                                    >
+                                    <button th:text="${answer.question.answerB}"
+                                            th:classappend="${answer.question.correctAnswer.equals('B')} ? 'correct' : ''"
+                                            class="answer">Kazdy odstep, ale bezpieczny.
+                                    </button
+                                    >
+                                    <button th:text="${answer.question.answerC}"
+                                            th:classappend="${answer.question.correctAnswer.equals('C')} ? 'correct' : ''"
+                                            class="answer">Nie mniejszy niz 1 metr.
+                                    </button>
+                                </div>
                             </div>
+                            <form th:action="@{/exam/result}" method="post">
+                                <input type="hidden" name="examId" th:value="${answer.studentExam.id}"/>
+                                <button type="submit" class="back" >Powrót</button>
+                            </form>
                         </div>
-                        <form th:action="@{/exam/result}" method="post">
-                            <input type="hidden" name="examId" th:value="${answer.studentExam.id}"/>
-                            <button type="submit" class="back" >Powrót</button>
-                        </form>
                     </div>
                 </div>
             </div>

@@ -122,12 +122,12 @@ h2 {
 }
 
 .navbar-left {
-  height: 179.1vh;
+  height: 189.1vh;
 }
 
 .test .hero-img {
   position: relative;
-  height: 190vh;
+  height: 200vh;
   background-image: url("../img/backgroundTest.png");
   background-position: center;
   background-size: cover;
@@ -143,19 +143,25 @@ h2 {
 }
 .test .hero-img .box-test {
   position: absolute;
-  top: 12vh;
-  left: 150px;
-  height: 100%;
-  width: 100%;
+  top: 100px;
+  left: 300px;
+  width: calc(100vw - 300px);
+  max-height: 187vh;
+  overflow-y: auto;
 }
-.test .hero-img .box-test .box-container {
+.test .hero-img .box-test .container {
+  width: 100%;
+  margin: 0 auto;
+  --bs-gutter-x: 0;
+}
+.test .hero-img .box-test .container .box-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px auto;
-  width: 80%;
+  margin: 0 12px;
+  margin-bottom: 50px;
 }
-.test .hero-img .box-test .box-container .header-test {
+.test .hero-img .box-test .container .box-container .header-test {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -168,33 +174,33 @@ h2 {
   letter-spacing: 1px;
   text-align: center;
   margin: 10px;
-  width: 80%;
+  width: 100%;
 }
-.test .hero-img .box-test .box-container .header-test .box img {
+.test .hero-img .box-test .container .box-container .header-test .box img {
   width: 50px;
 }
-.test .hero-img .box-test .box-container .header-test div {
+.test .hero-img .box-test .container .box-container .header-test div {
   display: flex;
   flex-direction: row;
 }
-.test .hero-img .box-test .box-container .header-test span {
+.test .hero-img .box-test .container .box-container .header-test span {
   color: #4cc9f0;
   font-size: 22px;
   font-style: normal;
   font-weight: bold;
 }
-.test .hero-img .box-test .box-container .header-test i {
+.test .hero-img .box-test .container .box-container .header-test i {
   font-size: 30px;
   margin: 10px;
 }
-.test .hero-img .box-test .box-container .header-test p {
+.test .hero-img .box-test .container .box-container .header-test p {
   font-size: 20px;
   margin: 10px;
 }
-.test .hero-img .box-test .box-container .header-test .-is-running {
+.test .hero-img .box-test .container .box-container .header-test .-is-running {
   animation-play-state: running !important;
 }
-.test .hero-img .box-test .box-container .header-test .star-box {
+.test .hero-img .box-test .container .box-container .header-test .star-box {
   width: 60px;
   height: 60px;
   position: relative;
@@ -203,7 +209,7 @@ h2 {
   align-items: center;
   justify-content: center;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .star {
+.test .hero-img .box-test .container .box-container .header-test .star-box .star {
   display: inline-block;
   cursor: pointer;
   font-size: 2.2rem;
@@ -211,7 +217,7 @@ h2 {
   z-index: 50;
   animation: starBounce 0.5s forwards 1 ease-in-out paused;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .circle {
+.test .hero-img .box-test .container .box-container .header-test .star-box .circle {
   position: absolute;
   top: 55%;
   left: 50%;
@@ -221,7 +227,7 @@ h2 {
   border-radius: 50%;
   z-index: -1;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .circle:before, .test .hero-img .box-test .box-container .header-test .star-box .circle:after {
+.test .hero-img .box-test .container .box-container .header-test .star-box .circle:before, .test .hero-img .box-test .container .box-container .header-test .star-box .circle:after {
   content: "";
   display: block;
   width: 10px;
@@ -232,10 +238,10 @@ h2 {
   top: 3px;
   left: 10px;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .circle:before {
+.test .hero-img .box-test .container .box-container .header-test .star-box .circle:before {
   animation: changeYellowToOrange 0.5s infinite forwards ease-in-out 0.5s;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .circle:after {
+.test .hero-img .box-test .container .box-container .header-test .star-box .circle:after {
   width: 8px;
   height: 8px;
   top: 12px;
@@ -243,7 +249,7 @@ h2 {
   background: #ffd166;
   animation: changeOrangeToYellow 0.5s infinite forwards ease-in-out 0.5s;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .inner-circle {
+.test .hero-img .box-test .container .box-container .header-test .star-box .inner-circle {
   position: absolute;
   top: 55%;
   left: 50%;
@@ -256,7 +262,7 @@ h2 {
   z-index: 6;
   animation: scaleWhiteCircle 0.5s ease-in-out forwards 1 0.2s paused;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .c-orange {
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-orange {
   position: absolute;
   top: 55%;
   left: 50%;
@@ -269,34 +275,34 @@ h2 {
   background: #ef476f;
   animation: scaleOrangeCircle 0.4s ease-in-out forwards 1 0.1s paused;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .c-1,
-.test .hero-img .box-test .box-container .header-test .star-box .c-2,
-.test .hero-img .box-test .box-container .header-test .star-box .c-3,
-.test .hero-img .box-test .box-container .header-test .star-box .c-4 {
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-1,
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-2,
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-3,
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-4 {
   animation: scaleCircle 0.4s ease-in-out forwards 1 paused 0.2s;
   z-index: 20;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .c-2:before {
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-2:before {
   top: 10px;
   left: 65px;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .c-2:after {
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-2:after {
   top: 3px;
   left: 58px;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .c-3:before {
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-3:before {
   top: 65px;
   left: 57px;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .c-3:after {
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-3:after {
   top: 59px;
   left: 67px;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .c-4:before {
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-4:before {
   top: 58px;
   left: 3px;
 }
-.test .hero-img .box-test .box-container .header-test .star-box .c-4:after {
+.test .hero-img .box-test .container .box-container .header-test .star-box .c-4:after {
   top: 67px;
   left: 12px;
 }
@@ -348,16 +354,16 @@ h2 {
     opacity: 0;
   }
 }
-.test .hero-img .box-test .box-container .container-test {
+.test .hero-img .box-test .container .box-container .container-test {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.85);
   border-radius: 20px;
   padding: 30px;
 }
-.test .hero-img .box-test .box-container .container-test .test-info {
+.test .hero-img .box-test .container .box-container .container-test .test-info {
   display: flex;
   flex-direction: row;
   align-content: space-between;
@@ -365,18 +371,18 @@ h2 {
   padding: 20px;
   align-items: center;
 }
-.test .hero-img .box-test .box-container .container-test .test-info img,
-.test .hero-img .box-test .box-container .container-test .test-info video {
-  width: 90%;
+.test .hero-img .box-test .container .box-container .container-test .test-info img,
+.test .hero-img .box-test .container .box-container .container-test .test-info video {
+  width: 95%;
   border-radius: 20px;
   margin: 10px;
 }
-.test .hero-img .box-test .box-container .container-test .test-info svg {
+.test .hero-img .box-test .container .box-container .container-test .test-info svg {
   width: 400px;
   border-radius: 20px;
   margin: 10px;
 }
-.test .hero-img .box-test .box-container .container-test #wrong {
+.test .hero-img .box-test .container .box-container .container-test #wrong {
   display: block;
   font-weight: bold;
   letter-spacing: 1px;
@@ -386,7 +392,7 @@ h2 {
   margin-top: 10px;
   margin-bottom: 0px;
 }
-.test .hero-img .box-test .box-container .container-test #correct {
+.test .hero-img .box-test .container .box-container .container-test #correct {
   margin-top: 10px;
   display: block;
   font-weight: bold;
@@ -396,8 +402,8 @@ h2 {
   text-align: center;
   margin-bottom: 0px;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question,
-.test .hero-img .box-test .box-container .container-test .specific-question {
+.test .hero-img .box-test .container .box-container .container-test .normal-question,
+.test .hero-img .box-test .container .box-container .container-test .specific-question {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -405,9 +411,10 @@ h2 {
   text-align: center;
   font-size: 19px;
   margin: 10px 30px;
+  gap: 5px;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .button-box,
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .button-box,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-box {
   margin: 10px;
   display: flex;
   flex-direction: row;
@@ -415,34 +422,34 @@ h2 {
   justify-content: center;
   gap: 10px;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .button-box .correct,
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .button-box .correct,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-box .correct {
   border: 2px solid springgreen;
   color: springgreen;
-  scale: 1.1;
+  scale: 1.05;
   font-weight: bold;
   padding: 0px 20px;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .questionTitle,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .questionTitle,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .questionTitle {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .questionTitle .icon-container,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle .icon-container {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .questionTitle .icon-container,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .questionTitle .icon-container {
   position: relative;
   display: inline-block;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .questionTitle .icon,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle .icon {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .questionTitle .icon,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .questionTitle .icon {
   width: 30px;
   height: 30px;
   background-color: #6acff1;
@@ -454,8 +461,8 @@ h2 {
   cursor: pointer;
   font-size: 20px;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .questionTitle .tooltip,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle .tooltip {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .questionTitle .tooltip,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .questionTitle .tooltip {
   visibility: hidden;
   width: 250px;
   background-color: #333;
@@ -473,51 +480,51 @@ h2 {
   overflow-wrap: break-word;
   box-sizing: border-box;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .questionTitle .icon-container:hover .tooltip,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle .icon-container:hover .tooltip {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .questionTitle .icon-container:hover .tooltip,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .questionTitle .icon-container:hover .tooltip {
   visibility: visible;
   opacity: 1;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .questionTitle .content,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .questionTitle .content {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .questionTitle .content,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .questionTitle .content {
   margin: 0px;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .separator-line,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .separator-line {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .separator-line,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .separator-line {
   width: 100%;
   height: 3px;
   background-color: rgb(192, 192, 219);
   border-radius: 5px;
   margin: 15px 0;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .explain,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .explain {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .explain,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .explain {
   font-size: 16px;
   display: flex;
   flex-direction: column;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .info-container .explain .content,
-.test .hero-img .box-test .box-container .container-test .specific-question .info-container .explain .content {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .explain .content,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .explain .content {
   font-weight: normal;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question span,
-.test .hero-img .box-test .box-container .container-test .specific-question span {
+.test .hero-img .box-test .container .box-container .container-test .normal-question span,
+.test .hero-img .box-test .container .box-container .container-test .specific-question span {
   font-weight: bold;
   letter-spacing: 1px;
   color: springgreen;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .content,
-.test .hero-img .box-test .box-container .container-test .specific-question .content {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .content,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .content {
   font-weight: bold;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question a,
-.test .hero-img .box-test .box-container .container-test .specific-question a {
+.test .hero-img .box-test .container .box-container .container-test .normal-question a,
+.test .hero-img .box-test .container .box-container .container-test .specific-question a {
   text-decoration: none;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question button,
-.test .hero-img .box-test .box-container .container-test .normal-question a,
-.test .hero-img .box-test .box-container .container-test .specific-question button,
-.test .hero-img .box-test .box-container .container-test .specific-question a {
+.test .hero-img .box-test .container .box-container .container-test .normal-question button,
+.test .hero-img .box-test .container .box-container .container-test .normal-question a,
+.test .hero-img .box-test .container .box-container .container-test .specific-question button,
+.test .hero-img .box-test .container .box-container .container-test .specific-question a {
   border: none;
   outline: none;
   height: 49px;
@@ -530,42 +537,42 @@ h2 {
   padding: 10px 20px;
   background: transparent;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question button i,
-.test .hero-img .box-test .box-container .container-test .normal-question a i,
-.test .hero-img .box-test .box-container .container-test .specific-question button i,
-.test .hero-img .box-test .box-container .container-test .specific-question a i {
+.test .hero-img .box-test .container .box-container .container-test .normal-question button i,
+.test .hero-img .box-test .container .box-container .container-test .normal-question a i,
+.test .hero-img .box-test .container .box-container .container-test .specific-question button i,
+.test .hero-img .box-test .container .box-container .container-test .specific-question a i {
   color: aliceblue;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question button,
-.test .hero-img .box-test .box-container .container-test .normal-question a:not(:disabled),
-.test .hero-img .box-test .box-container .container-test .specific-question button,
-.test .hero-img .box-test .box-container .container-test .specific-question a:not(:disabled) {
+.test .hero-img .box-test .container .box-container .container-test .normal-question button,
+.test .hero-img .box-test .container .box-container .container-test .normal-question a:not(:disabled),
+.test .hero-img .box-test .container .box-container .container-test .specific-question button,
+.test .hero-img .box-test .container .box-container .container-test .specific-question a:not(:disabled) {
   cursor: pointer;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .next,
-.test .hero-img .box-test .box-container .container-test .specific-question .next {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .next,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .next {
   background-color: #4d84e2;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question .back,
-.test .hero-img .box-test .box-container .container-test .specific-question .back {
+.test .hero-img .box-test .container .box-container .container-test .normal-question .back,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .back {
   background-color: #ffb200;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question #yes,
-.test .hero-img .box-test .box-container .container-test .normal-question #no,
-.test .hero-img .box-test .box-container .container-test .specific-question #yes,
-.test .hero-img .box-test .box-container .container-test .specific-question #no {
+.test .hero-img .box-test .container .box-container .container-test .normal-question #yes,
+.test .hero-img .box-test .container .box-container .container-test .normal-question #no,
+.test .hero-img .box-test .container .box-container .container-test .specific-question #yes,
+.test .hero-img .box-test .container .box-container .container-test .specific-question #no {
   color: #4cc9f0;
   padding: 5px 20px;
   border: 2px solid aliceblue;
 }
-.test .hero-img .box-test .box-container .container-test .normal-question button:hover,
-.test .hero-img .box-test .box-container .container-test .normal-question a:hover,
-.test .hero-img .box-test .box-container .container-test .specific-question button:hover,
-.test .hero-img .box-test .box-container .container-test .specific-question a:hover {
-  scale: 1.1;
+.test .hero-img .box-test .container .box-container .container-test .normal-question button:hover,
+.test .hero-img .box-test .container .box-container .container-test .normal-question a:hover,
+.test .hero-img .box-test .container .box-container .container-test .specific-question button:hover,
+.test .hero-img .box-test .container .box-container .container-test .specific-question a:hover {
+  scale: 1.05;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box,
-.test .hero-img .box-test .box-container .container-test .specific-question .button-action {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-box,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-action {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -573,25 +580,25 @@ h2 {
   align-content: center;
   align-items: center;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct,
-.test .hero-img .box-test .box-container .container-test .specific-question .button-action .correct {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-box .correct,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-action .correct {
   border: none;
   padding: 0px 10px;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box .correct.answer::before,
-.test .hero-img .box-test .box-container .container-test .specific-question .button-action .correct.answer::before {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-box .correct.answer::before,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-action .correct.answer::before {
   background-color: springgreen;
   color: aliceblue;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-box .back,
-.test .hero-img .box-test .box-container .container-test .specific-question .button-action .back {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-box .back,
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-action .back {
   text-transform: uppercase;
   font-weight: bold;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .button-action {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-action {
   flex-direction: row;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question button {
+.test .hero-img .box-test .container .box-container .container-test .specific-question button {
   border: none;
   outline: none;
   height: 49px;
@@ -606,10 +613,13 @@ h2 {
   text-transform: none;
   font-size: 16px;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question button:not(:disabled) {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .button-box button {
+  height: 100%;
+}
+.test .hero-img .box-test .container .box-container .container-test .specific-question button:not(:disabled) {
   cursor: pointer;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .answer:nth-child(1)::before {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .answer:nth-child(1)::before {
   content: "A";
   background-color: #118ab2;
   padding: 5px 10px;
@@ -620,7 +630,7 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .answer:nth-child(2)::before {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .answer:nth-child(2)::before {
   content: "B";
   background-color: #118ab2;
   padding: 5px 10px;
@@ -631,7 +641,7 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .answer:nth-child(3)::before {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .answer:nth-child(3)::before {
   content: "C";
   background-color: #118ab2;
   padding: 5px 10px;
@@ -642,20 +652,20 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
 }
-.test .hero-img .box-test .box-container .container-test .specific-question .next {
+.test .hero-img .box-test .container .box-container .container-test .specific-question .next {
   font-weight: bold;
   text-transform: uppercase;
   width: 180px;
   background-color: #4d84e2;
 }
-.test .hero-img .box-test .box-container .container-test .specific-question button:hover {
+.test .hero-img .box-test .container .box-container .container-test .specific-question button:hover {
   scale: 1.05;
 }
 
 @media (max-width: 900px) {
   .navbar-left {
     display: none;
-    height: 105vh;
+    height: 115vh;
   }
   .navbar-left .navbar-nav .logout {
     display: block;
@@ -668,52 +678,48 @@ h2 {
   }
   .test .hero-img .box-test {
     display: block;
-    top: 12vh;
     left: 0;
-  }
-  .test .hero-img .box-test .box-container {
-    width: 95%;
-  }
-  .test .hero-img .box-test .box-container .container-test,
-  .test .hero-img .box-test .box-container .header-test {
     width: 100%;
+  }
+  .test .hero-img .box-test .container .box-container .container-test,
+  .test .hero-img .box-test .container .box-container .header-test {
     padding: 10px;
   }
-  .test .hero-img .box-test .box-container .container-test span,
-  .test .hero-img .box-test .box-container .header-test span {
+  .test .hero-img .box-test .container .box-container .container-test span,
+  .test .hero-img .box-test .container .box-container .header-test span {
     font-size: 20px;
   }
 }
 @media (max-width: 700px) {
-  .test .hero-img .box-test .box-container .container-test .test-info {
+  .test .hero-img .box-test .container .box-container .container-test .test-info {
     flex-direction: column;
     padding: 0;
   }
-  .test .hero-img .box-test .box-container .container-test .test-info img,
-  .test .hero-img .box-test .box-container .container-test .test-info video {
+  .test .hero-img .box-test .container .box-container .container-test .test-info img,
+  .test .hero-img .box-test .container .box-container .container-test .test-info video {
     width: 100%;
-    padding: 0;
+    padding: 5px;
     margin: 0;
     margin-bottom: 10px;
   }
-  .test .hero-img .box-test .box-container .container-test .test-info svg {
+  .test .hero-img .box-test .container .box-container .container-test .test-info svg {
     width: 300px;
   }
-  .test .hero-img .box-test .box-container .header-test {
+  .test .hero-img .box-test .container .box-container .header-test {
     flex-direction: column;
   }
 }
 @media (max-width: 500px) {
-  .test .hero-img .box-test .box-container .container-test .normal-question .info-container .content,
-  .test .hero-img .box-test .box-container .container-test .specific-question .info-container .content {
+  .test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .content,
+  .test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .content {
     font-size: 14px;
   }
-  .test .hero-img .box-test .box-container .container-test .normal-question .info-container .explain .content,
-  .test .hero-img .box-test .box-container .container-test .specific-question .info-container .explain .content {
+  .test .hero-img .box-test .container .box-container .container-test .normal-question .info-container .explain .content,
+  .test .hero-img .box-test .container .box-container .container-test .specific-question .info-container .explain .content {
     font-size: 13px;
   }
-  .test .hero-img .box-test .box-container .container-test .normal-question button,
-  .test .hero-img .box-test .box-container .container-test .specific-question button {
+  .test .hero-img .box-test .container .box-container .container-test .normal-question button,
+  .test .hero-img .box-test .container .box-container .container-test .specific-question button {
     margin: 0;
     margin-top: 10px;
     font-size: 13px;

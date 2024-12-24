@@ -174,9 +174,13 @@ public class TestController {
                 break;
 
             default:
-                if (user.getSelectedTypeQuestions().equals("likedQuestions") && !isLiked)
+                if (user.getSelectedTypeQuestions().equals("likedQuestions"))
                     schoolUserService.deleteLikedQuestionFromUser(questionId, testId, user);
+
                 modelAndView = getTestToSolve(testId, user.getSelectedTypeQuestions(), session, redirectAttributes);
+
+                if (user.getSelectedTypeQuestions().equals("likedQuestions") && isLiked)
+                    schoolUserService.addLikedQuestionToUser(questionId, testId, user);
                 break;
         }
 

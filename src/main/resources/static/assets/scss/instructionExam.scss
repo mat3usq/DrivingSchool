@@ -75,92 +75,97 @@ h2 {
 
 		.box-instruction {
 			position: absolute;
-			top: 12vh;
-			left: 150px;
-			height: 95vh;
-			width: 100%;
-			overflow: scroll;
+			top: 100px;
+			left: 300px;
+			width: calc(100vw - 300px);
+			max-height: 97vh;
+			overflow-y: auto;
 
-			.box-container {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				margin: 10px auto;
+			.container {
+				width: 100%;
+				margin: 0 auto;
+				--bs-gutter-x: 0;
 
-				.title {
-					padding: 20px;
-					background-color: rgba(0, 0, 0, 0.8);
-					border-radius: 20px;
-					font-size: 22px;
-					letter-spacing: 1px;
-					text-align: center;
-					font-weight: bold;
-				}
-
-				.container-instruction {
+				.box-container {
 					display: flex;
 					flex-direction: column;
-					max-width: 60%;
+					align-items: center;
+					margin: 10px auto;
 
-					.instruction {
-						font-size: 19px;
+					.title {
+						padding: 20px;
+						background-color: rgba(0, 0, 0, 0.8);
+						border-radius: 20px;
+						font-size: 22px;
+						letter-spacing: 1px;
+						text-align: center;
+						font-weight: bold;
+					}
+
+					.container-instruction {
 						display: flex;
 						flex-direction: column;
-						align-items: center;
-						margin: 30px;
-						padding: 20px 50px;
-						background-color: rgba(0, 0, 0, 0.9);
-						border-radius: 20px;
-						// text-align: center;
 
-						span {
-							color: $category-icon;
-							font-weight: bold;
-						}
+						.instruction {
+							font-size: 19px;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							margin: 30px;
+							padding: 20px 50px;
+							background-color: rgba(0, 0, 0, 0.9);
+							border-radius: 20px;
+							// text-align: center;
 
-						img {
-							width: 80%;
-							border-radius: 40px;
-						}
+							span {
+								color: $category-icon;
+								font-weight: bold;
+							}
 
-						p {
-							margin: 20px;
-						}
+							img {
+								width: 80%;
+								border-radius: 40px;
+							}
 
-						.underline {
-							margin: 0 auto 0px;
-						}
+							p {
+								margin: 20px;
+							}
 
-						ul {
-							li {
-								font-size: 16px;
-								margin-bottom: 10px;
+							.underline {
+								margin: 0 auto 0px;
+							}
+
+							ul {
+								li {
+									font-size: 16px;
+									margin-bottom: 10px;
+								}
 							}
 						}
 					}
-				}
 
-				button {
-					border: none;
-					outline: none;
-					height: 60px;
-					border-radius: 50px;
-					color: $text-color;
-					text-transform: uppercase;
-					font-weight: 600;
-					transition: 0.5s;
-					margin: 10px;
-					padding: 15px 20px;
-					background: transparent;
-					backdrop-filter: blur(20px);
-					border: 2px solid $btn-bg-color;
-					font-size: 16px;
-				}
+					button {
+						border: none;
+						outline: none;
+						height: 60px;
+						border-radius: 50px;
+						color: $text-color;
+						text-transform: uppercase;
+						font-weight: 600;
+						transition: 0.5s;
+						margin: 10px;
+						padding: 15px 20px;
+						background: transparent;
+						backdrop-filter: blur(20px);
+						border: 2px solid $btn-bg-color;
+						font-size: 16px;
+					}
 
-				button:hover {
-					scale: 1.1;
-					color: $text-color;
-					background-color: $btn-bg-color;
+					button:hover {
+						scale: 1.1;
+						color: $text-color;
+						background-color: $btn-bg-color;
+					}
 				}
 			}
 		}
@@ -171,12 +176,14 @@ h2 {
 	.instruction {
 		.hero-img {
 			.box-instruction {
-				top: 12vh;
 				left: 0px;
-				height: 88vh;
-				.box-container {
-					.container-instruction {
-						max-width: 100%;
+				width: 100%;
+
+				.container {
+					.box-container {
+						.container-instruction {
+							max-width: 100%;
+						}
 					}
 				}
 			}
@@ -188,10 +195,14 @@ h2 {
 	.instruction {
 		.hero-img {
 			.box-instruction {
-				.box-container {
-					.container-instruction {
-						.instruction {
-							font-size: 14px;
+				.container {
+					.box-container {
+						.container-instruction {
+							.instruction {
+								font-size: 14px;
+								margin: 30px 10px;
+								padding: 20px;
+							}
 						}
 					}
 				}

@@ -136,14 +136,20 @@ h2 {
 }
 .mailBox .hero-img .mail-container {
   position: absolute;
-  top: 12vh;
+  top: 100px;
   left: 300px;
   width: calc(100vw - 300px);
   height: 105vh;
   padding: 20px 0;
-  overflow: scroll;
+  overflow-y: auto;
 }
-.mailBox .hero-img .mail-container .box-container {
+.mailBox .hero-img .mail-container .container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  --bs-gutter-x: 0;
+}
+.mailBox .hero-img .mail-container .container .box-container {
   position: relative;
   background-color: rgba(0, 0, 0, 0.89);
   padding: 20px;
@@ -154,8 +160,8 @@ h2 {
   min-height: 100%;
   overflow: hidden;
 }
-.mailBox .hero-img .mail-container .box-container .title,
-.mailBox .hero-img .mail-container .box-container .mini-title {
+.mailBox .hero-img .mail-container .container .box-container .title,
+.mailBox .hero-img .mail-container .container .box-container .mini-title {
   margin: 10px 40px 15px 40px;
   font-size: 22px;
   font-weight: bold;
@@ -165,11 +171,11 @@ h2 {
   border-bottom: 2px solid rgb(192, 192, 219);
   letter-spacing: 1px;
 }
-.mailBox .hero-img .mail-container .box-container .mini-title {
+.mailBox .hero-img .mail-container .container .box-container .mini-title {
   font-size: 16px;
   color: #6acff1;
 }
-.mailBox .hero-img .mail-container .box-container .mini-title-warning {
+.mailBox .hero-img .mail-container .container .box-container .mini-title-warning {
   margin: 20px auto;
   padding: 20px 15px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -180,7 +186,7 @@ h2 {
   text-align: center;
   border: 5px dotted #ef476f;
 }
-.mailBox .hero-img .mail-container .box-container .warning-text {
+.mailBox .hero-img .mail-container .container .box-container .warning-text {
   text-align: center;
   margin: 10px auto;
   max-width: 400px;
@@ -194,7 +200,7 @@ h2 {
   border-left: 4px solid #ffd166;
   border-right: 4px solid #ffd166;
 }
-.mailBox .hero-img .mail-container .box-container .warning-text::before {
+.mailBox .hero-img .mail-container .container .box-container .warning-text::before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   color: inherit;
@@ -204,12 +210,12 @@ h2 {
   transform: translateY(-50%);
   content: "\f071";
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container {
   width: 100%;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content {
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -222,39 +228,39 @@ h2 {
   position: relative;
   cursor: pointer;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content.unread,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content.unread,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content.unread {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content.unread,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content.unread,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content.unread {
   font-weight: bold;
   border: 3px solid rgb(192, 192, 219);
 }
 @media (hover: hover) and (pointer: fine) {
-  .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content:hover,
-  .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content:hover,
-  .mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content:hover {
+  .mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content:hover,
+  .mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content:hover,
+  .mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content:hover {
     transform: translateX(50px);
   }
-  .mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content:hover .operation-box,
-  .mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content:hover .operation-box,
-  .mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content:hover .operation-box {
+  .mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content:hover .operation-box,
+  .mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content:hover .operation-box,
+  .mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content:hover .operation-box {
     transform: translateY(-50%) translateX(15px);
     opacity: 1;
   }
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content.clicked,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content.clicked,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content.clicked {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content.clicked,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content.clicked,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content.clicked {
   transform: translateX(50px);
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content.clicked .operation-box,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content.clicked .operation-box,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content.clicked .operation-box {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content.clicked .operation-box,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content.clicked .operation-box,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content.clicked .operation-box {
   transform: translateY(-50%) translateX(15px);
   opacity: 1;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box {
   position: absolute;
   left: -60px;
   top: 50%;
@@ -267,202 +273,202 @@ h2 {
   opacity: 0;
   gap: 10px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box button,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box button,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box button {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box button,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box button,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box button {
   border: none;
   background: none;
   padding: 5px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box button i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box button i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box button i {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box button i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box button i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box button i {
   font-size: 20px;
   transition: transform 0.3s ease;
   padding-right: 16px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .infoMail-form i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box .infoMail-form i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box .infoMail-form i {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box .infoMail-form i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box .infoMail-form i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box .infoMail-form i {
   color: #4d84e2;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .infoMail-form i:hover,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box .infoMail-form i:hover,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box .infoMail-form i:hover {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box .infoMail-form i:hover,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box .infoMail-form i:hover,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box .infoMail-form i:hover {
   color: #6acff1;
   transform: scale(1.1);
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .responseMail-form i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box .responseMail-form i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box .responseMail-form i {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box .responseMail-form i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box .responseMail-form i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box .responseMail-form i {
   color: #7aba78;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .responseMail-form i:hover,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box .responseMail-form i:hover,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box .responseMail-form i:hover {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box .responseMail-form i:hover,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box .responseMail-form i:hover,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box .responseMail-form i:hover {
   color: springgreen;
   transform: scale(1.1);
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .moveToTrashMail-form i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box .moveToTrashMail-form i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box .moveToTrashMail-form i {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box .moveToTrashMail-form i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box .moveToTrashMail-form i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box .moveToTrashMail-form i {
   color: #b51b75;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .operation-box .moveToTrashMail-form i:hover,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .operation-box .moveToTrashMail-form i:hover,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .operation-box .moveToTrashMail-form i:hover {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .operation-box .moveToTrashMail-form i:hover,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .operation-box .moveToTrashMail-form i:hover,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .operation-box .moveToTrashMail-form i:hover {
   color: #ef476f;
   transform: scale(1.1);
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .icon,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .icon,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .icon {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .icon,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .icon,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .icon {
   padding: 0px 5px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .icon.unread,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .icon.unread,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .icon.unread {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .icon.unread,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .icon.unread,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .icon.unread {
   color: #6acff1;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   flex-wrap: wrap;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-from {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-from {
   font-size: 16px;
   color: #ffd166;
   margin-right: 5px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .surname {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .surname {
   margin-right: 0;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .e-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-e-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .e-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-e-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .e-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-e-mail {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .e-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-e-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .e-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-e-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .e-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-e-mail {
   font-size: 16px;
   color: #6acff1;
   margin-left: auto;
   text-align: right;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-icon,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-icon,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-icon {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-icon,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-icon,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-icon {
   font-size: 20px;
   padding-right: 8px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-e-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-e-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-name,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-surname,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-e-mail {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-e-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-e-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-name,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-surname,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-e-mail {
   font-size: 17px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .fa-arrow,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .fa-arrow,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .fa-arrow {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .fa-arrow,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .fa-arrow,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .fa-arrow {
   padding: 0 7px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .show-from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .sender-details .from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .show-from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .sender-details .from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-from,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .sender-details .from {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .show-from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .sender-details .from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .show-from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .sender-details .from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .show-from,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .sender-details .from {
   margin: 0;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail {
   flex: 1;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .email-header,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .email-header,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .email-header,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .email-header,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .email-header,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .email-header,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
   width: 100%;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .email-header span,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header span,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .email-header span,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header span,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .email-header span,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header span {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .email-header span,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header span,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .email-header span,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header span,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .email-header span,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header span {
   font-size: 15px;
   color: aliceblue;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .email-header .subject,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header .subject,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .email-header .subject,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header .subject,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .email-header .subject,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header .subject {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .email-header .subject,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header .subject,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .email-header .subject,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header .subject,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .email-header .subject,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header .subject {
   text-align: left;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .email-header .time,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header .time,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .email-header .time,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header .time,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .email-header .time,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header .time {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .email-header .time,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header .time,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .email-header .time,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header .time,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .email-header .time,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header .time {
   text-align: right;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header {
   border-top: 1px solid #b51b75;
   border-bottom: 1px solid #b51b75;
   margin: 0;
   padding: 10px 0;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header span,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header span,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header span {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header span,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header span,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header span {
   font-size: 17px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header span.time,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header span.time,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header span.time {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-email-header span.time,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-email-header span.time,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-email-header span.time {
   font-size: 16px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .mail {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .mail {
   font-size: 13px;
   line-height: 1.8;
   color: aliceblue;
@@ -472,9 +478,9 @@ h2 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-full-mail {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-full-mail {
   max-width: 80%;
   width: -moz-fit-content;
   width: fit-content;
@@ -488,29 +494,29 @@ h2 {
   border-radius: 10px;
   margin: 10px 0;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail i,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-full-mail i {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail i,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-full-mail i {
   padding-right: 5px;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail.left,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail.left,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-full-mail.left {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail.left,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail.left,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-full-mail.left {
   text-align: left;
   margin-left: 0;
   margin-right: auto;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail.right,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail.right,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-full-mail.right {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .content-mail .show-full-mail.right,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .content-mail .show-full-mail.right,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .content-mail .show-full-mail.right {
   text-align: right;
   margin-left: auto;
   margin-right: 0;
   background-color: rgba(4, 122, 160, 0.5607843137);
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .mailBox-content .noMessages,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content .noMessages,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content .noMessages {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .mailBox-content .noMessages,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content .noMessages,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content .noMessages {
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 16px;
@@ -519,19 +525,19 @@ h2 {
   font-style: italic;
   margin-bottom: 0;
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-mailBox-content,
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-mailBox-content,
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content {
   border: 1px solid rgb(192, 192, 219);
 }
-.mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content {
+.mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content {
   cursor: auto;
 }
 @media (hover: hover) and (pointer: fine) {
-  .mailBox .hero-img .mail-container .box-container .mailbox-container .show-replyMailBox-content:hover {
+  .mailBox .hero-img .mail-container .container .box-container .mailbox-container .show-replyMailBox-content:hover {
     transform: translateX(0px);
   }
 }
-.mailBox .hero-img .mail-container .box-container .write-mail {
+.mailBox .hero-img .mail-container .container .box-container .write-mail {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -547,15 +553,15 @@ h2 {
   cursor: pointer;
   transition: 0.3s ease;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail:hover {
+.mailBox .hero-img .mail-container .container .box-container .write-mail:hover {
   transform: scale(1.1);
   color: #ffd166;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail i {
+.mailBox .hero-img .mail-container .container .box-container .write-mail i {
   font-size: 17px;
   pointer-events: none;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper {
   position: absolute;
   top: 0px;
   left: 50%;
@@ -568,10 +574,10 @@ h2 {
   transform: translateX(-50%);
   transition: height 0.7s ease;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper.active {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper.active {
   height: 100%;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-header {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-header {
   width: 100%;
   height: 70px;
   display: flex;
@@ -580,38 +586,38 @@ h2 {
   padding: 10px 20px;
   border-bottom: 2px solid #f5f5f5;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-header .close {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-header .close {
   font-size: 24px;
   cursor: pointer;
   color: aliceblue;
   padding: 10px;
   transition: 0.3s ease;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-header .close:hover {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-header .close:hover {
   transform: scale(1.1);
   color: #ef476f;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-header .title-mail {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-header .title-mail {
   font-weight: bold;
   color: #ffd166;
   font-size: 19px;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-body {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 13px;
   padding: 20px;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body .write-mail-input {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-body .write-mail-input {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body .write-mail-input input,
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body .write-mail-input textarea {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-body .write-mail-input input,
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-body .write-mail-input textarea {
   width: 92%;
   height: 50px;
   outline: none;
@@ -624,25 +630,25 @@ h2 {
   border-radius: 5px;
   overflow: hidden;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body .write-mail-input input:focus,
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body .write-mail-input textarea:focus {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-body .write-mail-input input:focus,
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-body .write-mail-input textarea:focus {
   outline: none;
   border-color: #b51b75;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body .write-mail-input textarea {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-body .write-mail-input textarea {
   min-height: 25vh;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-body .write-mail-input i {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-body .write-mail-input i {
   font-size: 23px;
   padding: 0 10px;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-footer {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-footer {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px 15px;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-footer .write-mail-btn {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-footer .write-mail-btn {
   height: 40px;
   outline: none;
   border: none;
@@ -656,11 +662,11 @@ h2 {
   letter-spacing: 1px;
   font-weight: bold;
 }
-.mailBox .hero-img .mail-container .box-container .write-mail-wrapper .write-mail-footer .write-mail-btn:hover {
+.mailBox .hero-img .mail-container .container .box-container .write-mail-wrapper .write-mail-footer .write-mail-btn:hover {
   background-color: transparent;
   color: aliceblue;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -669,14 +675,14 @@ h2 {
   gap: 13px;
   padding: 20px 0;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body .reply-mail-area {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body .reply-mail-area {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 15px;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body .reply-mail-area textarea {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body .reply-mail-area textarea {
   width: 70%;
   outline: none;
   border: none;
@@ -690,20 +696,20 @@ h2 {
   border-radius: 10px;
   overflow: hidden;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body .reply-mail-area textarea:focus {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body .reply-mail-area textarea:focus {
   outline: none;
   border-color: #b51b75;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body .reply-mail-area textarea::-moz-placeholder {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body .reply-mail-area textarea::-moz-placeholder {
   color: aliceblue;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body .reply-mail-area textarea::placeholder {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body .reply-mail-area textarea::placeholder {
   color: aliceblue;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body .reply-mail-area i {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body .reply-mail-area i {
   font-size: 23px;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body .reply-mail-btn {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body .reply-mail-btn {
   position: absolute;
   right: 30px;
   font-size: 10px;
@@ -718,7 +724,7 @@ h2 {
   transition: 0.3s ease;
   font-weight: bold;
 }
-.mailBox .hero-img .mail-container .box-container .reply-mail-body .reply-mail-btn:hover {
+.mailBox .hero-img .mail-container .container .box-container .reply-mail-body .reply-mail-btn:hover {
   background-color: transparent;
   color: aliceblue;
 }
@@ -728,7 +734,7 @@ h2 {
     left: 0px;
     width: 100%;
   }
-  .mailBox .hero-img .mail-container .box-container {
+  .mailBox .hero-img .mail-container .container .box-container {
     width: 95%;
   }
 }/*# sourceMappingURL=mailBox.css.map */

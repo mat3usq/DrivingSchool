@@ -1,63 +1,84 @@
-function updateProgressBars() {
-	const testDetails = document.querySelectorAll('.tests-details');
-
-	testDetails.forEach(detail => {
-		const progressBar = detail.querySelector('.progres-bar')
-		const progressText = detail.querySelector('.progres-span')
-		const progress = parseInt(progressText.textContent)
-
-		progressBar.style.width = progress + '%'
-
-		if (progress < 5) {
-			progressBar.style.backgroundColor = '#ff0000' // Czerwony
-		} else if (progress < 10) {
-			progressBar.style.backgroundColor = '#ff4500' // Pomarańczowo-czerwony
-		} else if (progress < 15) {
-			progressBar.style.backgroundColor = '#ff7f50' // Koralowy
-		} else if (progress < 20) {
-			progressBar.style.backgroundColor = '#ff8c00' // Ciemnopomarańczowy
-		} else if (progress < 25) {
-			progressBar.style.backgroundColor = '#ffd700' // Złoty
-		} else if (progress < 30) {
-			progressBar.style.backgroundColor = '#ffff00' // Żółty
-		} else if (progress < 35) {
-			progressBar.style.backgroundColor = '#9acd32' // Żółto-zielony
-		} else if (progress < 40) {
-			progressBar.style.backgroundColor = '#32cd32' // Zielony
-		} else if (progress < 45) {
-			progressBar.style.backgroundColor = '#00fa9a' // Wiosenny zielony
-		} else if (progress < 50) {
-			progressBar.style.backgroundColor = '#00ffff' // Turkusowy
-		} else if (progress < 55) {
-			progressBar.style.backgroundColor = '#1e90ff' // Niebieski
-		} else if (progress < 60) {
-			progressBar.style.backgroundColor = '#0000ff' // Głęboki niebieski
-		} else if (progress < 65) {
-			progressBar.style.backgroundColor = '#771eb6' // Indygo
-		} else if (progress < 70) {
-			progressBar.style.backgroundColor = '#800080' // Purpurowy
-		} else if (progress < 75) {
-			progressBar.style.backgroundColor = '#9400d3' // Ciemnofioletowy
-		} else if (progress < 80) {
-			progressBar.style.backgroundColor = '#ff00ff' // Magenta
-		} else if (progress < 85) {
-			progressBar.style.backgroundColor = '#ff1493' // Różowy
-		} else if (progress < 90) {
-			progressBar.style.backgroundColor = '#ff69b4' // Jasnoróżowy
-		} else if (progress < 95) {
-			progressBar.style.backgroundColor = '#ff8c00' // Jasnopomarańczowy
-		} else {
-			progressBar.style.backgroundColor = '#00ff00' // Jasnozielony
+function generateGradientColors() {
+	const stops = [
+		{ color: '#ff0000', pos: 0 },
+		{ color: '#ff1a00', pos: 1 },
+		{ color: '#ff3300', pos: 2 },
+		{ color: '#ff4d00', pos: 3 },
+		{ color: '#ff6600', pos: 10 },
+		{ color: '#ff9933', pos: 15 },
+		{ color: '#ffcc00', pos: 20 },
+		{ color: '#ffff00', pos: 30 },
+		{ color: '#ccff00', pos: 40 },
+		{ color: '#66ff66', pos: 50 },
+		{ color: '#00ffc9', pos: 60 },
+		{ color: '#00ffff', pos: 70 },
+		{ color: '#00ccff', pos: 80 },
+		{ color: '#00ff80', pos: 90 },
+		{ color: '#00ff00', pos: 100 },
+	]
+	function hexToRgb(hex) {
+		const c = hex.replace('#', '')
+		return {
+			r: parseInt(c.substring(0, 2), 16),
+			g: parseInt(c.substring(2, 4), 16),
+			b: parseInt(c.substring(4, 6), 16),
 		}
+	}
+	function rgbToHex(r, g, b) {
+		const f = v => {
+			const h = v.toString(16)
+			return h.length === 1 ? '0' + h : h
+		}
+		return '#' + f(r) + f(g) + f(b)
+	}
+	function interpolateColor(c1, c2, f) {
+		const r = Math.round(c1.r + f * (c2.r - c1.r))
+		const g = Math.round(c1.g + f * (c2.g - c1.g))
+		const b = Math.round(c1.b + f * (c2.b - c1.b))
+		return { r, g, b }
+	}
+	function getColorForPercentage(p) {
+		if (p <= 0) return stops[0].color
+		if (p >= 100) return stops[stops.length - 1].color
+		let lower = stops[0]
+		let upper = stops[stops.length - 1]
+		for (let i = 0; i < stops.length - 1; i++) {
+			if (p >= stops[i].pos && p <= stops[i + 1].pos) {
+				lower = stops[i]
+				upper = stops[i + 1]
+				break
+			}
+		}
+		const range = upper.pos - lower.pos
+		const factor = (p - lower.pos) / range
+		const c1 = hexToRgb(lower.color)
+		const c2 = hexToRgb(upper.color)
+		const c = interpolateColor(c1, c2, factor)
+		return rgbToHex(c.r, c.g, c.b)
+	}
+	const colors = []
+	for (let i = 0; i <= 100; i++) {
+		colors.push(getColorForPercentage(i))
+	}
+	return colors
+}
+
+function updateProgressBars() {
+	const gradientColors = generateGradientColors()
+	document.querySelectorAll('.tests-details').forEach(detail => {
+		const bar = detail.querySelector('.progres-bar')
+		const span = detail.querySelector('.progres-span')
+		const value = parseInt(span.textContent)
+		bar.style.width = value + '%'
+		bar.style.backgroundColor = gradientColors[Math.max(0, Math.min(value, 100))]
 	})
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-	updateProgressBars();
-	const forms = document.querySelectorAll(".tests-details");
-	forms.forEach(form => {
-		form.addEventListener("click", function() {
-			form.submit();
-		});
-	});
-});
+document.addEventListener('DOMContentLoaded', () => {
+	updateProgressBars()
+	document.querySelectorAll('.tests-details').forEach(form => {
+		form.addEventListener('click', () => {
+			form.submit()
+		})
+	})
+})

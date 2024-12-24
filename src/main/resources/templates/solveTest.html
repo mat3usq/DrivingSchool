@@ -34,7 +34,8 @@
         <div class="hero-img">
             <div class="hero-shadow"></div>
             <div class="box-test">
-                <div class="box-container">
+                <div class="container">
+                    <div class="box-container">
                     <th:block
                             th:if="${question.questionNumber != 0 && question.questionNumber != test.numberQuestions + 1}">
                         <div class="header-test">
@@ -190,6 +191,7 @@
                         <input type="hidden" name="isLiked"/>
                         <input type="hidden" name="action"/>
                     </form>
+                    </div>
                 </div>
             </div>
         </div>

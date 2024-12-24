@@ -186,11 +186,15 @@ h2 {
   width: 50vw;
   max-width: 800px;
 }
-.account .hero-img .box-account .box-container .container-account .title-header {
+.account .hero-img .box-account .box-container .container-account .title-header,
+.account .hero-img .box-account .box-container .container-account .title-header-right {
   letter-spacing: 2px;
   font-size: 14px;
   margin-bottom: 3px;
   padding-left: 20px;
+}
+.account .hero-img .box-account .box-container .container-account .title-header-right {
+  text-align: right;
 }
 .account .hero-img .box-account .box-container .container-account .content {
   font-weight: bold;
@@ -237,19 +241,26 @@ h2 {
   flex-direction: row;
   justify-content: space-between;
 }
-.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .title-header {
+.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .title-header,
+.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .title-header-right {
   font-style: italic;
   letter-spacing: 0px;
   padding-right: 10px;
   font-size: 15px;
   color: #6acff1;
 }
-.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content {
+.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content,
+.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content-price {
   font-size: 15px;
   color: aliceblue;
 }
-.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content span {
+.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content span,
+.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content-price span {
   margin-left: 4px;
+}
+.account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content-price {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 @media (max-width: 950px) {
@@ -277,11 +288,13 @@ h2 {
   .account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment {
     padding: 7px 12px;
   }
-  .account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .title-header {
+  .account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .title-header,
+  .account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .title-header-right {
     padding-left: 0px;
     font-size: 13px;
   }
-  .account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content {
+  .account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content,
+  .account .hero-img .box-account .box-container .container-account .schoolUser-payments .payment .box .content-price {
     font-size: 13px;
   }
   .navbar-left {

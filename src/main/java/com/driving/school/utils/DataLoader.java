@@ -86,7 +86,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (schoolUserRepository.findByEmail("admin") != null) {
+        if (schoolUserRepository.findByEmail("jan.kowalski@gmail.com") != null) {
             logger.info("\u001B[1mAll \u001B[1;34mdata\u001B[1;39m was loaded in \u001B[1;33mpast\u001B[1;39m to database.\u001B[0m");
             return;
         }
@@ -113,19 +113,19 @@ public class DataLoader implements CommandLineRunner {
 
         // password: admin
         // categories: all
-        SchoolUser admin = new SchoolUser("admin", "admin", "$100801$cfJJlxSl83FjJ2mh+6yUcdxxksVm3XlOzhBr4gLHFEOhdeWmaf2H6Lki/fe99YUMduDoX/LGHUcodWe9SkhVnw==$Q1yyulzoYXseBJ/OmM/xgcYD9fFPaw2bRzBHRW7RgG4=", "admin", Constants.ADMIN_ROLE, "B");
+        SchoolUser admin = new SchoolUser("Jan", "Kowalski", "$100801$cfJJlxSl83FjJ2mh+6yUcdxxksVm3XlOzhBr4gLHFEOhdeWmaf2H6Lki/fe99YUMduDoX/LGHUcodWe9SkhVnw==$Q1yyulzoYXseBJ/OmM/xgcYD9fFPaw2bRzBHRW7RgG4=", "jan.kowalski@gmail.com", Constants.ADMIN_ROLE, "B");
 
         // password: student
         // categories: "A,B,D"
-        SchoolUser student = new SchoolUser("student", "student", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student", Constants.STUDENT_ROLE, "");
+        SchoolUser student = new SchoolUser("Anna", "Nowak", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "anna.nowak123@gmail.com", Constants.STUDENT_ROLE, "");
         // categories: "D, PT"
-        SchoolUser student2 = new SchoolUser("student2", "student2", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "student2", Constants.STUDENT_ROLE, "");
+        SchoolUser student2 = new SchoolUser("Michał", "Szczepura", "$100801$CzaxAyZkwycp18sGzcZE33ymaEBuqHY579JJ8CzRdckDIUMYQADzXGPRE2Hqz3iZauxyIkkSbo3998KrBYVznA==$vbVS5qCtrKps3saxR7pmK+pA+TNiZQfNWwrcHS7qHuo=", "michal.szczepura@yahoo.com", Constants.STUDENT_ROLE, "");
 
         // password: instructor
         // categories: all
-        SchoolUser instructor = new SchoolUser("instructor", "instructor", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor", Constants.INSTRUCTOR_ROLE, "");
-        SchoolUser instructor2 = new SchoolUser("instructor2", "instructor2", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor2", Constants.INSTRUCTOR_ROLE, "");
-        SchoolUser instructor3 = new SchoolUser("instructor3", "instructor3", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "instructor3", Constants.INSTRUCTOR_ROLE, "");
+        SchoolUser instructor = new SchoolUser("Krzysztof", "Wiśniewski", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "krzysztof.wisniewski@outlook.com", Constants.INSTRUCTOR_ROLE, "");
+        SchoolUser instructor2 = new SchoolUser("Ewa", "Kowalczyk", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "ewa.kowalczyk@wp.pl", Constants.INSTRUCTOR_ROLE, "");
+        SchoolUser instructor3 = new SchoolUser("Piotr", "Mazur", "$100801$mtcGeB1wJkCJufG6sWa/FJ110+v5R9nIhvFhccGm6IuTc9mA43NJQNQVz8Gbjy5XepW7tWaaI8QM7bpVDd0rmA==$gxqwRbGBy2s5ztOWgJRwfh2+TZJZvgfZCZSXHlQYE5k=", "piotr.mazur@gmail.com", Constants.INSTRUCTOR_ROLE, "");
 
         schoolUsers.add(admin);
         schoolUsers.add(student);

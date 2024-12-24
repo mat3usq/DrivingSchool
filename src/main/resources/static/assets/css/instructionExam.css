@@ -151,19 +151,24 @@ h2 {
 }
 .instruction .hero-img .box-instruction {
   position: absolute;
-  top: 12vh;
-  left: 150px;
-  height: 95vh;
-  width: 100%;
-  overflow: scroll;
+  top: 100px;
+  left: 300px;
+  width: calc(100vw - 300px);
+  max-height: 97vh;
+  overflow-y: auto;
 }
-.instruction .hero-img .box-instruction .box-container {
+.instruction .hero-img .box-instruction .container {
+  width: 100%;
+  margin: 0 auto;
+  --bs-gutter-x: 0;
+}
+.instruction .hero-img .box-instruction .container .box-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 10px auto;
 }
-.instruction .hero-img .box-instruction .box-container .title {
+.instruction .hero-img .box-instruction .container .box-container .title {
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 20px;
@@ -172,12 +177,11 @@ h2 {
   text-align: center;
   font-weight: bold;
 }
-.instruction .hero-img .box-instruction .box-container .container-instruction {
+.instruction .hero-img .box-instruction .container .box-container .container-instruction {
   display: flex;
   flex-direction: column;
-  max-width: 60%;
 }
-.instruction .hero-img .box-instruction .box-container .container-instruction .instruction {
+.instruction .hero-img .box-instruction .container .box-container .container-instruction .instruction {
   font-size: 19px;
   display: flex;
   flex-direction: column;
@@ -187,25 +191,25 @@ h2 {
   background-color: rgba(0, 0, 0, 0.9);
   border-radius: 20px;
 }
-.instruction .hero-img .box-instruction .box-container .container-instruction .instruction span {
+.instruction .hero-img .box-instruction .container .box-container .container-instruction .instruction span {
   color: #4cc9f0;
   font-weight: bold;
 }
-.instruction .hero-img .box-instruction .box-container .container-instruction .instruction img {
+.instruction .hero-img .box-instruction .container .box-container .container-instruction .instruction img {
   width: 80%;
   border-radius: 40px;
 }
-.instruction .hero-img .box-instruction .box-container .container-instruction .instruction p {
+.instruction .hero-img .box-instruction .container .box-container .container-instruction .instruction p {
   margin: 20px;
 }
-.instruction .hero-img .box-instruction .box-container .container-instruction .instruction .underline {
+.instruction .hero-img .box-instruction .container .box-container .container-instruction .instruction .underline {
   margin: 0 auto 0px;
 }
-.instruction .hero-img .box-instruction .box-container .container-instruction .instruction ul li {
+.instruction .hero-img .box-instruction .container .box-container .container-instruction .instruction ul li {
   font-size: 16px;
   margin-bottom: 10px;
 }
-.instruction .hero-img .box-instruction .box-container button {
+.instruction .hero-img .box-instruction .container .box-container button {
   border: none;
   outline: none;
   height: 60px;
@@ -222,7 +226,7 @@ h2 {
   border: 2px solid #4d84e2;
   font-size: 16px;
 }
-.instruction .hero-img .box-instruction .box-container button:hover {
+.instruction .hero-img .box-instruction .container .box-container button:hover {
   scale: 1.1;
   color: aliceblue;
   background-color: #4d84e2;
@@ -230,16 +234,17 @@ h2 {
 
 @media (max-width: 720px) {
   .instruction .hero-img .box-instruction {
-    top: 12vh;
     left: 0px;
-    height: 88vh;
+    width: 100%;
   }
-  .instruction .hero-img .box-instruction .box-container .container-instruction {
+  .instruction .hero-img .box-instruction .container .box-container .container-instruction {
     max-width: 100%;
   }
 }
 @media (max-width: 500px) {
-  .instruction .hero-img .box-instruction .box-container .container-instruction .instruction {
+  .instruction .hero-img .box-instruction .container .box-container .container-instruction .instruction {
     font-size: 14px;
+    margin: 30px 10px;
+    padding: 20px;
   }
 }/*# sourceMappingURL=instructionExam.css.map */

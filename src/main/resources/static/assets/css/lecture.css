@@ -103,6 +103,7 @@ footer {
 h2 {
   text-align: center;
   text-transform: uppercase;
+  padding: 5px;
 }
 
 .orange-text {
@@ -228,7 +229,7 @@ h2 {
   font-weight: bold;
   border-bottom: 3px solid #ef476f;
   border-top: 3px solid #ef476f;
-  margin: 0 auto;
+  margin: 0 10px;
   max-width: 400px;
   cursor: pointer;
   -webkit-user-select: none;
@@ -400,6 +401,7 @@ h2 {
 .editLectureForm .input-file .drag-area .header,
 .editSublectureForm .input-file .drag-area .header,
 .editSubjectForm .input-file .drag-area .header {
+  text-align: center;
   font-size: 20px;
   font-weight: 500;
 }
@@ -679,11 +681,11 @@ h2 {
 }
 .subject .hero-img .box-subject {
   position: absolute;
-  top: 12vh;
+  top: 100px;
   left: 300px;
   width: calc(100vw - 300px);
   height: 97vh;
-  overflow: scroll;
+  overflow-y: auto;
 }
 .subject .hero-img .box-subject .box-container {
   display: flex;
@@ -695,13 +697,19 @@ h2 {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 30px;
+  margin: 0 auto;
+  --bs-gutter-x: 0;
+  padding: 0 12px;
+}
+.subject .hero-img .box-subject .box-container .container .edit-box {
+  position: absolute;
+  top: 63%;
+  right: 0px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
 }
 .subject .hero-img .box-subject .box-container .container .edit-box .edit-item {
-  position: absolute;
-  right: 15px;
-  top: 70%;
-  transform: translateY(-45%);
   font-size: 11px;
   font-weight: lighter;
   font-style: italic;
@@ -750,7 +758,7 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture p,
 .subject .hero-img .box-subject .box-container .container-lecture .box-sublecture p {
-  margin: 20px;
+  margin: 5px 10px;
 }
 .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details .img-block img,
 .subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details .img-block img {
@@ -767,18 +775,15 @@ h2 {
   position: relative;
   width: 90%;
 }
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details a.edit-icon i,
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .sublecture-details a.edit-icon i,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details a.edit-icon i,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .sublecture-details a.edit-icon i {
-  right: -35px;
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .sublecture-details .edit-box,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .sublecture-details .edit-box {
+  top: 60%;
+  right: -67px;
 }
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details .edit-item,
-.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .sublecture-details .edit-item,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details .edit-item,
-.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .sublecture-details .edit-item {
-  right: -55px;
-  top: 36%;
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details .edit-box,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details .edit-box {
+  top: 60%;
+  right: -57px;
 }
 .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details,
 .subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .sublecture-details,
@@ -792,10 +797,6 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .container-sublecture a.edit-icon i,
 .subject .hero-img .box-subject .box-container .container-lecture a.edit-icon i {
-  position: absolute;
-  right: 10px;
-  top: 35%;
-  transform: translateY(-45%);
   text-decoration: none;
   color: #4cc9f0;
   transition: 0.3s ease;
@@ -848,7 +849,8 @@ h2 {
 }
 .subject .hero-img .box-subject .box-container .editSublectureForm .input-file,
 .subject .hero-img .box-subject .box-container .editSubjectForm .input-file {
-  width: 85%;
+  width: 100%;
+  padding: 15px;
 }
 
 .addLectures {
@@ -885,6 +887,9 @@ h2 {
   .subject .hero-img .box-subject .box-container .container-sublecture,
   .subject .hero-img .box-subject .box-container .container-lecture {
     max-width: 100%;
+  }
+  .subject .hero-img .box-subject .box-container .container {
+    padding: 5px;
   }
   .addLectures .lectureForm,
   .addLectures .sublectureForm,
@@ -944,6 +949,6 @@ h2 {
     height: 150vh;
   }
   .subject .hero-img .box-subject {
-    height: 130vh;
+    height: 136vh;
   }
 }/*# sourceMappingURL=lecture.css.map */

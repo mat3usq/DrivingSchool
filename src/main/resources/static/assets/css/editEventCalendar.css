@@ -147,7 +147,12 @@ h2 {
   background-color: rgba(0, 0, 0, 0.4);
   z-index: -5;
 }
-.edit-event-section .hero-img .mini-title-warning {
+.edit-event-section .hero-img .container {
+  width: 100%;
+  margin: 0 auto;
+  --bs-gutter-x: 0;
+}
+.edit-event-section .hero-img .container .mini-title-warning {
   margin: 20px auto;
   padding: 20px 15px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -158,7 +163,7 @@ h2 {
   text-align: center;
   border: 5px dotted #ef476f;
 }
-.edit-event-section .hero-img .warning-text {
+.edit-event-section .hero-img .container .warning-text {
   text-align: center;
   margin: 10px auto;
   max-width: 400px;
@@ -172,7 +177,7 @@ h2 {
   border-left: 4px solid #ffd166;
   border-right: 4px solid #ffd166;
 }
-.edit-event-section .hero-img .warning-text::before {
+.edit-event-section .hero-img .container .warning-text::before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   color: inherit;
@@ -182,7 +187,7 @@ h2 {
   transform: translateY(-50%);
   content: "\f071";
 }
-.edit-event-section .hero-img .box-event {
+.edit-event-section .hero-img .container .box-event {
   position: absolute;
   top: 30px;
   left: 300px;
@@ -198,7 +203,7 @@ h2 {
   justify-content: center;
   align-items: center;
 }
-.edit-event-section .hero-img .box-event .container {
+.edit-event-section .hero-img .container .box-event .box-container {
   margin: 0 auto;
   padding: 5px;
   color: aliceblue;
@@ -206,13 +211,13 @@ h2 {
   border-radius: 20px;
   background-color: rgba(39, 43, 57, 0.95);
 }
-.edit-event-section .hero-img .box-event .container .left {
+.edit-event-section .hero-img .container .box-event .box-container .left {
   width: 60%;
   padding: 20px;
   display: flex;
   flex-direction: column;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper {
   max-height: 550px;
   height: 100%;
   overflow-y: auto;
@@ -221,7 +226,7 @@ h2 {
   background: linear-gradient(to left, #cfdef3, rgb(252, 240, 221));
   box-shadow: 0px 0px 10px rgba(45, 76, 103, 0.654);
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-header {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-header {
   width: 100%;
   height: 70px;
   display: flex;
@@ -231,17 +236,17 @@ h2 {
   color: #373c4f;
   border-bottom: 1px solid #f5f5f5;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-header .title,
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-header .subject {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-header .title,
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-header .subject {
   color: #373c4f;
   font-size: 1.2rem;
   font-weight: 500;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-header .title {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-header .title {
   width: 100%;
   text-align: center;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-body {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -249,7 +254,7 @@ h2 {
   padding: 20px;
   padding-bottom: 0px;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body .edit-event-input {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-body .edit-event-input {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -258,7 +263,7 @@ h2 {
   gap: 10px;
   margin: 5px;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body .edit-event-input p {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-body .edit-event-input p {
   width: 100%;
   font-size: 14px;
   letter-spacing: 1px;
@@ -268,8 +273,8 @@ h2 {
   margin-left: 30px;
   margin-bottom: -10px;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body .edit-event-input input,
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body .edit-event-input select {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-body .edit-event-input input,
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-body .edit-event-input select {
   width: 100%;
   height: 40px;
   outline: none;
@@ -281,20 +286,20 @@ h2 {
   color: #373c4f;
   border-radius: 5px;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body .edit-event-input input:focus,
-.edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body .edit-event-input select:focus {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-body .edit-event-input input:focus,
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-body .edit-event-input select:focus {
   outline: none;
   border-color: #b51b75;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-footer {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-footer {
   display: flex;
   align-items: center;
   justify-content: center;
   justify-content: space-evenly;
   padding: 20px 15px;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-footer .edit-event-btn,
-.edit-event-section .hero-img .box-event .container .left .edit-event-footer .back-event-btn {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-footer .edit-event-btn,
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-footer .back-event-btn {
   height: 40px;
   font-size: 1rem;
   font-weight: 500;
@@ -306,34 +311,34 @@ h2 {
   padding: 5px 10px;
   transition: 0.3s ease;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-footer .edit-event-btn:hover,
-.edit-event-section .hero-img .box-event .container .left .edit-event-footer .back-event-btn:hover {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-footer .edit-event-btn:hover,
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-footer .back-event-btn:hover {
   background-color: transparent;
   color: #373c4f;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-footer .edit-event-btn {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-footer .edit-event-btn {
   border: 2px solid #b51b75;
   background-color: #b51b75;
 }
-.edit-event-section .hero-img .box-event .container .left .edit-event-footer .back-event-btn {
+.edit-event-section .hero-img .container .box-event .box-container .left .edit-event-footer .back-event-btn {
   border: 2px solid #4d84e2;
   background-color: #4d84e2;
 }
-.edit-event-section .hero-img .box-event .container .right {
+.edit-event-section .hero-img .container .box-event .box-container .right {
   position: relative;
   width: 40%;
   min-height: 100%;
   padding: 20px 0;
   margin-left: 8px;
 }
-.edit-event-section .hero-img .box-event .container .right .capacity-number {
+.edit-event-section .hero-img .container .box-event .box-container .right .capacity-number {
   font-family: "Roboto", sans-serif;
   font-size: 1.1rem;
   font-weight: 500;
   letter-spacing: 1px;
   color: #4cc9f0;
 }
-.edit-event-section .hero-img .box-event .container .right .today-date {
+.edit-event-section .hero-img .container .box-event .box-container .right .today-date {
   width: 100%;
   height: 50px;
   display: flex;
@@ -347,16 +352,16 @@ h2 {
   text-transform: capitalize;
   margin-top: 30px;
 }
-.edit-event-section .hero-img .box-event .container .right .today-date .event-day {
+.edit-event-section .hero-img .container .box-event .box-container .right .today-date .event-day {
   font-size: 1.5rem;
   font-weight: 500;
 }
-.edit-event-section .hero-img .box-event .container .right .today-date .event-date {
+.edit-event-section .hero-img .container .box-event .box-container .right .today-date .event-date {
   font-size: 1rem;
   font-weight: 400;
   color: #878895;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople {
   width: 100%;
   height: 100%;
   max-height: 500px;
@@ -368,7 +373,7 @@ h2 {
   padding-left: 5px;
   padding-top: 5px;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person {
   position: relative;
   width: 100%;
   min-height: 100px;
@@ -386,30 +391,30 @@ h2 {
   border-radius: 5px;
   transition: transform 0.3s ease;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person.hidden {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person.hidden {
   display: none;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person:nth-child(even) {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person:nth-child(even) {
   background: transparent;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person:hover {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person:hover {
   background: linear-gradient(90deg, #b51b75, transparent);
   transform: translateX(30px);
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person:hover .delete-icon {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person:hover .delete-icon {
   opacity: 1;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person:hover .delete-icon:hover {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person:hover .delete-icon:hover {
   color: #ef476f;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person.clicked {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person.clicked {
   background: linear-gradient(90deg, #b51b75, transparent);
   transform: translateX(30px);
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person.clicked .delete-icon {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person.clicked .delete-icon {
   opacity: 1;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .delete-form {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .delete-form {
   height: 100%;
   width: 40px;
   display: flex;
@@ -418,49 +423,49 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .delete-form button {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .delete-form button {
   width: 100%;
   padding-right: 20px;
   background: transparent;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .delete-icon {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .delete-icon {
   font-size: 22px;
   opacity: 0;
   transition: 0.3s ease;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .delete-icon:hover {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .delete-icon:hover {
   transform: scale(1.15);
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .name,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .surname,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .email {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .name,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .surname,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .email {
   display: flex;
   align-items: baseline;
   pointer-events: none;
   justify-content: center;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .name .person-name,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .name .person-surname,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .name .person-email,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .surname .person-name,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .surname .person-surname,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .surname .person-email,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .email .person-name,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .email .person-surname,
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person .email .person-email {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .name .person-name,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .name .person-surname,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .name .person-email,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .surname .person-name,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .surname .person-surname,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .surname .person-email,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .email .person-name,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .email .person-surname,
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person .email .person-email {
   font-size: 1rem;
   font-weight: 400;
   margin-left: 10px;
   margin-right: 10px;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person i {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person i {
   color: #b51b75;
   transition: color 0.3s ease;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person:hover i {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person:hover i {
   color: #fff;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person::after {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person::after {
   content: "☃︎";
   position: absolute;
   top: 50%;
@@ -474,13 +479,13 @@ h2 {
   color: #b51b75;
   transform: translateY(-50%);
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person:hover::after {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person:hover::after {
   display: flex;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .person button {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .person button {
   border: none;
 }
-.edit-event-section .hero-img .box-event .container .right .assignPeople .no-people {
+.edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .no-people {
   width: 100%;
   height: 100%;
   display: flex;
@@ -492,7 +497,7 @@ h2 {
 }
 
 @media (min-width: 768px) {
-  .edit-event-section .hero-img .box-event .container {
+  .edit-event-section .hero-img .container .box-event .box-container {
     max-width: 100%;
   }
 }
@@ -500,42 +505,44 @@ h2 {
   .edit-event-section .hero-img {
     min-height: 1500px;
   }
-  .edit-event-section .hero-img .box-event {
+  .edit-event-section .hero-img .container .box-event {
     width: 100%;
     top: 110px;
     left: 0px;
     align-items: flex-start;
     justify-content: flex-start;
   }
-  .edit-event-section .hero-img .box-event .container {
+  .edit-event-section .hero-img .container .box-event .box-container {
     min-height: 100vh;
     flex-direction: column;
   }
-  .edit-event-section .hero-img .box-event .container .left {
+  .edit-event-section .hero-img .container .box-event .box-container .left {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding: 0;
+    padding-top: 10px;
   }
-  .edit-event-section .hero-img .box-event .container .left .edit-event-wrapper {
+  .edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper {
     width: 75%;
   }
-  .edit-event-section .hero-img .box-event .container .left .edit-event-wrapper .edit-event-body .edit-event-input p {
+  .edit-event-section .hero-img .container .box-event .box-container .left .edit-event-wrapper .edit-event-body .edit-event-input p {
     font-size: 12px;
   }
-  .edit-event-section .hero-img .box-event .container .right {
+  .edit-event-section .hero-img .container .box-event .box-container .right {
     width: 100%;
     height: 100%;
     padding: 20px 0;
   }
-  .edit-event-section .hero-img .box-event .container .right .assignPeople {
+  .edit-event-section .hero-img .container .box-event .box-container .right .assignPeople {
     padding-bottom: 100px;
   }
-  .edit-event-section .hero-img .box-event .container .right .assignPeople .no-people {
+  .edit-event-section .hero-img .container .box-event .box-container .right .assignPeople .no-people {
     height: 30%;
   }
-  .edit-event-section .hero-img .box-event .container .right .today-date {
+  .edit-event-section .hero-img .container .box-event .box-container .right .today-date {
     margin-top: 10px;
   }
   .navbar-left {

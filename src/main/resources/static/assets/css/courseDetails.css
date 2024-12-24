@@ -131,13 +131,18 @@ h2 {
 }
 .details .hero-img .box-container {
   position: absolute;
-  top: 12vh;
+  top: 100px;
   left: 300px;
   width: calc(100vw - 300px);
   max-height: 97vh;
   overflow-y: auto;
 }
-.details .hero-img .box-container .title {
+.details .hero-img .box-container .container {
+  width: 100%;
+  margin: 0 auto;
+  --bs-gutter-x: 0;
+}
+.details .hero-img .box-container .container .title {
   display: inline-block;
   padding: 20px 10px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -149,7 +154,7 @@ h2 {
   white-space: nowrap;
   margin: 20px auto;
 }
-.details .hero-img .box-container .mini-title {
+.details .hero-img .box-container .container .mini-title {
   margin: 0px auto;
   padding: 20px 10px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -162,7 +167,8 @@ h2 {
   width: -moz-fit-content;
   width: fit-content;
 }
-.details .hero-img .box-container .mini-title-warning, .details .hero-img .box-container .mini-title-course-warning {
+.details .hero-img .box-container .container .mini-title-warning,
+.details .hero-img .box-container .container .mini-title-course-warning {
   margin: 20px auto;
   padding: 20px 15px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -173,7 +179,7 @@ h2 {
   text-align: center;
   border: 5px dotted #ef476f;
 }
-.details .hero-img .box-container .warning-text {
+.details .hero-img .box-container .container .warning-text {
   text-align: center;
   margin: 10px auto;
   max-width: 400px;
@@ -187,7 +193,7 @@ h2 {
   border-left: 4px solid #ffd166;
   border-right: 4px solid #ffd166;
 }
-.details .hero-img .box-container .warning-text::before {
+.details .hero-img .box-container .container .warning-text::before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   color: inherit;
@@ -197,10 +203,10 @@ h2 {
   transform: translateY(-50%);
   content: "\f071";
 }
-.details .hero-img .box-container .add-btn,
-.details .hero-img .box-container .delete-btn,
-.details .hero-img .box-container .info-btn,
-.details .hero-img .box-container .cancel-btn {
+.details .hero-img .box-container .container .add-btn,
+.details .hero-img .box-container .container .delete-btn,
+.details .hero-img .box-container .container .info-btn,
+.details .hero-img .box-container .container .cancel-btn {
   font-size: 18px;
   height: 35px;
   padding: 0px 10px;
@@ -213,38 +219,38 @@ h2 {
   cursor: pointer;
   transition: 0.3s ease;
 }
-.details .hero-img .box-container .add-btn:hover,
-.details .hero-img .box-container .delete-btn:hover,
-.details .hero-img .box-container .info-btn:hover,
-.details .hero-img .box-container .cancel-btn:hover {
+.details .hero-img .box-container .container .add-btn:hover,
+.details .hero-img .box-container .container .delete-btn:hover,
+.details .hero-img .box-container .container .info-btn:hover,
+.details .hero-img .box-container .container .cancel-btn:hover {
   transform: scale(1.05);
 }
-.details .hero-img .box-container button.delete-btn {
+.details .hero-img .box-container .container button.delete-btn {
   background-color: #ef476f;
 }
-.details .hero-img .box-container button.delete-btn:hover {
+.details .hero-img .box-container .container button.delete-btn:hover {
   background-color: #eb184a;
 }
-.details .hero-img .box-container button.add-btn {
+.details .hero-img .box-container .container button.add-btn {
   background-color: #2de300;
 }
-.details .hero-img .box-container button.add-btn:hover {
+.details .hero-img .box-container .container button.add-btn:hover {
   background-color: #23b000;
 }
-.details .hero-img .box-container button.info-btn {
+.details .hero-img .box-container .container button.info-btn {
   background-color: #4d84e2;
 }
-.details .hero-img .box-container button.info-btn:hover {
+.details .hero-img .box-container .container button.info-btn:hover {
   background-color: #2366d9;
 }
-.details .hero-img .box-container button.cancel-btn {
+.details .hero-img .box-container .container button.cancel-btn {
   background-color: #ffc233;
 }
-.details .hero-img .box-container button.cancel-btn:hover {
+.details .hero-img .box-container .container button.cancel-btn:hover {
   background-color: #ffb200;
 }
-.details .hero-img .box-container .box-course .course-schoolUser,
-.details .hero-img .box-container .box-course .editCourse-schoolUser {
+.details .hero-img .box-container .container .box-course .course-schoolUser,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser {
   width: auto;
   max-width: 700px;
   margin: 0px auto;
@@ -252,8 +258,8 @@ h2 {
   flex-direction: column;
   padding: 10px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .btn-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .btn-box {
+.details .hero-img .box-container .container .box-course .course-schoolUser .btn-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .btn-box {
   margin: 10px 0;
   display: flex;
   flex-wrap: wrap;
@@ -262,16 +268,16 @@ h2 {
   justify-content: space-evenly;
   gap: 10px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .btn-box button,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .btn-box button {
+.details .hero-img .box-container .container .box-course .course-schoolUser .btn-box button,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .btn-box button {
   font-size: 16px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -282,59 +288,59 @@ h2 {
   border-radius: 10px 10px 0 0;
   gap: 10px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .title-header,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .title-header,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .title-header,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .title-header,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .title-header,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .title-header {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail .title-header,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .title-header,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .title-header,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .title-header,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .title-header,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .title-header {
   font-style: italic;
   font-size: 15px;
   color: #6acff1;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail .content,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .content,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .content,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .content,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .content,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .content {
   font-size: 15px;
   color: aliceblue;
   text-align: right;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content span,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content span,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content span,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content span,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content span,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content span {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail .content span,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .content span,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .content span,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .content span,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .content span,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .content span {
   margin-left: 4px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content .hours,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content .hours,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content .hours,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content .hours,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content .hours,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content .hours {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail .content .hours,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .content .hours,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .content .hours,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .content .hours,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .content .hours,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .content .hours {
   font-weight: bold;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content.failed,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content.failed,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content.failed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content.failed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.failed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content.failed {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail .content.failed,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .content.failed,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .content.failed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .content.failed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .content.failed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .content.failed {
   position: relative;
   color: #ef476f;
   padding-right: 20px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content.failed::after,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content.failed::after,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content.failed::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content.failed::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.failed::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content.failed::after {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail .content.failed::after,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .content.failed::after,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .content.failed::after,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .content.failed::after,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .content.failed::after,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .content.failed::after {
   content: "\f00d";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
@@ -344,22 +350,22 @@ h2 {
   font-size: 20px;
   color: #ef476f;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content.passed,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content.passed,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content.passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content.passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content.passed {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail .content.passed,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .content.passed,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .content.passed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .content.passed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .content.passed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .content.passed {
   position: relative;
   color: springgreen;
   padding-right: 20px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail .content.passed::after,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content.passed::after,
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .content.passed::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .content.passed::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content.passed::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .content.passed::after {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail .content.passed::after,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .content.passed::after,
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .content.passed::after,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .content.passed::after,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .content.passed::after,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .content.passed::after {
   content: "\f00c";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
@@ -369,37 +375,37 @@ h2 {
   font-size: 20px;
   color: springgreen;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title {
   flex-direction: column;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-title .content,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .content {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-title .content,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .content {
   text-align: center;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment {
   flex-direction: column;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment .title-header,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .title-header {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment .title-header,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .title-header {
   text-align: center;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box {
   width: 100%;
   font-size: 14px;
   list-style: none;
   padding-left: 5px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box li,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box li,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li {
   position: relative;
   margin-bottom: 7px;
   padding-left: 15px;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box li::before,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li::before {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box li::before,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li::before {
   content: "";
   position: absolute;
   left: 0;
@@ -410,23 +416,23 @@ h2 {
   border-radius: 50%;
   background-color: #99d98c;
 }
-.details .hero-img .box-container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box .date-time,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box .date-time {
+.details .hero-img .box-container .container .box-course .course-schoolUser .course-details .detail-comment ul.comment-box .date-time,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box .date-time {
   color: #99d98c;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title input {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title input {
   width: 95%;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .time input {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .time input {
   width: 85px;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .time .hours {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .time .hours {
   font-weight: bold;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment input,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title input,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail input {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment input,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title input,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail input {
   padding: 10px;
   font-size: 15px;
   color: aliceblue;
@@ -434,16 +440,16 @@ h2 {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment input:focus,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title input:focus,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail input:focus {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment input:focus,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title input:focus,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio],
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio],
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail input[type=radio] {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio],
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio],
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail input[type=radio] {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -458,20 +464,20 @@ h2 {
   position: relative;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio]:hover,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio]:hover,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail input[type=radio]:hover {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio]:hover,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio]:hover,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail input[type=radio]:hover {
   border-color: #ffc233;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio]:checked,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio]:checked,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail input[type=radio]:checked {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio]:checked,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio]:checked,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail input[type=radio]:checked {
   background-color: #ef476f;
   border-color: #ef476f;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio]:checked::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio]:checked::after,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail input[type=radio]:checked::after {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio]:checked::after,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio]:checked::after,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail input[type=radio]:checked::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -482,31 +488,31 @@ h2 {
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio]:checked ~ label,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio]:checked ~ label,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail input[type=radio]:checked ~ label {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment input[type=radio]:checked ~ label,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title input[type=radio]:checked ~ label,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail input[type=radio]:checked ~ label {
   font-weight: bold;
   color: #ef476f;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment label,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title label,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail label {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment label,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title label,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail label {
   font-size: 16px;
   cursor: pointer;
   color: aliceblue;
   transition: color 0.3s ease;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment label:hover,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title label:hover,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail label:hover {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment label:hover,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title label:hover,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail label:hover {
   color: #ef476f;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .category-container,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .passed-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .category-container,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .passed-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .category-container,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .passed-box {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .category-container,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .passed-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .category-container,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .passed-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .category-container,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .passed-box {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -514,44 +520,44 @@ h2 {
   flex-wrap: wrap;
   gap: 10px;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .category-container .category-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .category-container .passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .passed-box .category-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment .passed-box .passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .category-container .category-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .category-container .passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .passed-box .category-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title .passed-box .passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .category-container .category-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .category-container .passed,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .passed-box .category-box,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail .passed-box .passed {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .category-container .category-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .category-container .passed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .passed-box .category-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment .passed-box .passed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .category-container .category-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .category-container .passed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .passed-box .category-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title .passed-box .passed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .category-container .category-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .category-container .passed,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .passed-box .category-box,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail .passed-box .passed {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li::before,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li::before,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li::before {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li::before,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li::before,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li::before {
   top: 45%;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li p,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li p,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li p {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li p,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li p,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li p {
   width: 140px;
   flex-shrink: 0;
   margin: 0 10px 5px 0;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li .comment-actions,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li .comment-actions,
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li .comment-actions {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li .comment-actions,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li .comment-actions,
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li .comment-actions {
   display: flex;
   flex: 1 1 230px;
   min-width: 230px;
@@ -559,12 +565,12 @@ h2 {
   align-items: center;
   gap: 10px;
 }
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li .comment-actions input[type=text],
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li .comment-actions input[type=text],
-.details .hero-img .box-container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li .comment-actions input[type=text] {
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-comment ul.comment-box li .comment-actions input[type=text],
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail-title ul.comment-box li .comment-actions input[type=text],
+.details .hero-img .box-container .container .box-course .editCourse-schoolUser .course-details .detail ul.comment-box li .comment-actions input[type=text] {
   flex: 1;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions {
   width: auto;
   max-width: 700px;
   display: flex;
@@ -572,7 +578,7 @@ h2 {
   padding: 10px;
   margin: 0px auto;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession {
   position: relative;
   display: flex;
   align-items: center;
@@ -582,10 +588,10 @@ h2 {
   border-bottom: 1px solid #373c4f;
   transition: transform 0.3s ease;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession:first-child {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession:first-child {
   border-radius: 10px 10px 0 0;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -594,32 +600,32 @@ h2 {
   gap: 10px;
   flex-wrap: wrap;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .title-header {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .title-header {
   font-size: 15px;
   color: #99d98c;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .content,
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .content,
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time {
   font-size: 15px;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .content span,
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time span {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .content span,
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time span {
   margin-left: 4px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time {
   display: inline-block;
   white-space: nowrap;
   margin-left: auto;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time .hours {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box .time .hours {
   font-weight: bold;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box img {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .box img {
   width: 35px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .operations {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession .operations {
   background: transparent;
   position: absolute;
   top: 50%;
@@ -634,21 +640,21 @@ h2 {
   padding-left: 0;
 }
 @media (hover: hover) and (pointer: fine) {
-  .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession:hover {
+  .details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession:hover {
     cursor: pointer;
     transform: translateX(100px);
   }
-  .details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession:hover .operations {
+  .details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession:hover .operations {
     opacity: 1;
   }
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession.clicked {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession.clicked {
   transform: translateX(100px);
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession.clicked .operations {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSession.clicked .operations {
   opacity: 1;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary {
   position: relative;
   display: flex;
   align-items: center;
@@ -658,7 +664,7 @@ h2 {
   border-top: 1px solid aliceblue;
   border-radius: 0px 0px 10px 10px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -666,29 +672,29 @@ h2 {
   align-items: center;
   gap: 10px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .title-header {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .title-header {
   font-weight: bold;
   font-size: 15px;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .content,
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .content,
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time {
   font-size: 15px;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .content span,
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time span {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .content span,
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time span {
   margin-left: 4px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time {
   display: inline-block;
   white-space: nowrap;
   font-weight: bold;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time .hours {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .drivingSummary .box .time .hours {
   color: #ffd166;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession {
   position: relative;
   display: flex;
   align-items: center;
@@ -698,23 +704,23 @@ h2 {
   border: 1.5px solid #6acff1;
   transition: transform 0.3s ease;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession:first-child {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession:first-child {
   border-radius: 10px 10px 0 0;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .rowSession {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .rowSession {
   display: flex;
   align-items: center;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row {
   justify-content: space-between;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .title-header {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .title-header {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -722,30 +728,30 @@ h2 {
   font-size: 16px;
   color: #99d98c;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .title-header img {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .title-header img {
   width: 35px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time {
   display: flex;
   align-items: center;
   font-size: 16px;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time input {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time input {
   width: 70px;
   margin-right: 5px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time .hours {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .top-row .time .hours {
   font-weight: bold;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .comment-row {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .comment-row {
   width: 100%;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .comment-row input {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit .comment-row input {
   width: 100%;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit input {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit input {
   padding: 10px;
   font-size: 16px;
   color: aliceblue;
@@ -753,17 +759,17 @@ h2 {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit input:focus {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .box-edit input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .button-group {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .editDrivingSession .button-group {
   display: flex;
   justify-content: center;
   gap: 10px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession {
   background: linear-gradient(-135deg, rgba(0, 0, 0, 0.93), rgba(10, 76, 98, 0.8823529412));
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -772,36 +778,36 @@ h2 {
   margin: 0 auto;
   margin-top: 25px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box {
   width: 100%;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box p {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box p {
   font-size: 20px;
   font-weight: bold;
   color: #4cc9f0;
   margin-top: 20px;
   text-align: center;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box hr {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .title-box hr {
   border: none;
   border-top: 1px solid aliceblue;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession {
   display: flex;
   align-items: center;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession .title-header {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession .title-header {
   flex: 1;
   color: #fff;
   margin-right: 10px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession input {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession input {
   padding: 10px;
   font-size: 16px;
   color: aliceblue;
@@ -809,28 +815,28 @@ h2 {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession input:focus {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession .hours {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .rowSession .hours {
   margin-left: 5px;
   font-size: 16px;
   font-weight: bold;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .bottom-row input {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .bottom-row input {
   width: 80px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .comment-row {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .comment-row {
   flex-direction: column;
   gap: 5px;
 }
-.details .hero-img .box-container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .comment-row input {
+.details .hero-img .box-container .container .box-drivingSessions .account-drivingSessions .schoolUser-drivingSessions .newDrivingSession .box-new .comment-row input {
   width: 90%;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses {
   width: auto;
   max-width: 700px;
   display: flex;
@@ -838,7 +844,7 @@ h2 {
   padding: 10px;
   margin: 0px auto;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse {
   position: relative;
   display: flex;
   align-items: center;
@@ -848,10 +854,10 @@ h2 {
   border-bottom: 1px solid #373c4f;
   transition: transform 0.3s ease;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:first-child {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:first-child {
   border-radius: 10px 10px 0 0;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -860,33 +866,33 @@ h2 {
   gap: 10px;
   flex-wrap: wrap;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .title-header {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .title-header {
   font-size: 15px;
   color: #99d98c;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content,
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content,
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult {
   font-size: 15px;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content span,
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult span {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content span,
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult span {
   margin-left: 4px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content img,
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult img {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .content img,
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult img {
   width: 35px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult {
   display: inline-block;
   white-space: nowrap;
   margin-left: auto;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult .percentages {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .box .percentagesResult .percentages {
   font-weight: bold;
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .operations {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse .operations {
   background: transparent;
   position: absolute;
   top: 50%;
@@ -901,21 +907,21 @@ h2 {
   padding-left: 0;
 }
 @media (hover: hover) and (pointer: fine) {
-  .details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:hover {
+  .details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:hover {
     cursor: pointer;
     transform: translateX(100px);
   }
-  .details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:hover .operations {
+  .details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse:hover .operations {
     opacity: 1;
   }
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse.clicked {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse.clicked {
   transform: translateX(100px);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse.clicked .operations {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourse.clicked .operations {
   opacity: 1;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary {
   position: relative;
   display: flex;
   align-items: center;
@@ -925,7 +931,7 @@ h2 {
   border-top: 1px solid aliceblue;
   border-radius: 0px 0px 10px 10px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -933,29 +939,29 @@ h2 {
   align-items: center;
   gap: 10px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .title-header {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .title-header {
   font-weight: bold;
   font-size: 15px;
   color: #ffd166;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .content,
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .content,
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult {
   font-size: 15px;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .content span,
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult span {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .content span,
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult span {
   margin-left: 4px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult {
   display: inline-block;
   white-space: nowrap;
   font-weight: bold;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult .percentages {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .testCourseSummary .box .percentagesResult .percentages {
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse {
   position: relative;
   display: flex;
   align-items: center;
@@ -965,24 +971,24 @@ h2 {
   border: 1.5px solid #6acff1;
   transition: transform 0.3s ease;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse:first-child {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse:first-child {
   border-radius: 10px 10px 0 0;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse {
   display: flex;
   align-items: center;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row {
   flex-direction: column;
   justify-content: center;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio] {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio] {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -997,14 +1003,14 @@ h2 {
   position: relative;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:hover {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:hover {
   border-color: #ffc233;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked {
   background-color: #ef476f;
   border-color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked::after {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -1015,28 +1021,28 @@ h2 {
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked ~ label {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row input[type=radio]:checked ~ label {
   font-weight: bold;
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label {
   font-size: 16px;
   cursor: pointer;
   color: aliceblue;
   transition: color 0.3s ease;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label:hover {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label:hover {
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label img {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row label img {
   width: 45px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .title-header {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .title-header {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .testType {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .testType {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1044,40 +1050,40 @@ h2 {
   flex-wrap: wrap;
   gap: 10px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .testType .type {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .rowTestCourse.type-row .testType .type {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 7px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row {
   justify-content: space-between;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .title-header {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .title-header {
   font-size: 16px;
   color: #99d98c;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult {
   display: flex;
   align-items: center;
   font-size: 16px;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult input {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult input {
   width: 85px;
   margin-right: 5px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult .percentages {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .top-row .percentagesResult .percentages {
   font-weight: bold;
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .comment-row {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .comment-row {
   width: 100%;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .comment-row input {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit .comment-row input {
   width: 100%;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit input {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit input {
   padding: 10px;
   font-size: 16px;
   color: aliceblue;
@@ -1085,17 +1091,17 @@ h2 {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit input:focus {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .box-edit input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .button-group {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .editTestCourse .button-group {
   display: flex;
   justify-content: center;
   gap: 10px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse {
   background: linear-gradient(-135deg, rgba(0, 0, 0, 0.93), rgba(10, 76, 98, 0.8823529412));
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -1104,35 +1110,35 @@ h2 {
   margin: 0 auto;
   margin-top: 25px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box {
   width: 100%;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box p {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box p {
   font-size: 20px;
   font-weight: bold;
   color: #4cc9f0;
   margin-top: 20px;
   text-align: center;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box hr {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .title-box hr {
   border: none;
   border-top: 1px solid aliceblue;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse {
   display: flex;
   align-items: center;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse .title-header {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse .title-header {
   flex: 1;
   color: aliceblue;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse input {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse input {
   padding: 10px;
   font-size: 16px;
   color: aliceblue;
@@ -1140,22 +1146,22 @@ h2 {
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse input:focus {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse input:focus {
   outline: none;
   border-color: #ef476f;
   box-shadow: 0 0 5px rgba(239, 71, 111, 0.5);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse .percentages {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse .percentages {
   margin-left: 5px;
   font-size: 16px;
   font-weight: bold;
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row {
   flex-direction: column;
   justify-content: center;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio] {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio] {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -1170,14 +1176,14 @@ h2 {
   position: relative;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:hover {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:hover {
   border-color: #ffc233;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked {
   background-color: #ef476f;
   border-color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked::after {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -1188,28 +1194,28 @@ h2 {
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked ~ label {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row input[type=radio]:checked ~ label {
   font-weight: bold;
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label {
   font-size: 16px;
   cursor: pointer;
   color: aliceblue;
   transition: color 0.3s ease;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label:hover {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label:hover {
   color: #ef476f;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label img {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row label img {
   width: 45px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .title-header {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .title-header {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .testType {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .testType {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1217,26 +1223,26 @@ h2 {
   flex-wrap: wrap;
   gap: 10px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .testType .type {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .rowTestCourse.type-row .testType .type {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 7px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .bottom-row input {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .bottom-row input {
   margin-left: 10px;
   width: 80px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .comment-row {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .comment-row {
   flex-direction: column;
   gap: 5px;
 }
-.details .hero-img .box-container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .comment-row input {
+.details .hero-img .box-container .container .box-testCourses .account-testCourses .schoolUser-testCourses .newTestCourse .box-new .comment-row input {
   width: 90%;
 }
-.details .hero-img .box-container .box-course,
-.details .hero-img .box-container .box-drivingSessions,
-.details .hero-img .box-container .box-testCourses {
+.details .hero-img .box-container .container .box-course,
+.details .hero-img .box-container .container .box-drivingSessions,
+.details .hero-img .box-container .container .box-testCourses {
   margin: 40px 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -1245,13 +1251,13 @@ h2 {
   -webkit-backdrop-filter: blur(9px);
           backdrop-filter: blur(9px);
 }
-.details .hero-img .box-container .box-course {
+.details .hero-img .box-container .container .box-course {
   background: linear-gradient(-135deg, rgba(188, 24, 80, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
-.details .hero-img .box-container .box-drivingSessions {
+.details .hero-img .box-container .container .box-drivingSessions {
   background: linear-gradient(-135deg, rgba(76, 45, 6, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
-.details .hero-img .box-container .box-testCourses {
+.details .hero-img .box-container .container .box-testCourses {
   background: linear-gradient(-135deg, rgba(77, 42, 111, 0.65), rgba(3, 68, 90, 0.7098039216));
 }
 
