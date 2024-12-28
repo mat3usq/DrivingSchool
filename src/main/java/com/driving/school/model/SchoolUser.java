@@ -91,9 +91,6 @@ public class SchoolUser {
     @JoinColumn(name = "USER_ID")
     private Set<UserLikedQuestion> likedQuestions = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "schoolUser")
-    private Set<UserStatistic> studentStatistics = new LinkedHashSet<>();
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "SCHOOLUSER_CATEGORY",
@@ -157,7 +154,6 @@ public class SchoolUser {
                 ", roleName='" + roleName + '\'' +
                 ", studentEvents=" + studentEvents +
                 ", payments=" + payments +
-                ", sensitiveData=" + sensitiveData +
                 ", studentAnswersTests=" + studentAnswersTests +
                 ", studentExams=" + studentExams +
                 ", createdAt=" + createdAt +

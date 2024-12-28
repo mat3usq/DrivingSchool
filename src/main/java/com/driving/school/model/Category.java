@@ -47,9 +47,6 @@ public class Category {
         this.minimumAge = minimumAge;
     }
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserStatistic> userStatistics = new HashSet<>();
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
