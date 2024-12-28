@@ -81,9 +81,6 @@ public class SchoolUser {
     @OneToMany(mappedBy = "schoolUser", fetch = FetchType.EAGER)
     private List<Notification> notifications = new LinkedList<>();
 
-    @OneToOne(mappedBy = "schoolUser")
-    private SensitiveData sensitiveData;
-
     @OneToMany(mappedBy = "schoolUser")
     private Set<StudentAnswersTest> studentAnswersTests = new LinkedHashSet<>();
 
