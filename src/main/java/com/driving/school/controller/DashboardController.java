@@ -56,9 +56,9 @@ public class DashboardController {
                                          HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
-        
-        
-        
+
+
+
         String examStatisticsMessage;
         String testStatisticsMessage;
         String currentCategory = user.getCurrentCategory();
@@ -94,8 +94,8 @@ public class DashboardController {
                 modelAndView.addObject("testStatistics", new Object[]{0, 0, 0, 0, 0});
             }
         }
-        
-        
+
+
 
 
         switch (user.getRoleName()) {
@@ -208,6 +208,21 @@ public class DashboardController {
         } else
             redirectAttributes.addFlashAttribute("assignInstructorInfo", "Nie udało się zacząć wspołpracy z instruktorem!");
         return modelAndView;
+    }
+
+
+    @GetMapping("/dashboard/admin/generateReport")
+    @ResponseBody
+    public ResponseEntity<byte[]> generateReport(HttpSession session) {
+        SchoolUser loggedInUser = (SchoolUser) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || !Constants.ADMIN_ROLE.equals(loggedInUser.getRoleName())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        byte[] report = pdfReportService.generatePdfReport();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.attachment().filename("raport.pdf").build());
+        return ResponseEntity.ok().headers(headers).body(report);
     }
 
     @PostMapping("/dashboard/student/cancelInstructor")
