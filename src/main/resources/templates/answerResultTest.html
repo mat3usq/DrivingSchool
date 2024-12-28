@@ -126,9 +126,16 @@
                         <div th:if="${question.availableAnswers == 3}" class="specific-question">
                             <div class="info-container">
                                 <div class="separator-line"></div>
-                                <p class="content">
-                                    <th:block th:text="${question.question}"></th:block> (<th:block th:text="${question.points} + 'pkt'"></th:block>)
-                                </p>
+                                <div class="questionTitle">
+                                    <p class="content">
+                                        <th:block th:text="${question.question}"></th:block> (<th:block th:text="${question.points} + 'pkt'"></th:block>)
+                                    </p>
+
+                                    <div class="icon-container">
+                                        <div class="icon">i</div>
+                                        <p class="tooltip" th:text="${question.source}"></p>
+                                    </div>
+                                </div>
                                 <div class="separator-line"></div>
                                 <div class="explain">
                                     <span>Wyjasnienie</span>
