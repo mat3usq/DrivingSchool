@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 
@@ -29,7 +30,14 @@ public class LectureController {
     }
 
     @GetMapping(value = "/lecture")
-    public ModelAndView displayLecturePage(HttpSession session) {
+    public ModelAndView displayLecturePage(HttpSession session, RedirectAttributes redirectAttributes) {
+        SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
+
+        if (user.getCurrentCategory().isEmpty()) {
+            redirectAttributes.addFlashAttribute("notChoosenCategoryInfo", "Proszę wybierz kategorię, aby pomyślnie zacząć naukę teorii!");
+            return new ModelAndView("redirect:/dashboard");
+        }
+
         ModelAndView m = new ModelAndView("lecture");
         m.addObject("newLecture", new Lecture());
         m.addObject("newSublecture", new Sublecture());

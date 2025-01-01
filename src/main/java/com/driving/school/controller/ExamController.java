@@ -46,7 +46,7 @@ public class ExamController {
         if (session.getAttribute("exam") == null) {
             SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
             if (user.getCurrentCategory().isEmpty()) {
-                redirectAttributes.addFlashAttribute("notChoosenCategoryInfo", "Prosze wybierz kategorie, aby rozwiazac test lub egzamin!");
+                redirectAttributes.addFlashAttribute("notChoosenCategoryInfo", "Proszę wybierz kategorię, aby pomyślnie rozwiązać egzamin!");
                 return new ModelAndView("redirect:/dashboard");
             }
             String category = user.getCurrentCategory();

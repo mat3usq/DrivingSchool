@@ -19,9 +19,6 @@ public class TestStatistics {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    // ogolna ilosc odpowiedzi wszystkich studentów zrobiona w danycm tescie
-    // (do zliczania potem ogolnych statysytk w testach)
-    // (odswiezane codziennie np. 24.00)
     @Column(name = "NUMBEROFQUESTIONSSOLVED", nullable = false)
     private Integer numberOfQuestionsSolved;
 

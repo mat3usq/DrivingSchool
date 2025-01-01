@@ -229,7 +229,7 @@ h2 {
   font-weight: bold;
   border-bottom: 3px solid #ef476f;
   border-top: 3px solid #ef476f;
-  margin: 0 10px;
+  margin: 0 auto;
   max-width: 400px;
   cursor: pointer;
   -webkit-user-select: none;
@@ -794,6 +794,16 @@ h2 {
   margin: 15px 0;
   border-radius: 10px;
   border: 3px dashed rgba(102, 102, 102, 0.879);
+}
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .subject-details p,
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .sublecture-details p,
+.subject .hero-img .box-subject .box-container .container-sublecture .box-sublecture .lecture-details p,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .subject-details p,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .sublecture-details p,
+.subject .hero-img .box-subject .box-container .container-lecture .box-sublecture .lecture-details p {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 .subject .hero-img .box-subject .box-container .container-sublecture a.edit-icon i,
 .subject .hero-img .box-subject .box-container .container-lecture a.edit-icon i {

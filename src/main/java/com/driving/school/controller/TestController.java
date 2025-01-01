@@ -46,7 +46,7 @@ public class TestController {
         SchoolUser user = (SchoolUser) session.getAttribute("loggedInUser");
 
         if (user.getCurrentCategory().isEmpty()) {
-            redirectAttributes.addFlashAttribute("notChoosenCategoryInfo", "Prosze wybierz kategorie, aby rozwiazac test lub egzamin!");
+            redirectAttributes.addFlashAttribute("notChoosenCategoryInfo", "Proszę wybierz kategorię, aby pomyślnie rozwiązać test!");
             return new ModelAndView("redirect:/dashboard");
         }
 

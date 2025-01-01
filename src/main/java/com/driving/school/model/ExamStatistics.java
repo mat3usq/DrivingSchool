@@ -20,9 +20,6 @@ public class ExamStatistics {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    // ogolna ilosc egzaminów wszystkich studentów zrobiona w danej kategori
-    // (do zliczania potem ogolnych statysytk egzaminu)
-    // (odswiezane codziennie np. 24.00)
     @Column(name = "CATEGORY", length = 128)
     private String category;
 

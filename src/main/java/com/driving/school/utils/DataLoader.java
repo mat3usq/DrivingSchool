@@ -20,7 +20,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -99,7 +98,6 @@ public class DataLoader implements CommandLineRunner {
         loadTests();
         loadQuestions();
         loadCourses();
-//         zapytac czy mozna brac z innych stron dane itp.
         loadLectures();
         loadInstructionEvents();
         loadMails();
@@ -418,39 +416,116 @@ public class DataLoader implements CommandLineRunner {
 
         try {
             lectures.addAll(Arrays.asList(
-                    new Lecture("RUCH POJAZDOW Kategoria B", null, 1, "B"),
-                    new Lecture("RUCH POJAZDOW Kategoria D", null, 1, "D")));
+                    new Lecture("Ruch Pojazdów", null, 1, "B")
+            ));
+
             sublectures.addAll(Arrays.asList(
-                    new Sublecture("Ogólne zasady ruchu pojazdów.", "Kierującego pojazdem obowiązuje ruch prawostronny. Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z drogi dwujezdniowej, jest obowiązany jechać po prawej jezdni; do jezdni tych nie wlicza się jezdni przeznaczonej do dojazdu do nieruchomości położonej przy drodze”.", 1, lectures.get(0)),
-                    new Sublecture("Włączanie się do ruchu.", "Włączanie się do ruchu wymaga zachowania szczególnej ostrożności, a także konieczności ustąpienia pierwszeństwa wszystkim pozostałym uczestnikom ruchu. Przede wszystkim, zanim rozpoczniesz ruch, dokonaj uważnej obserwacji sytuacji jaka występuje na drodze, a także podejmij trafną decyzję, czy manewr włączania się do ruchu przeprowadzisz w bezpieczny sposób. Jeżeli masz jakiekolwiek wątpliwości zaczekaj na poprawę sytuacji.", 2, lectures.get(0))
+                    new Sublecture(
+                            "Podstawowe zasady ruchu na drogach",
+                            "Prawo drogowe zobowiązuje kierujących do jazdy przy prawej krawędzi jezdni. W przypadku dróg dwujezdniowych należy korzystać tylko z prawej jezdni, wykluczając pasy przeznaczone do dojazdu do nieruchomości zlokalizowanych przy drodze. Taka organizacja ruchu przekłada się na zwiększone bezpieczeństwo oraz klarowność sytuacji na drodze. Stosowanie się do tych reguł ogranicza ryzyko kolizji i wspiera przewidywalność zachowań innych kierowców.",
+                            1,
+                            lectures.get(0)
+                    ),
+                    new Sublecture(
+                            "Ograniczenia Prędkości w Polsce",
+                            null,
+                            2,
+                            lectures.get(0)
+                    ),
+                    new Sublecture(
+                            "Autostrady",
+                            null,
+                            3,
+                            lectures.get(0)
+                    ),
+                    new Sublecture(
+                            "Drogi ekspresowe",
+                            null,
+                            4,
+                            lectures.get(0)
+                    )
             ));
+
             subjects.addAll(Arrays.asList(
-                    new Subject(null, "Odwołując się do Kodeksu Ruchu Drogowego (rozdział 3, oddział 1, art. 16) „Kierujący pojazdem, korzystając z jezdni dwukierunkowej co najmniej o czterech pasach ruchu, jest obowiązany zajmować pas ruchu znajdujący się na prawej połowie jezdni”",
-                            convertImage("/data/image/droga-dwujezdniowa.jpg"), 1, sublectures.get(0)),
-                    new Subject(null,
-                            "„Kierujący pojazdem jest obowiązany jechać możliwie blisko prawej krawędzi jezdni. Jeżeli pasy ruchu na jezdni są wyznaczone, nie może zajmować więcej niż jednego pasa.”",
-                            convertImage("/data/image/zajmowanie-jednego-pasa-ruchu.jpg"), 2, sublectures.get(0)),
-                    new Subject("Włączającym się do ruchu jesteś także w ściśle określonych przepisami sytuacjach, np. podczas:",
-                            null, null, 3, sublectures.get(1)),
-                    new Subject("1. wyjazdu ze strefy zamieszkania,",
+                    new Subject(
                             null,
-                            convertImage("/data/image/wyjazd-ze-strefy-zamieszkania.jpg"), 4, sublectures.get(1)),
-                    new Subject("2. wyjazdu na drogę z nieruchomości, obiektu przydrożnego tj. parkingu, stacji benzynowej,",
+                            "Zgodnie z przepisami, na drodze dwukierunkowej o co najmniej czterech pasach ruchu należy zajmować jedynie pasy zlokalizowane po prawej połowie jezdni. Pozwala to zapobiegać kolizjom, ułatwia manewry wyprzedzania oraz zapewnia jasne zasady poruszania się innym uczestnikom ruchu.",
+                            convertImage("/data/lectureImages/drogaDwujezdniowa.jpg"),
+                            1,
+                            sublectures.get(0)
+                    ),
+                    new Subject(
                             null,
-                            convertImage("/data/image/wyjazd-z-parkingu.jpg"), 5, sublectures.get(1)),
-                    new Subject("3. wyjazdu z drogi niebędącej drogą publiczną,",
+                            "Prawo wymaga jazdy możliwie najbliżej prawej krawędzi i zabrania równoczesnego korzystania z więcej niż jednego pasa, gdy pasy ruchu zostały wyznaczone na jezdni.",
+                            convertImage("/data/lectureImages/jazdaZPrawejStrony.jpg"),
+                            2,
+                            sublectures.get(0)
+                    ),
+                    new Subject(
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg"), 6, sublectures.get(1)),
-                    new Subject("4. wyjazdu na drogę z pola,",
+                            "Znak D-39, informujący o dopuszczalnych prędkościach w Polsce.",
+                            convertImage("/data/lectureImages/ograniczeniaPredkosci.jpg"),
+                            3,
+                            sublectures.get(1)
+                    ),
+                    new Subject(
+                            "Autostrada to dwujezdniowa droga oznaczona specjalnymi znakami, przeznaczona wyłącznie do ruchu pojazdów samochodowych (z pominięciem czterokołowców), zdolnych osiągnąć na płaskiej nawierzchni przynajmniej 40 km/h, także z przyczepą. Nie występuje na niej ruch poprzeczny.",
+                            "Znak D-9, informujący o początku autostrady.",
+                            convertImage("/data/lectureImages/poczatekAutostrady.png"),
+                            4,
+                            sublectures.get(2)
+                    ),
+                    new Subject(
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-niebedacej-droga-publiczna.jpg"), 7, sublectures.get(1)),
-                    new Subject("5. wyjazdu z drogi niebędącej drogą publiczną (drogi wewnętrznej),",
+                            "Tabliczka T-28 informująca, że za przejazd daną drogą trzeba uiścić opłatę.",
+                            convertImage("/data/lectureImages/platne.png"),
+                            5,
+                            sublectures.get(2)
+                    ),
+                    new Subject(
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-wewnetrznej.jpg"), 8, sublectures.get(1)),
-                    new Subject("6. wyjazdu z drogi dla rowerów na jezdnię lub pobocze, z wyjątkiem wjazdu na przejazd dla rowerzystów lub pas ruchu dla rowerów.",
+                            "Znak D-10, sygnalizujący koniec autostrady.",
+                            convertImage("/data/lectureImages/koniecAutostrady.png"),
+                            6,
+                            sublectures.get(2)
+                    ),
+                    new Subject(
+                            "Na autostradzie zabronione jest:",
+                            "- wykonywanie manewru zawracania,\n" +
+                                    "- cofanie pojazdu,\n" +
+                                    "- holowanie (chyba że odbywa się przy pomocy pojazdu do tego przeznaczonego do najbliższego wyjazdu lub MOP),\n" +
+                                    "- zatrzymywanie się na pasie rozdzielającym jezdnie,\n" +
+                                    "- zatrzymywanie i postój w miejscach niewyznaczonych do tego celu",
                             null,
-                            convertImage("/data/image/wyjazd-z-drogi-dla-rowerow.jpg"), 9, sublectures.get(1))
+                            7,
+                            sublectures.get(2)
+                    ),
+                    new Subject(
+                            "Droga ekspresowa może mieć jedną lub dwie jezdnie. Również jest oznakowana specjalnymi znakami i przeznaczona wyłącznie do ruchu pojazdów samochodowych (wyłączając czterokołowce). Skrzyżowania na tego typu drodze zdarzają się sporadycznie.",
+                            "Znak D-7, informujący o początku drogi ekspresowej.",
+                            convertImage("/data/lectureImages/poczatekDrogiEkspresowej.png"),
+                            8,
+                            sublectures.get(3)
+                    ),
+                    new Subject(
+                            null,
+                            "Znak D-8, sygnalizujący koniec drogi ekspresowej.",
+                            convertImage("/data/lectureImages/koniecDrogiEkspresowej.png"),
+                            9,
+                            sublectures.get(3)
+                    ),
+                    new Subject(
+                            "Na drodze ekspresowej zabronione jest:",
+                            "- cofanie,\n" +
+                                    "- zawracanie (wyłącznie dozwolone na skrzyżowaniach lub w specjalnie wyznaczonych miejscach),\n" +
+                                    "- zatrzymywanie się na pasie rozdzielającym jezdnie,\n" +
+                                    "- zatrzymywanie i postój w miejscach nieprzeznaczonych do tego celu",
+                            null,
+                            10,
+                            sublectures.get(3)
+                    )
             ));
+
 
             lectureRepository.saveAll(lectures);
             sublectureRepository.saveAll(sublectures);
