@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html
+        lang="pl"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Szczegóły Wiadomości</title>
+
+    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/mailBox.css"/>
+    <link rel="stylesheet" href="/assets/css/contact.css"/>
+</head>
+<body>
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="mailBox">
+        <div class="hero-img">
+            <div class="mail-container">
+                <div class="container">
+                    <div class="box-container">
+                    <p class="title mail-title">Szczegóły Wiadomości</p>
+                    <div class="mailbox-container">
+                        <div class="show-mailBox-content read" onclick="toggleEvent(this)"
+                             th:with="isSender=${showedMail.sender.id == session.loggedInUser.id},
+                                        statusMail=${isSender} ? ${showedMail.statusSender} : ${showedMail.statusRecipient}">
+                            <div class="operation-box">
+                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="responseMail-form"
+                                      th:action="@{/mailBox/getMailToReply}" method="post">
+                                    <input type="hidden" name="mailId" th:value="${showedMail.id}">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-reply"></i>
+                                    </button>
+                                </form>
+
+                                <form th:if="${statusMail == T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="responseMail-form"
+                                      th:action="@{/mailBox/moveMailFromTrash}" method="post">
+                                    <input type="hidden" name="mailId" th:value="${showedMail.id}">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                    </button>
+                                </form>
+
+                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_UNREAD and statusMail != T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="moveToTrashMail-form"
+                                      th:action="@{/mailBox/moveToTrashMail}" method="post">
+                                    <input type="hidden" name="mailId" th:value="${showedMail.id}">
+                                    <button type="submit">
+                                        <i class="fas fa-trash delete-icon"></i>
+                                    </button>
+                                </form>
+
+                                <form th:if="${statusMail != T(com.driving.school.model.Constants).MAIL_UNREAD and statusMail == T(com.driving.school.model.Constants).MAIL_TRASHED}"
+                                      class="moveToTrashMail-form"
+                                      th:action="@{/mailBox/deleteMail}" method="post">
+                                    <input type="hidden" name="mailId" th:value="${showedMail.id}">
+                                    <button type="submit">
+                                        <i class="fas fa-trash delete-icon"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="sender-details">
+                                <span class="show-icon">
+                                    <i class="fas fa-envelope-open-text"></i>
+                                </span>
+
+                                <th:block th:unless="${isSender}">
+                                    <span class="show-name" th:text="${showedMail.sender.name}">Imię</span>
+                                    <span class="show-surname" th:text="${showedMail.sender.surname}">Nazwisko</span>
+                                    <span><i class="fa-arrow fa-solid fa-arrow-right-from-bracket"></i><span class="show-from">Mnie</span></span>
+                                    <span class="show-e-mail"
+                                          th:text="'&lt;' + ${showedMail.sender.email} + '&gt;'">email@example.com</span>
+                                </th:block>
+
+                                <th:block th:if="${isSender}">
+                                    <span><span class="show-from">Ja</span><i class="fa-arrow fa-solid fa-arrow-right-to-bracket"></i></span>
+                                    <span class="show-name" th:text="${showedMail.recipient.name}">Imię</span>
+                                    <span class="show-surname" th:text="${showedMail.recipient.surname}">Nazwisko</span>
+                                    <span class="show-e-mail"
+                                          th:text="'&lt;' + ${showedMail.recipient.email} + '&gt;'">email@example.com</span>
+                                </th:block>
+
+                            </div>
+                            <div class="content-mail">
+                                <div class="show-email-header">
+                                    <span class="subject">
+                                        <i class="fa-solid fa-heading"></i>
+                                        <th:block th:text="${showedMail.subject}">Temat</th:block>
+                                    </span>
+                                    <span class="time">
+                                        <i class="fas fa-clock"></i>
+                                            <th:block th:text="${#temporals.format(showedMail.updatedAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
+                                    </span>
+                                </div>
+                                <span class="show-full-mail"
+                                      th:classappend="${isSender ? 'right' : 'left'}"><i class="fa-solid fa-font"></i><th:block
+                                        th:text="${showedMail.body}">Treść wiadomości</th:block></span>
+                                <span class="show-full-mail" th:each="replyMail : ${showedMail.replies}"
+                                      th:classappend="${replyMail.sender.id == session.loggedInUser.id ? 'right' : 'left'}"><i class="fa-solid fa-font"></i><th:block
+                                        th:text="${replyMail.body}">Treść wiadomości</th:block></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="write-mail">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <div class="write-mail-wrapper">
+                        <div class="write-mail-header">
+                            <div class="title-mail">Nowa Wiadomość</div>
+                            <i class="fas fa-times close"></i>
+                        </div>
+                        <form class="write-mail-body" th:action="@{/mailBox/sendMail}" method="post"
+                              th:object="${mail}">
+                            <div class="write-mail-input">
+                                <i class="fa-regular fa-address-book"></i>
+                                <input th:field="*{recipient.email}" type="text" placeholder="E-mail Odbiorcy"/>
+                            </div>
+                            <div class="write-mail-input">
+                                <i class="fa-solid fa-heading"></i>
+                                <input th:field="*{subject}" type="text" placeholder="Temat Wiadomości"/>
+                            </div>
+                            <div class="write-mail-input">
+                                <i class="fa-solid fa-font"></i>
+                                <textarea th:field="*{body}" id="messageInput"
+                                          placeholder="Treść Wiadomości"></textarea>
+                            </div>
+                            <div class="write-mail-footer">
+                                <button class="write-mail-btn">Wyślij Wiadomość</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <div th:replace="~{contact_footer :: contact}"></div>
+</main>
+
+<div th:replace="~{contact_footer :: footer}"></div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/mailBox.js"></script>
+</body>
+</html>

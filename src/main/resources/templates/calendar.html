@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html
+        lang="pl"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Kalendarz</title>
+
+    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;700&display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/calendar.css"/>
+    <link rel="stylesheet" href="/assets/css/contact.css"/>
+</head>
+<body>
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="calendar-section">
+        <div class="hero-img">
+            <div class="hero-shadow"></div>
+            <div class="container">
+                <div class="box-calendar">
+                    <div class="box-container">
+                        <div class="left">
+                            <div class="calendar">
+                                <div class="month">
+                                    <form th:action="@{/calendar}" method="post">
+                                        <input type="hidden" name="date" th:value="${date}"/>
+                                        <input type="hidden" name="month" value="-1"/>
+                                        <button class="fas fa-angle-left prev"></button>
+                                    </form>
+                                    <div class="date" th:text="${date}">Date</div>
+                                    <form th:action="@{/calendar}" method="post">
+                                        <input type="hidden" name="date" th:value="${date}"/>
+                                        <input type="hidden" name="month" value="1"/>
+                                        <button class="fas fa-angle-right next"></button>
+                                    </form>
+                                </div>
+                                <div class="weekdays">
+                                    <div>Pon</div>
+                                    <div>Wt</div>
+                                    <div>Sr</div>
+                                    <div>Czw</div>
+                                    <div>Pt</div>
+                                    <div>Sob</div>
+                                    <div>Nd</div>
+                                </div>
+                                <div class="days">
+                                </div>
+                                <div class="goto-today">
+                                    <form th:action="@{/calendar}" method="post" id="gotoForm">
+                                        <div class="goto">
+                                            <input type="text" placeholder="mm/yyyy" class="date-input" id="userDateInput"/>
+                                            <input type="hidden" name="date" id="dateInputGoTo"/>
+                                            <input type="hidden" name="month" id="monthDifference"/>
+                                            <button class="goto-btn" onclick="processDate()">Idź</button>
+                                        </div>
+                                    </form>
+                                    <form th:action="@{/calendar}" method="post" id="calendarForm">
+                                        <input type="hidden" name="date" id="dateInputToday"/>
+                                        <input type="hidden" name="month" value="0"/>
+                                        <button class="today-btn" onclick="submitFormWithDate()">Dziś</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="today-date">
+                                <div class="event-day" th:text="${formattedDay}">pon</div>
+                                <div class="event-date" th:text="${formattedDate}">20 maj 2024</div>
+                            </div>
+                            <div class="events">
+                                <div th:each="event : ${events}" class="event" th:id="'event-'+${event.id}"
+                                     onclick="toggleEvent(this)">
+                                    <th:block sec:authorize="hasRole('ROLE_STUDENT')">
+                                        <form th:if="${!event.isAssigned and event.availableEventSlots != 0}"
+                                              class="assign-form"
+                                              th:action="@{/calendar/student/assignEvent}" method="post">
+                                            <input type="hidden" name="eventId" th:value="${event.id}">
+                                            <button type="submit">
+                                                <i class="fa-solid fa-arrow-right-to-bracket assign-icon"></i>
+                                            </button>
+                                        </form>
+                                        <form th:if="${event.isAssigned}" class="leave-form"
+                                              th:action="@{/calendar/student/leaveEvent}" method="post">
+                                            <input type="hidden" name="eventId" th:value="${event.id}">
+                                            <button type="submit">
+                                                <i class="fa-solid fa-arrow-right-to-bracket leave-icon"></i>
+                                            </button>
+                                        </form>
+                                    </th:block>
+                                    <div class="operation-box" sec:authorize="!hasRole('ROLE_STUDENT')">
+                                        <form class="edit-form"
+                                              th:action="@{/calendar/operation/editEvent}" method="get">
+                                            <input type="hidden" name="eventId" th:value="${event.id}">
+                                            <button type="submit">
+                                                <i class="fa-solid fa-circle-info edit-icon"></i>
+                                            </button>
+                                        </form>
+                                        <form class="delete-form"
+                                              th:action="@{/calendar/operation/deleteEvent}" method="post">
+                                            <input type="hidden" name="eventId" th:value="${event.id}">
+                                            <button type="submit">
+                                                <i class="fas fa-trash delete-icon"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div hidden="hidden" class="id">
+                                        <i class="fas fa-circle"></i>
+                                        <h3 class="event-id" th:text="${event.id}">Event Id</h3>
+                                    </div>
+                                    <div class="title">
+                                        <i class="fas fa-font"></i>
+                                        <h3 class="event-title" th:text="${event.eventType}">Event Type</h3>
+                                    </div>
+                                    <div class="subject">
+                                        <i class="fas fa-quote-left"></i>
+                                        <h3 class="event-subject" th:text="${event.subject}">Event Subject</h3>
+                                        <i class="fas fa-quote-right"></i>
+                                    </div>
+                                    <div class="time">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span class="event-time"
+                                              th:text="${#temporals.format(event.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(event.endTime, 'HH:mm')}">Event Time</span>
+                                    </div>
+                                    <div class="createdBy">
+                                        <i class="fa-regular fa-user"></i>
+                                        <span>Stworzone przez </span>
+                                        <h6>
+                                            <i class="fa-solid fa-chevron-left"></i>
+                                            <th:block th:text="${event.getInstructor().getEmail()}">CreatedBy</th:block>
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </h6>
+                                    </div>
+                                    <div class="capacity" sec:authorize="!hasRole('ROLE_STUDENT')">
+                                        <i class="fa-solid fa-people-arrows"></i>
+                                        <span th:if="${event.getAvailableEventSlots != 0}" class="event-capacity">Wolne Miejsca: <span
+                                                class="event-capacity-number" th:text="${event.getAvailableEventSlots}">Event Capacity</span></span>
+                                        <span th:if="${event.getAvailableEventSlots == 0}" class="event-capacity">Brak Wolnych <span
+                                                class="event-capacity-number">Miejsc</span></span>
+                                    </div>
+
+                                    <div class="capacity" sec:authorize="hasRole('ROLE_STUDENT')">
+                                        <i class="fa-solid fa-people-arrows"></i>
+                                        <th:block th:if="${!event.isAssigned}">
+                                        <span th:if="${event.getAvailableEventSlots != 0}" class="event-capacity">Wolne Miejsca: <span
+                                                class="event-capacity-number" th:text="${event.getAvailableEventSlots}">Event Capacity</span></span>
+                                            <span th:if="${event.getAvailableEventSlots == 0}" class="event-capacity">Brak Wolnych <span
+                                                    class="event-capacity-number">Miejsc</span></span>
+                                        </th:block>
+                                        <th:block th:if="${event.isAssigned}">
+                                            <span class="event-capacity">Jesteś: <span class="event-capacity-number">Zapisany</span></span>
+                                        </th:block>
+                                    </div>
+                                    <div hidden="hidden" class="eventTime">
+                                        <span th:text="${event.startTime} + ' - ' + ${event.endTime}">Event Time</span>
+                                    </div>
+                                </div>
+                                <div class="no-event">
+                                    <h3>Brak Wydarzen</h3>
+                                </div>
+                            </div>
+                            <div sec:authorize="!hasRole('ROLE_STUDENT')" class="add-event-wrapper">
+                                <div class="add-event-header">
+                                    <div class="title">Dodaj Wydarzenie</div>
+                                    <i class="fas fa-times close"></i>
+                                </div>
+                                <form class="add-event-body" th:action="@{/calendar/operation/addEvent}" method="post"
+                                      th:object="${newEvent}">
+
+                                    <p class="mini-title-warning" th:if="${createEventValidationInfo}"
+                                       th:text="${createEventValidationInfo}"></p>
+                                    <div class="add-event-input">
+                                        <select class="event-name" th:field="*{eventType}">
+                                            <option value="" disabled selected>Wybierz Typ Wydarzenia</option>
+                                            <option th:each="eventType : ${eventTypes}" th:value="${eventType}"
+                                                    th:text="${eventType}"></option>
+                                        </select>
+                                    </div>
+                                    <th:block th:if="${#fields.hasErrors('subject')}">
+                                        <span class="warning-text" th:errors="*{subject}"></span>
+                                    </th:block>
+                                    <div class="add-event-input">
+                                        <input type="text" placeholder="Nazwa Wydarzenia" class="event-name"
+                                               th:field="*{subject}"/>
+                                    </div>
+
+                                    <th:block th:if="${#fields.hasErrors('startTimeBeforeEndTime')}">
+                                        <span class="warning-text" th:errors="*{startTimeBeforeEndTime}"></span>
+                                    </th:block>
+                                    <th:block th:if="${#fields.hasErrors('startTime')}">
+                                        <span class="warning-text" th:errors="*{startTime}"></span>
+                                    </th:block>
+                                    <div class="add-event-input">
+                                        <input type="hidden" id="startTime" th:field="*{startTime}"/>
+                                        <input type="text" placeholder="Początek Wydarzenia" class="event-time-from"
+                                               id="start-Time"/>
+                                    </div>
+                                    <th:block th:if="${#fields.hasErrors('endTime')}">
+                                        <span class="warning-text" th:errors="*{endTime}"></span>
+                                    </th:block>
+                                    <div class="add-event-input">
+                                        <input type="hidden" id="endTime" th:field="*{endTime}"/>
+                                        <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"
+                                               id="end-Time"/>
+                                    </div>
+                                    <th:block th:if="${#fields.hasErrors('eventCapacity')}">
+                                        <span class="warning-text" th:errors="*{eventCapacity}"></span>
+                                    </th:block>
+                                    <div class="add-event-input">
+                                        <input type="number" placeholder="Liczba Miejsc na Wydarzenie"
+                                               class="event-capacity" th:field="*{eventCapacity}" min="0"/>
+                                    </div>
+                                    <div class="add-event-footer">
+                                        <button class="add-event-btn" onclick="addEvent()">Dodaj Wydarzenie</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <button sec:authorize="!hasRole('ROLE_STUDENT')" class="add-event">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <div th:replace="~{contact_footer :: contact}"></div>
+</main>
+
+<div th:replace="~{contact_footer :: footer}"></div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/calendar.js"></script>
+</body>
+</html>

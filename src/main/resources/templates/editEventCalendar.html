@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html
+        lang="pl"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edycja Wydarzenia</title>
+
+    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;700&display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/editEventCalendar.css"/>
+    <link rel="stylesheet" href="/assets/css/contact.css"/>
+</head>
+<body>
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="edit-event-section">
+        <div class="hero-img">
+            <div class="hero-shadow"></div>
+            <div class="container">
+                <div class="box-event">
+                    <div class="box-container">
+                        <div class="left">
+                            <div class="edit-event-wrapper">
+                                <div class="edit-event-header">
+                                    <div class="title">Edycja Wydarzenia</div>
+                                </div>
+                                <form class="edit-event-body" th:action="@{/calendar/operation/editEvent}" method="post"
+                                      th:object="${editedEvent}">
+
+                                    <p class="mini-title-warning" th:if="${editEventValidationInfo}"
+                                       th:text="${editEventValidationInfo}"></p>
+                                    <div class="edit-event-input">
+                                        <p>Typ Wydarzenia</p>
+                                        <select class="event-name" th:field="*{eventType}">
+                                            <option value="" disabled>Zaktualizuj Typ Wydarzenia</option>
+                                            <option th:each="eventType : ${eventTypes}"
+                                                    th:value="${eventType}"
+                                                    th:text="${eventType}"
+                                                    th:selected="${eventType == editedEvent.eventType}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <th:block th:if="${#fields.hasErrors('subject')}">
+                                        <span class="warning-text" th:errors="*{subject}"></span>
+                                    </th:block>
+                                    <div class="edit-event-input">
+                                        <p>Nazwa Wydarzenia</p>
+                                        <input type="text" placeholder="Nazwa Wydarzenia" class="event-name"
+                                               th:field="*{subject}"/>
+                                    </div>
+                                    <th:block th:if="${#fields.hasErrors('startTimeBeforeEndTime')}">
+                                        <span class="warning-text" th:errors="*{startTimeBeforeEndTime}"></span>
+                                    </th:block>
+                                    <th:block th:if="${#fields.hasErrors('startTime')}">
+                                        <span class="warning-text" th:errors="*{startTime}"></span>
+                                    </th:block>
+                                    <div class="edit-event-input">
+                                        <p>Początek Wydarzenia</p>
+                                        <input type="hidden" id="startTime" th:field="*{startTime}"/>
+                                        <input type="text" placeholder="Początek Wydarzenia" class="event-time-from"
+                                               id="start-Time"
+                                               th:value="${#temporals.format(editedEvent.startTime, 'HH:mm')}"/>
+                                    </div>
+                                    <th:block th:if="${#fields.hasErrors('endTime')}">
+                                        <span class="warning-text" th:errors="*{endTime}"></span>
+                                    </th:block>
+                                    <div class="edit-event-input">
+                                        <p>Koniec Wydarzenia</p>
+                                        <input type="hidden" id="endTime" th:field="*{endTime}"/>
+                                        <input type="text" placeholder="Koniec Wydarzenia" class="event-time-to"
+                                               id="end-Time" th:value="${#temporals.format(editedEvent.endTime, 'HH:mm')}"/>
+                                    </div>
+                                    <th:block th:if="${#fields.hasErrors('eventCapacity')}">
+                                        <span class="warning-text" th:errors="*{eventCapacity}"></span>
+                                    </th:block>
+                                    <div class="edit-event-input">
+                                        <p>Liczba Miejsc na Wydarzenie</p>
+                                        <input type="number" placeholder="Liczba Miejsc na Wydarzenie"
+                                               class="event-capacity" th:field="*{eventCapacity}" min="0"/>
+                                    </div>
+
+                                </form>
+                                <div class="edit-event-footer">
+                                    <form th:action="@{/calendar}" method="post">
+                                        <input hidden="hidden" name="date" th:value="${editedEvent.startTime}">
+                                        <input hidden="hidden" name="month" value="0">
+                                        <button class="back-event-btn">Wróć</button>
+                                    </form>
+                                    <button class="edit-event-btn" onclick="editEvent()">Zaktualizuj
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="today-date">
+                                <p class="event-day" th:text="${formattedDay}">pon.</p>
+                                <p class="event-date" th:text="${formattedDate}">20 maj 2024</p>
+                            </div>
+
+                            <p th:if="${!editedEvent.students.isEmpty()}" >Uczestnicy: <span class="capacity-number" th:text="${editedEvent.eventCapacity - editedEvent.availableEventSlots}"></span></p>
+
+                            <div class="assignPeople">
+                                <div th:if="${!editedEvent.students.isEmpty()}" th:each="student : ${editedEvent.students}"
+                                     class="person" onclick="togglePerson(this)">
+                                    <form class="delete-form"
+                                          th:action="@{/calendar/operation/deleteUserFromEvent}" method="post">
+                                        <input type="hidden" name="eventId" th:value="${editedEvent.id}">
+                                        <input type="hidden" name="studentId" th:value="${student.id}">
+                                        <button type="submit">
+                                            <i class="fas fa-trash delete-icon"></i>
+                                        </button>
+                                    </form>
+                                    <div class="name">
+                                        <i class="fa-regular fa-user"></i>
+                                        <h3 class="person-name" th:text="${student.name}">Person Name</h3>
+                                    </div>
+                                    <div class="surname">
+                                        <i class="fa-solid fa-signature"></i>
+                                        <h3 class="person-surname" th:text="${student.surname}">Person Surname</h3>
+                                    </div>
+                                    <div class="email">
+                                        <i class="fa-regular fa-envelope"></i>
+                                        <span class="person-email" th:text="${student.email}">Person Email</span>
+                                    </div>
+                                </div>
+                                <div th:if="${editedEvent.students.isEmpty()}" class="no-people">
+                                    <h3>Brak Uczestników</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <div th:replace="~{contact_footer :: contact}"></div>
+</main>
+
+<div th:replace="~{contact_footer :: footer}"></div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/editEventCalendar.js"></script>
+</body>
+</html>

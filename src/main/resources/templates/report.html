@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>{{title}}</title>
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            src: url('../fonts/Roboto-Regular.ttf') format('truetype');
+        }
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+            font-size: 14px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h2 {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-weight: normal;
+            color: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            page-break-inside: auto;
+            font-size: 12px;
+        }
+        thead {
+            display: table-header-group;
+        }
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+            font-weight: bold;
+        }
+        .summary {
+            margin-top: 30px;
+            font-size: 1.1em;
+        }
+        .chart {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .chart img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<h1>{{title}}</h1>
+
+<div class="summary">
+    <strong>Suma płatności z ostatniego miesiąca:</strong> {{totalPaymentsLastMonth}}
+</div>
+
+<div class="summary">
+    <strong>Ilość Rozwiązanych Egzaminów z Ostatniego Miesiąca:</strong> {{totalSolvedExams}}
+</div>
+
+<div class="summary">
+    <strong>Ilość Zdanych Egzaminów z Ostatniego Miesiąca:</strong> {{totalPassedExams}}
+</div>
+
+<h2>Administatorzy</h2>
+{{adminTable}}
+
+<h2>Instruktorzy</h2>
+{{instructorTable}}
+
+<h2>Kursanci</h2>
+{{studentTable}}
+
+<div class="chart">
+    <img src="{{examsChart}}" alt="Wykres Rozwiązywanych i Zdanych Egzaminów" />
+    <p>{{emptyInfoAboutExamsChart}}</p>
+</div>
+
+<div class="chart">
+    <img src="{{passedExamsChart}}" alt="Wykres Rozwiązanych Pytań w Egzaminach" />
+    <p>{{emptyInfoAboutPassedExamsChart}}</p>
+</div>
+
+<div class="chart">
+    <img src="{{solvedQuestionsChart}}" alt="Wykres Rozwiązanych Pytań W Testach" />
+    <p>{{emptyInfoAboutSolvedQuestionsChart}}</p>
+</div>
+</body>
+</html>

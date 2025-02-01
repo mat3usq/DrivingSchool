@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html
+        lang="pl"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Odpowiedź Na Wiadomość</title>
+
+    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/mailBox.css"/>
+    <link rel="stylesheet" href="/assets/css/contact.css"/>
+</head>
+<body>
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="mailBox">
+        <div class="hero-img">
+            <div class="mail-container">
+                <div class="container">
+                    <div class="box-container">
+                    <p class="title mail-title">Odpowiedź Na Wiadomość</p>
+                    <div class="mailbox-container">
+                        <div class="show-replyMailBox-content read"
+                             th:with="isSender=${showedMail.sender.id == session.loggedInUser.id}">
+                            <div class="sender-details">
+                                <span class="show-icon">
+                                    <i class="fas fa-envelope-open-text"></i>
+                                </span>
+
+                                <th:block th:unless="${isSender}">
+                                    <span class="show-name" th:text="${showedMail.sender.name}">Imię</span>
+                                    <span class="show-surname" th:text="${showedMail.sender.surname}">Nazwisko</span>
+                                    <span><i class="fa-arrow fa-solid fa-arrow-right-from-bracket"></i><span
+                                            class="show-from">Mnie</span></span>
+                                    <span class="show-e-mail"
+                                          th:text="'&lt;' + ${showedMail.sender.email} + '&gt;'">email@example.com</span>
+                                </th:block>
+
+                                <th:block th:if="${isSender}">
+                                    <span><span class="show-from">Ja</span><i
+                                            class="fa-arrow fa-solid fa-arrow-right-to-bracket"></i></span>
+                                    <span class="show-name" th:text="${showedMail.recipient.name}">Imię</span>
+                                    <span class="show-surname" th:text="${showedMail.recipient.surname}">Nazwisko</span>
+                                    <span class="show-e-mail"
+                                          th:text="'&lt;' + ${showedMail.recipient.email} + '&gt;'">email@example.com</span>
+                                </th:block>
+
+                            </div>
+                            <div class="content-mail">
+                                <div class="show-email-header">
+                                    <span class="subject">
+                                        <i class="fa-solid fa-heading"></i>
+                                        <th:block th:text="${showedMail.subject}">Temat</th:block>
+                                    </span>
+                                    <span class="time">
+                                        <i class="fas fa-clock"></i>
+                                            <th:block
+                                                    th:text="${#temporals.format(showedMail.updatedAt, 'HH:mm yyyy/MM/dd')}">12:32 2024/10/12</th:block>
+                                    </span>
+                                </div>
+                                <span class="show-full-mail"
+                                      th:classappend="${isSender ? 'right' : 'left'}"><i class="fa-solid fa-font"></i><th:block
+                                        th:text="${showedMail.body}">Treść wiadomości</th:block></span>
+                                <span class="show-full-mail" th:each="replyMail : ${showedMail.replies}"
+                                      th:classappend="${replyMail.sender.id == session.loggedInUser.id ? 'right' : 'left'}"><i
+                                        class="fa-solid fa-font"></i><th:block
+                                        th:text="${replyMail.body}">Treść wiadomości</th:block></span>
+                            </div>
+                            <form class="reply-mail-body" th:action="@{/mailBox/replyOnMail}" method="post"
+                                  th:object="${mail}">
+                                <input type="hidden" name="parentMailId" th:value="${showedMail.id}">
+                                <div class="reply-mail-area">
+                                    <i class="fa-solid fa-font"></i>
+                                    <textarea th:field="*{body}" id="messageInput"
+                                              placeholder="Treść Wiadomości"></textarea>
+                                    <button class="reply-mail-btn"><i class="fa-regular fa-paper-plane"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <div th:replace="~{contact_footer :: contact}"></div>
+</main>
+
+<div th:replace="~{contact_footer :: footer}"></div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+<script>
+    document.getElementById('messageInput').addEventListener('input', function autoResize() {
+        this.style.height = 'auto'
+        this.style.height = this.scrollHeight + 'px'
+    })
+</script>
+</body>
+</html>

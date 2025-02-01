@@ -1,0 +1,267 @@
+.bounce-top {
+  display: block;
+  animation: bounce-top 2s infinite both;
+}
+
+@keyframes bounce-top {
+  0% {
+    transform: translateY(-45px);
+    animation-timing-function: ease-in;
+    opacity: 1;
+    color: #ef476f;
+  }
+  24% {
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-24px);
+    animation-timing-function: ease-in;
+  }
+  65% {
+    transform: translateY(-12px);
+    animation-timing-function: ease-in;
+  }
+  25%, 55%, 75%, 87% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+    opacity: 1;
+  }
+}
+.animation {
+  animation: itemAnimation 0.6s both;
+}
+
+.animationReverse {
+  animation: itemAnimationReverse 0.6s both;
+}
+
+@keyframes itemAnimation {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes itemAnimationReverse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.loginAnimation {
+  animation: loginItemAnimation 0.6s forwards;
+}
+
+.loginAnimationReverse {
+  animation: loginItemAnimationReverse 0.6s forwards;
+}
+
+@keyframes loginItemAnimation {
+  from {
+    transform: translateX(-300%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes loginItemAnimationReverse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-300%);
+  }
+}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  color: aliceblue;
+  background-color: #333;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+}
+
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.orange-text {
+  color: #ef476f;
+  font-weight: bold;
+}
+
+.gold-text {
+  color: #ffd166;
+  font-weight: bold;
+}
+
+.shadow-bg {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.underline {
+  background-color: #ef476f;
+  width: 220px;
+  height: 5px;
+  margin: 0 auto 30px;
+}
+
+.navbar-left {
+  height: 108vh;
+}
+
+.notifications .hero-img {
+  position: relative;
+  height: 120vh;
+  background-image: url("/assets/img/notificationsBackground.png");
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  overflow: hidden;
+}
+.notifications .hero-img .hero-shadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -5;
+}
+.notifications .hero-img .box-notifications {
+  position: absolute;
+  top: 90px;
+  left: 300px;
+  width: calc(100% - 300px);
+  height: 89%;
+  overflow-y: scroll;
+}
+.notifications .hero-img .box-notifications .box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.notifications .hero-img .box-notifications .box-container .title {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  font-size: 24px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.notifications .hero-img .box-notifications .box-container .mini-title {
+  margin: 10px 40px 15px 40px;
+  font-size: 21px;
+  font-weight: bold;
+  color: #ef476f;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(192, 192, 219);
+  letter-spacing: 1px;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 15px;
+  padding: 20px 25px;
+  border-radius: 15px;
+  gap: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification.seen {
+  background: linear-gradient(135deg, rgba(77, 42, 111, 0.82), rgba(3, 68, 90, 0.9));
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification.notSeen {
+  background: linear-gradient(135deg, rgba(233, 30, 98, 0.775), rgba(16, 82, 104, 0.9));
+  border: 1px solid rgb(192, 192, 219);
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification .box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification .box .content {
+  font-size: 15px;
+  color: aliceblue;
+  white-space: pre-line;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification .box .time {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 16px;
+  color: #7aba78;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  align-self: flex-end;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification .operations {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification .operations .delete-btn {
+  font-size: 18px;
+  height: 35px;
+  padding: 0px 10px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification .operations .delete-btn:hover {
+  transform: scale(1.05);
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification .operations button.delete-btn {
+  background-color: #ef476f;
+}
+.notifications .hero-img .box-notifications .box-container .container-notifications .notification .operations button.delete-btn:hover {
+  background-color: #eb184a;
+}
+
+@media (max-width: 720px) {
+  .notifications .hero-img .box-notifications {
+    top: 90px;
+    left: 0px;
+    width: 100%;
+  }
+}/*# sourceMappingURL=notifications.css.map */

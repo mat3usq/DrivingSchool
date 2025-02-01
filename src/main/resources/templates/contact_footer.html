@@ -1,0 +1,40 @@
+<section th:fragment="contact" id="contact" class="contact py-5">
+    <h2>Kontakt</h2>
+    <div class="underline"></div>
+
+    <div class="container">
+        <div class="row text-center contact-us">
+            <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                <h3>I Główna Siedziba</h3>
+                <p>ul. Wiejska 45A</p>
+                <p>15-351 Białystok</p>
+                <p style="word-break: break-word;">drivingschool.servicesystem@gmail.com</p>
+            </div>
+
+            <div class="order-0 order-lg-1 col-lg-4 contact-item">
+                <h3>Social Media</h3>
+                <div class="social-media">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="order-1 col-sm-6 col-lg-4 contact-item">
+                <h3>II Główna Siedziba</h3>
+                <p>ul. Złota 44</p>
+                <p>12-432 Warszawa</p>
+                <p style="word-break: break-word;">drivingschool.servicesystem@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-shadow"></div>
+</section>
+
+<footer th:fragment="footer" class="py-4 text-center">
+    <p class="mb-0">
+        &copy <span th:text="${T(java.time.Year).now()}"></span> | <span class="gold-text"><i class="fa-sharp fa-solid fa-School"></i></span>
+        <span class="orange-text">Driving</span> <span class="gold-text">School</span>
+    </p>
+</footer>

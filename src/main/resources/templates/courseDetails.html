@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Szczegóły Kursu</title>
+
+    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/courseDetails.css"/>
+    <link rel="stylesheet" href="/assets/css/contact.css"/>
+</head>
+<body>
+
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="details">
+        <div class="hero-img">
+            <div class="box-container">
+                <div class="container">
+                    <div class="box-course">
+                        <div class="course-schoolUser" th:unless="${isEditCourse}">
+                            <p class="title">Szczegóły Kursu</p>
+                            <div class="course-details">
+                                <div class="detail-title">
+                                    <span class="title-header">Opis</span>
+                                    <span class="content" th:text="${course.description}"></span>
+                                </div>
+                                <div class="detail">
+                                    <span class="title-header">Kategoria Kursu</span>
+                                    <span class="content">
+                                    <span th:if="${course.category}" th:text="${course.category.nameCategory}"></span>
+                                    <span th:unless="${course.category}">Brak</span>
+                                </span>
+                                </div>
+                                <div class="detail">
+                                    <span class="title-header">Czas Trwania</span>
+                                    <span th:if="${course.duration}" class="content"><th:block
+                                            th:text="${course.duration}"></th:block><span
+                                            class="hours">h</span></span>
+                                    <span th:unless="${course.duration}" class="content">0<span
+                                            class="hours">h</span></span>
+                                </div>
+                                <div class="detail-comment" th:unless="${course.commentCourses.isEmpty()}">
+                                    <span class="title-header">Uwagi dla Studenta</span>
+                                    <ul class="comment-box">
+                                        <li th:each="comment : ${course.commentCourses}">
+                                            [<span class="date-time"
+                                                   th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]
+                                            <span th:text="${comment.instructorComment}"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="detail" th:if="${course.commentCourses.isEmpty()}">
+                                    <span class="title-header">Uwagi dla Studenta</span>
+                                    <span class="content">Brak</span>
+                                </div>
+
+                                <div class="detail">
+                                    <span class="title-header">Wynik Koncowy</span>
+                                    <span class="content"
+                                          th:classappend="${course.passed == T(com.driving.school.model.Constants).COURSE_PASSED ? 'passed' : (course.passed == T(com.driving.school.model.Constants).COURSE_FAILED ? 'failed' : '')}"
+                                          th:text="${course.passed}"></span>
+                                </div>
+                                <div class="detail">
+                                    <span class="title-header">Data Rozpoczęcia</span>
+                                    <span class="content"
+                                          th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></span>
+                                </div>
+                                <div class="detail" th:if="${course.endAt}">
+                                    <span class="title-header">Data Zakończenia</span>
+                                    <span class="content"
+                                          th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></span>
+                                </div>
+                            </div>
+                            <div class="btn-box" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
+                                <form sec:authorize="hasRole('ROLE_INSTRUCTOR')"
+                                      th:action="@{/course/instructor/deleteCourse}" method="post">
+                                    <input type="hidden" name="courseId"
+                                           th:value="${course.id}"/>
+                                    <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs
+                                    </button>
+                                </form>
+                                <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/course/admin/deleteCourse}"
+                                      method="post">
+                                    <input type="hidden" name="courseId"
+                                           th:value="${course.id}"/>
+                                    <button type="submit" class="delete-btn"><i class="fa-solid fa-trash-can"></i> Usun Kurs
+                                    </button>
+                                </form>
+
+                                <form sec:authorize="hasRole('ROLE_INSTRUCTOR')"
+                                      th:action="@{/dashboard/instructor/studentDetails}" method="post">
+                                    <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
+                                    <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i>
+                                        Powrót
+                                    </button>
+                                </form>
+                                <form sec:authorize="hasRole('ROLE_ADMIN')"
+                                      th:action="@{/dashboard/admin/userCourseDetails}" method="post">
+                                    <input hidden="hidden" type="text" name="parentUserMail"
+                                           th:value="${course.mentorShip.instructor.email}"/>
+                                    <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
+                                    <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i>
+                                        Powrót
+                                    </button>
+                                </form>
+
+                                <form th:action="@{/course/instructor/editCourse}"
+                                      method="post">
+                                    <input type="hidden" name="courseId"
+                                           th:value="${course.id}"/>
+                                    <button type="submit" class="add-btn"><i class="fa-regular fa-pen-to-square"></i>
+                                        Edytuj Kurs
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="btn-box" sec:authorize="hasRole('ROLE_STUDENT')">
+                                <form th:action="@{/dashboard/student/instructorDetails}" method="post">
+                                    <input type="hidden" name="mentorShipId" th:value="${course.mentorShip.id}"/>
+                                    <button type="submit" class="cancel-btn"><i class="fa-solid fa-arrow-rotate-left"></i>
+                                        Powrót
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="editCourse-schoolUser" th:if="${isEditCourse}">
+                            <p class="title">Edycja Kursu</p>
+                            <p class="mini-title-course-warning" th:if="${editCourseValidationInfo}"
+                               th:text="${editCourseValidationInfo}"></p>
+                            <form class="course-details" th:action="@{/course/instructor/updateCourse}"
+                                  method="post" th:object="${course}" id="editCourseForm">
+                                <input type="hidden" name="courseId" th:value="${course.id}"/>
+
+                                <div class="detail-title">
+                                    <th:block th:if="${#fields.hasErrors('description')}">
+                                        <span class="warning-text" th:errors="*{description}"></span>
+                                    </th:block>
+                                    <span class="title-header">Opis</span>
+                                    <input class="content" th:field="*{description}"/>
+                                </div>
+
+                                <div class="detail">
+                                    <span class="title-header">Kategoria Kursu</span>
+                                    <div class="category-container">
+                                        <th:block th:if="${#fields.hasErrors('category')}">
+                                            <span class="warning-text" th:errors="*{category}"></span>
+                                        </th:block>
+                                        <div class="category-box" th:each="category : ${availableCategories}">
+                                            <input type="radio"
+                                                   th:field="*{category}"
+                                                   th:value="${category.id}"
+                                                   th:id="'category_' + ${category.id}"/>
+                                            <label th:for="'category_' + ${category.id}"
+                                                   th:text="${category.nameCategory}">Nazwa Kategorii</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="detail">
+                                    <th:block th:if="${#fields.hasErrors('duration')}">
+                                        <span class="warning-text" th:errors="*{duration}"></span>
+                                    </th:block>
+                                    <span class="title-header">Czas Trwania</span>
+                                    <span class="time">
+                                    <input type="number" step="0.1" th:field="*{duration}"/>
+                                    <span class="hours">h</span>
+                                </span>
+                                </div>
+
+                                <div class="detail-comment">
+                                    <span class="title-header">Uwagi dla Studenta</span>
+                                    <ul class="comment-box">
+                                        <li th:each="comment, iterStat : ${course.commentCourses}">
+                                            <input type="hidden" th:field="*{commentCourses[__${iterStat.index}__].id}"/>
+                                            <p>[<span class="date-time"
+                                                      th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}"></span>]
+                                            </p>
+                                            <div class="comment-actions">
+                                                <input type="text"
+                                                       th:field="*{commentCourses[__${iterStat.index}__].instructorComment}"/>
+                                                <button type="button" class="delete-btn"
+                                                        th:onclick="'deleteComment(' + ${comment.id} + ')'">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li th:object="${newCommentCourse}">
+                                            <p>[<span class="date-time">Dodawanie Uwagi</span>]</p>
+                                            <div class="comment-actions">
+                                                <input type="text" th:field="*{instructorComment}"
+                                                       placeholder="Treść Nowej Uwagi"/>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="detail">
+                                    <span class="title-header">Wynik Końcowy</span>
+                                    <div class="passed-box">
+                                        <div class="passed">
+                                            <input type="radio" id="passedTrue"
+                                                   th:field="*{passed}"
+                                                   th:value="${T(com.driving.school.model.Constants).COURSE_PASSED}"/>
+                                            <label for="passedTrue"
+                                                   th:text="${T(com.driving.school.model.Constants).COURSE_PASSED}">Pozytywny</label>
+                                        </div>
+
+                                        <div class="passed">
+                                            <input type="radio" id="passedFalse"
+                                                   th:field="*{passed}"
+                                                   th:value="${T(com.driving.school.model.Constants).COURSE_FAILED}"/>
+                                            <label for="passedFalse"
+                                                   th:text="${T(com.driving.school.model.Constants).COURSE_FAILED}">Negatywny</label>
+                                        </div>
+
+                                        <div class="passed">
+                                            <input type="radio" id="passedNone"
+                                                   th:field="*{passed}"
+                                                   th:value="${T(com.driving.school.model.Constants).COURSE_NOTSPECIFIED}"/>
+                                            <label for="passedNone"
+                                                   th:text="${T(com.driving.school.model.Constants).COURSE_NOTSPECIFIED}">Nie
+                                                określono</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="detail">
+                                    <span class="title-header">Data Rozpoczęcia</span>
+                                    <span class="content"
+                                          th:text="${#temporals.format(course.startedAt, 'yyyy-MM-dd')}"></span>
+                                </div>
+
+                                <div class="detail" th:if="${course.endAt}">
+                                    <span class="title-header">Data Zakończenia</span>
+                                    <span class="content" th:text="${#temporals.format(course.endAt, 'yyyy-MM-dd')}"></span>
+                                </div>
+                            </form>
+                            <form id="deleteCommentCourse" th:action="@{/course/instructor/deleteCommentCourse}"
+                                  method="post">
+                                <input type="hidden" name="commentCourseId" id="commentCourseId"/>
+                            </form>
+                            <div class="btn-box">
+                                <button type="button" class="cancel-btn"
+                                        onclick="document.getElementById('backCourseForm').submit();">Anuluj
+                                </button>
+                                <button onclick="document.getElementById('editCourseForm').submit();" class="add-btn">Zapisz
+                                    Kurs
+                                </button>
+                            </div>
+                        </div>
+                        <form id="backCourseForm" hidden="hidden" method="post"
+                              th:action="@{/course/showCourse}">
+                            <input type="hidden" name="courseId" th:value="${course.id}"/>
+                        </form>
+                    </div>
+                    <div class="box-drivingSessions">
+                        <div class="account-drivingSessions">
+                            <p class="title" th:unless="${course.drivingSessions.isEmpty()}">Sesje Jazd</p>
+                            <p class="title" th:if="${course.drivingSessions.isEmpty()}">Brak Sesji Jazd</p>
+                            <div class="schoolUser-drivingSessions">
+                                <th:block th:unless="${isEditDrivingSession}">
+                                    <div class="drivingSession" th:each="drivingSession : ${course.drivingSessions}">
+                                        <div class="operations" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
+                                            <form th:action="@{/course/instructor/deleteDrivingSession}" method="post">
+                                                <input type="hidden" name="drivingSessionId"
+                                                       th:value="${drivingSession.id}"/>
+                                                <button type="submit" class="delete-btn"><i
+                                                        class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                            <form th:action="@{/course/instructor/editDrivingSession}"
+                                                  method="post">
+                                                <input type="hidden" name="drivingSessionId"
+                                                       th:value="${drivingSession.id}"/>
+                                                <button type="submit" class="info-btn"><i
+                                                        class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="box">
+                                        <span class="content">
+                                        <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}"
+                                             th:alt="'ikona'+${course.category.nameCategory}">
+                                            <span class="title-header"
+                                                  th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                                th:unless="${drivingSession.instructorComment.isEmpty()}" th:text="${drivingSession.instructorComment}"></th:block><th:block
+                                                th:if="${drivingSession.instructorComment.isEmpty()}">Brak Komentarza</th:block></span>
+                                            <span class="time"><th:block th:if="${drivingSession.durationHours}" th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block>
+                                                <th:block th:unless="${drivingSession.durationHours}">0</th:block><span
+                                                        class="hours">h</span></span>
+                                        </div>
+                                    </div>
+                                </th:block>
+                                <th:block th:if="${isEditDrivingSession}">
+                                    <th:block th:each="drivingSession : ${course.drivingSessions}">
+                                        <div class="editDrivingSession"
+                                             th:if="${drivingSession.id == editDrivingSession.id}">
+                                            <p class="mini-title-warning" th:if="${editDrivingSessionValidationInfo}"
+                                               th:text="${editDrivingSessionValidationInfo}"></p>
+                                            <form class="box-edit" method="post"
+                                                  th:action="@{/course/instructor/updateDrivingSession}"
+                                                  th:object="${editDrivingSession}">
+                                                <input type="hidden" name="editDrivingSessionId"
+                                                       th:value="${editDrivingSession.id}"/>
+                                                <th:block th:if="${#fields.hasErrors('durationHours')}">
+                                                    <span class="warning-text" th:errors="*{durationHours}"></span>
+                                                </th:block>
+                                                <div class="rowSession top-row">
+                                                <span class="title-header">
+                                                    <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}"
+                                                         th:alt="'ikona'+${course.category.nameCategory}">
+                                                    <th:block
+                                                            th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></th:block>
+                                                </span>
+                                                    <span class="time">
+                                                    <input type="number" step="0.1" th:field="*{durationHours}"/>
+                                                    <span class="hours">h</span>
+                                                </span>
+                                                </div>
+                                                <th:block th:if="${#fields.hasErrors('instructorComment')}">
+                                                    <span class="warning-text" th:errors="*{instructorComment}"></span>
+                                                </th:block>
+                                                <div class="rowSession comment-row">
+                                                    <input type="text" th:field="*{instructorComment}"
+                                                           placeholder="Wprowadź komentarz"/>
+                                                </div>
+                                                <div class="button-group">
+                                                    <button type="button" class="cancel-btn"
+                                                            onclick="document.getElementById('backCourseForm').submit();">
+                                                        Anuluj
+                                                    </button>
+                                                    <button type="submit" class="add-btn">Zapisz</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="drivingSession"
+                                             th:unless="${drivingSession.id == editDrivingSession.id}">
+                                            <div class="operations">
+                                                <form th:action="@{/course/instructor/deleteDrivingSession}" method="post">
+                                                    <input type="hidden" name="drivingSessionId"
+                                                           th:value="${drivingSession.id}"/>
+                                                    <button type="submit" class="delete-btn"><i
+                                                            class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                                <form th:action="@{/course/instructor/editDrivingSession}"
+                                                      method="post">
+                                                    <input type="hidden" name="drivingSessionId"
+                                                           th:value="${drivingSession.id}"/>
+                                                    <button type="submit" class="info-btn"><i
+                                                            class="fa-regular fa-pen-to-square"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="box">
+                                            <span class="content">
+                                                <img th:src="@{'/assets/img/category/svg/' + ${course.category.nameCategory} + '.svg'}"
+                                                     th:alt="'ikona'+${course.category.nameCategory}">
+                                                <span class="title-header"
+                                                      th:text="${#temporals.format(drivingSession.sessionDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                                    th:unless="${drivingSession.instructorComment.isEmpty()}" th:text="${drivingSession.instructorComment}"></th:block><th:block
+                                                    th:if="${drivingSession.instructorComment.isEmpty()}">Brak Komentarza</th:block></span>
+                                                <span class="time"><th:block th:if="${drivingSession.durationHours}" th:text="${#numbers.formatDecimal(drivingSession.durationHours, 0, 1)}"></th:block>
+                                                <th:block th:unless="${drivingSession.durationHours}">0</th:block><span
+                                                            class="hours">h</span></span>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </th:block>
+                                <div class="drivingSession" th:if="${course.drivingSessions.isEmpty()}">
+                                    <div class="box">
+                                        <span class="content"><span class="title-header">Nie dodano jeszcze żadnych sesji jazdy.</span></span>
+                                        <span sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')" class="time">Dodaj pierwszą<span
+                                                class="hours">sesję</span>!</span>
+                                        <span sec:authorize="hasRole('ROLE_STUDENT')" class="time">Poczekaj na pierwsza<span
+                                                class="hours">sesję</span>!</span>
+                                    </div>
+                                </div>
+                                <div class="drivingSummary">
+                                    <div class="box">
+                                        <span class="content"><span class="title-header">Podsumowanie</span> Łączna ilość przejechanych godzin</span>
+                                        <span class="time">
+                                        <th:block
+                                                th:text="${course.summaryDurationHours == 0 ? '0' : #numbers.formatDecimal(course.summaryDurationHours, 0, 1)}"></th:block>
+                                        <span class="hours">h</span>
+                                    </span>
+                                    </div>
+                                </div>
+
+                                <div class="newDrivingSession" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
+                                    <form class="box-new" method="post" th:action="@{/course/instructor/addDrivingSession}"
+                                          th:object="${newDrivingSession}">
+                                        <input type="hidden" name="courseId" th:value="${course.id}"/>
+                                        <div class="title-box">
+                                            <p>Dodawanie Sesji Jazdy</p>
+                                            <hr>
+                                        </div>
+                                        <p class="mini-title-warning" th:if="${createDrivingSessionValidationInfo}"
+                                           th:text="${createDrivingSessionValidationInfo}"></p>
+                                        <div class="rowSession comment-row">
+                                            <th:block th:if="${#fields.hasErrors('instructorComment')}">
+                                                <span class="warning-text" th:errors="*{instructorComment}"></span>
+                                            </th:block>
+                                            <span class="title-header">Uwagi oraz Komentarze do Jazdy</span>
+                                            <input type="text" th:field="*{instructorComment}"
+                                                   placeholder="Wprowadź komentarz"/>
+                                        </div>
+                                        <th:block th:if="${#fields.hasErrors('durationHours')}">
+                                            <span class="warning-text" th:errors="*{durationHours}"></span>
+                                        </th:block>
+                                        <div class="rowSession bottom-row">
+                                            <span class="title-header">Odbyte Godziny Jazdy</span>
+                                            <input type="number" placeholder="Godz" step="0.1" th:field="*{durationHours}"/>
+                                            <span class="hours">h</span>
+                                        </div>
+
+                                        <button type="submit" class="add-btn">Dodaj</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-testCourses">
+                        <div class="account-testCourses">
+                            <p class="title" th:unless="${course.testCourses.isEmpty()}">Wyniki Testów</p>
+                            <p class="title" th:if="${course.testCourses.isEmpty()}">Brak Wyników Testów</p>
+                            <div class="schoolUser-testCourses"
+                                 th:with="Constants=${T(com.driving.school.model.Constants)}">
+                                <th:block th:unless="${isEditTestCourse}">
+                                    <div class="testCourse" th:each="testCourse : ${course.testCourses}">
+                                        <div class="operations" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
+                                            <form th:action="@{/course/instructor/deleteTestCourse}" method="post">
+                                                <input type="hidden" name="testCourseId"
+                                                       th:value="${testCourse.id}"/>
+                                                <button type="submit" class="delete-btn"><i
+                                                        class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                            <form th:action="@{/course/instructor/editTestCourse}"
+                                                  method="post">
+                                                <input type="hidden" name="testCourseId"
+                                                       th:value="${testCourse.id}"/>
+                                                <button type="submit" class="info-btn"><i
+                                                        class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="box">
+                                        <span class="content">
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_GENERAL)}">
+                                                <img src="/assets/img/generalTest.svg" alt="ikona testu ogolnego">
+                                            </th:block>
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_PRACTICAL)}">
+                                                <img src="/assets/img/practicalTest.svg" alt="ikona testu praktycznego">
+                                            </th:block>
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_THEORETICAL)}">
+                                                <img src="/assets/img/theoreticalTest.svg"
+                                                     alt="ikona testu teoretycznego">
+                                            </th:block>
+                                            <span class="title-header"
+                                                  th:text="${#temporals.format(testCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                                th:unless="${testCourse.instructorComment.isEmpty()}" th:text="${testCourse.instructorComment}"></th:block><th:block
+                                                th:if="${testCourse.instructorComment.isEmpty()}">Brak Komentarza</th:block>
+                                        </span>
+                                            <span class="percentagesResult">
+                                            <th:block th:if="${testCourse.testResult}" th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block th:unless="${testCourse.testResult}">0</th:block>
+                                            <span class="percentages">%</span></span>
+                                        </div>
+                                    </div>
+                                </th:block>
+                                <th:block th:if="${isEditTestCourse}">
+                                    <th:block th:each="testCourse : ${course.testCourses}"
+                                              th:with="Constants=${T(com.driving.school.model.Constants)}">
+                                        <div class="editTestCourse" th:if="${testCourse.id == editTestCourse.id}">
+                                            <p class="mini-title-warning" th:if="${editDrivingSessionValidationInfo}"
+                                               th:text="${editDrivingSessionValidationInfo}"></p>
+
+                                            <form class="box-edit" method="post"
+                                                  th:action="@{/course/instructor/updateTestCourse}"
+                                                  th:object="${editTestCourse}">
+                                                <input type="hidden" name="editTestCourseId"
+                                                       th:value="${editTestCourse.id}"/>
+
+                                                <th:block th:if="${#fields.hasErrors('testResult')}">
+                                                    <span class="warning-text" th:errors="*{testResult}"></span>
+                                                </th:block>
+                                                <div class="rowTestCourse top-row">
+                                                <span class="title-header"
+                                                      th:text="${#temporals.format(editTestCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                                    <span class="percentagesResult">
+                                                    <input type="number" step="0.01" max="100"
+                                                           th:field="*{testResult}"/>
+                                                    <span class="percentages">%</span>
+                                                </span>
+                                                </div>
+
+                                                <th:block th:if="${#fields.hasErrors('testType')}">
+                                                    <span class="warning-text" th:errors="*{testType}"></span>
+                                                </th:block>
+                                                <div class="rowTestCourse type-row">
+                                                    <span class="title-header">Rodzaj Testu</span>
+                                                    <div class="testType">
+                                                        <div class="type">
+                                                            <input type="radio" id="typeGeneral"
+                                                                   th:field="*{testType}"
+                                                                   th:value="${Constants.COURSE_TEST_GENERAL}"/>
+                                                            <label for="typeGeneral"
+                                                                   title="Jest to ogolny rodzaj testu (teoria+praktyka)."><img
+                                                                    src="/assets/img/generalTest.svg"
+                                                                    alt="ikona testu ogolnego"></label>
+                                                        </div>
+
+                                                        <div class="type">
+                                                            <input type="radio" id="typePractical"
+                                                                   th:field="*{testType}"
+                                                                   th:value="${Constants.COURSE_TEST_PRACTICAL}"/>
+                                                            <label for="typePractical"
+                                                                   title="Jest to praktyczny rodzaj testu."><img
+                                                                    src="/assets/img/practicalTest.svg"
+                                                                    alt="ikona testu praktycznego"></label>
+                                                        </div>
+
+                                                        <div class="type">
+                                                            <input type="radio" id="typeTheoretical"
+                                                                   th:field="*{testType}"
+                                                                   th:value="${Constants.COURSE_TEST_THEORETICAL}"/>
+                                                            <label for="typeTheoretical"
+                                                                   title="Jest to teoratyczny rodzaj testu."><img
+                                                                    src="/assets/img/theoreticalTest.svg"
+                                                                    alt="ikona testu teoretycznego"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <th:block th:if="${#fields.hasErrors('instructorComment')}">
+                                                    <span class="warning-text" th:errors="*{instructorComment}"></span>
+                                                </th:block>
+                                                <div class="rowTestCourse comment-row">
+                                                    <input type="text" th:field="*{instructorComment}"
+                                                           placeholder="Wprowadź komentarz"/>
+                                                </div>
+                                                <div class="button-group">
+                                                    <button type="button" class="cancel-btn"
+                                                            onclick="document.getElementById('backCourseForm').submit();">
+                                                        Anuluj
+                                                    </button>
+                                                    <button type="submit" class="add-btn">Zapisz</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="testCourse" th:unless="${testCourse.id == editTestCourse.id}">
+                                            <div class="operations">
+                                                <form th:action="@{/course/instructor/deleteTestCourse}" method="post">
+                                                    <input type="hidden" name="testCourseId"
+                                                           th:value="${testCourse.id}"/>
+                                                    <button type="submit" class="delete-btn"><i
+                                                            class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                                <form th:action="@{/course/instructor/editTestCourse}"
+                                                      method="post">
+                                                    <input type="hidden" name="testCourseId"
+                                                           th:value="${testCourse.id}"/>
+                                                    <button type="submit" class="info-btn"><i
+                                                            class="fa-regular fa-pen-to-square"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="box">
+                                        <span class="content">
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_GENERAL)}">
+                                                <img src="/assets/img/generalTest.svg"
+                                                     title="Jest to ogolny rodzaj testu (teoria+praktyka)."
+                                                     alt="ikona testu ogolnego">
+                                            </th:block>
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_PRACTICAL)}">
+                                                <img src="/assets/img/practicalTest.svg"
+                                                     title="Jest to praktyczny rodzaj testu."
+                                                     alt="ikona testu praktycznego">
+                                            </th:block>
+                                            <th:block
+                                                    th:if="${testCourse.testType.equals(Constants.COURSE_TEST_THEORETICAL)}">
+                                                <img src="/assets/img/theoreticalTest.svg"
+                                                     title="Jest to teoratyczny rodzaj testu."
+                                                     alt="ikona testu teoretycznego">
+                                            </th:block>
+                                            <span class="title-header"
+                                                  th:text="${#temporals.format(testCourse.testDate, 'yyyy-MM-dd HH:mm')}"></span> <th:block
+                                                th:unless="${testCourse.instructorComment.isEmpty()}" th:text="${testCourse.instructorComment}"></th:block><th:block
+                                                th:if="${testCourse.instructorComment.isEmpty()}">Brak Komentarza</th:block>
+                                        </span>
+                                                <span class="percentagesResult">
+                                            <th:block th:if="${testCourse.testResult}" th:text="${testCourse.testResult == 0 ? '0' : #numbers.formatDecimal(testCourse.testResult, 0, 2)}"></th:block>
+                                            <th:block th:unless="${testCourse.testResult}">0</th:block>
+                                            <span class="percentages">%</span></span>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </th:block>
+                                <div class="testCourse" th:if="${course.testCourses.isEmpty()}">
+                                    <div class="box">
+                                    <span class="content"><span
+                                            class="title-header">Nie dodano żadnych wyników testów.</span></span>
+                                        <span class="percentagesResult"
+                                              sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">Dodaj pierwszy<span
+                                                class="percentages">Test</span>!</span>
+                                        <span class="percentagesResult" sec:authorize="hasRole('ROLE_STUDENT')">Poczekaj na wynik<span
+                                                class="percentages">testów</span>!</span>
+                                    </div>
+                                </div>
+                                <div class="testCourseSummary">
+                                    <div class="box">
+                                        <span class="content"><span class="title-header">Podsumowanie</span> Średnia wyników wszystkich testów</span>
+                                        <span class="percentagesResult">
+                                      <th:block
+                                              th:text="${course.summaryAverageResultTest == 0 ? '0' : #numbers.formatDecimal(course.summaryAverageResultTest, 0, 2)}"></th:block>
+                                        <span class="percentages">%</span>
+                                    </span>
+                                    </div>
+                                </div>
+
+                                <div class="newTestCourse" sec:authorize="hasAnyRole('ROLE_INSTRUCTOR', 'ROLE_ADMIN')">
+                                    <form class="box-new" method="post" th:action="@{/course/instructor/addTestCourse}"
+                                          th:object="${newTestCourse}">
+                                        <input type="hidden" name="courseId" th:value="${course.id}"/>
+                                        <div class="title-box">
+                                            <p>Dodawanie Wyniku Testu</p>
+                                            <hr>
+                                        </div>
+
+                                        <p class="mini-title-warning" th:if="${createTestCourseValidationInfo}"
+                                           th:text="${createTestCourseValidationInfo}"></p>
+                                        <div class="rowTestCourse type-row">
+                                            <th:block th:if="${#fields.hasErrors('testType')}">
+                                                <span class="warning-text" th:errors="*{testType}"></span>
+                                            </th:block>
+                                            <span class="title-header">Rodzaj Testu</span>
+                                            <div class="testType">
+                                                <div class="type">
+                                                    <input type="radio" id="typeGeneralTest"
+                                                           th:field="*{testType}"
+                                                           th:value="${Constants.COURSE_TEST_GENERAL}"/>
+                                                    <label for="typeGeneralTest"
+                                                           title="Jest to ogolny rodzaj testu (teoria+praktyka)."><img
+                                                            src="/assets/img/generalTest.svg"
+                                                            alt="ikona testu ogolnego"></label>
+                                                </div>
+
+                                                <div class="type">
+                                                    <input type="radio" id="typePracticalTest"
+                                                           th:field="*{testType}"
+                                                           th:value="${Constants.COURSE_TEST_PRACTICAL}"/>
+                                                    <label for="typePracticalTest" title="Jest to praktyczny rodzaj testu."><img
+                                                            src="/assets/img/practicalTest.svg"
+                                                            alt="ikona testu praktycznego"></label>
+                                                </div>
+
+                                                <div class="type">
+                                                    <input type="radio" id="typeTheoreticalTest"
+                                                           th:field="*{testType}"
+                                                           th:value="${Constants.COURSE_TEST_THEORETICAL}"/>
+                                                    <label for="typeTheoreticalTest"
+                                                           title="Jest to teoratyczny rodzaj testu."><img
+                                                            src="/assets/img/theoreticalTest.svg"
+                                                            alt="ikona testu teoretycznego"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <th:block th:if="${#fields.hasErrors('instructorComment')}">
+                                            <span class="warning-text" th:errors="*{instructorComment}"></span>
+                                        </th:block>
+                                        <div class="rowTestCourse comment-row">
+                                            <span class="title-header">Uwagi oraz Komentarze do Testu</span>
+                                            <input type="text" th:field="*{instructorComment}"
+                                                   placeholder="Wprowadź komentarz"/>
+                                        </div>
+
+                                        <th:block th:if="${#fields.hasErrors('testResult')}">
+                                            <span class="warning-text" th:errors="*{testResult}"></span>
+                                        </th:block>
+                                        <div class="rowTestCourse bottom-row">
+                                            <span class="title-header">Wynik Testu</span>
+                                            <input type="number" placeholder="Proc." step="0.01" max="100"
+                                                   th:field="*{testResult}"/>
+                                            <span class="percentages">%</span>
+                                        </div>
+
+                                        <button type="submit" class="add-btn">Dodaj</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <div th:replace="~{contact_footer :: contact}"></div>
+</main>
+
+<div th:replace="~{contact_footer :: footer}"></div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/course.js"></script>
+</body>
+</html>

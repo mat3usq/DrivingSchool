@@ -1,0 +1,728 @@
+@import '_colors.scss';
+@import '_animation.scss';
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	position: relative;
+	color: $text-color;
+	background-color: #333;
+	font-family: 'Montserrat', sans-serif;
+	overflow-x: hidden;
+}
+
+main,
+footer {
+	display: none;
+}
+
+h2 {
+	text-align: center;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+.orange-text {
+	color: $primary-color;
+	font-weight: bold;
+}
+
+.gold-text {
+	color: $secondary-color;
+	font-weight: bold;
+}
+
+.shadow-bg {
+	background-color: rgba(0, 0, 0, 0.85);
+}
+
+.underline {
+	background-color: $primary-color;
+	width: 220px;
+	height: 5px;
+	margin: 0 auto 30px;
+}
+
+.navbar-nav {
+	.progres {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 30px;
+
+		span {
+			color: $icon-color;
+		}
+
+		.progres-box {
+			width: 80%;
+			height: 16px;
+			margin-bottom: 30px;
+			border-radius: 20px;
+			border: 2px solid $text-color;
+
+			.progres-bar {
+				height: 12px;
+				width: 24%;
+				border-radius: 20px;
+				background-color: #62d63c;
+			}
+		}
+	}
+
+	.subject-nav {
+		width: 100%;
+		height: 30vh;
+		overflow: auto;
+
+		.title {
+			font-style: normal;
+			font-weight: bold;
+			margin-bottom: 20px;
+		}
+
+		ol {
+			list-style-type: none;
+			counter-reset: item;
+			padding-left: 0;
+
+			li {
+				margin: 15px;
+				position: relative;
+				padding-left: 35px;
+				display: flex;
+				align-items: center;
+
+				a {
+					color: $text-color;
+					margin-left: 15px;
+					font-size: 14px;
+				}
+
+				a:hover {
+					cursor: pointer;
+					font-weight: bold;
+				}
+			}
+
+			li::before {
+				counter-increment: item;
+				content: counter(item);
+				position: absolute;
+				left: 10px;
+				width: 25px;
+				height: 25px;
+				border-radius: 50%;
+				background-color: $category-icon;
+				color: black;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+.navbar-left {
+	height: 100vh;
+	overflow: hidden;
+}
+
+.lectureForm,
+.sublectureForm,
+.subjectForm,
+.editLectureForm,
+.editSublectureForm,
+.editSubjectForm {
+	margin: 0;
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 65%;
+
+	.formTitle {
+		padding: 20px 10px;
+		background-color: rgba(0, 0, 0, 0.6);
+		border-radius: 20px;
+		font-size: 20px;
+		letter-spacing: 1px;
+		text-align: center;
+		font-weight: bold;
+		border-bottom: 3px solid $primary-color;
+		border-top: 3px solid $primary-color;
+		margin: 0 auto;
+		max-width: 400px;
+		cursor: pointer;
+		user-select: none;
+
+		.left-arrow,
+		.right-arrow {
+			font-weight: bold;
+		}
+	}
+
+	.collapsible-content {
+		width: 100%;
+		height: 100%;
+		display: none;
+		transition: opacity 0.3s ease;
+
+		&.show {
+			display: block;
+		}
+	}
+
+	#sublecturesContainer,
+	#subjectsContainer {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+
+		.sublectures-of-lecture {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+			padding: 20px 0;
+			background-color: rgba(0, 0, 0, 0.3);
+			border-bottom: 1px solid $text-color;
+			border-top: 1px solid $text-color;
+
+			.subjects-of-sublecture-of-lecture {
+				padding: 20px 0;
+				background-color: rgba(0, 0, 0, 0.3);
+				border-bottom: 1px solid $info-color;
+				border-top: 1px solid $info-color;
+			}
+		}
+
+		.subjects-of-sublecture {
+			padding: 20px 0;
+			background-color: rgba(0, 0, 0, 0.3);
+			border-bottom: 1px solid $info-color;
+			border-top: 1px solid $info-color;
+		}
+	}
+
+	.input-file {
+		width: 80%;
+		margin: 20px auto;
+		padding: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		background: #e0eafc;
+		background: -webkit-linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+		background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+		color: black;
+		border-radius: 10px;
+		border: 2px solid black;
+
+		h3 {
+			font-weight: bold;
+			font-size: 17px;
+			margin-bottom: 20px;
+		}
+
+		.drag-area {
+			width: 100%;
+			min-height: 250px;
+			max-height: 500px;
+			border: 3px dashed rgb(86, 86, 86);
+			border-radius: 10px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: 10px auto;
+
+			.icon {
+				font-size: 50px;
+				color: #1683ff;
+			}
+
+			.header {
+				text-align: center;
+				font-size: 20px;
+				font-weight: 500;
+			}
+
+			.header.second {
+				transition: opacity 0.3s ease;
+			}
+
+			.support {
+				font-size: 12px;
+				color: gray;
+				margin: 10px 0 15px 0;
+			}
+
+			.button {
+				font-size: 20px;
+				font-weight: 500;
+				color: #1683ff;
+				cursor: pointer;
+			}
+
+			img {
+				width: 100%;
+				min-height: 250px;
+				max-height: 500px;
+				object-fit: cover;
+				padding: 3px;
+			}
+		}
+
+		.active {
+			border: 4px dashed $primary-color;
+			outline: none;
+		}
+	}
+
+	.input-field {
+		position: relative;
+		margin: 20px auto;
+		width: 80%;
+
+		i {
+			position: absolute;
+			left: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: $bg-price-color;
+			font-size: 18px;
+		}
+
+		input,
+		textarea,
+		select {
+			width: 100%;
+			padding: 10px 10px 10px 40px;
+			border-radius: 10px;
+			border: 2px solid black;
+			font-size: 18px;
+			// background-color: rgba(252, 240, 221, 0.84);
+			background: #e0eafc;
+			background: -webkit-linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+			background: linear-gradient(to left, #cfdef3, rgba(252, 240, 221, 0.84));
+			color: black;
+
+			&::placeholder {
+				color: black;
+			}
+
+			&:focus {
+				outline: none;
+				border-color: $primary-color;
+			}
+		}
+	}
+
+	.box-btn {
+		display: flex;
+		flex-direction: row;
+		align-content: space-around;
+		justify-content: center;
+		align-items: stretch;
+		flex-wrap: wrap;
+		margin-top: 10px;
+		margin-bottom: 20px;
+	}
+
+	button.add-btn,
+	.delete-btn,
+	.info-btn {
+		margin: 10px;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 10px;
+		color: white;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-align: center;
+		cursor: pointer;
+		transition: 0.3s ease;
+
+		&:hover {
+			transform: scale(1.05);
+		}
+	}
+
+	button.add-btn {
+		background-color: #2de300;
+
+		&:hover {
+			background-color: darken(#2de300, 10%);
+		}
+	}
+
+	button.info-btn {
+		background-color: $btn-bg-color;
+		&:hover {
+			background-color: darken($btn-bg-color, 10%);
+		}
+	}
+
+	button.delete-btn {
+		background-color: $primary-color;
+		&:hover {
+			background-color: darken($primary-color, 10%);
+		}
+	}
+}
+
+.subject {
+	.hero-img {
+		position: relative;
+		height: 110vh;
+		background-image: url('../img/backgroundSubject.png');
+		background-position: center;
+		background-size: cover;
+		z-index: 0;
+		overflow: hidden;
+
+		.hero-shadow {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+			z-index: -5;
+		}
+
+		.box-subject {
+			position: absolute;
+			top: 100px;
+			left: 300px;
+			width: calc(100vw - 300px);
+			height: 97vh;
+			overflow-y: auto;
+
+			.box-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				.container {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					width: 100%;
+					margin: 0 auto;
+					--bs-gutter-x: 0;
+					padding: 0 12px;
+
+					.edit-box {
+						position: absolute;
+						top: 63%;
+						right: 0px;
+						transform: translate(-50%, -50%);
+						display: flex;
+						flex-direction: column;
+
+						.edit-item {
+							font-size: 11px;
+							font-weight: lighter;
+							font-style: italic;
+							color: rgb(191 191 191 / 88%);
+						}
+					}
+				}
+
+				.title {
+					padding: 20px 10px;
+					background-color: rgba(0, 0, 0, 0.6);
+					border-radius: 20px;
+					font-size: 20px;
+					letter-spacing: 1px;
+					text-align: center;
+					font-weight: bold;
+				}
+
+				.content {
+					padding: 20px 10px;
+					background-color: rgba(0, 0, 0, 0.6);
+					border-radius: 20px;
+					font-size: 17px;
+					text-align: center;
+				}
+
+				.container-sublecture,
+				.container-lecture {
+					display: flex;
+					flex-direction: column;
+
+					.box-sublecture {
+						font-size: 19px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						margin: 30px 0px;
+						padding: 20px;
+						background-color: rgba(0, 0, 0, 0.7);
+						border-radius: 20px;
+						text-align: center;
+
+						h4 {
+							font-weight: bold;
+							letter-spacing: 1px;
+							margin: 20px;
+							padding-bottom: 10px;
+							border-bottom: 3px solid $primary-color;
+						}
+
+						p {
+							margin: 5px 10px;
+						}
+
+						.subject-details {
+							.img-block img {
+								margin: 20px;
+								max-width: 70%;
+							}
+						}
+
+						.subject-details,
+						.sublecture-details {
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							position: relative;
+							width: 90%;
+						}
+
+						.sublecture-details {
+							.edit-box {
+								top: 60%;
+								right: -67px;
+							}
+						}
+
+						.subject-details {
+							.edit-box {
+								top: 60%;
+								right: -57px;
+							}
+						}
+
+						.subject-details,
+						.sublecture-details,
+						.lecture-details {
+							margin: 15px 0;
+							border-radius: 10px;
+							border: 3px dashed rgba(102, 102, 102, 0.879);
+
+							p {
+								white-space: pre-wrap;
+								overflow-wrap: break-word;
+								word-wrap: break-word;
+							}
+						}
+					}
+
+					a.edit-icon i {
+						text-decoration: none;
+						color: $category-icon;
+						transition: 0.3s ease;
+						font-size: 20px;
+
+						&:hover {
+							font-size: 22px;
+							color: $icon-color;
+						}
+					}
+				}
+
+				.container-lecture {
+					position: relative;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					padding: 20px 30px;
+					background-color: rgba(0, 0, 0, 0.6);
+					border-radius: 20px;
+					margin: 10px;
+					border-right: 3px solid $secondary-color;
+					border-left: 3px solid $secondary-color;
+
+					.title,
+					.content {
+						margin: 0px;
+						padding: 0px 10px;
+						background-color: transparent;
+					}
+				}
+
+				.editLectureForm {
+					margin: 0;
+					width: 100%;
+
+					.formTitle {
+						width: 80%;
+					}
+				}
+
+				.editSublectureForm,
+				.editSubjectForm {
+					margin: 0;
+					width: 85%;
+					.input-field {
+						width: 100%;
+						input,
+						textarea {
+							text-align: center;
+						}
+					}
+
+					.input-file {
+						width: 100%;
+						padding: 15px;
+					}
+				}
+			}
+		}
+	}
+}
+
+.addLectures {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+
+	.lectureForm,
+	.sublectureForm,
+	.subjectForm {
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+		border-radius: 20px;
+		width: 90%;
+		max-width: 900px;
+		padding: 20px 0;
+		margin: 20px 0;
+	}
+
+	.lectureForm {
+		background: linear-gradient(160deg, $box-third-start, $box-end);
+	}
+
+	.sublectureForm {
+		background: linear-gradient(120deg, $box-second-start, $box-end);
+	}
+
+	.subjectForm {
+		background: linear-gradient(80deg, $box-sixth-start, $box-end);
+	}
+}
+
+@media (max-width: 720px) {
+	.subject {
+		.hero-img {
+			.box-subject {
+				left: 0px;
+				width: 100%;
+				.box-container {
+					.container-sublecture,
+					.container-lecture {
+						max-width: 100%;
+					}
+
+					.container {
+						padding: 5px;
+					}
+				}
+			}
+		}
+	}
+
+	.addLectures {
+		.lectureForm,
+		.sublectureForm,
+		.subjectForm {
+			width: 90%;
+
+			.input-field,
+			.input-file {
+				width: 80%;
+			}
+		}
+	}
+}
+
+@media (min-width: 576px) and (max-width: 720px) {
+	.container,
+	.container-sm {
+		max-width: 100%;
+	}
+
+	.subject {
+		.hero-img {
+			.box-subject {
+				.box-container {
+					.container-sublecture {
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 540px) {
+	.subject {
+		.hero-img {
+			height: 117vh;
+			.box-subject {
+				height: 102vh;
+				.box-container {
+					.container-sublecture {
+						margin: 0 10px;
+						.box-sublecture {
+							font-size: 14px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.addLectures {
+		.lectureForm,
+		.sublectureForm,
+		.subjectForm {
+			.formTitle {
+				font-size: 16px;
+			}
+		}
+	}
+
+	.editLectureForm,
+	.editSublectureForm,
+	.editSubjectForm {
+		.input-field {
+			input,
+			textarea,
+			select {
+				font-size: 13px;
+			}
+		}
+	}
+}
+
+@media (max-width: 400px) {
+	.subject {
+		.hero-img {
+			height: 150vh;
+			.box-subject {
+				height: 136vh;
+			}
+		}
+	}
+}

@@ -1,0 +1,134 @@
+<nav th:fragment="navigation-top" class="navbar-top shadow-bg">
+    <a class="navbar-brand" href="javascript:document.getElementById('logoutForm').submit()">
+        <img src="/assets/img/logo.png" class="logo" alt="Logo L"/>
+        <span class="orange-text">Driving <span class="gold-text">School</span></span></a
+    >
+    <div data-aos="fade-right" data-aos-delay="150" class="box-account">
+        <a href="javascript:document.getElementById('notificationFrom').submit()">
+            <i class="fa-solid fa-bell"></i><span th:if="${session.loggedInUser.numberOfNotifications > 0}" class="countNotifications" th:text="${session.loggedInUser.numberOfNotifications}"></span>
+        </a>
+        <div class="user-box">
+            <span th:text="'Witaj ' + ${session.loggedInUser.name}"></span>
+            <span class="user_role" th:text="'['+${session.loggedInUser.roleName}+']'"></span>
+        </div>
+        <form id="notificationFrom" th:action="@{/notifications}" method="get">
+        </form>
+        <form id="logoutForm" th:action="@{/logout}" method="post">
+            <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
+        </form>
+        <a href="javascript:document.getElementById('logoutForm').submit()">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+    </div>
+    <button data-aos="fade-right" data-aos-delay="150" class="menu-bars">
+        <i class="fa-sharp fa-solid fa-bars"></i>
+    </button>
+</nav>
+
+<nav th:fragment="navigation-left" data-aos="fade-right" data-aos-delay="20" class="navbar-left shadow-bg">
+    <div class="navbar-nav">
+        <p class="title" th:if="${!session.loggedInUser.currentCategory.isEmpty()}"
+           th:text="'Kategoria ' + ${session.loggedInUser.currentCategory}">Kategoria B</p>
+        <p class="title" th:if="${session.loggedInUser.currentCategory.isEmpty()}">Brak Kategorii</p>
+        <div class="underline"></div>
+
+        <a data-aos="fade-right" data-aos-delay="100" class="nav-link dashboard" th:href="@{/dashboard}"
+        ><i class="fa-solid fa-car-side"></i>Akutalności</a
+        >
+        <a data-aos="fade-right" data-aos-delay="150" class="nav-link" th:href="@{/lecture}"
+        ><i class="fa-solid fa-book-open"></i>Wykłady</a
+        >
+        <a data-aos="fade-right" data-aos-delay="200" class="nav-link" th:href="@{/calendar}"
+        ><i class="fa-solid fa-calendar-days"></i>Kalendarz</a
+        >
+        <a data-aos="fade-right" data-aos-delay="250" class="nav-link mailBox" th:href="@{/mailBox}"
+        ><i class="fa-solid fa-comment"></i>Wiadomości<span th:if="${session.loggedInUser.numberOfMails > 0}" class="countMails" th:text="${session.loggedInUser.numberOfMails}"></span></a
+        >
+        <div class="mail-nav">
+            <a data-aos="fade-right" data-aos-delay="300" class="nav-link" th:href="@{/mailBox/read}">
+                <i class="fas fa-envelope-open-text"></i>Odebrane
+            </a>
+            <a data-aos="fade-right" data-aos-delay="350" class="nav-link" th:href="@{/mailBox/unread}">
+                <i class="fa-solid fa-envelope"></i>Nieprzeczytane
+            </a>
+            <a data-aos="fade-right" data-aos-delay="300" class="nav-link" th:href="@{/mailBox/sent}">
+                <i class="fa-solid fa-paper-plane"></i>Wysłane
+            </a>
+            <a data-aos="fade-right" data-aos-delay="350" class="nav-link" th:href="@{/mailBox/trash}">
+                <i class="fa-solid fa-trash"></i>Kosz
+            </a>
+        </div>
+        <a data-aos="fade-right" data-aos-delay="400" class="nav-link" th:href="@{/tests}"
+        ><i class="fa-solid fa-person-chalkboard"></i>Nauka Testów</a
+        >
+        <a data-aos="fade-right" data-aos-delay="450" class="nav-link" th:href="@{/exam}"
+        ><i class="fa-solid fa-file-pen"></i>Egzamin</a
+        >
+        <a data-aos="fade-right" data-aos-delay="500" class="nav-link notification"
+           href="javascript:document.getElementById('notificationFrom').submit()"
+        ><i class="fa-solid fa-bell"></i>Powiadomienia<span th:if="${session.loggedInUser.numberOfNotifications  > 0}" class="countNotifications" th:text="${session.loggedInUser.numberOfNotifications }"></span></a>
+        <a data-aos="fade-right" data-aos-delay="550" class="nav-link" th:href="@{/account}"
+        ><i class="fa-solid fa-user"></i>Moje Konto</a
+        >
+        <a data-aos="fade-right" data-aos-delay="600" class="nav-link logout"
+           href="javascript:document.getElementById('logoutForm').submit()"
+        ><i class="fa-solid fa-arrow-right-to-bracket"></i>Wyloguj Sie</a
+        >
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const currentPath = window.location.pathname;
+
+            function updateActiveNavLink() {
+                navLinks.forEach(link => {
+                    if (currentPath.includes(link.getAttribute('href'))) {
+                        link.classList.add('active');
+                    }
+                });
+
+                const mailNav = document.querySelector('.mail-nav');
+                if (currentPath.startsWith('/mailBox')) {
+                    mailNav.style.display = 'block';
+
+                    if (currentPath.includes('/mailBox/'))
+                        document.querySelector('.mailBox').classList.remove('active')
+
+                    if (currentPath.includes('/mailBox/showMail') ||
+                        currentPath.includes('/mailBox/getMailToReply') ||
+                        currentPath.includes('/mailBox/sendMail') )
+                        document.querySelector('.mailBox').classList.add('active')
+                } else {
+                    if (mailNav) {
+                        mailNav.remove();
+                    }
+                }
+
+                if (currentPath.includes('/course'))
+                    document.querySelector('.dashboard').classList.add('active')
+            }
+
+            updateActiveNavLink();
+
+            function adjustNavbarHeight() {
+                const navbar = document.querySelector('.navbar-left');
+                const heroImg = document.querySelector('.hero-img');
+
+                if (navbar && heroImg) {
+                    navbar.style.height = `${heroImg.offsetHeight - 90}px`;
+                }
+            }
+
+            const observer = new ResizeObserver(() => {
+                adjustNavbarHeight();
+            });
+
+            const heroImg = document.querySelector('.hero-img');
+            if (heroImg) {
+                observer.observe(heroImg);
+            }
+
+            adjustNavbarHeight();
+        });
+    </script>
+</nav>

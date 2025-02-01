@@ -1,0 +1,26 @@
+$primary-color: #ef476f;
+$secondary-color: #ffd166;
+$nav-color: #e0ff72;
+$text-color: aliceblue;
+$placeHolder-color: rgb(192, 192, 219);
+$icon-color: springgreen;
+$bg-price-color: #073b4c6f;
+$bg-category-color: #118ab2;
+$input-color: #0077b6;
+$btn-bg-color: #4d84e2;
+$btn-bg-color-hover: #99d98c;
+$category-icon: #4cc9f0;
+$info-color: #6acff1;
+$bg-calendar-color: rgba(39, 43, 57, 0.95);
+$calendar-color: #b51b75;
+$calendar-color-hover: #7aba78;
+$calendar-font-color: #373c4f;
+
+$box-end: adjust-color(#118ab2b5, $lightness: -20%, $saturation: 10%);
+$box-first-start: adjust-color(rgba(102, 51, 153, 0.65), $lightness: -10%, $saturation: -5%);
+$box-second-start: adjust-color(rgba(151, 87, 8, 0.65), $lightness: -15%, $saturation: -5%);
+$box-third-start: adjust-color(rgba(233, 30, 99, 0.65), $lightness: -10%, $saturation: -5%);
+$box-fourth-start: adjust-color(rgba(94, 12, 162, 0.65), $lightness: -10%, $saturation: -5%);
+$box-fifth-start: adjust-color(rgba(0, 128, 192, 0.65), $lightness: -15%, $saturation: -5%);
+$box-sixth-start: adjust-color(rgba(128, 0, 64, 0.65), $lightness: -10%, $saturation: -5%);
+

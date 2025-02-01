@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edycja Rozdziału</title>
+
+    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/lecture.css"/>
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/contact.css"/>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar">
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="subject">
+        <div class="hero-img">
+            <div class="hero-shadow"></div>
+            <div class="box-subject">
+                <div class="box-container">
+                    <div class="container" th:each="lecture, lectureIterStat : ${lectureList}">
+                        <div class="container-lecture">
+                            <div class="lecture-details">
+                                <p class="title" th:text="'Wykład nr. ' + ${lectureIterStat.index + 1}"></p>
+                                <p class="title" th:text="${lecture.name}"></p>
+                                <p
+                                        class="content"
+                                        th:unless="${lecture.content == null or lecture.content.isEmpty()}"
+                                        th:text="${lecture.content}"></p>
+                            </div>
+                        </div>
+
+                        <div class="container-sublecture">
+                            <div class="box-sublecture" th:each="sublecture, sublectureIterStat : ${lecture.getSublectures()}">
+                                <div class="sublecture-details">
+                                    <h4 th:text="'PodWykład nr. ' + ${sublectureIterStat.index + 1}"></h4>
+                                    <h4
+                                            th:unless="${sublecture.title == null or sublecture.title.isEmpty()}"
+                                            th:text="${sublecture.title}"></h4>
+                                    <p
+                                            th:unless="${sublecture.content == null or sublecture.content.isEmpty()}"
+                                            th:text="${sublecture.content}"></p>
+                                </div>
+                                <div class="subject-details" th:each="subject, subjectIterStat : ${sublecture.getSubjects()}">
+                                    <th:block th:if="${subject.id} != ${newSubject.id}">
+                                        <p th:text="'Rozdział nr. ' + ${subjectIterStat.index + 1}"></p>
+                                        <p th:unless="${subject.title == null or subject.title.isEmpty()}"
+                                           th:text="${subject.title}"></p>
+                                        <div class="img-block">
+                                            <img th:if="${subject.image}" th:src="${subject.getImageBase64()}"
+                                                 th:alt="${subject.title}"/>
+                                        </div>
+                                        <p
+                                                th:unless="${subject.content == null or subject.content.isEmpty()}"
+                                                th:text="${subject.content}"></p>
+                                    </th:block>
+                                    <form
+                                            th:if="${subject.id} == ${newSubject.id}"
+                                            name="editSubject"
+                                            th:action="@{/lecture/editSubject}"
+                                            method="post"
+                                            th:object="${newSubject}"
+                                            class="editSubjectForm"
+                                            enctype="multipart/form-data"
+                                            id="editable">
+                                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                                        <p th:text="'Edycja Rozdziału nr. ' + ${subjectIterStat.index + 1}"></p>
+                                        <div class="input-field">
+                                            <i class="fas fa-chalkboard-teacher"></i>
+                                            <input
+                                                    type="text"
+                                                    name="subjectTitle"
+                                                    placeholder="Nazwa Rozdziału"
+                                                    th:field="*{title}"/>
+                                        </div>
+                                        <div class="input-file" th:data-sublecture="${sublecture.id}" th:data-subject="${subject.id}">
+                                            <h3 class="title-file">Zamień swój plik na nowy poprzez:</h3>
+                                            <div class="drag-area">
+                                                <div class="icon">
+                                                    <i class="fas fa-images"></i>
+                                                </div>
+                                                <span class="header first">Przeciągnij & Upuść</span>
+                                                <span class="header second">lub <span
+                                                        class="button">Zaimportuj</span></span>
+                                                <span class="support">Wspieramy: JPEG, PNG, JPG</span>
+                                            </div>
+                                            <input type="file" hidden accept="image/*" th:field="*{file}" th:id="'sublectures[' + ${sublecture.id} + '].subjects[' + ${subject.id} + ']'" />
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="fas fa-align-left"></i>
+                                            <textarea
+                                                    name="subjectContent"
+                                                    placeholder="Treść Rozdziału"
+                                                    rows="5"
+                                                    th:field="*{content}">
+                                            </textarea>
+                                        </div>
+
+                                        <p>Zmien miejsce Rozdziału</p>
+                                        <div class="input-field">
+                                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                                            <select id="subject-sublectureSelect" name="sublecture" th:field="*{sublecture}"
+                                                    onchange="filterSubjects()">
+                                                <th:block th:each="l : ${lectureList}">
+                                                    <th:block th:each="sl, iter: ${l.sublectures}">
+                                                        <option th:value="${sl.id}"
+                                                                th:text="'Do PodWykładu nr. '+${iter.index+1}+': &quot;' + ${sl.title.length() > 50 ? sl.title.substring(0, 47) + '...' : sl.title} + '&quot;'">
+                                                        </option>
+                                                    </th:block>
+                                                </th:block>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+                                            <select id="subject-subjectSelect" name="orderIndex" th:field="*{orderIndex}">
+                                                <option th:value="1">Jako Pierwszy Rozdział</option>
+                                                <th:block th:each="l : ${lectureList}">
+                                                    <th:block th:each="sl : ${l.sublectures}">
+                                                        <th:block th:each="sb, subIterStat : ${sl.subjects}">
+                                                            <option th:value="${sb.orderIndex}"
+                                                                    th:if="${sb.id == newSubject.id}"
+                                                                    th:text="'Aktualna Pozycja Rozdziału'">
+                                                            </option>
+                                                        </th:block>
+                                                    </th:block>
+                                                </th:block>
+                                                <option th:value="-1">Jako Ostatni Rozdział</option>
+                                                <th:block th:each="l : ${lectureList}">
+                                                    <th:block th:each="sl : ${l.sublectures}">
+                                                        <th:block th:each="sb, subIterStat : ${sl.subjects}">
+                                                            <option th:value="${sb.orderIndex + 1}"
+                                                                    th:if="${subIterStat.index + 1 < sl.subjects.size() && sb.id != newSubject.id && sl.subjects[subIterStat.index + 1].id != newSubject.id}"
+                                                                    th:text="'Pomiędzy Rozdziały: nr.'+${subIterStat.index+1}+' &quot;' + (${sb.title != null ? (sb.title.length() > 25 ? sb.title.substring(0, 22) + '...' : sb.title) : 'Rozdział nr. ' + subIterStat.index + 1}) + '&quot; - nr.'+${subIterStat.index+2}+' &quot;' + (${sl.subjects[subIterStat.index + 1].title != null ? (sl.subjects[subIterStat.index + 1].title.length() > 25 ? sl.subjects[subIterStat.index + 1].title.substring(0, 22) + '...' : sl.subjects[subIterStat.index + 1].title) : 'Rozdział nr. ' + subIterStat.index + 2}) + '&quot;'"
+                                                                    th:data-sublecture-id="${sl.id}">
+                                                            </option>
+                                                        </th:block>
+                                                    </th:block>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                        <div class="box-btn">
+                                            <button type="button" class="info-btn back-btn">Wróć</button>
+                                            <button type="button" class="delete-btn">Usuń</button>
+                                            <button type="submit" class="add-btn">Zaktualizuj</button>
+                                        </div>
+                                    </form>
+                                    <form th:action="@{/lecture/deleteSubject}" method="post" id="deleteSubjectForm">
+                                        <input type="hidden" th:name="${_csrf}" th:value="${_csrf.token}"/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <div th:replace="~{contact_footer :: contact}"></div>
+</main>
+
+<div th:replace="~{contact_footer :: footer}"></div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+<script src="/assets/js/loadTextarea.js"></script>
+<script src="/assets/js/dragAndDrop.js"></script>
+<script src="/assets/js/editSubject.js"></script>
+</body>
+</html>

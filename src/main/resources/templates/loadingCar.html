@@ -1,0 +1,33 @@
+<div th:fragment="loadingCar" class="loading-container">
+    <div class="loading-window">
+        <div class="loading-car"></div>
+        <div class="text">
+            <span>Loading</span><span class="dots">...</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+    <script>
+        window.onload = function () {
+            document.querySelector(".loading-container").style.display = 'none';
+            document.querySelector("main").style.display = 'block';
+            document.querySelector("footer").style.display = 'block';
+        };
+
+        const loadingWindow = document.querySelector('.loading-car');
+
+        lottie.loadAnimation({
+            container: loadingWindow,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '/assets/img/animation_car_loading2.json'
+        });
+    </script>
+    <link rel="stylesheet" href="/assets/css/carLoading.css"/>
+</div>
+
+
+
+
+

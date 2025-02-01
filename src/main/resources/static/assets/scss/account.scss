@@ -1,0 +1,277 @@
+@import '_colors.scss';
+@import '_animation.scss';
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	position: relative;
+	color: $text-color;
+	background-color: #333;
+	font-family: 'Montserrat', sans-serif;
+	overflow-x: hidden;
+}
+
+h2 {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.orange-text {
+	color: $primary-color;
+	font-weight: bold;
+}
+
+.gold-text {
+	color: $secondary-color;
+	font-weight: bold;
+}
+
+.shadow-bg {
+	background-color: rgba(0, 0, 0, 0.85);
+}
+
+.underline {
+	background-color: $primary-color;
+	width: 220px;
+	height: 5px;
+	margin: 0 auto 30px;
+}
+
+.navbar-left {
+	height: 108vh;
+}
+
+.account {
+	.hero-img {
+		position: relative;
+		height: 120vh;
+		background-image: url('/assets/img/backgroundAccount.png');
+		background-position: center;
+		background-size: cover;
+		z-index: 0;
+		overflow: hidden;
+
+		.hero-shadow {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+			z-index: -5;
+		}
+
+		.box-account {
+			position: absolute;
+			top: 90px;
+			left: 300px;
+			width: calc(100% - 300px);
+			height: 89%;
+			overflow-y: scroll;
+
+			.box-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: 85%;
+				margin: 0 auto;
+				margin-top: 20px;
+
+				.title {
+					padding: 20px;
+					background-color: rgba(0, 0, 0, 0.85);
+					border-radius: 20px;
+					font-size: 24px;
+					font-style: italic;
+					letter-spacing: 1px;
+					text-align: center;
+				}
+
+				.mini-title {
+					margin: 10px 40px 15px 40px;
+					font-size: 21px;
+					font-weight: bold;
+					color: $primary-color;
+					text-align: center;
+					padding-bottom: 10px;
+					border-bottom: 2px solid $placeHolder-color;
+					letter-spacing: 1px;
+				}
+
+				.container-account {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					background-color: rgba(0, 0, 0, 0.85);
+					border-radius: 20px;
+					padding: 20px;
+					width: 50vw;
+					max-width: 800px;
+
+					.title-header,
+					.title-header-right {
+						letter-spacing: 2px;
+						font-size: 14px;
+						margin-bottom: 3px;
+						padding-left: 20px;
+					}
+
+					.title-header-right {
+						text-align: right;
+					}
+
+					.content {
+						font-weight: bold;
+					}
+
+					hr {
+						width: 87%;
+						background-color: rgba(255, 255, 255, 1);
+						border-radius: 20px;
+						height: 5px;
+						margin: 5px;
+					}
+
+					.account-details {
+						width: 87%;
+						font-size: 18px;
+						padding: 10px;
+
+						span {
+							color: $category-icon;
+							font-weight: bold;
+						}
+					}
+
+					.schoolUser-payments {
+						width: 87%;
+						background-color: #1e1d1d;
+						border-radius: 15px;
+						margin: 10px 0;
+						padding: 10px 10px;
+
+						.payment {
+							position: relative;
+							display: flex;
+							align-items: center;
+							flex-direction: column;
+							margin-bottom: 10px;
+							background-color: rgba(0, 0, 0, 0.8);
+							padding: 10px 15px;
+							border-bottom: 2px solid $text-color;
+							border-radius: 10px 10px 0 0;
+							gap: 5px;
+							transition: transform 0.3s ease;
+
+							.box {
+								width: 100%;
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+
+								.title-header,
+								.title-header-right {
+									font-style: italic;
+									letter-spacing: 0px;
+									padding-right: 10px;
+									font-size: 15px;
+									color: $info-color;
+								}
+
+								.content,
+								.content-price {
+									font-size: 15px;
+									color: $text-color;
+
+									span {
+										margin-left: 4px;
+									}
+								}
+
+								.content-price {
+									display: inline-block;
+									white-space: nowrap;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 950px) {
+	.account {
+		.hero-img {
+			.box-account {
+				top: 90px;
+				left: 0px;
+				width: 100%;
+
+				.box-container {
+					.container-account {
+						width: 100%;
+
+						.account-details {
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+
+							p {
+								text-align: center;
+								font-size: 13px;
+							}
+						}
+
+						.schoolUser-payments {
+							margin: 7px 0;
+							padding: 7px 7px;
+
+							.payment {
+								padding: 7px 12px;
+
+								.box {
+									.title-header,
+									.title-header-right {
+										padding-left: 0px;
+										font-size: 13px;
+									}
+
+									.content,
+									.content-price {
+										font-size: 13px;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.navbar-left {
+		display: none;
+
+		.navbar-nav {
+			.logout {
+				display: block;
+			}
+		}
+	}
+
+	.navbar-top {
+		button {
+			display: block;
+		}
+
+		.box-account {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Wyniki Egzaminu</title>
+
+    <link rel="icon" href="/assets/img/logo.png" type="image/png"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+            crossorigin="anonymous"/>
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/assets/css/navigation.css"/>
+    <link rel="stylesheet" href="/assets/css/examResult.css"/>
+    <link rel="stylesheet" href="/assets/css/contact.css"/>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar">
+
+<div th:replace="~{loadingCar :: loadingCar}"></div>
+<div th:replace="~{navigation :: navigation-top}"></div>
+<div th:replace="~{navigation :: navigation-left}"></div>
+
+<main>
+    <section class="examResult">
+        <div class="hero-img">
+            <div class="hero-shadow"></div>
+            <div class="box-examResult">
+                <div class="container">
+                    <div class="box-container">
+                        <div class="header-examResult">
+                            <div class="header-info">
+                                <th:block th:if="${exam.passed}">
+                                    <p>Gratulacje! Wynik egzaminu</p>
+                                    <span class="green">Pozytywny</span>
+                                </th:block>
+                                <th:block th:if="${!exam.passed}">
+                                    <p>Niestety! Wynik egzaminu</p>
+                                    <span class="red">Negatywny</span>
+                                </th:block>
+                            </div>
+
+                            <div class="header-info">
+                                <p>Czas trwania</p>
+                                <span class="info" th:text="${exam.examDurationString}"></span>
+                            </div>
+
+                            <div class="header-info">
+                                <p>Końcowa Liczba Punktów</p>
+                                <p th:if="${exam.passed}"><span class="green" th:text="${exam.points}"></span> / 74pkt</p>
+                                <p th:if="${!exam.passed}"><span class="red" th:text="${exam.points}"></span> / 74pkt</p>
+                            </div>
+                        </div>
+                        <div class="container-examResult">
+                            <div class="examResult-info">
+                                <div class="img" th:if="${exam.passed}">
+                                    <th:block th:replace="~{carAnimation :: positive-exam}"></th:block>
+                                </div>
+                                <div class="img" th:unless="${exam.passed}">
+                                    <th:block th:replace="~{carAnimation :: negative-exam}"></th:block>
+                                </div>
+                                <div class="box-info">
+                                    <h4>Poprawne odpowiedzi</h4>
+                                    <div class="info-container">
+                                        <div>
+                                            <p class="info-title">Część Podstawowa</p>
+                                            <p class="counter"><span
+                                                    th:text="${exam.getAmountCorrectNoSpecAnswers()}">9</span> / 20</p>
+                                        </div>
+                                        <div>
+                                            <p class="info-title">Część Specjalistyczna</p>
+                                            <p class="counter"><span
+                                                    th:text="${exam.getAmountCorrectSpecAnswers()}">3</span> / 12</p>
+                                        </div>
+                                    </div>
+                                    <div class="bottom-container">
+                                        <p class="info-title">Pominięte Pytania</p>
+                                        <p class="counter"><span class="orange"
+                                                                 th:text="${exam.getAmountSkippedQuestions()}">8</span></p>
+                                    </div>
+                                    <div class="bottom-container">
+                                        <p class="info-title">Średni Czas Odpowiedzi</p>
+                                        <p class="counter"><span class="info"
+                                                                 th:text="${#numbers.formatDecimal(exam.getAverageTimePerQuestion(), 1, 2)} + 's'">>8</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="questions">
+                                <th:block th:if="${exam.getSortedStudentExamAnswers().size() > 0}">
+                                    <h5 class="content">Część Podstawowa</h5>
+                                    <div class="answer-box">
+                                        <div class="answer-container">
+                                            <th:block th:each="answer, iterStat : ${exam.getSortedStudentExamAnswers()}">
+                                                <th:block th:if="${iterStat.index < 20}">
+                                                    <form th:action="@{/exam/showAnswer}" method="post">
+                                                        <input type="hidden" name="answerId" th:value="${answer.id}"/>
+                                                        <button type="submit" class="answer"
+                                                                th:classappend="${#strings.isEmpty(answer.getAnswer()) ? 'none' : (answer.getCorrectness() ? 'correct' : 'wrong')}"
+                                                                th:text="${iterStat.index + 1}"></button>
+                                                    </form>
+                                                </th:block>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </th:block>
+
+                                <th:block th:if="${exam.getSortedStudentExamAnswers().size() > 20}">
+                                    <h5 class="content">Część Specjalistyczna</h5>
+                                    <div class="answer-box">
+                                        <div class="answer-container">
+                                            <th:block th:each="answer, iterStat : ${exam.getSortedStudentExamAnswers()}">
+                                                <th:block th:if="${iterStat.index >= 20}">
+                                                    <form th:action="@{/exam/showAnswer}" method="post">
+                                                        <input type="hidden" name="answerId" th:value="${answer.id}"/>
+                                                        <button type="submit" class="answer"
+                                                                th:classappend="${#strings.isEmpty(answer.getAnswer()) ? 'none' : (answer.getCorrectness() ? 'correct' : 'wrong')}"
+                                                                th:text="${iterStat.index + 1}"></button>
+                                                    </form>
+                                                </th:block>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </th:block>
+
+                                <div class="button-box">
+                                    <button class="back"><a href="/exam">Powrót</a></button>
+                                    <form th:action="@{/exam/generate}" method="post">
+                                        <button type="submit" class="next"><a>Rozwiąż Ponownie</a></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+
+    <div th:replace="~{contact_footer :: contact}"></div>
+</main>
+
+<div th:replace="~{contact_footer :: footer}"></div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/assets/js/solveExam.js"></script>
+<script src="/assets/js/aosSettings.js"></script>
+<script src="/assets/js/navigation.js"></script>
+</body>
+</html>

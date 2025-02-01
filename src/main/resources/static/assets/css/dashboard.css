@@ -1,0 +1,715 @@
+.bounce-top {
+  display: block;
+  animation: bounce-top 2s infinite both;
+}
+
+@keyframes bounce-top {
+  0% {
+    transform: translateY(-45px);
+    animation-timing-function: ease-in;
+    opacity: 1;
+    color: #ef476f;
+  }
+  24% {
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-24px);
+    animation-timing-function: ease-in;
+  }
+  65% {
+    transform: translateY(-12px);
+    animation-timing-function: ease-in;
+  }
+  25%, 55%, 75%, 87% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+    opacity: 1;
+  }
+}
+.animation {
+  animation: itemAnimation 0.6s both;
+}
+
+.animationReverse {
+  animation: itemAnimationReverse 0.6s both;
+}
+
+@keyframes itemAnimation {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes itemAnimationReverse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.loginAnimation {
+  animation: loginItemAnimation 0.6s forwards;
+}
+
+.loginAnimationReverse {
+  animation: loginItemAnimationReverse 0.6s forwards;
+}
+
+@keyframes loginItemAnimation {
+  from {
+    transform: translateX(-300%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes loginItemAnimationReverse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-300%);
+  }
+}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  color: aliceblue;
+  background-color: #333;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+}
+
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.orange-text {
+  color: #ef476f;
+  font-weight: bold;
+}
+
+.gold-text {
+  color: #ffd166;
+  font-weight: bold;
+}
+
+.shadow-bg {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.underline {
+  background-color: #ef476f;
+  width: 220px;
+  height: 5px;
+  margin: 0 auto 30px;
+}
+
+.dashboard .hero-img {
+  position: relative;
+  height: 110vh;
+  background-image: url("../img/backgroundPaneldashboard.png");
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+.dashboard .hero-img .box-container {
+  position: absolute;
+  top: 100px;
+  left: 300px;
+  width: calc(100vw - 300px);
+  max-height: 97vh;
+  overflow-y: auto;
+}
+.dashboard .hero-img .box-container .container {
+  width: 100%;
+  margin: 0 auto;
+  --bs-gutter-x: 0;
+}
+.dashboard .hero-img .box-container .container .title {
+  margin-top: 30px;
+  padding: 20px 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  font-size: 20px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.dashboard .hero-img .box-container .container .mini-title-warning {
+  margin: 20px auto;
+  padding: 20px 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  font-size: 16px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+  border: 5px dotted #ffd166;
+  box-shadow: 0px 0px 15px 5px #ffd166;
+}
+.dashboard .hero-img .box-container .container .box-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dashboard .hero-img .box-container .container .box-category .container-category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.dashboard .hero-img .box-container .container .box-category .container-category .category {
+  font-size: 19px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px;
+  padding: 10px;
+  border: 5px dotted rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  text-align: center;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+.dashboard .hero-img .box-container .container .box-category .container-category .category img {
+  width: 120px;
+  height: 120px;
+  padding: 20px;
+}
+.dashboard .hero-img .box-container .container .box-category .container-category .category span {
+  color: #4cc9f0;
+  font-weight: bold;
+}
+.dashboard .hero-img .box-container .container .box-category .container-category .category p {
+  margin-bottom: 0rem;
+}
+.dashboard .hero-img .box-container .container .box-category .container-category .currentCategory {
+  border: 5px dotted #ffd166;
+  box-shadow: 0px 0px 15px 3px rgba(7, 59, 76, 0.4352941176);
+}
+.dashboard .hero-img .box-container .container .box-category .container-category .category:hover {
+  border: 5px dotted #ffd166;
+  box-shadow: 0px 0px 15px 5px #ffd166;
+}
+.dashboard .hero-img .box-container .container .box-statistics-exam,
+.dashboard .hero-img .box-container .container .box-statistics-test {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dashboard .hero-img .box-container .container .box-statistics-exam .container-statistics,
+.dashboard .hero-img .box-container .container .box-statistics-test .container-statistics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.dashboard .hero-img .box-container .container .box-statistics-exam .container-statistics .charts-container,
+.dashboard .hero-img .box-container .container .box-statistics-test .container-statistics .charts-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.dashboard .hero-img .box-container .container .box-statistics-exam .container-statistics .charts-container div,
+.dashboard .hero-img .box-container .container .box-statistics-test .container-statistics .charts-container div {
+  min-width: 400px;
+  max-width: 500px;
+}
+.dashboard .hero-img .box-container .container .box-users {
+  margin-bottom: 60px;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student,
+.dashboard .hero-img .box-container .container .box-users .account-instructor {
+  max-width: 740px;
+  font-size: 19px;
+  padding: 10px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .info-text::before,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .info-text::before {
+  content: "\f05a";
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .info-text,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .info-text {
+  color: aliceblue;
+  border-left: 4px solid aliceblue;
+  border-right: 4px solid aliceblue;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 35px;
+  text-align: right;
+  position: relative;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .info-text::before,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .info-text::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: inherit;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .mini-title,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .mini-title {
+  margin-top: 0px;
+  padding: 20px 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  font-size: 17px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+  border: 5px dotted #ffd166;
+  box-shadow: 0px 0px 15px 3px rgba(7, 59, 76, 0.4352941176);
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list {
+  width: 100%;
+  margin-top: 20px;
+  overflow: scroll;
+  border-radius: 10px;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.95);
+  overflow: hidden;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table th,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table td,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table th,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table td,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table th,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table td,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table th,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table td,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table th,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table td,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table th,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table td,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table th,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table td,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table th,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table td {
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  color: #f5f5f5;
+  min-width: 120px;
+  max-width: 120px;
+  word-wrap: break-word;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table thead,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table thead,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table thead,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table thead,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table thead,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table thead,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table thead,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table thead {
+  background-color: #ef476f;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table th,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table th,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table th,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table th,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table th,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table th,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table th,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table th {
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  min-width: 120px;
+  max-width: 120px;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-normal-row,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-normal-row,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-normal-row,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-normal-row,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-normal-row,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-normal-row,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-normal-row,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-normal-row {
+  position: relative;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-one-option,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-one-option,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-one-option,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-one-option,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-one-option,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-one-option,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-one-option,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-one-option {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-one-option .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-one-option .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-one-option .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-one-option .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-one-option .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-one-option .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-one-option .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-one-option .operations {
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -50px;
+  transition: transform 0.3s ease;
+  display: flex;
+  overflow: visible;
+  gap: 6px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-one-option:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-one-option:hover {
+    cursor: pointer;
+    transform: translateX(50px);
+  }
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-one-option.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-one-option.clicked {
+  transform: translateX(50px);
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-two-options,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-two-options,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-two-options,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-two-options,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-two-options,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-two-options,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-two-options,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-two-options {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-two-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-two-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-two-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-two-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-two-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-two-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-two-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-two-options .operations {
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -100px;
+  transition: transform 0.3s ease;
+  display: flex;
+  overflow: visible;
+  gap: 6px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-two-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-two-options:hover {
+    cursor: pointer;
+    transform: translateX(100px);
+  }
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-two-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-two-options.clicked {
+  transform: translateX(100px);
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-three-options,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-three-options,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-three-options,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-three-options,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-three-options,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-three-options,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-three-options,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-three-options {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-three-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-three-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-three-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-three-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-three-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-three-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-three-options .operations,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-three-options .operations {
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -130px;
+  transition: transform 0.3s ease;
+  display: flex;
+  overflow: visible;
+  gap: 6px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-three-options:hover,
+  .dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-three-options:hover {
+    cursor: pointer;
+    transform: translateX(130px);
+  }
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .instructors-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .instructors-list .students-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .instructors-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-student .students-list .students-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .instructors-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .instructors-list .students-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .instructors-table .table-three-options.clicked,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .students-list .students-table .table-three-options.clicked {
+  transform: translateX(130px);
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .select-instructor,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .select-instructor {
+  padding: 10px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: space-around;
+  align-items: center;
+  gap: 20px;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .select-instructor input,
+.dashboard .hero-img .box-container .container .box-users .account-student .select-instructor select,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .select-instructor input,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .select-instructor select {
+  height: 35px;
+  width: 280px;
+  outline: none;
+  border: none;
+  border: 2px solid #f5f5f5;
+  padding: 0 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #373c4f;
+  border-radius: 5px;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .select-instructor input:focus,
+.dashboard .hero-img .box-container .container .box-users .account-student .select-instructor select:focus,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .select-instructor input:focus,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .select-instructor select:focus {
+  outline: none;
+  border-color: #b51b75;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .select-instructor button,
+.dashboard .hero-img .box-container .container .box-users .account-student .select-instructor input,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .select-instructor button,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .select-instructor input {
+  margin: 7px;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .correct-btn,
+.dashboard .hero-img .box-container .container .box-users .account-student .delete-btn,
+.dashboard .hero-img .box-container .container .box-users .account-student .info-btn,
+.dashboard .hero-img .box-container .container .box-users .account-student .cancel-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .correct-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .delete-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .info-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .cancel-btn {
+  font-size: 18px;
+  height: 35px;
+  padding: 0px 10px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .correct-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-student .delete-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-student .info-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-student .cancel-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .correct-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .delete-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .info-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .cancel-btn:hover {
+  transform: scale(1.05);
+}
+.dashboard .hero-img .box-container .container .box-users .account-student button.add-btn,
+.dashboard .hero-img .box-container .container .box-users .account-student button.correct-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.add-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.correct-btn {
+  background-color: #2de300;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student button.add-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-student button.correct-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.add-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.correct-btn:hover {
+  background-color: #23b000;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student button.info-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.info-btn {
+  background-color: #4d84e2;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student button.info-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.info-btn:hover {
+  background-color: #2366d9;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student button.delete-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.delete-btn {
+  background-color: #ef476f;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student button.delete-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.delete-btn:hover {
+  background-color: #eb184a;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student button.cancel-btn,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.cancel-btn {
+  background-color: #ffc233;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student button.cancel-btn:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor button.cancel-btn:hover {
+  background-color: #ffb200;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .current,
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .icon,
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .number,
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .disabled,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .current,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .icon,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .number,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .disabled {
+  font-weight: bold;
+  margin-top: 0px;
+  padding: 10px 14px;
+  background-color: rgba(0, 0, 0, 0.8);
+  font-size: 15px;
+  border-radius: 20px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.3s ease;
+  border: 2px dotted rgba(0, 0, 0, 0.8);
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .icon,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .icon {
+  font-style: normal;
+  color: #ef476f;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .icon:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .icon:hover {
+  border: 2px dotted #ffd166;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .number,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .number {
+  font-style: normal;
+  color: #6acff1;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .number:hover,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .number:hover {
+  border: 2px dotted #ffd166;
+}
+.dashboard .hero-img .box-container .container .box-users .account-student .pagination .disabled,
+.dashboard .hero-img .box-container .container .box-users .account-instructor .pagination .disabled {
+  font-style: normal;
+  color: #4d84e2;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+.dashboard .hero-img .box-container .container .box-category,
+.dashboard .hero-img .box-container .container .box-users,
+.dashboard .hero-img .box-container .container .box-statistics-test,
+.dashboard .hero-img .box-container .container .box-statistics-exam {
+  margin: 40px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(9px);
+          backdrop-filter: blur(9px);
+}
+.dashboard .hero-img .box-container .container .box-category {
+  background: linear-gradient(-135deg, rgba(77, 42, 111, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+.dashboard .hero-img .box-container .container .box-statistics-exam {
+  background: linear-gradient(-135deg, rgba(66, 12, 111, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+.dashboard .hero-img .box-container .container .box-statistics-test {
+  background: linear-gradient(-135deg, rgba(76, 45, 6, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+.dashboard .hero-img .box-container .container .box-users {
+  background: linear-gradient(-135deg, rgba(188, 24, 80, 0.65), rgba(3, 68, 90, 0.7098039216));
+}
+
+@media (max-width: 720px) {
+  .dashboard .hero-img .box-container {
+    left: 0px;
+    width: 100%;
+  }
+}/*# sourceMappingURL=dashboard.css.map */

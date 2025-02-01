@@ -1,0 +1,212 @@
+@import '_colors.scss';
+@import '_animation.scss';
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	position: relative;
+	color: $text-color;
+	background-color: #333;
+	font-family: 'Montserrat', sans-serif;
+	overflow-x: hidden;
+}
+
+h2 {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.orange-text {
+	color: $primary-color;
+	font-weight: bold;
+}
+
+.gold-text {
+	color: $secondary-color;
+	font-weight: bold;
+}
+
+.shadow-bg {
+	background-color: rgba(0, 0, 0, 0.85);
+}
+
+.underline {
+	background-color: $primary-color;
+	width: 220px;
+	height: 5px;
+	margin: 0 auto 30px;
+}
+
+.navbar-left {
+	height: 108vh;
+}
+
+.notifications {
+	.hero-img {
+		position: relative;
+		height: 120vh;
+		background-image: url('/assets/img/notificationsBackground.png');
+		background-position: center;
+		background-size: cover;
+		z-index: 0;
+		overflow: hidden;
+
+		.hero-shadow {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+			z-index: -5;
+		}
+
+		.box-notifications {
+			position: absolute;
+			top: 90px;
+			left: 300px;
+			width: calc(100% - 300px);
+			height: 89%;
+			overflow-y: scroll;
+
+			.box-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: 95%;
+				max-width: 700px;
+				margin: 0 auto;
+				margin-top: 20px;
+
+				.title {
+					padding: 20px;
+					background-color: rgba(0, 0, 0, 0.85);
+					border-radius: 20px;
+					font-size: 24px;
+					font-style: italic;
+					letter-spacing: 1px;
+					text-align: center;
+				}
+
+				.mini-title {
+					margin: 10px 40px 15px 40px;
+					font-size: 21px;
+					font-weight: bold;
+					color: $primary-color;
+					text-align: center;
+					padding-bottom: 10px;
+					border-bottom: 2px solid $placeHolder-color;
+					letter-spacing: 1px;
+				}
+
+				.container-notifications {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					background-color: rgba(0, 0, 0, 0.85);
+					border-radius: 20px;
+					padding: 20px;
+					width: 100%;
+					max-width: 800px;
+
+					.notification {
+						position: relative;
+						display: flex;
+						align-items: center;
+						flex-direction: column;
+						margin-bottom: 15px;
+						padding: 20px 25px;
+						border-radius: 15px;
+						gap: 10px;
+						transition: transform 0.3s ease, box-shadow 0.3s ease;
+						width: 100%;
+
+						&.seen {
+							background: linear-gradient(135deg, rgb(77 42 111 / 82%), rgb(3 68 90 / 90%));
+						}
+
+						&.notSeen {
+							background: linear-gradient(135deg, rgba(233, 30, 98, 0.775), rgba(16, 82, 104, 0.9));
+							border: 1px solid $placeHolder-color;
+						}
+
+						&:hover {
+							transform: translateY(-5px);
+							box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+						}
+
+						.box {
+							width: 100%;
+							display: flex;
+							flex-direction: column;
+							justify-content: space-between;
+
+							.content {
+								font-size: 15px;
+								color: $text-color;
+								white-space: pre-line;
+							}
+
+							.time {
+								font-weight: bold;
+								font-style: italic;
+								font-size: 16px;
+								color: $calendar-color-hover;
+								text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+								white-space: nowrap;
+								align-self: flex-end;
+							}
+						}
+
+						.operations {
+							position: absolute;
+							top: 11px;
+							right: 11px;
+
+							.delete-btn {
+								font-size: 18px;
+								height: 35px;
+								padding: 0px 10px;
+								border: none;
+								border-radius: 10px;
+								color: white;
+								font-weight: bold;
+								text-transform: uppercase;
+								text-align: center;
+								cursor: pointer;
+								transition: 0.3s ease;
+
+								&:hover {
+									transform: scale(1.05);
+								}
+							}
+
+							button.delete-btn {
+								background-color: $primary-color;
+								&:hover {
+									background-color: darken($primary-color, 10%);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 720px) {
+	.notifications {
+		.hero-img {
+			.box-notifications {
+				top: 90px;
+				left: 0px;
+				width: 100%;
+			}
+		}
+	}
+}

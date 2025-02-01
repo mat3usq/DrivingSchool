@@ -1,0 +1,554 @@
+.bounce-top {
+  display: block;
+  animation: bounce-top 2s infinite both;
+}
+
+@keyframes bounce-top {
+  0% {
+    transform: translateY(-45px);
+    animation-timing-function: ease-in;
+    opacity: 1;
+    color: #ef476f;
+  }
+  24% {
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-24px);
+    animation-timing-function: ease-in;
+  }
+  65% {
+    transform: translateY(-12px);
+    animation-timing-function: ease-in;
+  }
+  25%, 55%, 75%, 87% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+    opacity: 1;
+  }
+}
+.animation {
+  animation: itemAnimation 0.6s both;
+}
+
+.animationReverse {
+  animation: itemAnimationReverse 0.6s both;
+}
+
+@keyframes itemAnimation {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes itemAnimationReverse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.loginAnimation {
+  animation: loginItemAnimation 0.6s forwards;
+}
+
+.loginAnimationReverse {
+  animation: loginItemAnimationReverse 0.6s forwards;
+}
+
+@keyframes loginItemAnimation {
+  from {
+    transform: translateX(-300%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes loginItemAnimationReverse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-300%);
+  }
+}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  color: aliceblue;
+  background-color: #333;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+}
+
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.orange-text {
+  color: #ef476f;
+  font-weight: bold;
+}
+
+.gold-text {
+  color: #ffd166;
+  font-weight: bold;
+}
+
+.shadow-bg {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.underline {
+  background-color: #ef476f;
+  width: 220px;
+  height: 5px;
+  margin: 0 auto 30px;
+}
+
+.navbar-left {
+  height: 170vh;
+}
+
+.exam .hero-img {
+  position: relative;
+  height: 182vh;
+  background-image: url("../img/backgroundExam.png");
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  overflow: hidden;
+}
+.exam .hero-img .hero-shadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -5;
+}
+.exam .hero-img .box-exam {
+  position: absolute;
+  top: 100px;
+  left: 300px;
+  width: calc(100vw - 300px);
+  height: 100%;
+  overflow-y: auto;
+}
+.exam .hero-img .box-exam .container {
+  width: 100%;
+  margin: 0 auto;
+  --bs-gutter-x: 0;
+}
+.exam .hero-img .box-exam .container .box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 12px;
+  width: 100%;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 10px;
+  width: 100%;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam span {
+  color: #4cc9f0;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: bold;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam p {
+  font-size: 18px;
+  margin: 10px;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info {
+  position: relative;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: 1px;
+  margin: 10px;
+  width: 100%;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info .info-exam {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  align-items: stretch;
+  text-align: center;
+  gap: 25px;
+  padding-right: 40px;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info .info-exam .info {
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info .info-exam .info .counter {
+  font-size: 20px;
+  font-style: normal;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info .info-exam span {
+  font-size: 20px;
+  color: springgreen;
+  font-weight: bold;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info .info-exam p {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info .info-exam .noSpecificTimerToThink {
+  display: none;
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info .endExam {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+}
+.exam .hero-img .box-exam .container .box-container .header-exam-info .endExam button {
+  background-color: aliceblue;
+  padding: 5px;
+  border-radius: 50%;
+  border: none;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 120px;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info img,
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info video {
+  width: 100%;
+  border-radius: 20px;
+  margin: 10px;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info svg {
+  width: 400px;
+  border-radius: 20px;
+  margin: 10px;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info #prepareMedia {
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  cursor: pointer;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info #prepareMedia .question-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #444;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info #prepareMedia .question-content .video-icon,
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info #prepareMedia .question-content .image-icon {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  color: #888;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .exam-info #media {
+  width: 100%;
+  display: none;
+  justify-content: center;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 18px;
+  margin: 10px 30px;
+  gap: 5px;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question .button-box,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .button-box {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question .info-container,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question span,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question span {
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: springgreen;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question .content,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .content {
+  font-weight: bold;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question a,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question a {
+  text-decoration: none;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question button,
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question a,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question button,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question a {
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 49px;
+  color: aliceblue;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: 0.5s;
+  margin: 10px;
+  padding: 10px 20px;
+  background: transparent;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question button i,
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question a i,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question button i,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question a i {
+  color: aliceblue;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question button,
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question a:not(:disabled),
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question button,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question a:not(:disabled) {
+  cursor: pointer;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question .next,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .next {
+  background-color: #4d84e2;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question #yes,
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question #no,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #yes,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #no {
+  color: #4cc9f0;
+  padding: 5px 20px;
+  border: 2px solid aliceblue;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question button:hover,
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question a:hover,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question button:hover,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question a:hover {
+  scale: 1.05;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question #yes.active-button,
+.exam .hero-img .box-exam .container .box-container .container-exam .normal-question #no.active-button,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #yes.active-button,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #no.active-button {
+  scale: 1.05;
+  border: 3px solid #ffd166;
+  background-color: #ffd166;
+  color: rgba(39, 43, 57, 0.95);
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .button-box,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .button-action {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .button-action {
+  flex-direction: row;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question button {
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 49px;
+  color: aliceblue;
+  background-color: transparent;
+  transition: 0.3s;
+  margin: 10px 20px;
+  padding: 0px 10px;
+  position: relative;
+  font-weight: normal;
+  text-transform: none;
+  font-size: 16px;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .button-box button {
+  height: 100%;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question button:not(:disabled) {
+  cursor: pointer;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .next {
+  font-weight: bold;
+  font-weight: 600;
+  padding: 10px 20px;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .answer:nth-child(1)::before {
+  content: "A";
+  background-color: #118ab2;
+  padding: 5px 10px;
+  position: absolute;
+  border-radius: 10px;
+  left: -30px;
+  font-weight: bold;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .answer:nth-child(2)::before {
+  content: "B";
+  background-color: #118ab2;
+  padding: 5px 10px;
+  position: absolute;
+  border-radius: 10px;
+  left: -30px;
+  font-weight: bold;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question .answer:nth-child(3)::before {
+  content: "C";
+  background-color: #118ab2;
+  padding: 5px 10px;
+  position: absolute;
+  border-radius: 10px;
+  left: -30px;
+  font-weight: bold;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question button:hover {
+  scale: 1.05;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #answerA.active-button,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #answerB.active-button,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #answerC.active-button {
+  scale: 1.05;
+  transition: 0.3s;
+}
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #answerA.active-button::before,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #answerB.active-button::before,
+.exam .hero-img .box-exam .container .box-container .container-exam .specific-question #answerC.active-button::before {
+  scale: 1.05;
+  background-color: #ffd166;
+  color: rgba(39, 43, 57, 0.95);
+  transition: 0.3s;
+}
+
+@media (max-width: 900px) {
+  .navbar-left {
+    display: none;
+    height: 105vh;
+  }
+  .navbar-left .navbar-nav .logout {
+    display: block;
+  }
+  .navbar-top button {
+    display: block;
+  }
+  .navbar-top .box-account {
+    display: none;
+  }
+  .exam .hero-img .box-exam {
+    display: block;
+    left: 0;
+    width: 100%;
+  }
+  .exam .hero-img .box-exam .container .box-container .container-exam .info-exam span,
+  .exam .hero-img .box-exam .container .box-container .header-exam .info-exam span,
+  .exam .hero-img .box-exam .container .box-container .header-exam-info .info-exam span {
+    font-size: 20px;
+  }
+  .exam .hero-img .box-exam .container .box-container .container-exam .normal-question .info-container,
+  .exam .hero-img .box-exam .container .box-container .container-exam .specific-question .info-container {
+    flex-direction: column;
+  }
+}
+@media (max-width: 700px) {
+  .exam .hero-img .box-exam .container .box-container .container-exam {
+    padding: 10px 5px;
+  }
+  .exam .hero-img .box-exam .container .box-container .container-exam .exam-info {
+    flex-direction: column;
+    padding: 0;
+  }
+  .exam .hero-img .box-exam .container .box-container .container-exam .exam-info img,
+  .exam .hero-img .box-exam .container .box-container .container-exam .exam-info video {
+    padding: 5px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .exam .hero-img .box-exam .container .box-container .container-exam .exam-info svg {
+    width: 300px;
+  }
+  .exam .hero-img .box-exam .container .box-container .header-exam,
+  .exam .hero-img .box-exam .container .box-container .header-exam-info .info-exam {
+    flex-direction: column;
+  }
+}
+@media (max-width: 500px) {
+  .exam .hero-img .box-exam .container .box-container .container-exam .normal-question .info-container .content,
+  .exam .hero-img .box-exam .container .box-container .container-exam .specific-question .info-container .content {
+    margin: 5px;
+    font-size: 14px;
+  }
+  .exam .hero-img .box-exam .container .box-container .container-exam .normal-question .info-container .explain .content,
+  .exam .hero-img .box-exam .container .box-container .container-exam .specific-question .info-container .explain .content {
+    font-size: 14px;
+  }
+  .exam .hero-img .box-exam .container .box-container .container-exam .normal-question button,
+  .exam .hero-img .box-exam .container .box-container .container-exam .specific-question button {
+    margin: 0;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+}/*# sourceMappingURL=solveExam.css.map */

@@ -1,0 +1,283 @@
+@import '_colors.scss';
+@import '_animation.scss';
+
+.navbar-left.show {
+	display: block;
+}
+
+nav {
+	position: absolute;
+	font-size: 16px;
+	text-transform: uppercase;
+
+	a {
+		text-decoration: none;
+	}
+
+	i,
+	.nav-link {
+		padding: 6px;
+	}
+
+	.nav-link {
+		color: $nav-color;
+	}
+
+	.fa-arrow-right-to-bracket {
+		color: $icon-color;
+		font-size: 1.3em;
+	}
+
+	.fa-arrow-right-to-bracket:hover {
+		color: $primary-color;
+	}
+
+	.fa-bell {
+		color: $category-icon;
+		font-size: 1.3em;
+	}
+
+	.navbar-nav .nav-link.active {
+		border-left: 5px solid $nav-color;
+		background-color: #ffd16682;
+		font-weight: bold;
+	}
+
+	.nav-link:hover {
+		font-weight: bold;
+		color: $secondary-color;
+	}
+
+	.navbar-brand {
+		font-size: 17px;
+		font-weight: bold;
+		color: $secondary-color;
+		img {
+			width: 65px;
+			height: 65px;
+		  }
+	}
+
+	.active {
+		color: $primary-color;
+	}
+
+	.fa-bars {
+		color: $secondary-color;
+	}
+
+	.fa-bars:hover {
+		color: $primary-color;
+	}
+}
+
+.navbar-left {
+	top: 90px;
+	width: 300px;
+	height: 99.1vh;
+	z-index: 3000;
+
+	.navbar-nav {
+		display: flex;
+		flex-direction: column;
+
+		.title {
+			font-size: 18px;
+			font-style: italic;
+			letter-spacing: 2px;
+			text-align: center;
+		}
+
+		.underline {
+			width: 250px;
+			border-radius: 5px;
+		}
+
+		hr {
+			margin: 0px auto 10px;
+			width: 200px;
+		}
+
+		.nav-link {
+			padding: 10px 20px;
+			display: flex;
+			align-items: center;
+		}
+
+		.logout,
+		.notification {
+			display: none;
+			.fa-arrow-right-to-bracket {
+				color: $icon-color;
+			}
+
+			.countNotifications {
+				left: 38px;
+			}
+		}
+
+		.mail-nav {
+			display: none;
+			position: relative;
+			padding-left: 45px;
+
+			.nav-link {
+				position: relative;
+				display: flex;
+				align-items: center;
+				font-size: 14px;
+
+				&.active {
+					border-left: none;
+					background-color: #ffd16682;
+					font-weight: bold;
+
+					&::before,
+					&::after {
+						background-color: $nav-color;
+					}
+
+					&::before {
+						width: 5px;
+					}
+
+					&::after {
+						height: 5px;
+					}
+				}
+
+				i {
+					font-size: 16px;
+					margin-right: 8px;
+				}
+
+				&::before {
+					content: '';
+					position: absolute;
+					left: -5px;
+					top: 0;
+					bottom: 0;
+					width: 2px;
+					background-color: $text-color;
+				}
+
+				&::after {
+					content: '';
+					position: absolute;
+					left: -5px;
+					top: 50%;
+					transform: translateY(-50%);
+					width: 20px;
+					height: 2px;
+					background-color: $text-color;
+				}
+
+				&:last-child {
+					margin-bottom: 0;
+
+					&::before {
+						bottom: 50%;
+					}
+				}
+			}
+		}
+	}
+
+	i {
+		font-size: 23px;
+		margin-right: 13px;
+		color: $category-icon;
+	}
+}
+
+.navbar-top {
+	width: 100vw;
+	height: 90px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 3000;
+
+	button {
+		margin: 20px;
+		padding: 6px;
+		background: transparent;
+		border: none;
+		font-size: 25px;
+		display: none;
+	}
+
+	.navbar-brand,
+	.box-account {
+		padding: 10px 20px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+
+		.countNotifications {
+			top: 29px;
+			left: 38px;
+		}
+
+		.fa-bell:hover {
+			color: $secondary-color;
+		}
+	}
+}
+
+.user-box {
+	margin: 10px;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
+
+	.user_role {
+		font-size: 10px;
+		font-weight: lighter;
+		font-style: italic;
+	}
+}
+
+.countMails,
+.countNotifications {
+	position: absolute;
+	top: 12px;
+	left: 40px;
+	background-color: #ef476f;
+	color: aliceblue;
+	font-weight: bold;
+	font-size: 9.3px;
+	border-radius: 100%;
+	padding: 1.5px 5px;
+}
+
+@media (max-width: 720px) {
+	.navbar-left {
+		display: none;
+
+		.navbar-nav {
+			.logout,
+			.notification {
+				display: block;
+			}
+		}
+	}
+
+	.navbar-top {
+		button {
+			display: block;
+		}
+
+		.box-account {
+			display: none;
+		}
+	}
+}
+
